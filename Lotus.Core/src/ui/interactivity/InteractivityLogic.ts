@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { TCssProperties } from 'ui/types';
+import { TCssProperties } from '../types';
 import { InteractivityBorderLogic } from './InteractivityBorder';
 import { TInteractivityModel } from './InteractivityModel';
 import { TInteractivityState } from './InteractivityState';

@@ -1,4 +1,4 @@
-import { IFilterFunctionDesc } from 'modules/filter/FilterFunction';
+import { IFilterFunctionDesc } from '../filter';
 import { IPropertyDescriptor } from './PropertyDescriptor';
 
 /**

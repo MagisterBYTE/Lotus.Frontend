@@ -12,7 +12,7 @@ export interface IResult<TData = any>
   /**
    * Код
    */
-  code: number;
+  code: number|string;
 
   /**
    * Сообщение о результате выполнения операции

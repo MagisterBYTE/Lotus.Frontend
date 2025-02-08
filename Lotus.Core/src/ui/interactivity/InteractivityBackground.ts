@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ObjectHelper } from 'helpers';
-import { IGeneralBackgroundProperties } from 'ui/base/GeneralBackgroundProperties';
-import
-{
-  ThemeColorVariantHelper, ThemePaletteHelper, TThemeColorVariant, TThemeColorVariantUndef,
-  TThemePaletteActionType, TThemePaletteComponentStructuralPart
-} from 'ui/theme';
-import { TCssProperties } from 'ui/types';
+
+import { ObjectHelper } from '../../helpers';
+import { IGeneralBackgroundProperties } from '../base';
+import { ThemePaletteHelper, ThemeColorVariantHelper } from '../theme';
+import { ThemeColorVariant, ThemeColorVariantUndef, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '../theme/types';
+import { TCssProperties } from '../types';
 import { TInteractivityState } from './InteractivityState';
 
 
@@ -20,12 +18,12 @@ export interface IInteractivityBackgroundProperties extends IGeneralBackgroundPr
   /**
    * Цвет фона при наведении
    */
-  hoverBackColor?: TThemeColorVariant;
+  hoverBackColor?: ThemeColorVariant;
 
   /**
    * Цвет фона при нажатии
    */
-  pressedBackColor?: TThemeColorVariant;
+  pressedBackColor?: ThemeColorVariant;
 }
 
 
@@ -36,9 +34,9 @@ export class InteractivityBackgroundLogic
   {
     const backProps: TCssProperties = {};
 
-    const backColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'backColor');
-    const hoverBackColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'hoverBackColor');
-    const pressedBackColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'pressedBackColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
+    const hoverBackColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'hoverBackColor');
+    const pressedBackColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'pressedBackColor');
 
     switch (state)
     {

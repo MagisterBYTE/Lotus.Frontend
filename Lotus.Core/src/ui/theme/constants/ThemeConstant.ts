@@ -7,7 +7,7 @@ export class ThemeConstant
   /**
    * Ключ под которым сохраняется тема сайта
    */
-  public static readonly SaveKey: string = 'lotus-theme';
+  public static readonly SaveKey: string = 'lotus-core-theme';
 
   /**
    * Названия атрибута в документа под которым сохраняется тема сайта

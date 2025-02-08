@@ -1,4 +1,4 @@
-import { IGrouping } from 'types/Grouping';
+import { IGrouping } from '../types';
 
 export class ArrayHelper
 {

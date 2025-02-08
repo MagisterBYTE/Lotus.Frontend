@@ -1,5 +1,5 @@
-import { Color, Colors } from 'modules/color';
-import { IThemePaletteColor, Theme, TThemeColorVariant, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '../types';
+import { Color, Colors } from '../../../modules/color';
+import { IThemePaletteColor, Theme, ThemeColorVariant, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '../types';
 import { ThemeColorVariantHelper } from './ThemeColorVariantHelper';
 
 export class ThemePaletteHelper
@@ -30,7 +30,7 @@ export class ThemePaletteHelper
    * Получить палитру цвета
    * @param color Вариант цвета темы
    */
-  public static getPaletteColor(color: TThemeColorVariant): IThemePaletteColor | undefined
+  public static getPaletteColor(color: ThemeColorVariant): IThemePaletteColor | undefined
   {
     const colorData = ThemeColorVariantHelper.deconstruction(color);
     if (!colorData) return;
@@ -47,7 +47,7 @@ export class ThemePaletteHelper
    * @param actionType Тип действия
    * @returns Цвет
    */
-  public static getElementColor(color: TThemeColorVariant, actionType?: TThemePaletteActionType): Color
+  public static getElementColor(color: ThemeColorVariant, actionType?: TThemePaletteActionType): Color
   {
     const colorData = ThemeColorVariantHelper.deconstruction(color);
     if (!colorData) return Colors.red;
@@ -63,7 +63,7 @@ export class ThemePaletteHelper
    * @param actionType Тип действия
    * @returns Цвет
    */
-  public static getTextColor(color: TThemeColorVariant, allColor: boolean, actionType?: TThemePaletteActionType): Color
+  public static getTextColor(color: ThemeColorVariant, allColor: boolean, actionType?: TThemePaletteActionType): Color
   {
     const colorData = ThemeColorVariantHelper.deconstruction(color);
     if (!colorData) return Colors.red;
@@ -106,7 +106,7 @@ export class ThemePaletteHelper
    * @param actionType Тип действия
    * @returns Цвет
    */
-  public static getBackgroundColor(color: TThemeColorVariant, allColor: boolean, actionType?: TThemePaletteActionType): Color
+  public static getBackgroundColor(color: ThemeColorVariant, allColor: boolean, actionType?: TThemePaletteActionType): Color
   {
     const colorData = ThemeColorVariantHelper.deconstruction(color);
     if (!colorData) return Colors.red;
@@ -149,7 +149,7 @@ export class ThemePaletteHelper
    * @param actionType Тип действия
    * @returns Цвет
    */
-  public static getBorderColor(color: TThemeColorVariant, allColor: boolean, actionType?: TThemePaletteActionType): Color
+  public static getBorderColor(color: ThemeColorVariant, allColor: boolean, actionType?: TThemePaletteActionType): Color
   {
     const colorData = ThemeColorVariantHelper.deconstruction(color);
     if (!colorData) return Colors.red;
@@ -192,7 +192,7 @@ export class ThemePaletteHelper
    * @param actionType Тип действия
    * @returns Цвет
    */
-  public static getColorByStructuralPart(part: TThemePaletteComponentStructuralPart, color: TThemeColorVariant, actionType?: TThemePaletteActionType): Color
+  public static getColorByStructuralPart(part: TThemePaletteComponentStructuralPart, color: ThemeColorVariant, actionType?: TThemePaletteActionType): Color
   {
     switch (part)
     {

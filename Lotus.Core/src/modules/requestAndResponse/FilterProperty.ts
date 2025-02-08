@@ -1,5 +1,6 @@
-import { IPropertyTypeDesc } from 'modules/objectInfo';
-import { IFilterFunctionDesc } from 'modules/filter';
+import { IFilterFunctionDesc } from '../filter';
+import { IPropertyTypeDesc } from '../objectInfo';
+
 
 /**
  * Интерфейс для фильтрации по одному свойству

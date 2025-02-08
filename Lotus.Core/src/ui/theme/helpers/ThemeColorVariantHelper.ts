@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { checkOfColorVariantName, ColorVariantsHelper, TColorVariantName } from 'modules/color';
-import { StringHelper } from 'helpers';
-import { checkOfThemeColor, TThemeColor, TThemeColorVariant } from '../types';
+import { StringHelper } from '../../../helpers';
+import { checkOfColorVariantName, ColorVariantsHelper, TColorVariantName } from '../../../modules/color';
+import { checkOfThemeColor, TThemeColor, ThemeColorVariant } from '../types';
 
 export class ThemeColorVariantHelper
 {
@@ -10,7 +10,7 @@ export class ThemeColorVariantHelper
    * @param color Проверяемый цвет
    * @returns Статус проверки
    */
-  public static checkOf(color: any): color is TThemeColorVariant 
+  public static checkOf(color: any): color is ThemeColorVariant 
   {
     if (typeof color == 'string')
     {
@@ -35,10 +35,10 @@ export class ThemeColorVariantHelper
    * @param colorVariant Именованный тип в вариативности цветов
    * @returns Вариант цвета темы
    */
-  public static create(color: TThemeColor, colorVariant: TColorVariantName): TThemeColorVariant
+  public static create(color: TThemeColor, colorVariant: TColorVariantName): ThemeColorVariant
   {
-    if(colorVariant == 'main') return color as TThemeColorVariant;
-    return `${color}${StringHelper.capitalizeFirstLetter(colorVariant)}` as TThemeColorVariant;
+    if(colorVariant == 'main') return color as ThemeColorVariant;
+    return `${color}${StringHelper.capitalizeFirstLetter(colorVariant)}` as ThemeColorVariant;
   }
 
   /**
@@ -79,7 +79,7 @@ export class ThemeColorVariantHelper
    * @param color Вариант цвета темы
    * @returns Смещенный варианта цвета
    */
-  public static next(color: TThemeColorVariant, delta?: number): TThemeColorVariant 
+  public static next(color: ThemeColorVariant, delta?: number): ThemeColorVariant 
   {
     if (typeof color == 'string')
     {

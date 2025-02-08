@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ObjectHelper } from 'helpers/ObjectHelper';
-import
-{
-  ThemeColorVariantHelper, ThemePaletteHelper, TThemeColorVariant,
-  TThemeColorVariantUndef, TThemePaletteActionType, TThemePaletteComponentStructuralPart
-} from 'ui/theme';
-import { TCssBorderStyle, TCssBorderWidth, TCssProperties } from 'ui/types';
-import { hasBorderProperties, IGeneralBorderProperties } from 'ui/base/GeneralBorderProperties';
+import { ObjectHelper } from '../../helpers';
+import { hasBorderProperties, IGeneralBorderProperties } from '../base';
+import { ThemeColorVariant, ThemeColorVariantHelper, ThemeColorVariantUndef, ThemePaletteHelper, 
+  TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '../theme';
+import { TCssProperties, TCssBorderStyle, TCssBorderWidth } from '../types';
 import { TInteractivityState } from './InteractivityState';
 
 export type TInteractivityBorderType =
@@ -23,12 +20,12 @@ export interface IInteractivityBorderProperties extends IGeneralBorderProperties
   /**
    * Цвет границы при наведении
    */
-  hoverBorderColor?: TThemeColorVariant;
+  hoverBorderColor?: ThemeColorVariant;
 
   /**
    * Цвет границы при нажатии
    */
-  pressedBorderColor?: TThemeColorVariant;
+  pressedBorderColor?: ThemeColorVariant;
 }
 
 export class InteractivityBorderLogic
@@ -38,10 +35,10 @@ export class InteractivityBorderLogic
   {
     const borderProps: TCssProperties = {};
 
-    const backColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'backColor');
-    const borderColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'borderColor');
-    const hoverBorderColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'hoverBorderColor');
-    const pressedBorderColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'pressedBorderColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
+    const borderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'borderColor');
+    const hoverBorderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'hoverBorderColor');
+    const pressedBorderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'pressedBorderColor');
 
     switch (state)
     {
@@ -77,7 +74,7 @@ export class InteractivityBorderLogic
   {
     const borderStyle: TCssBorderStyle | undefined = ObjectHelper.getValueByPropertyPath<TCssBorderStyle | undefined>(element, 'borderStyle');
     const borderWidth: TCssBorderWidth | undefined = ObjectHelper.getValueByPropertyPath<TCssBorderWidth | undefined>(element, 'borderWidth');
-    const borderColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'borderColor');
+    const borderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'borderColor');
 
     switch (type)
     {

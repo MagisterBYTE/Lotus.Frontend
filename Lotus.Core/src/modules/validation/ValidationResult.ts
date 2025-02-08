@@ -3,15 +3,15 @@
  */
 export interface IValidationResult
 {
-    /**
-     * Статус наличия ошибки валидации
-     */
-    error: boolean;
+  /**
+   * Статус наличия ошибки валидации
+   */
+  error: boolean;
 
-    /**
-     * Текст ошибки
-     */
-    text?: string
+  /**
+   * Текст ошибки
+   */
+  text?: string
 }
 
 /**

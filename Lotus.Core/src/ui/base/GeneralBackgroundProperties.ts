@@ -1,5 +1,6 @@
-import { TThemeColorVariant } from 'ui/theme/types';
-import { TCssBackgroundImage, TShadowElevation } from 'ui/types';
+import { ThemeColorVariant } from '../theme/types';
+import { TCssBackgroundImage, TShadowElevation } from '../types';
+
 
 /**
  * Общие свойства для фона элемента UI
@@ -9,7 +10,7 @@ export interface IGeneralBackgroundProperties
   /**
    * Основной цвет
    */
-  backColor?: TThemeColorVariant;
+  backColor?: ThemeColorVariant;
 
   /**
    * Фоновое изображение

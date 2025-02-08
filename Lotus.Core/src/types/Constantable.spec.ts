@@ -1,3 +1,4 @@
+import { describe, expect } from '@jest/globals';
 import { checkOfConstantable } from './Constantable';
 
 describe('test IConstantable', () => 

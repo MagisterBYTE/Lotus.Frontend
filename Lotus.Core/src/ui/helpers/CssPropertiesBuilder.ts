@@ -1,13 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TControlPadding, TControlPaddingOffset, TControlSize, TCssBorderRadius, TCssProperties, TCssTextAlign, TTextEffect } from 'ui/types';
-import { ObjectHelper } from 'helpers';
-import { ThemeConstant, TThemeColorVariantUndef } from 'ui/theme';
-import { InteractivityLogic, TInteractivityModel } from 'ui/interactivity';
-import { IEffectContextProps } from 'ui/interactivity/InteractivityLogic';
-import { CssSizerHelper } from './CssSizerHelper';
+import { TControlPadding, TControlPaddingOffset, TControlSize, TCssBorderRadius, TCssProperties, TCssTextAlign, TTextEffect } from '../types';
+import { TInteractivityModel } from '../interactivity';
+import { ThemeColorVariantUndef } from '../theme/types';
+import { ObjectHelper } from '../../helpers';
+import { IEffectContextProps, InteractivityLogic } from '../interactivity/InteractivityLogic';
+import { ThemeConstant } from '../theme/constants';
 import { CssPropertiesHelper } from './CssPropertiesHelper';
+import { CssSizerHelper } from './CssSizerHelper';
 
 export interface ICssPropertiesBuilderContext
 {
@@ -91,7 +92,7 @@ export class CssPropertiesBuilder
     const isSelected: boolean = Boolean(context?.isSelected || props.isSelected);
 
     // Background
-    const backColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(props, 'backColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(props, 'backColor');
 
     // BackgroundEffect
     const hasRippleEffect:boolean = Boolean(ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'hasRippleEffect'));

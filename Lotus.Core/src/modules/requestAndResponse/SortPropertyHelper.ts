@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TPropertyType } from 'modules/objectInfo/PropertyType';
-import { BooleanHelper } from 'helpers/BooleanHelper';
-import { NumberHelper } from 'helpers/NumberHelper';
-import { DateHelper } from 'helpers/DateHelper';
-import { StringHelper } from 'helpers/StringHelper';
+import { DateTimeConverter } from '../../converters';
+import { StringHelper, BooleanHelper, NumberHelper, DateTimeHelper } from '../../helpers';
+import { TPropertyType } from '../objectInfo';
 import { ISortObject, ISortProperty } from './SortProperty';
 
 export class SortPropertyHelper
@@ -61,9 +59,9 @@ export class SortPropertyHelper
         {
           return result.sort((a, b) =>
           {
-            const l: Date = DateHelper.parse((a as any)[key]);
-            const r: Date = DateHelper.parse((b as any)[key]);
-            return DateHelper.compare(l, r, sortProperty.isDesc);
+            const l: Date = DateTimeConverter.convert((a as any)[key]);
+            const r: Date = DateTimeConverter.convert((b as any)[key]);
+            return DateTimeHelper.compare(l, r, sortProperty.isDesc);
           });
         } break;
     }

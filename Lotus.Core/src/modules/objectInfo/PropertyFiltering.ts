@@ -1,4 +1,5 @@
-import { IFilterFunctionDesc } from 'modules/filter';
+import { IFilterFunctionDesc } from '../filter';
+
 
 /**
  * Интерфейс для описания фильтрации свойства

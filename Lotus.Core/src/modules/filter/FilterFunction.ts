@@ -1,4 +1,4 @@
-import { localizationCore } from 'localization';
+import { LocalizationCore } from '../../localization';
 
 /**
  * Описание функции фильтрации
@@ -30,8 +30,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 0,
       type: 'Equals',
-      abbr: localizationCore.filters.equalsAbbr,
-      desc: localizationCore.filters.equals
+      abbr: LocalizationCore.data.filters.equalsAbbr,
+      desc: LocalizationCore.data.filters.equals
     },
 
     /**
@@ -41,8 +41,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 1,
       type: 'NotEqual',
-      abbr: localizationCore.filters.notEqualAbbr,
-      desc: localizationCore.filters.notEqual
+      abbr: LocalizationCore.data.filters.notEqualAbbr,
+      desc: LocalizationCore.data.filters.notEqual
     },
 
     /**
@@ -52,8 +52,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 2,
       type: 'LessThan',
-      abbr: localizationCore.filters.lessThanAbbr,
-      desc: localizationCore.filters.lessThan
+      abbr: LocalizationCore.data.filters.lessThanAbbr,
+      desc: LocalizationCore.data.filters.lessThan
     },
 
     /**
@@ -63,8 +63,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 3,
       type: 'LessThanOrEqual',
-      abbr: localizationCore.filters.lessThanOrEqualAbbr,
-      desc: localizationCore.filters.lessThanOrEqual
+      abbr: LocalizationCore.data.filters.lessThanOrEqualAbbr,
+      desc: LocalizationCore.data.filters.lessThanOrEqual
     },
 
     /**
@@ -74,8 +74,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 4,
       type: 'GreaterThan',
-      abbr: localizationCore.filters.greaterThanAbbr,
-      desc: localizationCore.filters.greaterThan
+      abbr: LocalizationCore.data.filters.greaterThanAbbr,
+      desc: LocalizationCore.data.filters.greaterThan
     },
 
     /**
@@ -85,8 +85,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 5,
       type: 'GreaterThanOrEqual',
-      abbr: localizationCore.filters.greaterThanOrEqualAbbr,
-      desc: localizationCore.filters.greaterThanOrEqual
+      abbr: LocalizationCore.data.filters.greaterThanOrEqualAbbr,
+      desc: LocalizationCore.data.filters.greaterThanOrEqual
     },
 
     /**
@@ -96,8 +96,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 6,
       type: 'Between',
-      abbr: localizationCore.filters.betweenAbbr,
-      desc: localizationCore.filters.between
+      abbr: LocalizationCore.data.filters.betweenAbbr,
+      desc: LocalizationCore.data.filters.between
     },
 
     /**
@@ -107,8 +107,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 7,
       type: 'Contains',
-      abbr: localizationCore.filters.contains,
-      desc: localizationCore.filters.contains
+      abbr: LocalizationCore.data.filters.contains,
+      desc: LocalizationCore.data.filters.contains
     },
 
     /**
@@ -118,8 +118,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 8,
       type: 'StartsWith',
-      abbr: localizationCore.filters.startsWith,
-      desc: localizationCore.filters.startsWith
+      abbr: LocalizationCore.data.filters.startsWith,
+      desc: LocalizationCore.data.filters.startsWith
     },
 
     /**
@@ -129,8 +129,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 9,
       type: 'EndsWith',
-      abbr: localizationCore.filters.endsWith,
-      desc: localizationCore.filters.endsWith
+      abbr: LocalizationCore.data.filters.endsWith,
+      desc: LocalizationCore.data.filters.endsWith
     },
 
     /**
@@ -140,8 +140,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 10,
       type: 'Like',
-      abbr: localizationCore.filters.like,
-      desc: localizationCore.filters.like
+      abbr: LocalizationCore.data.filters.like,
+      desc: LocalizationCore.data.filters.like
     },
 
     /**
@@ -152,8 +152,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 11,
       type: 'NotEmpty',
-      abbr: localizationCore.filters.notEmpty,
-      desc: localizationCore.filters.notEmpty
+      abbr: LocalizationCore.data.filters.notEmpty,
+      desc: LocalizationCore.data.filters.notEmpty
     },
 
     /**
@@ -164,8 +164,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 12,
       type: 'Empty',
-      abbr: localizationCore.filters.empty,
-      desc: localizationCore.filters.empty
+      abbr: LocalizationCore.data.filters.empty,
+      desc: LocalizationCore.data.filters.empty
     },
 
     /**
@@ -175,8 +175,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 13,
       type: 'IncludeAny',
-      abbr: localizationCore.filters.includeAny,
-      desc: localizationCore.filters.includeAny
+      abbr: LocalizationCore.data.filters.includeAny,
+      desc: LocalizationCore.data.filters.includeAny
     },
 
     /**
@@ -186,8 +186,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 14,
       type: 'IncludeAll',
-      abbr: localizationCore.filters.includeAll,
-      desc: localizationCore.filters.includeAll
+      abbr: LocalizationCore.data.filters.includeAll,
+      desc: LocalizationCore.data.filters.includeAll
     },
 
     /**
@@ -197,8 +197,8 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 15,
       type: 'IncludeEquals',
-      abbr: localizationCore.filters.includeEquals,
-      desc: localizationCore.filters.includeEquals
+      abbr: LocalizationCore.data.filters.includeEquals,
+      desc: LocalizationCore.data.filters.includeEquals
     },
 
     /**
@@ -208,7 +208,7 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     {
       id: 16,
       type: 'IncludeNone',
-      abbr: localizationCore.filters.includeNone,
-      desc: localizationCore.filters.includeNone
+      abbr: LocalizationCore.data.filters.includeNone,
+      desc: LocalizationCore.data.filters.includeNone
     }
   } as const;

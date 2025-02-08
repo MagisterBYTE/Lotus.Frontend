@@ -1,6 +1,5 @@
-import { TThemeColorVariant } from 'ui/theme';
-import { TTextEffect } from 'ui/types';
-import { TCssTextAlign } from 'ui/types/CssTypes';
+import { ThemeColorVariant } from '../theme/types';
+import { TCssTextAlign, TTextEffect } from '../types';
 
 /**
  * Общие свойства текста для элемента UI
@@ -35,5 +34,5 @@ export interface IGeneralTextProperties
   /**
    * Цвет текста
    */
-  textColor?:TThemeColorVariant;
+  textColor?:ThemeColorVariant;
 }

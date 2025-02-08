@@ -1,4 +1,5 @@
-import { Color, ColorVariants, TColorVariantName } from 'modules/color';
+import { Color, ColorVariants, TColorVariantName } from '../../../modules/color';
+
 
 /**
  * Цвета текста для соответствующей темы

@@ -1,6 +1,6 @@
 export { Theme } from './Theme';
 export { TThemeColors, ThemeColorOptions, checkOfThemeColor, type TThemeColor } from './ThemeColor';
-export { type TThemeColorVariant, type TThemeColorVariantUndef } from './ThemeColorVariant';
+export { type ThemeColorVariant, type ThemeColorVariantUndef } from './ThemeColorVariant';
 export { type TThemeData } from './ThemeData';
 export { TThemeModes, ThemeModeOptions, type TThemeMode } from './ThemeMode';
 export { type IThemePalette } from './ThemePalette';

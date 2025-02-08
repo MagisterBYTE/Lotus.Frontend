@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IRoute } from 'types/Route';
+import { IRoute } from '../../types';
 import { BaseCommand, ICommand } from './Command';
 
 /**

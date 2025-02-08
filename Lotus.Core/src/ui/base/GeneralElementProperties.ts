@@ -1,4 +1,4 @@
-import { TControlPadding, TControlSize, TCssBorderRadius } from 'ui/types';
+import { TControlPadding, TControlSize, TCssBorderRadius } from '../types';
 import { IGeneralBackgroundProperties } from './GeneralBackgroundProperties';
 import { IGeneralBorderProperties } from './GeneralBorderProperties';
 import { IGeneralTextProperties } from './GeneralTextProperties';

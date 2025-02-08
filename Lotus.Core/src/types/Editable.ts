@@ -14,7 +14,7 @@ export interface IEditable
 /**
  * Проверка объекта на поддержку интерфейса IEditable
  * @param value Проверяемый объект
- * @returns true, если объекта поддерживает интерфейс, false в противном случае
+ * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function checkOfEditable(value: any): value is IEditable

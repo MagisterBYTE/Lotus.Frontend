@@ -12,9 +12,8 @@ export interface IConstantable
 /**
  * Проверка объекта на поддержку интерфейса IConstantable
  * @param value Проверяемый объект
- * @returns true, если объекта поддерживает интерфейс, false в противном случае
+ * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function checkOfConstantable(value: any): value is IConstantable
 {

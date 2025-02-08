@@ -1,5 +1,5 @@
-import { NumberHelper } from 'helpers';
-import { TControlPadding, TControlPaddingOffset, TControlSize, TCssProperties } from 'ui/types';
+import { NumberConverter } from '../../converters';
+import { TControlPadding, TControlPaddingOffset, TControlSize, TCssProperties } from '../types';
 
 export class CssSizerHelper
 {
@@ -375,8 +375,8 @@ export class CssSizerHelper
 
     const css = CssSizerHelper.getPaddingProps(size, paddingControl, 'normal', topBottom);
 
-    if (css.paddingTop) result += NumberHelper.parseFloat(css.paddingTop as string);
-    if (css.paddingBottom) result += NumberHelper.parseFloat(css.paddingBottom as string);
+    if (css.paddingTop) result += NumberConverter.parseFloat(css.paddingTop as string);
+    if (css.paddingBottom) result += NumberConverter.parseFloat(css.paddingBottom as string);
 
     return result;
   }

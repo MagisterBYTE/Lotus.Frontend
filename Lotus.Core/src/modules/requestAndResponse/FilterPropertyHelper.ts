@@ -1,9 +1,8 @@
-import { TPropertyType } from 'modules/objectInfo/PropertyType';
-import { TFilterFunction } from 'modules/filter';
-import { BooleanHelper } from 'helpers/BooleanHelper';
-import { DateHelper } from 'helpers/DateHelper';
-import { StringHelper } from 'helpers/StringHelper';
-import { ObjectHelper } from 'helpers';
+/* eslint-disable max-len */
+import { DateTimeConverter } from '../../converters';
+import { StringHelper, BooleanHelper, ObjectHelper } from '../../helpers';
+import { TFilterFunction } from '../filter';
+import { TPropertyType } from '../objectInfo';
 import { IFilterObject, IFilterProperty } from './FilterProperty';
 
 export class FilterPropertyHelper
@@ -76,8 +75,6 @@ export class FilterPropertyHelper
             switch (filterFunction)
             {
               case 'Equals': return massive.filter(x => BooleanHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) === BooleanHelper.parse(filterProperty.value));
-              
-              // eslint-disable-next-line max-len
               case 'NotEqual': return massive.filter(x => BooleanHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) !== BooleanHelper.parse(filterProperty.value));
             }
           } break;
@@ -122,14 +119,13 @@ export class FilterPropertyHelper
           {
             switch (filterFunction)
             {
-              case 'Equals': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) === DateHelper.parse(filterProperty.value!));
-              case 'NotEqual': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) !== DateHelper.parse(filterProperty.value!));
-              case 'LessThan': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) < DateHelper.parse(filterProperty.value!));
-              // eslint-disable-next-line max-len
-              case 'LessThanOrEqual': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) <= DateHelper.parse(filterProperty.value!));
-              case 'GreaterThan': return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) > DateHelper.parse(filterProperty.value!));
+              case 'Equals': return massive.filter(x => DateTimeConverter.convert((ObjectHelper.getValueByPropertyPath(x, key))) === DateTimeConverter.convert(filterProperty.value!));
+              case 'NotEqual': return massive.filter(x => DateTimeConverter.convert((ObjectHelper.getValueByPropertyPath(x, key))) !== DateTimeConverter.convert(filterProperty.value!));
+              case 'LessThan': return massive.filter(x => DateTimeConverter.convert((ObjectHelper.getValueByPropertyPath(x, key))) < DateTimeConverter.convert(filterProperty.value!));
+              case 'LessThanOrEqual': return massive.filter(x => DateTimeConverter.convert((ObjectHelper.getValueByPropertyPath(x, key))) <= DateTimeConverter.convert(filterProperty.value!));
+              case 'GreaterThan': return massive.filter(x => DateTimeConverter.convert((ObjectHelper.getValueByPropertyPath(x, key))) > DateTimeConverter.convert(filterProperty.value!));
               case 'GreaterThanOrEqual':
-                return massive.filter(x => DateHelper.parse((ObjectHelper.getValueByPropertyPath(x, key))) >= DateHelper.parse(filterProperty.value!));
+                return massive.filter(x => DateTimeConverter.convert((ObjectHelper.getValueByPropertyPath(x, key))) >= DateTimeConverter.convert(filterProperty.value!));
             }
           } break;
       }

@@ -1,4 +1,5 @@
-import { TControlPadding, TControlSize, TCssAlignItems, TCssJustifyContent, TCssProperties, TIconPlacement } from 'ui/types';
+import { TControlPadding, TControlSize, TCssAlignItems, TCssJustifyContent, TCssProperties, TIconPlacement } from '../types';
+
 
 export class CssContainerHelper
 {

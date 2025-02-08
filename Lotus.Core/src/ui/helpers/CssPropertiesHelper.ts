@@ -1,10 +1,12 @@
-import { hasBorderProperties } from 'ui/base';
-import { ThemeConstant, ThemePaletteHelper, TThemeColorVariant } from 'ui/theme';
+import { hasBorderProperties } from '../base';
+import { ThemeConstant } from '../theme/constants';
+import { ThemePaletteHelper } from '../theme/helpers';
+import { ThemeColorVariant } from '../theme/types';
 import
 {
   TControlSize, TCssBorderRadius,
   TCssBorderStyle, TCssBorderWidth, TCssProperties, TCssTextAlign, TShadowElevation, TTextEffect
-} from 'ui/types';
+} from '../types';
 
 export class CssPropertiesHelper
 {
@@ -243,7 +245,7 @@ export class CssPropertiesHelper
    * @returns Свойства CSS по границе в виде TCssProperties
    */
   public static getBorderStyleProps(size?: TControlSize, borderStyle?: TCssBorderStyle, borderWidth?: TCssBorderWidth,
-    borderColor?: TThemeColorVariant): TCssProperties
+    borderColor?: ThemeColorVariant): TCssProperties
   {
     if (hasBorderProperties(borderStyle, borderWidth, borderColor) == false)
     {
@@ -296,7 +298,7 @@ export class CssPropertiesHelper
    * @returns Свойства CSS по индивидуальной границе в виде TCssProperties
    */
   public static getBorderStyleIndividualProps(size?: TControlSize, borderStyle?: TCssBorderStyle, borderWidth?: TCssBorderWidth,
-    borderColor?: TThemeColorVariant, isLeft?: boolean, isTop?: boolean, isRight?: boolean, isBottom?: boolean): TCssProperties
+    borderColor?: ThemeColorVariant, isLeft?: boolean, isTop?: boolean, isRight?: boolean, isBottom?: boolean): TCssProperties
   {
     if (hasBorderProperties(borderStyle, borderWidth, borderColor) == false)
     {
@@ -370,7 +372,7 @@ export class CssPropertiesHelper
    * @param shadowAlpha Альфа компонент цвета для тени
    * @returns Свойства CSS по тени для границы в виде TCssProperties
    */
-  public static getBorderShadowProps(elevation: TShadowElevation, color?: TThemeColorVariant, shadowAlpha?: number): TCssProperties
+  public static getBorderShadowProps(elevation: TShadowElevation, color?: ThemeColorVariant, shadowAlpha?: number): TCssProperties
   {
     const colorShadow = ThemePaletteHelper.getElementColor(color ?? 'primaryBlack');
 
@@ -402,7 +404,7 @@ export class CssPropertiesHelper
    * @param colorVariant Вариант цвета
    * @returns Свойства CSS по тени в виде TCssProperties
    */
-  public static getBoxShadowProps(elevation: TShadowElevation, color?: TThemeColorVariant): TCssProperties
+  public static getBoxShadowProps(elevation: TShadowElevation, color?: ThemeColorVariant): TCssProperties
   {
     const colorShadow = ThemePaletteHelper.getElementColor(color ?? 'primaryBlack');
 

@@ -1,5 +1,6 @@
-import { StringHelper } from 'helpers';
-import { IOption } from 'modules/option';
+import { StringHelper } from '../../../helpers';
+import { IOption } from '../../../modules/option';
+
 
 /**
  * Режим темы

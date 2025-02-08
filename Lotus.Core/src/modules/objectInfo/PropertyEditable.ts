@@ -1,4 +1,4 @@
-import { IValidationResult } from 'modules/validation';
+import { IValidationResult } from '../validation';
 
 /**
  * Интерфейс для описания редактируемого свойства

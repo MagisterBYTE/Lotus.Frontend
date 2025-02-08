@@ -1,4 +1,4 @@
-import { Color, Colors, ColorVariants, ColorVariantsHelper, TColorVariantName } from 'modules/color';
+import { Color, Colors, ColorVariants, ColorVariantsHelper, TColorVariantName } from '../../../modules/color';
 import { IThemePalette, TThemeMode } from '../types';
 import { ThemeColorVariants } from './ThemeColorVariants';
 

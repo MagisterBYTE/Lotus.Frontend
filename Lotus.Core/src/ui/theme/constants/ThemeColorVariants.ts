@@ -1,4 +1,5 @@
-import { Color, ColorVariants } from 'modules/color';
+import { Color, ColorVariants } from '../../../modules/color';
+
 
 /**
  * Наборы типовых вариантов цвета

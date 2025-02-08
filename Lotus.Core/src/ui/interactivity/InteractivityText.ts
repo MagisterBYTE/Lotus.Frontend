@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ObjectHelper } from 'helpers';
-import { IGeneralTextProperties } from 'ui/base/GeneralTextProperties';
-import
-{
-  TThemeColorVariant, TThemeColorVariantUndef,
-  TThemePaletteActionType,
-  TThemePaletteComponentStructuralPart,
-  ThemeColorVariantHelper,
-  ThemePaletteHelper
-} from 'ui/theme';
-import { TCssProperties } from 'ui/types';
+import { ObjectHelper } from '../../helpers';
+import { IGeneralTextProperties } from '../base';
+import { ThemePaletteHelper, ThemeColorVariantHelper } from '../theme';
+import { ThemeColorVariant, ThemeColorVariantUndef, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '../theme/types';
+import { TCssProperties } from '../types';
 import { TInteractivityState } from './InteractivityState';
 
 export type TInteractivityTextType =
@@ -24,12 +18,12 @@ export interface IInteractivityTextProperties extends IGeneralTextProperties
   /**
    * Цвет текста при наведении
    */
-  hoverTextColor?: TThemeColorVariant;
+  hoverTextColor?: ThemeColorVariant;
 
   /**
    * Цвет текста при нажатии
    */
-  pressedTextColor?: TThemeColorVariant;
+  pressedTextColor?: ThemeColorVariant;
 }
 
 export class InteractivityTextLogic
@@ -39,10 +33,10 @@ export class InteractivityTextLogic
   {
     const textProps: TCssProperties = {};
 
-    const backColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'backColor');
-    const textColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'textColor');
-    const hoverTextColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'hoverTextColor');
-    const pressedTextColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'pressedTextColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
+    const textColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'textColor');
+    const hoverTextColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'hoverTextColor');
+    const pressedTextColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'pressedTextColor');
 
     switch (state)
     {
@@ -75,8 +69,8 @@ export class InteractivityTextLogic
   public static fillProperties(target: TCssProperties, element: any, type: TInteractivityTextType, state: TInteractivityState,
     part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
   {
-    const backColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'backColor');
-    const textColor: TThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<TThemeColorVariantUndef>(element, 'textColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
+    const textColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'textColor');
 
     switch (type)
     {

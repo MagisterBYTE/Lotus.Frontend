@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IResult } from 'types/Result';
+import { IResult } from '../../types';
 import { IPageInfoResponse } from './PageInfo';
 
 /**
