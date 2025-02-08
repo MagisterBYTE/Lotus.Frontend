@@ -12,7 +12,7 @@ export class ObjectHelper
    * @param shouldThrow Генерировать исключение если свойство не найдено
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getValueByPropertyPath<TValue = any>(source: any, propertyPath: string, shouldThrow: boolean = false): TValue | undefined
+  public static getValue<TValue = any>(source: any, propertyPath: string, shouldThrow: boolean = false): TValue | undefined
   {
     if (source === null || source === undefined)
     {

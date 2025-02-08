@@ -33,10 +33,10 @@ export class InteractivityTextLogic
   {
     const textProps: TCssProperties = {};
 
-    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
-    const textColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'textColor');
-    const hoverTextColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'hoverTextColor');
-    const pressedTextColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'pressedTextColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'backColor');
+    const textColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'textColor');
+    const hoverTextColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'hoverTextColor');
+    const pressedTextColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'pressedTextColor');
 
     switch (state)
     {
@@ -69,8 +69,8 @@ export class InteractivityTextLogic
   public static fillProperties(target: TCssProperties, element: any, type: TInteractivityTextType, state: TInteractivityState,
     part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
   {
-    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
-    const textColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'textColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'backColor');
+    const textColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'textColor');
 
     switch (type)
     {

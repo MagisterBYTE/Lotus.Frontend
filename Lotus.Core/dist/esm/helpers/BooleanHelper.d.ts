@@ -1,9 +1,10 @@
 export declare class BooleanHelper {
     /**
-     * Текстовые значение логического типа которые означает истинное значение
+     * Сравнение логических значений
+     * @param left Левое значение
+     * @param right Правое значение
+     * @param isDesc Статус сравнения по убиванию
+     * @returns Статус сравнения
      */
-    static readonly TrueValues: string[];
-    static parse(item: any): boolean;
-    static getValue(value: boolean, yes?: string, no?: string): string;
     static compare(left?: boolean, right?: boolean, isDesc?: boolean): number;
 }

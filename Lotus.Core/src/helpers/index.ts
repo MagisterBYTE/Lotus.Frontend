@@ -10,4 +10,3 @@ export { ObjectHelper } from './ObjectHelper';
 export { PathHelper } from './PathHelper';
 export { RandomHelper } from './RandomHelper';
 export { StringHelper } from './StringHelper';
-

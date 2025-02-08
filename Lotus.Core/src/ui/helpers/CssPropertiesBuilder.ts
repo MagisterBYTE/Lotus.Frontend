@@ -53,15 +53,15 @@ export class CssPropertiesBuilder
   public static buildElement(props: any, context?: ICssPropertiesBuilderContext): TCssProperties
   {
     // Element
-    const borderRadius: TCssBorderRadius|undefined = ObjectHelper.getValueByPropertyPath<TCssBorderRadius|undefined>(props, 'borderRadius');
-    const size: TControlSize|undefined = ObjectHelper.getValueByPropertyPath<TControlSize|undefined>(props, 'size');
-    const paddingControl: TControlPadding|undefined = ObjectHelper.getValueByPropertyPath<TControlPadding|undefined>(props, 'paddingControl');
+    const borderRadius: TCssBorderRadius|undefined = ObjectHelper.getValue<TCssBorderRadius|undefined>(props, 'borderRadius');
+    const size: TControlSize|undefined = ObjectHelper.getValue<TControlSize|undefined>(props, 'size');
+    const paddingControl: TControlPadding|undefined = ObjectHelper.getValue<TControlPadding|undefined>(props, 'paddingControl');
 
     // Text
-    const fontBold:boolean|undefined = ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'fontBold');
-    const fontAccent:boolean|undefined = ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'fontAccent');
-    const textEffect:TTextEffect|undefined = ObjectHelper.getValueByPropertyPath<TTextEffect|undefined>(props, 'textEffect');
-    const textAlign:TCssTextAlign|undefined = ObjectHelper.getValueByPropertyPath<TCssTextAlign|undefined>(props, 'textAlign');
+    const fontBold:boolean|undefined = ObjectHelper.getValue<boolean|undefined>(props, 'fontBold');
+    const fontAccent:boolean|undefined = ObjectHelper.getValue<boolean|undefined>(props, 'fontAccent');
+    const textEffect:TTextEffect|undefined = ObjectHelper.getValue<TTextEffect|undefined>(props, 'textEffect');
+    const textAlign:TCssTextAlign|undefined = ObjectHelper.getValue<TCssTextAlign|undefined>(props, 'textAlign');
 
     // Status
     const isDisabled: boolean = Boolean(props.disabled || props.isDisabled);
@@ -92,13 +92,13 @@ export class CssPropertiesBuilder
     const isSelected: boolean = Boolean(context?.isSelected || props.isSelected);
 
     // Background
-    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(props, 'backColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(props, 'backColor');
 
     // BackgroundEffect
-    const hasRippleEffect:boolean = Boolean(ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'hasRippleEffect'));
-    const hasScaleEffect:boolean = Boolean(ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'hasScaleEffect'));
-    const hasShadowBorderEffect:boolean = Boolean(ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'hasShadowBorderEffect'));
-    const hasShadowBoxEffect:boolean = Boolean(ObjectHelper.getValueByPropertyPath<boolean|undefined>(props, 'hasShadowBoxEffect'));
+    const hasRippleEffect:boolean = Boolean(ObjectHelper.getValue<boolean|undefined>(props, 'hasRippleEffect'));
+    const hasScaleEffect:boolean = Boolean(ObjectHelper.getValue<boolean|undefined>(props, 'hasScaleEffect'));
+    const hasShadowBorderEffect:boolean = Boolean(ObjectHelper.getValue<boolean|undefined>(props, 'hasShadowBorderEffect'));
+    const hasShadowBoxEffect:boolean = Boolean(ObjectHelper.getValue<boolean|undefined>(props, 'hasShadowBoxEffect'));
 
     const effectContext:IEffectContextProps =
     {

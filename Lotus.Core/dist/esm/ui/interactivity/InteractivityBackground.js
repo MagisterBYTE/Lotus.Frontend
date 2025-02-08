@@ -4,9 +4,9 @@ import { ThemePaletteHelper, ThemeColorVariantHelper } from '../theme';
 export class InteractivityBackgroundLogic {
     static getEffectByState(element, state, part, actionType) {
         const backProps = {};
-        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
-        const hoverBackColor = ObjectHelper.getValueByPropertyPath(element, 'hoverBackColor');
-        const pressedBackColor = ObjectHelper.getValueByPropertyPath(element, 'pressedBackColor');
+        const backColor = ObjectHelper.getValue(element, 'backColor');
+        const hoverBackColor = ObjectHelper.getValue(element, 'hoverBackColor');
+        const pressedBackColor = ObjectHelper.getValue(element, 'pressedBackColor');
         switch (state) {
             case 'normal':
                 {

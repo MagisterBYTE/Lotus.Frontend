@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DateTimeConverter } from '../../converters';
+import { BooleanConverter, DateTimeConverter } from '../../converters';
 import { StringHelper, BooleanHelper, NumberHelper, DateTimeHelper } from '../../helpers';
 import { TPropertyType } from '../objectInfo';
 import { ISortObject, ISortProperty } from './SortProperty';
@@ -24,8 +24,8 @@ export class SortPropertyHelper
         {
           return result.sort((a, b) =>
           {
-            const l: boolean = BooleanHelper.parse((a as any)[key]);
-            const r: boolean = BooleanHelper.parse((b as any)[key]);
+            const l: boolean = BooleanConverter.toBoolean((a as any)[key]);
+            const r: boolean = BooleanConverter.toBoolean((b as any)[key]);
             return BooleanHelper.compare(l, r, sortProperty.isDesc);
           });
         } break;
@@ -59,8 +59,8 @@ export class SortPropertyHelper
         {
           return result.sort((a, b) =>
           {
-            const l: Date = DateTimeConverter.convert((a as any)[key]);
-            const r: Date = DateTimeConverter.convert((b as any)[key]);
+            const l: Date = DateTimeConverter.toDateTime((a as any)[key]);
+            const r: Date = DateTimeConverter.toDateTime((b as any)[key]);
             return DateTimeHelper.compare(l, r, sortProperty.isDesc);
           });
         } break;

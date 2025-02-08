@@ -3,10 +3,10 @@
 # Создание шаблона модуля
 * Установка TypeScript `npm install -D typescript`
   + Настройка tsconfig.json
-    - **moduleResolution**: "bundler"   // Для поддержки Node.js Subpath Imports 
-    - **outDir**: "./dist/esm"          // Путь для скомпилированных файлов
+    - **moduleResolution**: "bundler"    // Для поддержки Node.js Subpath Imports 
+    - **outDir**: "./dist/esm"           // Путь для скомпилированных файлов
     - **rootDirs**: ["src"]              // Путь до исходных файлов
-    - **include**: ["src/**/*.ts"]      // Включаем все файлы
+    - **include**: ["src/**/*.ts"]       // Включаем все файлы
 
 * Установка Eslint `npm init @eslint/config@latest`
   + Установка плагина Eslint(eslint-plugin-import) `npm install eslint-plugin-import --save-dev`

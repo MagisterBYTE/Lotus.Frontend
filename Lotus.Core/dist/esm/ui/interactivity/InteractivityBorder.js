@@ -5,10 +5,10 @@ import { ThemeColorVariantHelper, ThemePaletteHelper } from '../theme';
 export class InteractivityBorderLogic {
     static getEffectByState(element, state, part, actionType) {
         const borderProps = {};
-        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
-        const borderColor = ObjectHelper.getValueByPropertyPath(element, 'borderColor');
-        const hoverBorderColor = ObjectHelper.getValueByPropertyPath(element, 'hoverBorderColor');
-        const pressedBorderColor = ObjectHelper.getValueByPropertyPath(element, 'pressedBorderColor');
+        const backColor = ObjectHelper.getValue(element, 'backColor');
+        const borderColor = ObjectHelper.getValue(element, 'borderColor');
+        const hoverBorderColor = ObjectHelper.getValue(element, 'hoverBorderColor');
+        const pressedBorderColor = ObjectHelper.getValue(element, 'pressedBorderColor');
         switch (state) {
             case 'normal':
                 {
@@ -35,9 +35,9 @@ export class InteractivityBorderLogic {
         return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, part, actionType);
     }
     static fillProperties(target, element, type, state, part, actionType) {
-        const borderStyle = ObjectHelper.getValueByPropertyPath(element, 'borderStyle');
-        const borderWidth = ObjectHelper.getValueByPropertyPath(element, 'borderWidth');
-        const borderColor = ObjectHelper.getValueByPropertyPath(element, 'borderColor');
+        const borderStyle = ObjectHelper.getValue(element, 'borderStyle');
+        const borderWidth = ObjectHelper.getValue(element, 'borderWidth');
+        const borderColor = ObjectHelper.getValue(element, 'borderColor');
         switch (type) {
             // Границы нет
             case 'none':

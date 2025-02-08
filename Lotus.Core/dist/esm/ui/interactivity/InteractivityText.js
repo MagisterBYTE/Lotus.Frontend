@@ -4,10 +4,10 @@ import { ThemePaletteHelper, ThemeColorVariantHelper } from '../theme';
 export class InteractivityTextLogic {
     static getEffectByState(element, state, part, actionType) {
         const textProps = {};
-        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
-        const textColor = ObjectHelper.getValueByPropertyPath(element, 'textColor');
-        const hoverTextColor = ObjectHelper.getValueByPropertyPath(element, 'hoverTextColor');
-        const pressedTextColor = ObjectHelper.getValueByPropertyPath(element, 'pressedTextColor');
+        const backColor = ObjectHelper.getValue(element, 'backColor');
+        const textColor = ObjectHelper.getValue(element, 'textColor');
+        const hoverTextColor = ObjectHelper.getValue(element, 'hoverTextColor');
+        const pressedTextColor = ObjectHelper.getValue(element, 'pressedTextColor');
         switch (state) {
             case 'normal':
                 {
@@ -34,8 +34,8 @@ export class InteractivityTextLogic {
         return InteractivityTextLogic.fillProperties(textProps, element, type, state, part, actionType);
     }
     static fillProperties(target, element, type, state, part, actionType) {
-        const backColor = ObjectHelper.getValueByPropertyPath(element, 'backColor');
-        const textColor = ObjectHelper.getValueByPropertyPath(element, 'textColor');
+        const backColor = ObjectHelper.getValue(element, 'backColor');
+        const textColor = ObjectHelper.getValue(element, 'textColor');
         switch (type) {
             case 'default':
                 {

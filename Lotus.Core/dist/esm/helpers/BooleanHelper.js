@@ -1,36 +1,11 @@
 export class BooleanHelper {
     /**
-     * Текстовые значение логического типа которые означает истинное значение
+     * Сравнение логических значений
+     * @param left Левое значение
+     * @param right Правое значение
+     * @param isDesc Статус сравнения по убиванию
+     * @returns Статус сравнения
      */
-    static TrueValues = [
-        'True',
-        'true',
-        '1',
-        'on',
-        'On',
-        'истина',
-        'Истина',
-        'да',
-        'Да'
-    ];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static parse(item) {
-        if (item) {
-            if (typeof item == 'boolean') {
-                return item;
-            }
-            if (typeof item == 'string') {
-                return BooleanHelper.TrueValues.indexOf(item) > -1;
-            }
-            if (typeof item == 'number') {
-                return Boolean(item);
-            }
-        }
-        return false;
-    }
-    static getValue(value, yes = 'Да', no = 'Нет') {
-        return (value ? yes : no);
-    }
     static compare(left, right, isDesc) {
         let status = 0;
         if (left) {

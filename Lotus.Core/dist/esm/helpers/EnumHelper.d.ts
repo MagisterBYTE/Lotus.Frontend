@@ -1,12 +1,5 @@
 export declare class EnumHelper {
     /**
-     *
-     * @param $enum
-     * @returns
-     */
-    static getValues<TEnum>($enum: Record<string, TEnum>): TEnum[];
-    static getNames<TEnum>($enum: Record<string, TEnum>): string[];
-    /**
      * Проверка на установленный флаг
      * @param value Значение
      * @param flag Проверяемый флаг

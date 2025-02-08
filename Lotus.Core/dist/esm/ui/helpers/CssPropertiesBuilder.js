@@ -6,14 +6,14 @@ import { CssSizerHelper } from './CssSizerHelper';
 export class CssPropertiesBuilder {
     static buildElement(props, context) {
         // Element
-        const borderRadius = ObjectHelper.getValueByPropertyPath(props, 'borderRadius');
-        const size = ObjectHelper.getValueByPropertyPath(props, 'size');
-        const paddingControl = ObjectHelper.getValueByPropertyPath(props, 'paddingControl');
+        const borderRadius = ObjectHelper.getValue(props, 'borderRadius');
+        const size = ObjectHelper.getValue(props, 'size');
+        const paddingControl = ObjectHelper.getValue(props, 'paddingControl');
         // Text
-        const fontBold = ObjectHelper.getValueByPropertyPath(props, 'fontBold');
-        const fontAccent = ObjectHelper.getValueByPropertyPath(props, 'fontAccent');
-        const textEffect = ObjectHelper.getValueByPropertyPath(props, 'textEffect');
-        const textAlign = ObjectHelper.getValueByPropertyPath(props, 'textAlign');
+        const fontBold = ObjectHelper.getValue(props, 'fontBold');
+        const fontAccent = ObjectHelper.getValue(props, 'fontAccent');
+        const textEffect = ObjectHelper.getValue(props, 'textEffect');
+        const textAlign = ObjectHelper.getValue(props, 'textAlign');
         // Status
         const isDisabled = Boolean(props.disabled || props.isDisabled);
         const isSelected = Boolean(props.isSelected || context?.isSelected);
@@ -37,12 +37,12 @@ export class CssPropertiesBuilder {
         const isDisabled = Boolean(props.disabled || props.isDisabled);
         const isSelected = Boolean(context?.isSelected || props.isSelected);
         // Background
-        const backColor = ObjectHelper.getValueByPropertyPath(props, 'backColor');
+        const backColor = ObjectHelper.getValue(props, 'backColor');
         // BackgroundEffect
-        const hasRippleEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasRippleEffect'));
-        const hasScaleEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasScaleEffect'));
-        const hasShadowBorderEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasShadowBorderEffect'));
-        const hasShadowBoxEffect = Boolean(ObjectHelper.getValueByPropertyPath(props, 'hasShadowBoxEffect'));
+        const hasRippleEffect = Boolean(ObjectHelper.getValue(props, 'hasRippleEffect'));
+        const hasScaleEffect = Boolean(ObjectHelper.getValue(props, 'hasScaleEffect'));
+        const hasShadowBorderEffect = Boolean(ObjectHelper.getValue(props, 'hasShadowBorderEffect'));
+        const hasShadowBoxEffect = Boolean(ObjectHelper.getValue(props, 'hasShadowBoxEffect'));
         const effectContext = {
             isDisabled: isDisabled,
             isSelected: isSelected,

@@ -1,0 +1,19 @@
+export declare class BooleanHelper {
+    /**
+     * Текстовые значение логического типа которые означает истинное значение
+     */
+    static readonly TrueValues: string[];
+    /**
+     * Преобразование объекта в логическое значение.
+     * @param item Объект.
+     * @param defaultValue Значение по умолчанию если преобразовать не удалось.
+     * @returns Логическое значение.
+     */
+    static toBoolean(item: any, defaultValue?: boolean): boolean;
+    /**
+     * Преобразование текста в логическое значение.
+     * @param value Текст.
+     * @returns Логическое значение.
+     */
+    static parse(value: string): boolean;
+}

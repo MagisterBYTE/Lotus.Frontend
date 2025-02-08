@@ -35,10 +35,10 @@ export class InteractivityBorderLogic
   {
     const borderProps: TCssProperties = {};
 
-    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
-    const borderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'borderColor');
-    const hoverBorderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'hoverBorderColor');
-    const pressedBorderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'pressedBorderColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'backColor');
+    const borderColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'borderColor');
+    const hoverBorderColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'hoverBorderColor');
+    const pressedBorderColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'pressedBorderColor');
 
     switch (state)
     {
@@ -72,9 +72,9 @@ export class InteractivityBorderLogic
   public static fillProperties(target: TCssProperties, element: any, type: TInteractivityBorderType, state: TInteractivityState,
     part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
   {
-    const borderStyle: TCssBorderStyle | undefined = ObjectHelper.getValueByPropertyPath<TCssBorderStyle | undefined>(element, 'borderStyle');
-    const borderWidth: TCssBorderWidth | undefined = ObjectHelper.getValueByPropertyPath<TCssBorderWidth | undefined>(element, 'borderWidth');
-    const borderColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'borderColor');
+    const borderStyle: TCssBorderStyle | undefined = ObjectHelper.getValue<TCssBorderStyle | undefined>(element, 'borderStyle');
+    const borderWidth: TCssBorderWidth | undefined = ObjectHelper.getValue<TCssBorderWidth | undefined>(element, 'borderWidth');
+    const borderColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'borderColor');
 
     switch (type)
     {

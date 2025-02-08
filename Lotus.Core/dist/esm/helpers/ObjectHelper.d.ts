@@ -7,7 +7,7 @@ export declare class ObjectHelper {
      * @param propertyPath Имя/путь свойства
      * @param shouldThrow Генерировать исключение если свойство не найдено
      */
-    static getValueByPropertyPath<TValue = any>(source: any, propertyPath: string, shouldThrow?: boolean): TValue | undefined;
+    static getValue<TValue = any>(source: any, propertyPath: string, shouldThrow?: boolean): TValue | undefined;
     /**
      * Searches the supplied object, and then down it's prototype chain until it
      * finds the object where `prop` is its own property. In other words, finds

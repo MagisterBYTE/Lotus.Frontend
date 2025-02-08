@@ -34,9 +34,9 @@ export class InteractivityBackgroundLogic
   {
     const backProps: TCssProperties = {};
 
-    const backColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'backColor');
-    const hoverBackColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'hoverBackColor');
-    const pressedBackColor: ThemeColorVariantUndef = ObjectHelper.getValueByPropertyPath<ThemeColorVariantUndef>(element, 'pressedBackColor');
+    const backColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'backColor');
+    const hoverBackColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'hoverBackColor');
+    const pressedBackColor: ThemeColorVariantUndef = ObjectHelper.getValue<ThemeColorVariantUndef>(element, 'pressedBackColor');
 
     switch (state)
     {

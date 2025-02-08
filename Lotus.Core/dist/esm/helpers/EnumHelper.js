@@ -1,16 +1,5 @@
 export class EnumHelper {
     /**
-     *
-     * @param $enum
-     * @returns
-     */
-    static getValues($enum) {
-        return Object.keys($enum).map((key) => $enum[key]);
-    }
-    static getNames($enum) {
-        return Object.keys($enum).map((key) => key);
-    }
-    /**
      * Проверка на установленный флаг
      * @param value Значение
      * @param flag Проверяемый флаг
