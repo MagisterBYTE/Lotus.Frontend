@@ -2,7 +2,7 @@ import { TKey } from './Key';
 /**
  * Интерфейс для группирования объектов
  */
-export interface IGrouping<TItem = any> {
+export interface IGrouping<TItem extends Record<string, any> = Record<string, any>> {
     /**
      * Ключ для группирования
      */

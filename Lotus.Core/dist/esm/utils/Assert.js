@@ -5,7 +5,7 @@ export class Assert {
      * @returns Статус проверки
      */
     static empty(value) {
-        return value === undefined || value === null;
+        return value == undefined || value == null;
     }
     /**
      * Проверка на наличие значения
@@ -13,7 +13,7 @@ export class Assert {
      * @returns Статус проверки
      */
     static exist(value) {
-        return value !== undefined && value !== null;
+        return value != undefined && value != null;
     }
     /**
      * Проверка объекта на то, что все его свойства имеют значения undefined

@@ -8,7 +8,7 @@ export interface IFilterFunctionDesc {
     desc: string;
 }
 /**
- * Тип функция для фильтрации данных
+ * Тип функции для фильтрации данных
  */
 export type TFilterFunction = 'Equals' | 'NotEqual' | 'LessThan' | 'LessThanOrEqual' | 'GreaterThan' | 'GreaterThanOrEqual' | 'Between' | 'Contains' | 'StartsWith' | 'EndsWith' | 'Like' | 'NotEmpty' | 'Empty' | 'IncludeAny' | 'IncludeAll' | 'IncludeEquals' | 'IncludeNone';
 /**

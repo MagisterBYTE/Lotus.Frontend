@@ -3,7 +3,7 @@ import { BooleanConverter, DateTimeConverter } from '../../converters';
 import { StringHelper, ObjectHelper } from '../../helpers';
 import { TFilterFunction } from '../filter';
 import { TPropertyType } from '../objectInfo';
-import { IFilterObject, IFilterProperty } from './FilterProperty';
+import { IFilterPropertyCollection, IFilterProperty } from './FilterProperty';
 
 export class FilterPropertyHelper
 {
@@ -40,7 +40,7 @@ export class FilterPropertyHelper
    * Проверка на значение фильтров свойств
    * @param filterProperty Список параметров фильтрации свойства
    */
-  public static hasValues(filterProperties: IFilterObject): boolean
+  public static hasValues(filterProperties: IFilterPropertyCollection): boolean
   {
     let findValue = false;
     filterProperties.forEach(x =>
@@ -140,7 +140,7 @@ export class FilterPropertyHelper
    * @param filterProperties Массив фильтров свойств
    * @returns Отфильтрованный массив
    */
-  public static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterObject): TItem[]
+  public static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterPropertyCollection): TItem[]
   {
     if(!filterProperties) return massive;
 

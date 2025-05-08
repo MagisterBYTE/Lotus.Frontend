@@ -8,7 +8,7 @@ export class Assert
    */
   public static empty(value: unknown):boolean
   {
-    return value === undefined || value === null;
+    return value == undefined || value == null;
   }
 
   /**
@@ -18,7 +18,7 @@ export class Assert
    */
   public static exist(value: unknown):boolean
   {
-    return value !== undefined && value !== null;
+    return value != undefined && value != null;
   }
 
   /**

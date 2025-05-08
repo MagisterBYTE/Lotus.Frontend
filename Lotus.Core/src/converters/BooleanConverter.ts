@@ -23,26 +23,26 @@ export class BooleanConverter
    * @returns Логическое значение.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static toBoolean(item: any, defaultValue:boolean = false): boolean
+  public static toBoolean(item: any, defaultValue: boolean = false): boolean
   {
-    if(item)
+    if (item)
     {
-      if(typeof item == 'boolean')
+      if (typeof item == 'boolean')
       {
         return item as boolean;
       }
-      if(typeof item == 'string')
+      if (typeof item == 'string')
       {
         return BooleanConverter.TrueValues.indexOf(item as string) > -1;
       }
-      if(typeof item == 'number')
+      if (typeof item == 'number')
       {
         return Boolean(item as number);
       }
     }
     return defaultValue;
   }
-  
+
   /**
    * Преобразование текста в логическое значение.
    * @param value Текст.

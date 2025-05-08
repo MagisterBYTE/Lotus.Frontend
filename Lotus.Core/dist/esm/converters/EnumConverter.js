@@ -5,7 +5,7 @@ export class EnumConverter {
      * @returns массив всех значений перечисления.
      */
     static getValues(enumValue) {
-        return Object.keys(enumValue).map((key) => enumValue[key]); // Используем !, чтобы указать TypeScript, что значение не null и не undefined.
+        return Object.keys(enumValue).map((key) => enumValue[key]).filter(x => typeof x == 'number'); // Используем !, чтобы указать TypeScript, что значение не null и не undefined.
     }
     /**
      * Метод для получения всех имен перечисления.
@@ -13,6 +13,6 @@ export class EnumConverter {
      * @returns массив всех имен перечисления.
      */
     static getNames(enumValue) {
-        return Object.keys(enumValue).map((key) => key); // Получаем ключи объекта, что соответствует именам перечисления.
+        return Object.keys(enumValue).map((key) => key).filter(x => Number.isNaN(parseInt(x))); // Получаем ключи объекта, что соответствует именам перечисления.
     }
 }

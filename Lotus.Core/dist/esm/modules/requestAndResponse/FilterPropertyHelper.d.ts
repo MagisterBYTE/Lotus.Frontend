@@ -1,4 +1,4 @@
-import { IFilterObject, IFilterProperty } from './FilterProperty';
+import { IFilterPropertyCollection, IFilterProperty } from './FilterProperty';
 export declare class FilterPropertyHelper {
     /**
      * Проверка на значение фильтра свойства
@@ -9,7 +9,7 @@ export declare class FilterPropertyHelper {
      * Проверка на значение фильтров свойств
      * @param filterProperty Список параметров фильтрации свойства
      */
-    static hasValues(filterProperties: IFilterObject): boolean;
+    static hasValues(filterProperties: IFilterPropertyCollection): boolean;
     /**
      * Фильтрация массива по указанному фильтру свойства
      * @param massive Исходный массив
@@ -23,5 +23,5 @@ export declare class FilterPropertyHelper {
      * @param filterProperties Массив фильтров свойств
      * @returns Отфильтрованный массив
      */
-    static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterObject): TItem[];
+    static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterPropertyCollection): TItem[];
 }

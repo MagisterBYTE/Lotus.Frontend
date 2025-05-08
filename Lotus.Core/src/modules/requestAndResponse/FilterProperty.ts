@@ -1,7 +1,6 @@
 import { IFilterFunctionDesc } from '../filter';
 import { IPropertyTypeDesc } from '../objectInfo';
 
-
 /**
  * Интерфейс для фильтрации по одному свойству
  */
@@ -52,4 +51,4 @@ export interface IFilterProperty
 /**
  * Тип для фильтрации объектов
  */
-export type IFilterObject = IFilterProperty[];
+export type IFilterPropertyCollection = IFilterProperty[];

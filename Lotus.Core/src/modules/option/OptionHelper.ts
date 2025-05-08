@@ -37,7 +37,7 @@ export class OptionHelper
   {
     const result = options.map((x) =>
     {
-      const value: IOption = { text: x.text, value: Number(x.value) };
+      const value: IOption = { label: x.label, value: Number(x.value) };
       return value;
     });
 
@@ -53,7 +53,7 @@ export class OptionHelper
   {
     const result = options.map((x) =>
     {
-      const value: IOption = { text: x.text, value: String(x.value) };
+      const value: IOption = { label: x.label, value: String(x.value) };
       return value;
     });
 
@@ -61,12 +61,12 @@ export class OptionHelper
   }
 
   /**
-   * Получение корректного значения по умолчанию или начального значения
+   * Получение корректного значения по умолчанию или первого значения из списка опций
    * @param options Список опций
    * @param initialSelectedValue Начальное значение
-   * @returns
+   * @returns Значение по умолчанию или первого значения из списка опций
    */
-  public static getDefaultValue<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption
+  public static getValueOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption
   {
     if (Assert.exist(initialSelectedValue))
     {
@@ -77,12 +77,12 @@ export class OptionHelper
   }
 
   /**
-   * Получение корректного текста по умолчанию или начального значения текста
+   * Получение корректного текста по умолчанию или первого значения текста из списка опций
    * @param options Список опций
    * @param initialSelectedValue Начальное значение
-   * @returns
+   * @returns Корректный текст по умолчанию или первое значения текста из списка опций
    */
-  public static getDefaultText<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string
+  public static getLabelOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string
   {
     if (Assert.exist(initialSelectedValue))
     {
@@ -91,25 +91,24 @@ export class OptionHelper
       {
         if (element.value === initialSelectedValue)
         {
-          text = element.text;
+          text = element.label;
         }
       });
 
       return text;
     }
 
-    return options[0]!.text;
+    return options[0]!.label;
   }
 
   /**
-   * Получение корректной иконки по умолчанию или начальной иконки
+   * Получение корректной иконки по умолчанию или первой иконки из списка опций
    * @param options Список опций
    * @param initialSelectedValue Начальное значение
-   * @returns
+   * @returns Корректная иконка по умолчанию или первая иконка из списка опций
    */
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getDefaultIcon<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any
+  public static getIconOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any
   {
     if (Assert.exist(initialSelectedValue))
     {
@@ -130,12 +129,12 @@ export class OptionHelper
   }
 
   /**
-   * Получение корректного текста по умолчанию или начального значения текста
+   * Получение корректного списка текста по умолчанию или пустой список
    * @param options Список опций
-   * @param initialSelectedValues Начальное значение
-   * @returns Массив текста выбранных значений
+   * @param initialSelectedValues Список начальных значение
+   * @returns Массив текста выбранных значений или пустой список
    */
-  public static getDefaultTexts<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValues?: TValueOption[]): string[]
+  public static getLabelsOrEmpty<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValues?: TValueOption[]): string[]
   {
     if (initialSelectedValues && initialSelectedValues.length > 0)
     {
@@ -145,7 +144,7 @@ export class OptionHelper
       {
         if (initialSelectedValues.find((x) => x === element.value))
         {
-          texts.push(element.text);
+          texts.push(element.label);
         }
       });
 
@@ -158,12 +157,34 @@ export class OptionHelper
   }
 
   /**
-   * Получение опций из значения опций
+   * Получение опций из значения опций или первой опции
    * @param options Массив всех опций
    * @param selectedValue Выбранное значение
    * @returns Опция
    */
-  public static getOptionByValue(options: IOption[], selectedValue?: TKey): IOption
+  public static getOptionByValueOrFirst(options: IOption[], selectedValue?: TKey): IOption
+  {
+    if (Assert.exist(selectedValue))
+    {
+      for (const option of options)
+      {
+        if (option.value === selectedValue)
+        {
+          return option;
+        }
+      }
+    }
+
+    return options[0];
+  }
+
+  /**
+   * Получение опций из значения опций или undefined
+   * @param options Массив всех опций
+   * @param selectedValue Выбранное значение
+   * @returns Опция или undefined
+   */
+  public static getOptionByValueOrUndefined(options: IOption[], selectedValue?: TKey): IOption|undefined
   {
     if (Assert.exist(selectedValue))
     {
@@ -176,7 +197,8 @@ export class OptionHelper
       }
     }
 
-    return options[0];
+    // eslint-disable-next-line consistent-return
+    return undefined;
   }
 
   /**
@@ -185,7 +207,7 @@ export class OptionHelper
    * @param selectedValue Выбранное значение
    * @returns Текст выбранного значения
    */
-  public static getTextByValue(options: IOption[], selectedValue?: TKey): string
+  public static getLabelByValue(options: IOption[], selectedValue?: TKey): string
   {
     let text = '';
     if (Assert.exist(selectedValue))
@@ -194,7 +216,7 @@ export class OptionHelper
       {
         if (element.value === selectedValue)
         {
-          text = element.text;
+          text = element.label;
         }
       });
     }
@@ -275,7 +297,7 @@ export class OptionHelper
    * @param selectedValues Выбранные значения
    * @returns Массив текста выбранных значений
    */
-  public static getTextsByValues(options: IOption[], selectedValues?: TKey[]): string[]
+  public static getLabelsByValues(options: IOption[], selectedValues?: TKey[]): string[]
   {
     if (selectedValues && selectedValues.length > 0)
     {
@@ -285,7 +307,7 @@ export class OptionHelper
       {
         if (selectedValues.find((x) => x === element.value))
         {
-          texts.push(element.text);
+          texts.push(element.label);
         }
       });
 
@@ -305,7 +327,7 @@ export class OptionHelper
    */
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getTextsByUnknownValues(options: IOption[], item: any): string[]
+  public static getLabelsByUnknownValues(options: IOption[], item: any): string[]
   {
     if (Array.isArray(item))
     {
@@ -319,7 +341,7 @@ export class OptionHelper
           return value;
         });
 
-        const result = OptionHelper.getTextsByValues(options, numbers);
+        const result = OptionHelper.getLabelsByValues(options, numbers);
         return result;
       }
       else
@@ -330,7 +352,7 @@ export class OptionHelper
           return value;
         });
 
-        const result = OptionHelper.getTextsByValues(options, texts);
+        const result = OptionHelper.getLabelsByValues(options, texts);
         return result;
       }
     }

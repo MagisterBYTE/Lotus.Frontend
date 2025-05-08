@@ -29,7 +29,7 @@ export class OptionHelper {
      */
     static convertToNumber(options) {
         const result = options.map((x) => {
-            const value = { text: x.text, value: Number(x.value) };
+            const value = { label: x.label, value: Number(x.value) };
             return value;
         });
         return result;
@@ -41,49 +41,49 @@ export class OptionHelper {
      */
     static convertToString(options) {
         const result = options.map((x) => {
-            const value = { text: x.text, value: String(x.value) };
+            const value = { label: x.label, value: String(x.value) };
             return value;
         });
         return result;
     }
     /**
-     * Получение корректного значения по умолчанию или начального значения
+     * Получение корректного значения по умолчанию или первого значения из списка опций
      * @param options Список опций
      * @param initialSelectedValue Начальное значение
-     * @returns
+     * @returns Значение по умолчанию или первого значения из списка опций
      */
-    static getDefaultValue(options, initialSelectedValue) {
+    static getValueOrFirst(options, initialSelectedValue) {
         if (Assert.exist(initialSelectedValue)) {
             return initialSelectedValue;
         }
         return options[0].value;
     }
     /**
-     * Получение корректного текста по умолчанию или начального значения текста
+     * Получение корректного текста по умолчанию или первого значения текста из списка опций
      * @param options Список опций
      * @param initialSelectedValue Начальное значение
-     * @returns
+     * @returns Корректный текст по умолчанию или первое значения текста из списка опций
      */
-    static getDefaultText(options, initialSelectedValue) {
+    static getLabelOrFirst(options, initialSelectedValue) {
         if (Assert.exist(initialSelectedValue)) {
             let text = '';
             options.forEach((element) => {
                 if (element.value === initialSelectedValue) {
-                    text = element.text;
+                    text = element.label;
                 }
             });
             return text;
         }
-        return options[0].text;
+        return options[0].label;
     }
     /**
-     * Получение корректной иконки по умолчанию или начальной иконки
+     * Получение корректной иконки по умолчанию или первой иконки из списка опций
      * @param options Список опций
      * @param initialSelectedValue Начальное значение
-     * @returns
+     * @returns Корректная иконка по умолчанию или первая иконка из списка опций
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static getDefaultIcon(options, initialSelectedValue) {
+    static getIconOrFirst(options, initialSelectedValue) {
         if (Assert.exist(initialSelectedValue)) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let icon = undefined;
@@ -97,17 +97,17 @@ export class OptionHelper {
         return options[0].icon;
     }
     /**
-     * Получение корректного текста по умолчанию или начального значения текста
+     * Получение корректного списка текста по умолчанию или пустой список
      * @param options Список опций
-     * @param initialSelectedValues Начальное значение
-     * @returns Массив текста выбранных значений
+     * @param initialSelectedValues Список начальных значение
+     * @returns Массив текста выбранных значений или пустой список
      */
-    static getDefaultTexts(options, initialSelectedValues) {
+    static getLabelsOrEmpty(options, initialSelectedValues) {
         if (initialSelectedValues && initialSelectedValues.length > 0) {
             const texts = [];
             options.forEach((element) => {
                 if (initialSelectedValues.find((x) => x === element.value)) {
-                    texts.push(element.text);
+                    texts.push(element.label);
                 }
             });
             return texts;
@@ -117,12 +117,28 @@ export class OptionHelper {
         }
     }
     /**
-     * Получение опций из значения опций
+     * Получение опций из значения опций или первой опции
      * @param options Массив всех опций
      * @param selectedValue Выбранное значение
      * @returns Опция
      */
-    static getOptionByValue(options, selectedValue) {
+    static getOptionByValueOrFirst(options, selectedValue) {
+        if (Assert.exist(selectedValue)) {
+            for (const option of options) {
+                if (option.value === selectedValue) {
+                    return option;
+                }
+            }
+        }
+        return options[0];
+    }
+    /**
+     * Получение опций из значения опций или undefined
+     * @param options Массив всех опций
+     * @param selectedValue Выбранное значение
+     * @returns Опция или undefined
+     */
+    static getOptionByValueOrUndefined(options, selectedValue) {
         if (Assert.exist(selectedValue)) {
             for (const element of options) {
                 if (element.value === selectedValue) {
@@ -130,7 +146,8 @@ export class OptionHelper {
                 }
             }
         }
-        return options[0];
+        // eslint-disable-next-line consistent-return
+        return undefined;
     }
     /**
      * Получение текста из значения опций
@@ -138,12 +155,12 @@ export class OptionHelper {
      * @param selectedValue Выбранное значение
      * @returns Текст выбранного значения
      */
-    static getTextByValue(options, selectedValue) {
+    static getLabelByValue(options, selectedValue) {
         let text = '';
         if (Assert.exist(selectedValue)) {
             options.forEach((element) => {
                 if (element.value === selectedValue) {
-                    text = element.text;
+                    text = element.label;
                 }
             });
         }
@@ -203,12 +220,12 @@ export class OptionHelper {
      * @param selectedValues Выбранные значения
      * @returns Массив текста выбранных значений
      */
-    static getTextsByValues(options, selectedValues) {
+    static getLabelsByValues(options, selectedValues) {
         if (selectedValues && selectedValues.length > 0) {
             const texts = [];
             options.forEach((element) => {
                 if (selectedValues.find((x) => x === element.value)) {
-                    texts.push(element.text);
+                    texts.push(element.label);
                 }
             });
             return texts;
@@ -224,7 +241,7 @@ export class OptionHelper {
      * @returns Массив текста выбранных значений
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static getTextsByUnknownValues(options, item) {
+    static getLabelsByUnknownValues(options, item) {
         if (Array.isArray(item)) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const massive = item;
@@ -233,7 +250,7 @@ export class OptionHelper {
                     const value = Number(x);
                     return value;
                 });
-                const result = OptionHelper.getTextsByValues(options, numbers);
+                const result = OptionHelper.getLabelsByValues(options, numbers);
                 return result;
             }
             else {
@@ -241,7 +258,7 @@ export class OptionHelper {
                     const value = String(x);
                     return value;
                 });
-                const result = OptionHelper.getTextsByValues(options, texts);
+                const result = OptionHelper.getLabelsByValues(options, texts);
                 return result;
             }
         }

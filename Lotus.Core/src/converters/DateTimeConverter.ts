@@ -11,8 +11,8 @@ export class DateTimeConverter
   public static toDateTime(value: any, defaultValue: Date = new Date(Date.now())): Date 
   {
     if (value == null) return defaultValue;
-    if (typeof value === 'number') return this.fromTimestamp(value);
-    if (typeof value === 'string') return this.parse(value, defaultValue);
+    if (typeof value === 'number') return DateTimeConverter.fromTimestamp(value);
+    if (typeof value === 'string') return DateTimeConverter.parse(value, defaultValue);
     return defaultValue;
   }
 
@@ -26,7 +26,7 @@ export class DateTimeConverter
   {
     if (!text) return null;
 
-    const date = this.tryParseDate(text);
+    const date = DateTimeConverter.tryParseDate(text);
     if (date) return date.toLocaleString();
 
     if (!formatDate) return null;
@@ -40,7 +40,7 @@ export class DateTimeConverter
           new Date().getDate(),
           new Date().getHours(),
           new Date().getMinutes(),
-          this.parseSecond(text)
+          DateTimeConverter.parseSecond(text)
         ).toLocaleString();
       case '%m':
         return new Date(
@@ -48,7 +48,7 @@ export class DateTimeConverter
           new Date().getMonth(),
           new Date().getDate(),
           new Date().getHours(),
-          this.parseMinute(text),
+          DateTimeConverter.parseMinute(text),
           0
         ).toLocaleString();
       case '%H':
@@ -56,7 +56,7 @@ export class DateTimeConverter
           new Date().getFullYear(),
           new Date().getMonth(),
           new Date().getDate(),
-          this.parseHour(text),
+          DateTimeConverter.parseHour(text),
           0,
           0
         ).toLocaleString();
@@ -65,7 +65,7 @@ export class DateTimeConverter
           new Date().getFullYear(),
           new Date().getMonth(),
           new Date().getDate(),
-          this.parseHour(text),
+          DateTimeConverter.parseHour(text),
           0,
           0
         ).toLocaleString();
@@ -84,7 +84,7 @@ export class DateTimeConverter
   {
     if (!text) return defaultValue;
 
-    const date = this.tryParseDate(text);
+    const date = DateTimeConverter.tryParseDate(text);
     return date ? date : defaultValue;
   }
 
@@ -102,7 +102,7 @@ export class DateTimeConverter
       return false;
     }
 
-    const date = this.tryParseDate(text);
+    const date = DateTimeConverter.tryParseDate(text);
     if (date) 
     {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

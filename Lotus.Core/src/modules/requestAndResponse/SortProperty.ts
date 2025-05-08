@@ -25,4 +25,4 @@ export interface ISortProperty
 /**
  * Тип для сортировки объектов
  */
-export type ISortObject = ISortProperty[];
+export type ISortPropertyCollection = ISortProperty[];

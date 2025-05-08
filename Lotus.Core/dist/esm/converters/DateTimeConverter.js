@@ -10,9 +10,9 @@ export class DateTimeConverter {
         if (value == null)
             return defaultValue;
         if (typeof value === 'number')
-            return this.fromTimestamp(value);
+            return DateTimeConverter.fromTimestamp(value);
         if (typeof value === 'string')
-            return this.parse(value, defaultValue);
+            return DateTimeConverter.parse(value, defaultValue);
         return defaultValue;
     }
     /**
@@ -24,20 +24,20 @@ export class DateTimeConverter {
     static parsableText(text, formatDate) {
         if (!text)
             return null;
-        const date = this.tryParseDate(text);
+        const date = DateTimeConverter.tryParseDate(text);
         if (date)
             return date.toLocaleString();
         if (!formatDate)
             return null;
         switch (formatDate) {
             case '%s':
-                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), new Date().getMinutes(), this.parseSecond(text)).toLocaleString();
+                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), new Date().getMinutes(), DateTimeConverter.parseSecond(text)).toLocaleString();
             case '%m':
-                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), this.parseMinute(text), 0).toLocaleString();
+                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), DateTimeConverter.parseMinute(text), 0).toLocaleString();
             case '%H':
-                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), this.parseHour(text), 0, 0).toLocaleString();
+                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), DateTimeConverter.parseHour(text), 0, 0).toLocaleString();
             case 'H:m:s':
-                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), this.parseHour(text), 0, 0).toLocaleString();
+                return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), DateTimeConverter.parseHour(text), 0, 0).toLocaleString();
             default:
                 return null;
         }
@@ -51,7 +51,7 @@ export class DateTimeConverter {
     static parse(text, defaultValue = new Date(0)) {
         if (!text)
             return defaultValue;
-        const date = this.tryParseDate(text);
+        const date = DateTimeConverter.tryParseDate(text);
         return date ? date : defaultValue;
     }
     /**
@@ -65,7 +65,7 @@ export class DateTimeConverter {
             result = new Date(0);
             return false;
         }
-        const date = this.tryParseDate(text);
+        const date = DateTimeConverter.tryParseDate(text);
         if (date) {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             result = date;

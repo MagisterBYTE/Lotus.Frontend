@@ -1,6 +1,6 @@
-import { IFilterObject } from './FilterProperty';
+import { IFilterPropertyCollection } from './FilterProperty';
 import { IPageInfoRequest } from './PageInfo';
-import { ISortObject } from './SortProperty';
+import { ISortPropertyCollection } from './SortProperty';
 /**
  * Базовый интерфейс для запроса данных
  */
@@ -12,9 +12,9 @@ export interface IRequest {
     /**
      * Параметры фильтрации данных
      */
-    filtering?: IFilterObject;
+    filtering?: IFilterPropertyCollection;
     /**
      * Параметры сортировки данных
      */
-    sorting?: ISortObject;
+    sorting?: ISortPropertyCollection;
 }

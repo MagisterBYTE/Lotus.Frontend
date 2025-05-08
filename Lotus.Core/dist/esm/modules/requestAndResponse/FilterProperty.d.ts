@@ -41,4 +41,4 @@ export interface IFilterProperty {
 /**
  * Тип для фильтрации объектов
  */
-export type IFilterObject = IFilterProperty[];
+export type IFilterPropertyCollection = IFilterProperty[];

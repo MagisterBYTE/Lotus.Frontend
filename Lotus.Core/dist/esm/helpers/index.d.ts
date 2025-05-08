@@ -5,6 +5,7 @@ export { CookiesHelper } from './CookiesHelper';
 export { DateTimeHelper } from './DateTimeHelper';
 export { EnumHelper } from './EnumHelper';
 export { FunctionHelper } from './FunctionHelper';
+export { GuidHelper } from './GuidHelper';
 export { NumberHelper } from './NumberHelper';
 export { ObjectHelper } from './ObjectHelper';
 export { PathHelper } from './PathHelper';

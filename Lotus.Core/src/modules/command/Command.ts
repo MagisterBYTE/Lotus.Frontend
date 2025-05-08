@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IRoute } from '../../types';
 
-
 /**
  * Делегат для интерфейса команды, возвращает any
  */

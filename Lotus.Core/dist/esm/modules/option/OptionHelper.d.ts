@@ -21,47 +21,54 @@ export declare class OptionHelper {
      */
     static convertToString(options: IOption[]): IOption[];
     /**
-     * Получение корректного значения по умолчанию или начального значения
+     * Получение корректного значения по умолчанию или первого значения из списка опций
      * @param options Список опций
      * @param initialSelectedValue Начальное значение
-     * @returns
+     * @returns Значение по умолчанию или первого значения из списка опций
      */
-    static getDefaultValue<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption;
+    static getValueOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption;
     /**
-     * Получение корректного текста по умолчанию или начального значения текста
+     * Получение корректного текста по умолчанию или первого значения текста из списка опций
      * @param options Список опций
      * @param initialSelectedValue Начальное значение
-     * @returns
+     * @returns Корректный текст по умолчанию или первое значения текста из списка опций
      */
-    static getDefaultText<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string;
+    static getLabelOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string;
     /**
-     * Получение корректной иконки по умолчанию или начальной иконки
+     * Получение корректной иконки по умолчанию или первой иконки из списка опций
      * @param options Список опций
      * @param initialSelectedValue Начальное значение
-     * @returns
+     * @returns Корректная иконка по умолчанию или первая иконка из списка опций
      */
-    static getDefaultIcon<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any;
+    static getIconOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any;
     /**
-     * Получение корректного текста по умолчанию или начального значения текста
+     * Получение корректного списка текста по умолчанию или пустой список
      * @param options Список опций
-     * @param initialSelectedValues Начальное значение
-     * @returns Массив текста выбранных значений
+     * @param initialSelectedValues Список начальных значение
+     * @returns Массив текста выбранных значений или пустой список
      */
-    static getDefaultTexts<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValues?: TValueOption[]): string[];
+    static getLabelsOrEmpty<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValues?: TValueOption[]): string[];
     /**
-     * Получение опций из значения опций
+     * Получение опций из значения опций или первой опции
      * @param options Массив всех опций
      * @param selectedValue Выбранное значение
      * @returns Опция
      */
-    static getOptionByValue(options: IOption[], selectedValue?: TKey): IOption;
+    static getOptionByValueOrFirst(options: IOption[], selectedValue?: TKey): IOption;
+    /**
+     * Получение опций из значения опций или undefined
+     * @param options Массив всех опций
+     * @param selectedValue Выбранное значение
+     * @returns Опция или undefined
+     */
+    static getOptionByValueOrUndefined(options: IOption[], selectedValue?: TKey): IOption | undefined;
     /**
      * Получение текста из значения опций
      * @param options Массив всех опций
      * @param selectedValue Выбранное значение
      * @returns Текст выбранного значения
      */
-    static getTextByValue(options: IOption[], selectedValue?: TKey): string;
+    static getLabelByValue(options: IOption[], selectedValue?: TKey): string;
     /**
      * Получение иконки из значения опций
      * @param options Массив всех опций
@@ -82,14 +89,14 @@ export declare class OptionHelper {
      * @param selectedValues Выбранные значения
      * @returns Массив текста выбранных значений
      */
-    static getTextsByValues(options: IOption[], selectedValues?: TKey[]): string[];
+    static getLabelsByValues(options: IOption[], selectedValues?: TKey[]): string[];
     /**
      * Получение массива текста из неопределённого значения(свойства объекта)
      * @param options Массив всех опций
      * @param item Неопределённое значение
      * @returns Массив текста выбранных значений
      */
-    static getTextsByUnknownValues(options: IOption[], item: any): string[];
+    static getLabelsByUnknownValues(options: IOption[], item: any): string[];
     /**
      * Проверка на наличие опции
      * @param options Массив всех опций

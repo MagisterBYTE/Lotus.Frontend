@@ -2,7 +2,7 @@
 import { BooleanConverter, DateTimeConverter } from '../../converters';
 import { StringHelper, BooleanHelper, NumberHelper, DateTimeHelper } from '../../helpers';
 import { TPropertyType } from '../objectInfo';
-import { ISortObject, ISortProperty } from './SortProperty';
+import { ISortPropertyCollection, ISortProperty } from './SortProperty';
 
 export class SortPropertyHelper
 {
@@ -75,7 +75,7 @@ export class SortPropertyHelper
    * @param sortProperties Массив свойств сортировки
    * @returns Отсортированный массив
    */
-  public static sortArrayByProperties<TItem = object>(massive: TItem[], sortProperties?: ISortObject): TItem[]
+  public static sortArrayByProperties<TItem = object>(massive: TItem[], sortProperties?: ISortPropertyCollection): TItem[]
   {
     if(!sortProperties) return massive;
 

@@ -1,44 +1,66 @@
-import { ObjectHelper } from './ObjectHelper';
-
-export class FunctionHelper
+/**
+ * Вспомогательный класс для работы с функциями и методами
+ */
+export class FunctionHelper 
 {
   /**
-     * Bind all methods on `scope` to that `scope`.
-     *
-     * Normal fat arrow/lambda functions in TypeScript are simply member functions
-     * that replace the value of `this`, with `_this` (a reference to `this` from
-     * within the constructor's scope). They're not on the prototype and as such do not
-     * support inheritance. So no calling `super.myMethod()` if it's been
-     * declared with a `=>`.
-     *
-     * `FunctionUtil.bindAllMethods( this )` should be called from the base class' constructor.
-     * It will bind each method as such that it will always execute using the class scope.
-     *
-     * Essentially, we should now write class methods without `=>`. When executed,
-     * the scope will be preserved and they will importantly continue to support
-     * inheritance. Fat arrow/lambda functions (`=>`) are still great when you
-     * don't require inheritance, for example, when using anonymous function callbacks.
-     *
-     * @param scope     Usually, pass the value of `this` from your base class.
-     */
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static bindAllMethods(scope: {} & Record<string, any>)
+   * Привязывает все методы объекта к его контексту (this)
+   * 
+   * Этот метод решает проблему потери контекста при передаче методов как колбэков.
+   * Должен вызываться в конструкторе класса после определения всех методов.
+   * 
+   * @template T - Тип объекта
+   * @param {T} scope - Объект, методы которого нужно привязать (обычно передается `this`)
+   * @returns {T} Объект с привязанными методами
+   * @example
+   * class MyClass {
+   *   constructor() {
+   *     FunctionHelper.bindAllMethods(this);
+   *   }
+   *   
+   *   method() {
+   *     console.log(this); // Всегда будет указывать на экземпляр MyClass
+   *   }
+   * }
+   */
+  public static bindAllMethods<T extends object>(scope: T): T 
   {
-    for (const p in scope)
+    // Получаем все свойства объекта, включая унаследованные
+    let currentObj = scope;
+    const properties = new Set<string>();
+
+    // Собираем все свойства по цепочке прототипов
+    while (currentObj && currentObj !== Object.prototype) 
     {
-      // Find the object in which prop was originally defined on
-      const ownObject = ObjectHelper.getPropertyDefinitionObject(scope, p);
-
-      // Now we can check if it is a getter/setter
-      const descriptor = Object.getOwnPropertyDescriptor(ownObject, p);
-      if (descriptor && (descriptor.get || descriptor.set))
-        continue;   // Don't bind if `scope[p]` is a getter/setter, we'd be attemping to bind the value returned by the getter
-
-      // Only bind if scope[p] is a function that's not already a class member
-      // the bound function will be added as a class member, referencing the function on the prototype
-      if (!Object.prototype.hasOwnProperty.call(scope, p) && typeof scope[p] == 'function')
-        scope[p] = scope[p].bind(scope);
+      for (const name of Object.getOwnPropertyNames(currentObj)) 
+      {
+        properties.add(name);
+      }
+      currentObj = Object.getPrototypeOf(currentObj);
     }
+
+    // Обрабатываем каждое свойство
+    for (const property of properties) 
+    {
+      // Пропускаем конструктор
+      if (property === 'constructor') continue;
+
+      // Получаем дескриптор свойства
+      const descriptor = Object.getOwnPropertyDescriptor(currentObj, property);
+      
+      // Пропускаем геттеры/сеттеры
+      if (descriptor && (descriptor.get || descriptor.set)) continue;
+
+      // Получаем значение свойства
+      const value = scope[property as keyof T];
+      
+      // Привязываем только функции
+      if (typeof value === 'function') 
+      {
+        scope[property as keyof T] = value.bind(scope);
+      }
+    }
+
+    return scope;
   }
 }

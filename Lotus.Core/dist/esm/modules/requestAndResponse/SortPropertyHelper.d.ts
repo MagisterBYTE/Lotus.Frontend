@@ -1,4 +1,4 @@
-import { ISortObject, ISortProperty } from './SortProperty';
+import { ISortPropertyCollection, ISortProperty } from './SortProperty';
 export declare class SortPropertyHelper {
     /**
      * Сортировка массива по указанному свойству сортировки
@@ -13,5 +13,5 @@ export declare class SortPropertyHelper {
      * @param sortProperties Массив свойств сортировки
      * @returns Отсортированный массив
      */
-    static sortArrayByProperties<TItem = object>(massive: TItem[], sortProperties?: ISortObject): TItem[];
+    static sortArrayByProperties<TItem = object>(massive: TItem[], sortProperties?: ISortPropertyCollection): TItem[];
 }

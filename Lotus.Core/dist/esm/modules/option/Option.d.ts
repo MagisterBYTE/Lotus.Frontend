@@ -3,15 +3,15 @@ export type FunctionOptionDelegate = (option: IOption, context?: any) => any;
 /**
  * Интерфейс представляющий некую опцию
  */
-export interface IOption {
+export interface IOption<TValueOption extends TKey = TKey> {
     /**
      * Значение
      */
-    value: TKey;
+    value: TValueOption;
     /**
      * Текст
      */
-    text: string;
+    label: string;
     /**
      * Статус доступности опции
      */

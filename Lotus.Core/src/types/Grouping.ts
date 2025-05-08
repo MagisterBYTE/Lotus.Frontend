@@ -3,8 +3,9 @@ import { TKey } from './Key';
 /**
  * Интерфейс для группирования объектов
  */
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IGrouping<TItem = any>
+export interface IGrouping<TItem extends Record<string, any> = Record<string, any>>
 {
   /**
    * Ключ для группирования
