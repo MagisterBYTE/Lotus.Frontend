@@ -1,0 +1,45 @@
+.lotus-label-container-v {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+}
+
+.lotus-label-container-h {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.lotus-label-gap-h-smaller {
+  column-gap: 0.2rem;
+}
+
+.lotus-label-gap-h-small {
+  column-gap: 0.3rem;
+}
+
+.lotus-label-gap-h-medium {
+  column-gap: 0.5rem;
+}
+
+.lotus-label-gap-h-large {
+  column-gap: 0.75rem;
+}
+
+.lotus-label-gap-v-smaller {
+  row-gap: 0.2rem;
+}
+
+.lotus-label-gap-v-small {
+  row-gap: 0.2rem;
+}
+
+.lotus-label-gap-v-medium {
+  row-gap: 0.3rem;
+}
+
+.lotus-label-gap-v-large {
+  row-gap: 0.4rem;
+}

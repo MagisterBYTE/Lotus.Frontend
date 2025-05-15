@@ -1,0 +1,27 @@
+.lotus-foreground-main {
+  color: var(--lotus-color-mainColor);
+}
+
+.lotus-foreground-secondary {
+  color: var(--lotus-color-secondaryColor);
+}
+
+.lotus-foreground-primary {
+  color: var(--lotus-color-primary);
+}
+
+.lotus-foreground-success {
+  color: var(--lotus-color-success);
+}
+
+.lotus-foreground-danger {
+  color: var(--lotus-color-danger);
+}
+
+.lotus-foreground-warning {
+  color: var(--lotus-color-warning);
+}
+
+.lotus-foreground-info {
+  color: var(--lotus-color-info);
+}

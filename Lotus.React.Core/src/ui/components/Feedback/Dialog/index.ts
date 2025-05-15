@@ -1,0 +1,1 @@
+export { Dialog, type IDialogProps, type IDialogComponent } from './Dialog';
