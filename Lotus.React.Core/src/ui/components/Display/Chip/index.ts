@@ -1,1 +1,0 @@
-export { Chip, type IChipProps } from './Chip';

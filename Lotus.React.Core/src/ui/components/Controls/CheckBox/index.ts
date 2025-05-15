@@ -1,1 +1,0 @@
-export { type ICheckBoxProps, CheckBox } from './CheckBox'
