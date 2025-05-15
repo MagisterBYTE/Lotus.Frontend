@@ -1,0 +1,1 @@
+Модуль компонентов Lotus.UI.React для Frontend приложений платформы Lotus

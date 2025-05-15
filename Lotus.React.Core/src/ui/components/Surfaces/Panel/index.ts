@@ -1,1 +1,0 @@
-export { Panel, type IPanelProps } from './Panel';

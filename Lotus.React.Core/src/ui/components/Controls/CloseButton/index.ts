@@ -1,1 +1,0 @@
-export { type ICloseButtonProps, CloseButton } from './CloseButton'
