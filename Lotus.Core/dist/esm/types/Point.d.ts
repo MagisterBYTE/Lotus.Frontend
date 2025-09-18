@@ -11,3 +11,4 @@ export interface IPoint {
      */
     y: number;
 }
+//# sourceMappingURL=Point.d.ts.map

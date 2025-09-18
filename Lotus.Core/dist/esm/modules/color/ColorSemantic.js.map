@@ -1,0 +1,1 @@
+{"version":3,"file":"ColorSemantic.js","sourceRoot":"","sources":["../../../../src/modules/color/ColorSemantic.ts"],"names":[],"mappings":"AAKA;;GAEG;AACH,MAAM,CAAC,MAAM,eAAe,GAA8B,CAAC,SAAS,EAAE,WAAW,EAAE,OAAO,EAAE,SAAS,EAAE,MAAM,EAAE,SAAS,CAAC,CAAC;AAG1H;;;;GAIG;AACH,8DAA8D;AAC9D,MAAM,UAAU,oBAAoB,CAAC,KAAU;IAE7C,OAAO,eAAe,CAAC,QAAQ,CAAC,KAAK,CAAC,CAAC;AACzC,CAAC"}

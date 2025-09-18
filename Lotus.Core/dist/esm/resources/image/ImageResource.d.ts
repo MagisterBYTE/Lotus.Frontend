@@ -19,3 +19,4 @@ export interface IImageResource {
      */
     source: string;
 }
+//# sourceMappingURL=ImageResource.d.ts.map

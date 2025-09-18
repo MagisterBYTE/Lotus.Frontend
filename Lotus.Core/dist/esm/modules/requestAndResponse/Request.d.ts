@@ -18,3 +18,4 @@ export interface IRequest {
      */
     sorting?: ISortPropertyCollection;
 }
+//# sourceMappingURL=Request.d.ts.map

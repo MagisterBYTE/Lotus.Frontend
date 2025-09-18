@@ -1,4 +1,4 @@
-import { LocalizationCore, LocalizationDispatcher, TLanguageType } from '../localization';
+import { LocalizationCore, LocalizationCoreDispatcher, TLanguageType } from '../localization';
 import { NumberFormatter } from './NumberFormatter';
 
 export class ByteSizeFormatter
@@ -8,7 +8,7 @@ export class ByteSizeFormatter
    * @param sizeInBytes 
    * @returns 
    */
-  public static byteSize(sizeInBytes: number, locale: TLanguageType = LocalizationDispatcher.currentLanguage): string
+  public static byteSize(sizeInBytes: number, locale: TLanguageType = LocalizationCoreDispatcher.currentLanguage): string
   {
     let size = sizeInBytes / 1024;
     if (size < 1000) 

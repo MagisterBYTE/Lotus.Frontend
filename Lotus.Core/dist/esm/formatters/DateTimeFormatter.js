@@ -30,3 +30,4 @@ export class DateTimeFormatter {
         return date.toLocaleTimeString(locale, options);
     }
 }
+//# sourceMappingURL=DateTimeFormatter.js.map

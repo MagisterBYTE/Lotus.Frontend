@@ -25,3 +25,4 @@ export function instanceOfEditable(value) {
         return undefined;
     }
 }
+//# sourceMappingURL=Editable.js.map

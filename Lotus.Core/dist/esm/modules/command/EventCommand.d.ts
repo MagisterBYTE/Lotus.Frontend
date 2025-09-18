@@ -27,3 +27,4 @@ export declare class EventCommand extends BaseCommand implements IEventCommand {
      */
     executeCommand(context?: any): void;
 }
+//# sourceMappingURL=EventCommand.d.ts.map

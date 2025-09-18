@@ -46,3 +46,4 @@ export class CommandServiceClass {
  * Глобальный доступ к сервису для работы с командами
  */
 export const CommandService = CommandServiceClass.Instance;
+//# sourceMappingURL=CommandService.js.map

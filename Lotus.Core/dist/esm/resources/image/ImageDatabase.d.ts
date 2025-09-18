@@ -15,3 +15,4 @@ export interface IImageDatabase {
      */
     getImageByIdOrName(id?: number | string, category?: string): IImageResource | undefined;
 }
+//# sourceMappingURL=ImageDatabase.d.ts.map

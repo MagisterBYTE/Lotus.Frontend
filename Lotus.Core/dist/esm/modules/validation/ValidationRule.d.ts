@@ -8,3 +8,4 @@ export interface IValidationRule<TValue = any> {
 export declare class ValidationSuccess<TValue = any> implements IValidationRule<TValue> {
     validation(_: TValue | null): IValidationResult;
 }
+//# sourceMappingURL=ValidationRule.d.ts.map

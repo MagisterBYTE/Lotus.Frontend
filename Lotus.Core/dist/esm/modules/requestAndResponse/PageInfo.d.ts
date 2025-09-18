@@ -32,3 +32,4 @@ export interface IPageInfoResponse {
      */
     totalCount: number;
 }
+//# sourceMappingURL=PageInfo.d.ts.map

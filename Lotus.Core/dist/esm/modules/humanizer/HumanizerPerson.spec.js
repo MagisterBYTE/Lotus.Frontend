@@ -72,3 +72,4 @@ describe('test HumanizerPerson.getFullName', () => {
         expect(HumanizerPerson.getFullName('', 'First', '', ['sub1', 'sub2'])).toBe('First');
     });
 });
+//# sourceMappingURL=HumanizerPerson.spec.js.map

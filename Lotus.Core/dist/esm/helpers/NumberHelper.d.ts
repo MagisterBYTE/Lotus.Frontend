@@ -29,3 +29,4 @@ export declare class NumberHelper {
      */
     static clearFlag(value: number, flags: number): number;
 }
+//# sourceMappingURL=NumberHelper.d.ts.map

@@ -1,4 +1,4 @@
-import { TKey } from '../../types';
+import { TKey } from '#types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FunctionOptionDelegate = (option: IOption, context?: any) => any

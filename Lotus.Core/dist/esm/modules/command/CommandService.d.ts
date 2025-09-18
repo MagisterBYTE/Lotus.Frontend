@@ -42,3 +42,4 @@ export declare class CommandServiceClass implements ICommandService {
  * Глобальный доступ к сервису для работы с командами
  */
 export declare const CommandService: CommandServiceClass;
+//# sourceMappingURL=CommandService.d.ts.map

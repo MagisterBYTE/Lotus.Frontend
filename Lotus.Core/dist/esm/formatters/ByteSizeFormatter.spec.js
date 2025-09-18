@@ -10,3 +10,4 @@ describe('test ByteSizeFormatter.ByteSize', () => {
         expect(ByteSizeFormatter.byteSize(78177935360, 'en-US')).toBe(`72.81 ${LocalizationCore.data.byteSize.Gb}`);
     });
 });
+//# sourceMappingURL=ByteSizeFormatter.spec.js.map

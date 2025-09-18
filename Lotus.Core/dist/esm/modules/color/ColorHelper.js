@@ -293,3 +293,4 @@ export class ColorHelper {
         return newh;
     }
 }
+//# sourceMappingURL=ColorHelper.js.map

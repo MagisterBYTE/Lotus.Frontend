@@ -508,3 +508,4 @@ export const ColorNames = {
     'yellow 4': [139, 139, 0],
     'yellow green': [154, 205, 50]
 };
+//# sourceMappingURL=ColorNames.js.map

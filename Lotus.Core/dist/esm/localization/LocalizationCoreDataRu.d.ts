@@ -64,3 +64,4 @@ export declare const LocalizationCoreDataRu: {
         maxLength: (length: number) => string;
     };
 };
+//# sourceMappingURL=LocalizationCoreDataRu.d.ts.map

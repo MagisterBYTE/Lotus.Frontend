@@ -4,3 +4,4 @@
  * @template TGuid
  */
 export type TGuid = `${string}-${string}-${string}-${string}-${string}`;
+//# sourceMappingURL=Guid.d.ts.map

@@ -35,3 +35,4 @@ export declare class BrowserHelper {
      */
     static downloadBlobFile(file: Blob, fileName: string): void;
 }
+//# sourceMappingURL=BrowserHelper.d.ts.map

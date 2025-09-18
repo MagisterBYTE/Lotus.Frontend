@@ -20,3 +20,4 @@ export class Route {
         this.permissions = permissions;
     }
 }
+//# sourceMappingURL=Route.js.map

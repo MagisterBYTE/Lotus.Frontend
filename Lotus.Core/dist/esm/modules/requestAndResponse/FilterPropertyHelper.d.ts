@@ -25,3 +25,4 @@ export declare class FilterPropertyHelper {
      */
     static filterArrayByProperties<TItem = object>(massive: TItem[], filterProperties?: IFilterPropertyCollection): TItem[];
 }
+//# sourceMappingURL=FilterPropertyHelper.d.ts.map

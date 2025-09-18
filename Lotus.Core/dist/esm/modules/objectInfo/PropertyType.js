@@ -24,24 +24,32 @@ export const PropertyTypeDescriptors = {
         type: 'Double'
     },
     /**
+     * Тип перечисления (на базовом уровне ведет себя как числовой)
+     */
+    Enum: {
+        id: 3,
+        type: 'Enum'
+    },
+    /**
      * Строковый тип
      */
     String: {
-        id: 3,
+        id: 4,
         type: 'String'
     },
     /**
      * Тип даты-времени
      */
     DateTime: {
-        id: 4,
+        id: 5,
         type: 'DateTime'
     },
     /**
      * Глобальный идентификатор в формате UUID
      */
     Guid: {
-        id: 5,
+        id: 6,
         type: 'Guid'
     }
 };
+//# sourceMappingURL=PropertyType.js.map

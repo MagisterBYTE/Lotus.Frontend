@@ -220,3 +220,4 @@ export declare class Vector2 implements IVector2 {
     normalize(dest?: Vector2): Vector2;
     toString(): string;
 }
+//# sourceMappingURL=Vector2.d.ts.map

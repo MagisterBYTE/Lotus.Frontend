@@ -7,3 +7,4 @@ export interface IPropertyGrouping {
      */
     enabled?: boolean;
 }
+//# sourceMappingURL=PropertyGrouping.d.ts.map

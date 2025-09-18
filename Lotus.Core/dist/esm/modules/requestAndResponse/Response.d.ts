@@ -26,3 +26,4 @@ export interface IResponsePage<TPayload = any> extends Omit<IResponse<TPayload>,
      */
     pageInfo?: IPageInfoResponse;
 }
+//# sourceMappingURL=Response.d.ts.map

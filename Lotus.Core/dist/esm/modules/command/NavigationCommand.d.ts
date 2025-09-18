@@ -15,3 +15,4 @@ export declare class NavigationCommand extends BaseCommand implements INavigatio
      */
     isSelectedCommand(context?: any): boolean;
 }
+//# sourceMappingURL=NavigationCommand.d.ts.map

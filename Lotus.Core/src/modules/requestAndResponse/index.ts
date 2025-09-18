@@ -1,4 +1,4 @@
-export { type IFilterProperty, type IFilterPropertyCollection as IFilterObject } from './FilterProperty'
+export { type IFilterProperty, type IFilterPropertyCollection } from './FilterProperty'
 export { FilterPropertyHelper } from './FilterPropertyHelper'
 export { type IPageInfoRequest, type IPageInfoResponse } from './PageInfo'
 export { type IRequest } from './Request'

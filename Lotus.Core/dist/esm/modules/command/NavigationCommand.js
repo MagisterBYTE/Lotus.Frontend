@@ -17,3 +17,4 @@ export class NavigationCommand extends BaseCommand {
         return false;
     }
 }
+//# sourceMappingURL=NavigationCommand.js.map

@@ -24,3 +24,4 @@ export declare class FunctionHelper {
      */
     static bindAllMethods<T extends object>(scope: T): T;
 }
+//# sourceMappingURL=FunctionHelper.d.ts.map

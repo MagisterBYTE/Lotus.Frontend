@@ -1,4 +1,4 @@
-import { LocalizationDispatcher, TLanguageType } from '../localization';
+import { LocalizationCoreDispatcher, TLanguageType } from '../localization';
 
 export class NumberFormatter
 {
@@ -9,7 +9,7 @@ export class NumberFormatter
    * @param options Опции форматирования (например, минимальное и максимальное количество знаков после запятой).
    * @returns Отформатированная строка.
    */
-  public static number(number: number, locale: TLanguageType = LocalizationDispatcher.currentLanguage, options: Intl.NumberFormatOptions = {}): string
+  public static number(number: number, locale: TLanguageType = LocalizationCoreDispatcher.currentLanguage, options: Intl.NumberFormatOptions = {}): string
   {
     const result = new Intl.NumberFormat(locale, options).format(number);
     return result;
@@ -22,7 +22,7 @@ export class NumberFormatter
    * @param locale Локаль (например, 'ru-RU', 'en-US'). По умолчанию используется локаль браузера.
    * @returns Отформатированная строка.
    */
-  public static numberFixed(number: number, maximumFractionDigits:number = 2, locale: TLanguageType = LocalizationDispatcher.currentLanguage): string 
+  public static numberFixed(number: number, maximumFractionDigits:number = 2, locale: TLanguageType = LocalizationCoreDispatcher.currentLanguage): string 
   {
     // Форматируем число с учетом локали (целая часть и разделитель тысяч)
     const formatter = new Intl.NumberFormat(locale, {
@@ -58,7 +58,7 @@ export class NumberFormatter
    * @param locale Локаль (например, 'ru-RU', 'en-US'). По умолчанию используется локаль браузера.
    * @returns Отформатированная строка с валютой.
    */
-  public static currency(amount: number, currency: string = 'USD', locale: TLanguageType = LocalizationDispatcher.currentLanguage): string
+  public static currency(amount: number, currency: string = 'USD', locale: TLanguageType = LocalizationCoreDispatcher.currentLanguage): string
   {
     const result = new Intl.NumberFormat(locale, {
       style: 'currency',
@@ -75,7 +75,7 @@ export class NumberFormatter
    * @param options Опции форматирования (например, минимальное и максимальное количество знаков после запятой).
    * @returns Отформатированная строка с процентом.
    */
-  public static percentage(amount: number, locale: TLanguageType = LocalizationDispatcher.currentLanguage, options: Intl.NumberFormatOptions = {}): string
+  public static percentage(amount: number, locale: TLanguageType = LocalizationCoreDispatcher.currentLanguage, options: Intl.NumberFormatOptions = {}): string
   {
     const result = new Intl.NumberFormat(locale, {
       style: 'percent',

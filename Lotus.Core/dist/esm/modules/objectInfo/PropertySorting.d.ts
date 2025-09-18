@@ -7,3 +7,4 @@ export interface IPropertySorting {
      */
     enabled?: boolean;
 }
+//# sourceMappingURL=PropertySorting.d.ts.map

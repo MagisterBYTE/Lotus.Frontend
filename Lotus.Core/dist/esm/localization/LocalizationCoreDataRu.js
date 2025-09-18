@@ -64,3 +64,4 @@ export const LocalizationCoreDataRu = {
         maxLength: (length) => `Длина поля не может превышать ${length} символов`
     }
 };
+//# sourceMappingURL=LocalizationCoreDataRu.js.map

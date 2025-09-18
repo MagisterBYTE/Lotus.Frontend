@@ -59,3 +59,4 @@ export declare class DateTimeConverter {
     static toTimestamp(value: Date): number;
     private static tryParseDate;
 }
+//# sourceMappingURL=DateTimeConverter.d.ts.map

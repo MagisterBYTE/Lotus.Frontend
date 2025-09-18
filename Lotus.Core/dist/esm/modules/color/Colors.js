@@ -508,3 +508,4 @@ export class Colors {
     static yellow_green = new Color(154, 205, 50);
 }
 ;
+//# sourceMappingURL=Colors.js.map

@@ -1,5 +1,5 @@
-import { TKey } from '../../types';
 import { IOption } from './Option';
+import { TKey } from '#types';
 export declare class OptionHelper {
     /**
      * Преобразование значение в значение корректного типа
@@ -112,3 +112,4 @@ export declare class OptionHelper {
      */
     static hasIcons(options: IOption[], context?: any): boolean;
 }
+//# sourceMappingURL=OptionHelper.d.ts.map

@@ -15,3 +15,4 @@ export declare class SortPropertyHelper {
      */
     static sortArrayByProperties<TItem = object>(massive: TItem[], sortProperties?: ISortPropertyCollection): TItem[];
 }
+//# sourceMappingURL=SortPropertyHelper.d.ts.map

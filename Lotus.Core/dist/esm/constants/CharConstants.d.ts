@@ -20,3 +20,4 @@ export declare class CharConstants {
      */
     static readonly WordJoiner: string;
 }
+//# sourceMappingURL=CharConstants.d.ts.map

@@ -20,3 +20,4 @@ export class CharConstants {
      */
     static WordJoiner = '\u2060';
 }
+//# sourceMappingURL=CharConstants.js.map

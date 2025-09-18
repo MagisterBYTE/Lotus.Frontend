@@ -57,3 +57,4 @@ export class PathHelper {
         return `${normalizedPath}/${normalizedFile}`;
     }
 }
+//# sourceMappingURL=PathHelper.js.map

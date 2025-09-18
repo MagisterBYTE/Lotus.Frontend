@@ -42,3 +42,4 @@ export interface IFilterProperty {
  * Тип для фильтрации объектов
  */
 export type IFilterPropertyCollection = IFilterProperty[];
+//# sourceMappingURL=FilterProperty.d.ts.map

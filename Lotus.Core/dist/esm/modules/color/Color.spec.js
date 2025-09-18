@@ -307,3 +307,4 @@ describe('Color.toModifyAlpha', function () {
         done();
     });
 });
+//# sourceMappingURL=Color.spec.js.map

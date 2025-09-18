@@ -1,0 +1,1 @@
+{"version":3,"file":"BooleanConverter.d.ts","sourceRoot":"","sources":["../../../src/converters/BooleanConverter.ts"],"names":[],"mappings":"AAAA,qBAAa,gBAAgB;IAE3B;;OAEG;IACH,gBAAuB,UAAU,EAAE,MAAM,EAAE,CAWvC;IAEJ;;;;;OAKG;WAEW,SAAS,CAAC,IAAI,EAAE,GAAG,EAAE,YAAY,GAAE,OAAe,GAAG,OAAO;IAoB1E;;;;OAIG;WACW,KAAK,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO;CAI5C"}

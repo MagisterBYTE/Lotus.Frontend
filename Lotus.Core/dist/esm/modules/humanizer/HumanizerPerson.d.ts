@@ -32,3 +32,4 @@ export declare class HumanizerPerson {
      */
     static getFullName(lastName: string | null, firstName: string | null, patronymic: string | null, substitutes?: Array<string | null>): string;
 }
+//# sourceMappingURL=HumanizerPerson.d.ts.map

@@ -25,3 +25,4 @@ export interface IRectOffset {
  */
 export interface IRectSizeOffset extends IRectOffset, ISize {
 }
+//# sourceMappingURL=RectOffset.d.ts.map

@@ -117,6 +117,5 @@ export class NumberConverter
 
     return resultValue;
   }
-
   // #endregion
 }

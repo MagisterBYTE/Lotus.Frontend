@@ -33,3 +33,4 @@ export declare class NumberFormatter {
      */
     static percentage(amount: number, locale?: TLanguageType, options?: Intl.NumberFormatOptions): string;
 }
+//# sourceMappingURL=NumberFormatter.d.ts.map

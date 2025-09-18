@@ -24,3 +24,4 @@ export class Assert {
         return !Object.values(object).some((value) => value !== undefined);
     }
 }
+//# sourceMappingURL=Assert.js.map

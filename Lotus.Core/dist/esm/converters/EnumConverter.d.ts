@@ -12,3 +12,4 @@ export declare class EnumConverter {
      */
     static getNames<TEnum>(enumValue: Record<string, TEnum>): string[];
 }
+//# sourceMappingURL=EnumConverter.d.ts.map

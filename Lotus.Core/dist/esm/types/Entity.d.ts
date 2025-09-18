@@ -8,3 +8,4 @@ export interface IEntity<TKey = number | string | TGuid> {
      */
     id: TKey;
 }
+//# sourceMappingURL=Entity.d.ts.map

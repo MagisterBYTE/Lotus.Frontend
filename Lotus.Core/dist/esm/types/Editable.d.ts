@@ -20,3 +20,4 @@ export declare function checkOfEditable(value: any): value is IEditable;
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 export declare function instanceOfEditable(value: any): IEditable | undefined;
+//# sourceMappingURL=Editable.d.ts.map

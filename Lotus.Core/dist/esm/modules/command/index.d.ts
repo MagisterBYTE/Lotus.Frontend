@@ -3,3 +3,4 @@ export { type ICommandService, CommandServiceClass, CommandService } from './Com
 export { type IDelimiterCommand, DelimiterCommand, DelimiterCommandDefault } from './DelimiterCommand';
 export { type IEventCommand, EventCommand, type IBaseEventCommandData, EventCommandKey } from './EventCommand';
 export { type INavigationCommand, NavigationCommand } from './NavigationCommand';
+//# sourceMappingURL=index.d.ts.map

@@ -16,3 +16,4 @@ export interface IPropertyFiltering {
      */
     variant?: 'text' | 'select' | 'multi-select' | 'range' | 'checkbox' | 'date' | 'date-range' | 'autocomplete';
 }
+//# sourceMappingURL=PropertyFiltering.d.ts.map

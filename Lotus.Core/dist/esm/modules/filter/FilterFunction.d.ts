@@ -15,3 +15,4 @@ export type TFilterFunction = 'Equals' | 'NotEqual' | 'LessThan' | 'LessThanOrEq
  * Перечисление для типа функции для фильтрации данных
  */
 export declare const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionDesc>;
+//# sourceMappingURL=FilterFunction.d.ts.map

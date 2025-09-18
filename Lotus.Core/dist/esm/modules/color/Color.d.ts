@@ -479,3 +479,4 @@ export declare class Color {
      */
     createContrastOrHarmoniousColor(isHarmonious?: boolean): Color;
 }
+//# sourceMappingURL=Color.d.ts.map

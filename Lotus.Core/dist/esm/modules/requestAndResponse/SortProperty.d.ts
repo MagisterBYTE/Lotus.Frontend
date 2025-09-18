@@ -21,3 +21,4 @@ export interface ISortProperty {
  * Тип для сортировки объектов
  */
 export type ISortPropertyCollection = ISortProperty[];
+//# sourceMappingURL=SortProperty.d.ts.map

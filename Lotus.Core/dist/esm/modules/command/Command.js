@@ -84,3 +84,4 @@ export class BaseCommand {
         return false;
     }
 }
+//# sourceMappingURL=Command.js.map

@@ -97,3 +97,4 @@ export declare class StringHelper {
      */
     static toKebabCase(value: string): string;
 }
+//# sourceMappingURL=StringHelper.d.ts.map

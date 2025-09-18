@@ -42,3 +42,4 @@ describe('ColorVarianHelper', function () {
         done();
     });
 });
+//# sourceMappingURL=ColorVariants.spec.js.map

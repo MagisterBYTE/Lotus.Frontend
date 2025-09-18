@@ -1,5 +1,9 @@
 export class GuidHelper {
     /**
+     * Пустой Guid
+     */
+    static Empty = '00000000-0000-0000-0000-000000000000';
+    /**
      * Регулярное выражение для проверки формата UUID (TGuid)
      */
     static TGuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -54,3 +58,4 @@ export class GuidHelper {
             .join('');
     }
 }
+//# sourceMappingURL=GuidHelper.js.map

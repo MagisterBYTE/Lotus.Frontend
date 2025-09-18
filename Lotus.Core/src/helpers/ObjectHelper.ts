@@ -1,74 +1,56 @@
+import _ from 'lodash'
+
 export class ObjectHelper
 {
-
-  private static readonly ALL_DIGITS_REGEX = /^\d+$/;
-
-  private static readonly PATH_SPLIT_REGEX = /\.|\]|\[/;
-
   /**
    * Получить значения свойства у объекта source по пути propertyPath
    * @param source Объект
    * @param propertyPath Имя/путь свойства
-   * @param shouldThrow Генерировать исключение если свойство не найдено
+   * @param defaultValue Значение по умолчанию если свойство не найдено
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getValue<TValue = any>(source: any, propertyPath: string, shouldThrow: boolean = false): TValue | undefined
+  public static getValue<TValue = any>(source: TValue, propertyPath: string, defaultValue?: any): TValue | undefined
   {
-    if (source === null || source === undefined)
-    {
-      return undefined;
-    }
-
-    // split path: "param[3].test" => ["param", 3, "test"]
-    const parts = ObjectHelper.splitPath(propertyPath);
-
+    if (source === undefined || source === null) return undefined;
+    const value = _.get(source, propertyPath, defaultValue) as TValue;
     // eslint-disable-next-line consistent-return
-    return parts.reduce((acc, el) =>
-    {
-      if (acc === undefined)
-      {
-        if (shouldThrow)
-        {
-          throw new Error(
-            `Could not dig the value using path: ${propertyPath}`
-          );
-        }
-        else
-        {
-          return undefined;
-        }
-      }
+    return value;
+  }
 
-      if (ObjectHelper.isNum(el))
-      {
-        // array getter [3]
-        const arrIndex = parseInt(el);
-        if (acc instanceof Set)
-        {
-          // eslint-disable-next-line consistent-return
-          return Array.from(acc)[arrIndex];
-        }
-        else
-        {
-          // eslint-disable-next-line consistent-return
-          return acc[arrIndex];
-        }
-      }
-      else
-      {
-        // object getter
-        if (acc instanceof Map)
-        {
-          // eslint-disable-next-line consistent-return
-          return acc.get(el);
-        }
-        else
-        {
-          // eslint-disable-next-line consistent-return
-          return acc[el];
-        }
-      }
-    }, source) as TValue;
+  /**
+   * Установить значения свойства у объекта source по пути propertyPath
+   * @param source Объект
+   * @param propertyPath Имя/путь свойства
+   * @param value Значение
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static setValue<TValue = any>(source: TValue, propertyPath: string, value?: any)
+  {
+    if (source === undefined || source === null) return; 
+    _.set<TValue>(source, propertyPath, value);
+  }
+
+  /**
+   * Получить глубокую копию объекта
+   * @param source 
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static cloneDeep<TValue = any>(source?: TValue|null): TValue|undefined
+  {
+    if (source === undefined || source === null) return undefined; 
+    // eslint-disable-next-line consistent-return
+    return _.cloneDeep(source) as TValue;
+  }
+
+  /**
+   * Проверка на идентичность объектов
+   * @param a Первый объект
+   * @param b Второй объект
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static equality(a: any, b: any): boolean
+  {
+    return _.isEqual(a, b)
   }
 
   /**
@@ -91,20 +73,5 @@ export class ObjectHelper
     return Object.prototype.hasOwnProperty.call(scope, prop)
       ? scope
       : this.getPropertyDefinitionObject(Object.getPrototypeOf(scope), prop);
-  }
-
-  private static isNum(str: string)
-  {
-    return str.match(ObjectHelper.ALL_DIGITS_REGEX);
-  }
-
-  private static splitPath(str: string)
-  {
-    return (
-      str
-        .split(ObjectHelper.PATH_SPLIT_REGEX)
-        // remove empty strings
-        .filter((x) => !!x)
-    );
   }
 }

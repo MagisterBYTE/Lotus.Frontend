@@ -22,3 +22,4 @@ export interface IPropertyEditable {
      */
     onValidation: (value: any, context?: any) => IValidationResult;
 }
+//# sourceMappingURL=PropertyEditable.d.ts.map

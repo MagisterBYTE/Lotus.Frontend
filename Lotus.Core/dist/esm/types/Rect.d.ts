@@ -19,3 +19,4 @@ export interface IRect {
      */
     height: number;
 }
+//# sourceMappingURL=Rect.d.ts.map

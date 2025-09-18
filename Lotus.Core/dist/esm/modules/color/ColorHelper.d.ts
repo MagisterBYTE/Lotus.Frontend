@@ -111,3 +111,4 @@ export declare class ColorHelper {
      */
     static tint(sourceHue: number, targetHue: number, amount: number): number;
 }
+//# sourceMappingURL=ColorHelper.d.ts.map

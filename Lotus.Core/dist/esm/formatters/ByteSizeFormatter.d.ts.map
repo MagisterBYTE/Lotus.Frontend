@@ -1,0 +1,1 @@
+{"version":3,"file":"ByteSizeFormatter.d.ts","sourceRoot":"","sources":["../../../src/formatters/ByteSizeFormatter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAgD,aAAa,EAAE,MAAM,iBAAiB,CAAC;AAG9F,qBAAa,iBAAiB;IAE5B;;;;OAIG;WACW,QAAQ,CAAC,WAAW,EAAE,MAAM,EAAE,MAAM,GAAE,aAA0D,GAAG,MAAM;CAiBxH"}

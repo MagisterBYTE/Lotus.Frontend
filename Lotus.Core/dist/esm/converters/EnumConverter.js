@@ -16,3 +16,4 @@ export class EnumConverter {
         return Object.keys(enumValue).map((key) => key).filter(x => Number.isNaN(parseInt(x))); // Получаем ключи объекта, что соответствует именам перечисления.
     }
 }
+//# sourceMappingURL=EnumConverter.js.map

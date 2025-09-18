@@ -14,3 +14,4 @@ export declare class DelimiterCommand extends BaseCommand implements IDelimiterC
  * Глобальный доступ к команде разделения по умолчанию
  */
 export declare const DelimiterCommandDefault: DelimiterCommand;
+//# sourceMappingURL=DelimiterCommand.d.ts.map

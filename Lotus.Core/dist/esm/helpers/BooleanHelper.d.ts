@@ -8,3 +8,4 @@ export declare class BooleanHelper {
      */
     static compare(left?: boolean, right?: boolean, isDesc?: boolean): number;
 }
+//# sourceMappingURL=BooleanHelper.d.ts.map

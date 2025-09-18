@@ -65,3 +65,4 @@ export interface IPropertyDescriptor {
      */
     viewImage?: boolean;
 }
+//# sourceMappingURL=PropertyDescriptor.d.ts.map

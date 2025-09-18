@@ -15,3 +15,4 @@ describe('test IConstantable', () => {
         expect(checkOfConstantable(data3)).toBe(false);
     });
 });
+//# sourceMappingURL=Constantable.spec.js.map

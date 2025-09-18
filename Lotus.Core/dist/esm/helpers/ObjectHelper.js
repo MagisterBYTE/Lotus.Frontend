@@ -1,53 +1,50 @@
+import _ from 'lodash';
 export class ObjectHelper {
-    static ALL_DIGITS_REGEX = /^\d+$/;
-    static PATH_SPLIT_REGEX = /\.|\]|\[/;
     /**
      * Получить значения свойства у объекта source по пути propertyPath
      * @param source Объект
      * @param propertyPath Имя/путь свойства
-     * @param shouldThrow Генерировать исключение если свойство не найдено
+     * @param defaultValue Значение по умолчанию если свойство не найдено
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static getValue(source, propertyPath, shouldThrow = false) {
-        if (source === null || source === undefined) {
+    static getValue(source, propertyPath, defaultValue) {
+        if (source === undefined || source === null)
             return undefined;
-        }
-        // split path: "param[3].test" => ["param", 3, "test"]
-        const parts = ObjectHelper.splitPath(propertyPath);
+        const value = _.get(source, propertyPath, defaultValue);
         // eslint-disable-next-line consistent-return
-        return parts.reduce((acc, el) => {
-            if (acc === undefined) {
-                if (shouldThrow) {
-                    throw new Error(`Could not dig the value using path: ${propertyPath}`);
-                }
-                else {
-                    return undefined;
-                }
-            }
-            if (ObjectHelper.isNum(el)) {
-                // array getter [3]
-                const arrIndex = parseInt(el);
-                if (acc instanceof Set) {
-                    // eslint-disable-next-line consistent-return
-                    return Array.from(acc)[arrIndex];
-                }
-                else {
-                    // eslint-disable-next-line consistent-return
-                    return acc[arrIndex];
-                }
-            }
-            else {
-                // object getter
-                if (acc instanceof Map) {
-                    // eslint-disable-next-line consistent-return
-                    return acc.get(el);
-                }
-                else {
-                    // eslint-disable-next-line consistent-return
-                    return acc[el];
-                }
-            }
-        }, source);
+        return value;
+    }
+    /**
+     * Установить значения свойства у объекта source по пути propertyPath
+     * @param source Объект
+     * @param propertyPath Имя/путь свойства
+     * @param value Значение
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static setValue(source, propertyPath, value) {
+        if (source === undefined || source === null)
+            return;
+        _.set(source, propertyPath, value);
+    }
+    /**
+     * Получить глубокую копию объекта
+     * @param source
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static cloneDeep(source) {
+        if (source === undefined || source === null)
+            return undefined;
+        // eslint-disable-next-line consistent-return
+        return _.cloneDeep(source);
+    }
+    /**
+     * Проверка на идентичность объектов
+     * @param a Первый объект
+     * @param b Второй объект
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static equality(a, b) {
+        return _.isEqual(a, b);
     }
     /**
      * Searches the supplied object, and then down it's prototype chain until it
@@ -68,13 +65,5 @@ export class ObjectHelper {
             ? scope
             : this.getPropertyDefinitionObject(Object.getPrototypeOf(scope), prop);
     }
-    static isNum(str) {
-        return str.match(ObjectHelper.ALL_DIGITS_REGEX);
-    }
-    static splitPath(str) {
-        return (str
-            .split(ObjectHelper.PATH_SPLIT_REGEX)
-            // remove empty strings
-            .filter((x) => !!x));
-    }
 }
+//# sourceMappingURL=ObjectHelper.js.map

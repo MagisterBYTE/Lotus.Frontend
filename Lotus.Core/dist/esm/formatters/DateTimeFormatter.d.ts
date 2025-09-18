@@ -24,3 +24,4 @@ export declare class DateTimeFormatter {
      */
     time(date: Date, locale?: string, options?: Intl.DateTimeFormatOptions): string;
 }
+//# sourceMappingURL=DateTimeFormatter.d.ts.map

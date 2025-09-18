@@ -7,3 +7,4 @@ export declare class ByteSizeFormatter {
      */
     static byteSize(sizeInBytes: number, locale?: TLanguageType): string;
 }
+//# sourceMappingURL=ByteSizeFormatter.d.ts.map

@@ -507,3 +507,4 @@ export declare class Colors {
     static readonly yellow_4: Color;
     static readonly yellow_green: Color;
 }
+//# sourceMappingURL=Colors.d.ts.map

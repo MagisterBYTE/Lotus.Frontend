@@ -26,3 +26,4 @@ export declare class NumberConverter {
      */
     static parseFloat(text: string, defaultValue?: number): number;
 }
+//# sourceMappingURL=NumberConverter.d.ts.map

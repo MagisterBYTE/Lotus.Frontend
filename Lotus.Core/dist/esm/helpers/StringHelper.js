@@ -139,3 +139,4 @@ export class StringHelper {
         return this.toSnakeCase(value).replace(/_/g, '-');
     }
 }
+//# sourceMappingURL=StringHelper.js.map

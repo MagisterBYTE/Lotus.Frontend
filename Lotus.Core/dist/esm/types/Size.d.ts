@@ -11,3 +11,4 @@ export interface ISize {
      */
     height: number;
 }
+//# sourceMappingURL=Size.d.ts.map

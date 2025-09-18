@@ -76,3 +76,4 @@ describe('GuidHelper', () => {
 //     expect(timeInMilliseconds).toBeLessThanOrEqual(currentTime); // Таймштамп не должен быть в будущем
 //   });
 // });
+//# sourceMappingURL=GuidHelper.spec.js.map

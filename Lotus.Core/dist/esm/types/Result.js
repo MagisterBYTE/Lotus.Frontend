@@ -25,3 +25,4 @@ export function instanceOfResult(value) {
         return undefined;
     }
 }
+//# sourceMappingURL=Result.js.map

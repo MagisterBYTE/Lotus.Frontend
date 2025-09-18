@@ -53,3 +53,4 @@ export class FunctionHelper {
         return scope;
     }
 }
+//# sourceMappingURL=FunctionHelper.js.map

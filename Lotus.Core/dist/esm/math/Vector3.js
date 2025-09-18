@@ -260,3 +260,4 @@ export class Vector3 {
         return dest;
     }
 }
+//# sourceMappingURL=Vector3.js.map

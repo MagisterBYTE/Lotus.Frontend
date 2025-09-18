@@ -909,3 +909,4 @@ export class Color {
         }
     }
 }
+//# sourceMappingURL=Color.js.map

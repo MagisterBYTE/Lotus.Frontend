@@ -31,3 +31,4 @@ export declare function checkOfResult(value: any): value is IResult;
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 export declare function instanceOfResult(value: any): IResult | undefined;
+//# sourceMappingURL=Result.d.ts.map

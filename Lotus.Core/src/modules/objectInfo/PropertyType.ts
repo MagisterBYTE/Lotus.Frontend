@@ -10,7 +10,7 @@ export interface IPropertyTypeDesc
 /**
  * Тип свойства
  */
-export type TPropertyType = 'Boolean' | 'Integer' | 'Double' | 'String' | 'DateTime' | 'Guid';
+export type TPropertyType = 'Boolean' | 'Integer' | 'Double' | 'Enum' | 'String' | 'DateTime' | 'Guid';
 
 /**
  * Дескрипторы (перечисление) для типа свойства
@@ -45,11 +45,20 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     },
 
     /**
+     * Тип перечисления (на базовом уровне ведет себя как числовой)
+     */
+    Enum:
+    {
+      id: 3,
+      type: 'Enum'
+    },
+
+    /**
      * Строковый тип
      */
     String:
     {
-      id: 3,
+      id: 4,
       type: 'String'
     },
 
@@ -58,7 +67,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
      */
     DateTime:
     {
-      id: 4,
+      id: 5,
       type: 'DateTime'
     },
 
@@ -67,7 +76,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
      */
     Guid:
     {
-      id: 5,
+      id: 6,
       type: 'Guid'
     }
   } as const;

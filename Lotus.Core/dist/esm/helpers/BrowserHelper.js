@@ -51,6 +51,8 @@ export class BrowserHelper {
         document.body.appendChild(link);
         link.click();
         link.remove();
+        URL.revokeObjectURL(downloadUrl);
     }
     ;
 }
+//# sourceMappingURL=BrowserHelper.js.map

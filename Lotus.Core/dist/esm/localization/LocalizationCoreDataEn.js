@@ -64,3 +64,4 @@ export const LocalizationCoreDataEn = {
         maxLength: (length) => `Field length cannot exceed ${length} characters`
     }
 };
+//# sourceMappingURL=LocalizationCoreDataEn.js.map

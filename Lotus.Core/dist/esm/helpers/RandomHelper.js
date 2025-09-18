@@ -6,3 +6,4 @@ export class RandomHelper {
         return Math.floor(Math.random() * max);
     }
 }
+//# sourceMappingURL=RandomHelper.js.map

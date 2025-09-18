@@ -41,3 +41,4 @@ export declare class PathHelper {
      */
     static joinPathAndFile(path: string, fileName: string): string;
 }
+//# sourceMappingURL=PathHelper.d.ts.map

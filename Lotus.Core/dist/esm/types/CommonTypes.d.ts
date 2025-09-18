@@ -32,3 +32,4 @@ export type PropertyType<TType, TPropertyName extends keyof TType> = TType[TProp
 export type Dictionary<TKey extends string | symbol | number | TGuid, TValue> = {
     [key in TKey]: TValue;
 };
+//# sourceMappingURL=CommonTypes.d.ts.map

@@ -1,5 +1,5 @@
 import { TLanguageType } from './LanguageType';
-export declare class LocalizationDispatcher {
+export declare class LocalizationCoreDispatcher {
     private static _currentLanguage;
     /**
      * Получить текущую язык
@@ -10,3 +10,4 @@ export declare class LocalizationDispatcher {
      */
     static set currentLanguage(language: TLanguageType);
 }
+//# sourceMappingURL=LocalizationCoreDispatcher.d.ts.map

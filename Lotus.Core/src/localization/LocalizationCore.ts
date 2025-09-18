@@ -1,6 +1,6 @@
 import { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
 
-export const LocalizationCore = 
+export const LocalizationCore =
 {
-  data:LocalizationCoreDataRu
+  data: LocalizationCoreDataRu
 };

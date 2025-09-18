@@ -43,3 +43,4 @@ export class BooleanConverter {
         return BooleanConverter.TrueValues.indexOf(value) > -1;
     }
 }
+//# sourceMappingURL=BooleanConverter.js.map

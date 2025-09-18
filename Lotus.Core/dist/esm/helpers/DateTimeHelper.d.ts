@@ -8,3 +8,4 @@ export declare class DateTimeHelper {
      */
     static compare(left?: Date, right?: Date, isDesc?: boolean): number;
 }
+//# sourceMappingURL=DateTimeHelper.d.ts.map

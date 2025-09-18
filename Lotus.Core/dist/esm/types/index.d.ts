@@ -11,3 +11,4 @@ export { type IPoint } from './Point';
 export { type ISize } from './Size';
 export { type IRect } from './Rect';
 export { type IRectOffset, type IRectSizeOffset } from './RectOffset';
+//# sourceMappingURL=index.d.ts.map

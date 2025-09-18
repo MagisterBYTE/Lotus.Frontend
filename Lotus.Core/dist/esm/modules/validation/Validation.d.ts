@@ -5,3 +5,4 @@ import { IValidationResult } from './ValidationResult';
 export interface IValidation<TValue = any> {
     validation: (value: TValue | null) => IValidationResult;
 }
+//# sourceMappingURL=Validation.d.ts.map

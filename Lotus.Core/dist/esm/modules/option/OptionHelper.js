@@ -1,5 +1,5 @@
-import { ArrayHelper } from '../../helpers';
-import { Assert } from '../../utils';
+import { ArrayHelper } from '#helpers';
+import { Assert } from '#utils';
 export class OptionHelper {
     /**
      * Преобразование значение в значение корректного типа
@@ -298,3 +298,4 @@ export class OptionHelper {
         return false;
     }
 }
+//# sourceMappingURL=OptionHelper.js.map

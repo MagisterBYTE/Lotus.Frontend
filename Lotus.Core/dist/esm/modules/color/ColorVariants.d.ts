@@ -54,3 +54,4 @@ export declare class ColorVariants implements IColorVariants {
      */
     getNextByName(name?: TColorVariantName, delta?: number, modifyAlpha?: number): Color;
 }
+//# sourceMappingURL=ColorVariants.d.ts.map

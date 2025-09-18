@@ -24,3 +24,4 @@ export declare function checkOfGrouping(value: any): value is IGrouping;
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 export declare function instanceOfGrouping(value: any): IGrouping | undefined;
+//# sourceMappingURL=Grouping.d.ts.map

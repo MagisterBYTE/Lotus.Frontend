@@ -15,3 +15,4 @@ export interface IValidationResult {
  * Успешный результат валидации
  */
 export declare const ValidationResultSuccess: IValidationResult;
+//# sourceMappingURL=ValidationResult.d.ts.map

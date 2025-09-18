@@ -15,3 +15,4 @@ export declare const GroupFilterFunctionsEnum: readonly IFilterFunctionDesc[];
  * Группа функций фильтрации для массива
  */
 export declare const GroupFilterFunctionsArray: readonly IFilterFunctionDesc[];
+//# sourceMappingURL=FilterFunctionGroups.d.ts.map

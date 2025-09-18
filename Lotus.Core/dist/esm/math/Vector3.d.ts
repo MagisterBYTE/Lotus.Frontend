@@ -66,3 +66,4 @@ export declare class Vector3 implements IVector3 {
     scale(value: number, dest?: Vector3): Vector3;
     normalize(dest?: Vector3): Vector3;
 }
+//# sourceMappingURL=Vector3.d.ts.map

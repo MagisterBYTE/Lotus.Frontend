@@ -66,3 +66,4 @@ export declare const LocalizationCore: {
         };
     };
 };
+//# sourceMappingURL=LocalizationCore.d.ts.map

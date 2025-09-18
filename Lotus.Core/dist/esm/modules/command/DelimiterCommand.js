@@ -11,3 +11,4 @@ export class DelimiterCommand extends BaseCommand {
  * Глобальный доступ к команде разделения по умолчанию
  */
 export const DelimiterCommandDefault = new DelimiterCommand('delimiter');
+//# sourceMappingURL=DelimiterCommand.js.map

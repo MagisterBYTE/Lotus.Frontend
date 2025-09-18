@@ -112,3 +112,4 @@ export declare class BaseCommand implements ICommand {
      */
     isSelectedCommand(context?: any): boolean;
 }
+//# sourceMappingURL=Command.d.ts.map

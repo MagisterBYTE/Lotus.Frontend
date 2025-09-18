@@ -25,3 +25,4 @@ export declare class CookiesHelper {
      */
     static deleteAll(): void;
 }
+//# sourceMappingURL=CookiesHelper.d.ts.map

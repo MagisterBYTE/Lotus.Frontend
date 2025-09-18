@@ -15,3 +15,4 @@ export interface IColorModelHSL {
      */
     l: number;
 }
+//# sourceMappingURL=ColorModel.d.ts.map

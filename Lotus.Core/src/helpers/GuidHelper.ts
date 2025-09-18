@@ -3,6 +3,11 @@ import { TGuid } from '../types';
 export class GuidHelper
 {
   /**
+   * Пустой Guid
+   */
+  public static readonly Empty:TGuid = '00000000-0000-0000-0000-000000000000';
+  
+  /**
    * Регулярное выражение для проверки формата UUID (TGuid)
    */
   public static readonly TGuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;

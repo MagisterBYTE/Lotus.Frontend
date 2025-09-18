@@ -3,17 +3,17 @@ import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 import { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
 
-export class LocalizationDispatcher
+export class LocalizationCoreDispatcher
 {
   // #region Static properties
-  private static _currentLanguage: TLanguageType|undefined;
+  private static _currentLanguage: TLanguageType | undefined;
 
   /**
    * Получить текущую язык
    */
   public static get currentLanguage(): TLanguageType
   {
-    if (LocalizationDispatcher._currentLanguage) return LocalizationDispatcher._currentLanguage;
+    if (LocalizationCoreDispatcher._currentLanguage) return LocalizationCoreDispatcher._currentLanguage;
     return 'ru-RU';
   }
 
@@ -22,9 +22,9 @@ export class LocalizationDispatcher
    */
   public static set currentLanguage(language: TLanguageType)
   {
-    LocalizationDispatcher._currentLanguage = language;
-    if(language == 'en-US') LocalizationCore.data = LocalizationCoreDataEn;
-    if(language == 'ru-RU') LocalizationCore.data = LocalizationCoreDataRu;
+    LocalizationCoreDispatcher._currentLanguage = language;
+    if (language == 'en-US') LocalizationCore.data = LocalizationCoreDataEn;
+    if (language == 'ru-RU') LocalizationCore.data = LocalizationCoreDataRu;
   }
   // #endregion
 };

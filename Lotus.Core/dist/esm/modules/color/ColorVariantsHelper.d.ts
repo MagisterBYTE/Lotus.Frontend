@@ -27,3 +27,4 @@ export declare class ColorVariantsHelper {
      */
     static calcColor(baseColor: Color, name?: TColorVariantName): Color;
 }
+//# sourceMappingURL=ColorVariantsHelper.d.ts.map

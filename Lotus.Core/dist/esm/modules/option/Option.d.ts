@@ -1,4 +1,4 @@
-import { TKey } from '../../types';
+import { TKey } from '#types';
 export type FunctionOptionDelegate = (option: IOption, context?: any) => any;
 /**
  * Интерфейс представляющий некую опцию
@@ -25,3 +25,4 @@ export interface IOption<TValueOption extends TKey = TKey> {
      */
     render?: FunctionOptionDelegate;
 }
+//# sourceMappingURL=Option.d.ts.map

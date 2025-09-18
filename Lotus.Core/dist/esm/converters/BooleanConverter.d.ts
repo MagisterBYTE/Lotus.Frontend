@@ -17,3 +17,4 @@ export declare class BooleanConverter {
      */
     static parse(value: string): boolean;
 }
+//# sourceMappingURL=BooleanConverter.d.ts.map

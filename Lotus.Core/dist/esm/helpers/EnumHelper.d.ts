@@ -21,3 +21,4 @@ export declare class EnumHelper {
      */
     static clearFlag(value: number, flags: number): number;
 }
+//# sourceMappingURL=EnumHelper.d.ts.map

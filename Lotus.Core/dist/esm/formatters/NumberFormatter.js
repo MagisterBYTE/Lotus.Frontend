@@ -1,4 +1,4 @@
-import { LocalizationDispatcher } from '../localization';
+import { LocalizationCoreDispatcher } from '../localization';
 export class NumberFormatter {
     /**
      * Форматирует число в соответствии с форматом и текущей локалью.
@@ -7,7 +7,7 @@ export class NumberFormatter {
      * @param options Опции форматирования (например, минимальное и максимальное количество знаков после запятой).
      * @returns Отформатированная строка.
      */
-    static number(number, locale = LocalizationDispatcher.currentLanguage, options = {}) {
+    static number(number, locale = LocalizationCoreDispatcher.currentLanguage, options = {}) {
         const result = new Intl.NumberFormat(locale, options).format(number);
         return result;
     }
@@ -18,7 +18,7 @@ export class NumberFormatter {
      * @param locale Локаль (например, 'ru-RU', 'en-US'). По умолчанию используется локаль браузера.
      * @returns Отформатированная строка.
      */
-    static numberFixed(number, maximumFractionDigits = 2, locale = LocalizationDispatcher.currentLanguage) {
+    static numberFixed(number, maximumFractionDigits = 2, locale = LocalizationCoreDispatcher.currentLanguage) {
         // Форматируем число с учетом локали (целая часть и разделитель тысяч)
         const formatter = new Intl.NumberFormat(locale, {
             minimumFractionDigits: 0,
@@ -46,7 +46,7 @@ export class NumberFormatter {
      * @param locale Локаль (например, 'ru-RU', 'en-US'). По умолчанию используется локаль браузера.
      * @returns Отформатированная строка с валютой.
      */
-    static currency(amount, currency = 'USD', locale = LocalizationDispatcher.currentLanguage) {
+    static currency(amount, currency = 'USD', locale = LocalizationCoreDispatcher.currentLanguage) {
         const result = new Intl.NumberFormat(locale, {
             style: 'currency',
             currency: currency
@@ -60,7 +60,7 @@ export class NumberFormatter {
      * @param options Опции форматирования (например, минимальное и максимальное количество знаков после запятой).
      * @returns Отформатированная строка с процентом.
      */
-    static percentage(amount, locale = LocalizationDispatcher.currentLanguage, options = {}) {
+    static percentage(amount, locale = LocalizationCoreDispatcher.currentLanguage, options = {}) {
         const result = new Intl.NumberFormat(locale, {
             style: 'percent',
             ...options
@@ -68,3 +68,4 @@ export class NumberFormatter {
         return result;
     }
 }
+//# sourceMappingURL=NumberFormatter.js.map

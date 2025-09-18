@@ -1,6 +1,10 @@
 import { TGuid } from '../types';
 export declare class GuidHelper {
     /**
+     * Пустой Guid
+     */
+    static readonly Empty: TGuid;
+    /**
      * Регулярное выражение для проверки формата UUID (TGuid)
      */
     static readonly TGuidRegex: RegExp;
@@ -23,3 +27,4 @@ export declare class GuidHelper {
     static createGuidV7(): TGuid;
     private static getRandomHexBytes;
 }
+//# sourceMappingURL=GuidHelper.d.ts.map

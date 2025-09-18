@@ -67,3 +67,4 @@ export declare class ArrayHelper {
      */
     static insertArrayInPlace<TItem = any>(array: TItem[], index: number, direction: 'Lower' | 'End' | 'Upper', value: TItem | TItem[]): void;
 }
+//# sourceMappingURL=ArrayHelper.d.ts.map

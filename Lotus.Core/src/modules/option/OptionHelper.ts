@@ -1,7 +1,8 @@
-import { ArrayHelper } from '../../helpers';
-import { TKey } from '../../types';
-import { Assert } from '../../utils';
 import { IOption } from './Option';
+import { ArrayHelper } from '#helpers';
+import { TKey } from '#types';
+import { Assert } from '#utils';
+
 
 export class OptionHelper
 {

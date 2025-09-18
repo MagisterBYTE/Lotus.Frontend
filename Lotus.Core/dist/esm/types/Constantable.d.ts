@@ -19,3 +19,4 @@ export declare function checkOfConstantable(value: any): value is IConstantable;
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 export declare function instanceOfConstantable(value: any): IConstantable | undefined;
+//# sourceMappingURL=Constantable.d.ts.map

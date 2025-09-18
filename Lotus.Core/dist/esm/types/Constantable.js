@@ -25,3 +25,4 @@ export function instanceOfConstantable(value) {
         return undefined;
     }
 }
+//# sourceMappingURL=Constantable.js.map

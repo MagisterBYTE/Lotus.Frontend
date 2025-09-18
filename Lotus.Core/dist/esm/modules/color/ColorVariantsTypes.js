@@ -21,3 +21,4 @@ export const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light'
 export function checkOfColorVariantName(value) {
     return TColorVariantNames.includes(value);
 }
+//# sourceMappingURL=ColorVariantsTypes.js.map

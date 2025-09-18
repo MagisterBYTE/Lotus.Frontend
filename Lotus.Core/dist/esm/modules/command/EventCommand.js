@@ -20,3 +20,4 @@ export class EventCommand extends BaseCommand {
         window.dispatchEvent(event);
     }
 }
+//# sourceMappingURL=EventCommand.js.map

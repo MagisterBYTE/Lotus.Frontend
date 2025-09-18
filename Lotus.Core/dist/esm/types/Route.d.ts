@@ -33,3 +33,4 @@ export declare class Route implements IRoute {
     permissions?: string[];
     constructor(path: string, isShouldBeAuthorized?: boolean, permissions?: string[]);
 }
+//# sourceMappingURL=Route.d.ts.map

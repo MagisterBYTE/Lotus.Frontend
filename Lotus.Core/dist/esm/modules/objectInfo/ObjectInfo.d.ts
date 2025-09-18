@@ -33,3 +33,4 @@ export declare class ObjectInfo implements IObjectInfo {
     getPropertyByName(name: string): IPropertyDescriptor;
     getFilterFunctionsDesc(): Record<string, IFilterFunctionDesc>;
 }
+//# sourceMappingURL=ObjectInfo.d.ts.map

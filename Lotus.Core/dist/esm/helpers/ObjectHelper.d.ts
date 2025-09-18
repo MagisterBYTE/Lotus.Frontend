@@ -1,13 +1,29 @@
 export declare class ObjectHelper {
-    private static readonly ALL_DIGITS_REGEX;
-    private static readonly PATH_SPLIT_REGEX;
     /**
      * Получить значения свойства у объекта source по пути propertyPath
      * @param source Объект
      * @param propertyPath Имя/путь свойства
-     * @param shouldThrow Генерировать исключение если свойство не найдено
+     * @param defaultValue Значение по умолчанию если свойство не найдено
      */
-    static getValue<TValue = any>(source: any, propertyPath: string, shouldThrow?: boolean): TValue | undefined;
+    static getValue<TValue = any>(source: TValue, propertyPath: string, defaultValue?: any): TValue | undefined;
+    /**
+     * Установить значения свойства у объекта source по пути propertyPath
+     * @param source Объект
+     * @param propertyPath Имя/путь свойства
+     * @param value Значение
+     */
+    static setValue<TValue = any>(source: TValue, propertyPath: string, value?: any): void;
+    /**
+     * Получить глубокую копию объекта
+     * @param source
+     */
+    static cloneDeep<TValue = any>(source?: TValue | null): TValue | undefined;
+    /**
+     * Проверка на идентичность объектов
+     * @param a Первый объект
+     * @param b Второй объект
+     */
+    static equality(a: any, b: any): boolean;
     /**
      * Searches the supplied object, and then down it's prototype chain until it
      * finds the object where `prop` is its own property. In other words, finds
@@ -20,6 +36,5 @@ export declare class ObjectHelper {
      * @returns {*}
      */
     static getPropertyDefinitionObject(scope: object, prop: string): any;
-    private static isNum;
-    private static splitPath;
 }
+//# sourceMappingURL=ObjectHelper.d.ts.map
