@@ -1,4 +1,4 @@
-import { LocalizationCore } from '../localization';
+import { LocalizationCore } from '#localization';
 import { ByteSizeFormatter } from './ByteSizeFormatter';
 
 describe('test ByteSizeFormatter.ByteSize', () => 

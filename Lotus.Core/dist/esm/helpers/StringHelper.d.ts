@@ -1,7 +1,7 @@
 /**
  * Вспомогательный класс для работы со строками
  */
-export declare class StringHelper {
+export declare abstract class StringHelper {
     /**
      * Сравнивает строки без учета регистра
      * @param {string} first - Первая строка для сравнения

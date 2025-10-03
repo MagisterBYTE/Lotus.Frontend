@@ -24,11 +24,11 @@ export interface IResult<TData = any> {
  * @param value Проверяемый объект
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
-export declare function checkOfResult(value: any): value is IResult;
+export declare function instanceOfResult(value: any): value is IResult;
 /**
  * Преобразование объекта к интерфейсу IResult
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-export declare function instanceOfResult(value: any): IResult | undefined;
+export declare function castToResult(value: any): IResult | undefined;
 //# sourceMappingURL=Result.d.ts.map

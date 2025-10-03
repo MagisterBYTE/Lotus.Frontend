@@ -1,4 +1,4 @@
-export declare class DateTimeHelper {
+export declare abstract class DateTimeHelper {
     /**
      * Сравнение значений дат
      * @param left Левое значение

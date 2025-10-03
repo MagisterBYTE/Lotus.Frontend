@@ -1,5 +1,4 @@
-
-export class DateTimeConverter 
+export abstract class DateTimeConverter 
 {
   /**
    * Преобразование объекта в значение даты-времени.

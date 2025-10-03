@@ -15,7 +15,7 @@ export const TColorSemantics: readonly TColorSemantic[] = ['primary', 'secondary
  * @returns Статус проверки
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfColorSemantic(value: any): value is TColorSemantic 
+export function instanceOfColorSemantic(value: any): value is TColorSemantic 
 {
   return TColorSemantics.includes(value);
 }

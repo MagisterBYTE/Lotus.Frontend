@@ -1,4 +1,4 @@
-export declare class HumanizerPerson {
+export declare abstract class HumanizerPerson {
     /**
      * Возвращает фамилию с инициалами имени и отчества.
      * Если фамилия отсутствует, возвращает первый непустой элемент из массива substitutes или пустую строку.

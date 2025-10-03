@@ -17,9 +17,9 @@ export interface IEditable
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfEditable(value: any): value is IEditable
+export function instanceOfEditable(value: any): value is IEditable
 {
-  if (value)
+  if (value && typeof value === "object")
   {
     return ('id' in value);
   }
@@ -33,9 +33,9 @@ export function checkOfEditable(value: any): value is IEditable
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfEditable(value: any): IEditable | undefined
+export function castToEditable(value: any): IEditable | undefined
 {
-  if (checkOfEditable(value))
+  if (instanceOfEditable(value))
   {
     return value as IEditable;
   }

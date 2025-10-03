@@ -1,5 +1,5 @@
 
-export class DateTimeHelper
+export abstract class DateTimeHelper
 {
   /**
    * Сравнение значений дат

@@ -2,7 +2,7 @@
 /**
  * Вспомогательный класс для работы с путями и файлами
  */
-export class PathHelper
+export abstract class PathHelper
 {
   /**
    * Разделяет имя файла на название и расширение

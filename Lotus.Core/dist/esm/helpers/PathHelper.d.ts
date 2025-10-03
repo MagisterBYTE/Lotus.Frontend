@@ -1,7 +1,7 @@
 /**
  * Вспомогательный класс для работы с путями и файлами
  */
-export declare class PathHelper {
+export declare abstract class PathHelper {
     /**
      * Разделяет имя файла на название и расширение
      * @param {string} fileName - Полное имя файла

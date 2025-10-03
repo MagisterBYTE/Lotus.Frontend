@@ -1,6 +1,6 @@
-import { StringHelper } from '../../helpers';
+import { StringHelper } from '#helpers';
 
-export class HumanizerPerson 
+export abstract class HumanizerPerson 
 {
   /**
    * Возвращает фамилию с инициалами имени и отчества.

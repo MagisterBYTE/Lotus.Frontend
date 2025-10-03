@@ -31,7 +31,7 @@ export const TColorVariantNames: readonly TColorVariantName[] = ['white', 'pales
  * @returns Статус проверки
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfColorVariantName(value: any): value is TColorVariantName 
+export function instanceOfColorVariantName(value: any): value is TColorVariantName 
 {
   return TColorVariantNames.includes(value);
 }

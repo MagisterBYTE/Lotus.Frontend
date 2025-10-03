@@ -1,4 +1,4 @@
-export class RandomHelper
+export abstract class RandomHelper
 {
   public static getMinMax(min: number, max: number): number
   {

@@ -1,4 +1,4 @@
-import { LocalizationCore, LocalizationCoreDispatcher } from '../localization';
+import { LocalizationCore, LocalizationCoreDispatcher } from '#localization';
 import { NumberFormatter } from './NumberFormatter';
 export class ByteSizeFormatter {
     /**

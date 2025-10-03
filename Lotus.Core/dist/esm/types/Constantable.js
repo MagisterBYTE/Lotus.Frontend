@@ -4,8 +4,8 @@
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfConstantable(value) {
-    if (value) {
+export function instanceOfConstantable(value) {
+    if (value && typeof value === "object") {
         return ('isConst' in value) && value.isConst === true;
     }
     return false;
@@ -16,8 +16,8 @@ export function checkOfConstantable(value) {
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfConstantable(value) {
-    if (checkOfConstantable(value)) {
+export function castToConstantable(value) {
+    if (instanceOfConstantable(value)) {
         return value;
     }
     else {

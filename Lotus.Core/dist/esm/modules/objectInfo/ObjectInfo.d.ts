@@ -1,4 +1,4 @@
-import { IFilterFunctionDesc } from '../filter';
+import { IFilterFunctionDesc } from '#modules/filter';
 import { IPropertyDescriptor } from './PropertyDescriptor';
 /**
  * Интерфейс для представления(описания) свойств объектов

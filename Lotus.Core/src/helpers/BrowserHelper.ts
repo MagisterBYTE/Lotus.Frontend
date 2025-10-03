@@ -1,4 +1,4 @@
-export class BrowserHelper
+export abstract class BrowserHelper
 {
   /**
    * Проверяет, выполняется ли код на localhost

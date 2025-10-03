@@ -1,6 +1,6 @@
-import { IGrouping } from '../types';
+import { IGrouping } from '#types';
 
-export class ArrayHelper
+export abstract class ArrayHelper
 {
   /**
    * Получить числовой массив в указанном диапазоне

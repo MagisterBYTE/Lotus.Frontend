@@ -1,4 +1,4 @@
-export declare class DateTimeConverter {
+export declare abstract class DateTimeConverter {
     /**
      * Преобразование объекта в значение даты-времени.
      * @param value Объект.

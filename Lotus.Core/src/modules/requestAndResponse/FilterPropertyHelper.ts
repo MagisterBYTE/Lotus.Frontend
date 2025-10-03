@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
-import { BooleanConverter, DateTimeConverter } from '../../converters';
-import { StringHelper, ObjectHelper } from '../../helpers';
-import { TFilterFunction } from '../filter';
-import { TPropertyType } from '../objectInfo';
+import { BooleanConverter, DateTimeConverter } from '#converters';
+import { StringHelper, ObjectHelper } from '#helpers';
+import { TFilterFunction } from '#modules/filter';
+import { TPropertyType } from '#modules/objectInfo';
 import { IFilterPropertyCollection, IFilterProperty } from './FilterProperty';
 
-export class FilterPropertyHelper
+export abstract class FilterPropertyHelper
 {
   /**
    * Проверка на значение фильтра свойства

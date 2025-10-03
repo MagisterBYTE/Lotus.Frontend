@@ -1,4 +1,4 @@
-export declare class EnumHelper {
+export declare abstract class EnumHelper {
     /**
      * Проверка на установленный флаг
      * @param value Значение

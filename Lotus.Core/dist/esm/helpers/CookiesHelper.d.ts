@@ -1,4 +1,4 @@
-export declare class CookiesHelper {
+export declare abstract class CookiesHelper {
     /**
      * Возвращает куки с указанным name или undefined, если ничего не найдено
      * @param name Имя куки

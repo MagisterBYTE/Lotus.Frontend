@@ -1,6 +1,6 @@
 import { IOption } from './Option';
 import { TKey } from '#types';
-export declare class OptionHelper {
+export declare abstract class OptionHelper {
     /**
      * Преобразование значение в значение корректного типа
      * @param options Список опций

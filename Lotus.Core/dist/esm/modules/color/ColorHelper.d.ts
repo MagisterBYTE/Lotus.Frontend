@@ -4,7 +4,7 @@ import { IColorModelHSL } from './ColorModel';
  * Предоставляет методы для проверки, конвертации и манипуляций с цветами.
  * Все методы статические - экземпляр класса не требуется.
  */
-export declare class ColorHelper {
+export declare abstract class ColorHelper {
     /**
      * Проверяет, является ли число валидным значением цвета (0-255)
      * @param value - Проверяемое значение

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BooleanConverter, DateTimeConverter } from '../../converters';
-import { StringHelper, BooleanHelper, NumberHelper, DateTimeHelper } from '../../helpers';
+import { BooleanConverter, DateTimeConverter } from '#converters';
+import { BooleanHelper, DateTimeHelper, NumberHelper, StringHelper } from '#helpers';
 export class SortPropertyHelper {
     /**
      * Сортировка массива по указанному свойству сортировки

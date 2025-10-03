@@ -1,5 +1,4 @@
-
-export class EnumConverter
+export abstract class EnumConverter
 {
   /**
    * Метод для получения всех значений перечисления.

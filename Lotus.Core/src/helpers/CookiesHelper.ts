@@ -1,5 +1,5 @@
 
-export class CookiesHelper
+export abstract class CookiesHelper
 {
   /**
    * Возвращает куки с указанным name или undefined, если ничего не найдено

@@ -1,4 +1,4 @@
-import { LocalizationCoreDispatcher } from '../localization';
+import { LocalizationCoreDispatcher } from '#localization';
 export class NumberFormatter {
     /**
      * Форматирует число в соответствии с форматом и текущей локалью.

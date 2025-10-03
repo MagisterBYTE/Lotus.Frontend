@@ -1,4 +1,4 @@
-export declare class ObjectHelper {
+export declare abstract class ObjectHelper {
     /**
      * Получить значения свойства у объекта source по пути propertyPath
      * @param source Объект

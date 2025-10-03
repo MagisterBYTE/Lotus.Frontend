@@ -1,5 +1,5 @@
 import { TGuid } from '../types';
-export declare class GuidHelper {
+export declare abstract class GuidHelper {
     /**
      * Пустой Guid
      */
@@ -14,7 +14,7 @@ export declare class GuidHelper {
      * @param value Проверяемый объект
      * @returns true, если объект соответствует типу TGuid, false в противном случае
      */
-    static checkOfGuid(value?: any): value is TGuid;
+    static instanceOfGuid(value?: any): value is TGuid;
     /**
      * Создание простого Guid
      * @returns Guid

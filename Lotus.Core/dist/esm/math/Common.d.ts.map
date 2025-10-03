@@ -1,1 +1,1 @@
-{"version":3,"file":"Common.d.ts","sourceRoot":"","sources":["../../../src/math/Common.ts"],"names":[],"mappings":"AACA,qBAAa,KAAK;IAEhB,gBAAuB,OAAO,WAAW;CAC1C"}
+{"version":3,"file":"Common.d.ts","sourceRoot":"","sources":["../../../src/math/Common.ts"],"names":[],"mappings":"AACA,8BAAsB,KAAK;IAEzB,gBAAuB,OAAO,WAAW;CAC1C"}

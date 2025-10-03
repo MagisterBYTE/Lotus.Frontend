@@ -1,5 +1,5 @@
 
-export class EnumHelper
+export abstract class EnumHelper
 {
   /**
    * Проверка на установленный флаг

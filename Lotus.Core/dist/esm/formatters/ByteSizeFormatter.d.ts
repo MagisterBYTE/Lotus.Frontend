@@ -1,5 +1,5 @@
-import { TLanguageType } from '../localization';
-export declare class ByteSizeFormatter {
+import { TLanguageType } from '#localization';
+export declare abstract class ByteSizeFormatter {
     /**
      *
      * @param sizeInBytes

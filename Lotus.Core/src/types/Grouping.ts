@@ -24,9 +24,9 @@ export interface IGrouping<TItem extends Record<string, any> = Record<string, an
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfGrouping(value: any): value is IGrouping 
+export function instanceOfGrouping(value: any): value is IGrouping 
 {
-  if (value)
+  if (value && typeof value === "object")
   {
     return ('groupKey' in value) && ('items' in value) && (Array.isArray(value['items']));
   }
@@ -40,9 +40,9 @@ export function checkOfGrouping(value: any): value is IGrouping
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfGrouping(value: any): IGrouping | undefined
+export function castToGrouping(value: any): IGrouping | undefined
 {
-  if (checkOfGrouping(value))
+  if (instanceOfGrouping(value))
   {
     return value as IGrouping;
   }

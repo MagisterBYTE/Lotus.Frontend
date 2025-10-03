@@ -1,6 +1,6 @@
 import { IRequest } from './Request';
 
-export class RequestHelper
+export abstract class RequestHelper
 {
   public static createURLSearchParams(request?: IRequest): URLSearchParams
   {

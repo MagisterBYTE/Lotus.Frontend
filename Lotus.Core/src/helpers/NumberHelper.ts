@@ -1,5 +1,5 @@
 
-export class NumberHelper
+export abstract class NumberHelper
 {
   /**
    * Сравнение числовых значений

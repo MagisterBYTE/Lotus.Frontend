@@ -1,4 +1,4 @@
-import { LocalizationCore } from '../../localization';
+import { LocalizationCore } from '#localization';
 
 /**
  * Описание функции фильтрации

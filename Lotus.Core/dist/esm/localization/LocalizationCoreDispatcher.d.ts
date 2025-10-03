@@ -1,5 +1,5 @@
 import { TLanguageType } from './LanguageType';
-export declare class LocalizationCoreDispatcher {
+export declare abstract class LocalizationCoreDispatcher {
     private static _currentLanguage;
     /**
      * Получить текущую язык

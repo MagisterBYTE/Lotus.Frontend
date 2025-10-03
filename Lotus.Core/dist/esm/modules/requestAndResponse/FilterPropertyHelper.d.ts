@@ -1,5 +1,5 @@
 import { IFilterPropertyCollection, IFilterProperty } from './FilterProperty';
-export declare class FilterPropertyHelper {
+export declare abstract class FilterPropertyHelper {
     /**
      * Проверка на значение фильтра свойства
      * @param filterProperty Параметры фильтрации свойства

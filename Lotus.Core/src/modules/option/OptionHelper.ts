@@ -3,8 +3,7 @@ import { ArrayHelper } from '#helpers';
 import { TKey } from '#types';
 import { Assert } from '#utils';
 
-
-export class OptionHelper
+export abstract class OptionHelper
 {
   /**
    * Преобразование значение в значение корректного типа

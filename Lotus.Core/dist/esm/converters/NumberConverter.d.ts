@@ -1,4 +1,4 @@
-export declare class NumberConverter {
+export declare abstract class NumberConverter {
     /**
      * Преобразование в текст который можно сконвертировать в целый тип
      * @param text Текст

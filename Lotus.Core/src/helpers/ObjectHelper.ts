@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export class ObjectHelper
+export abstract class ObjectHelper
 {
   /**
    * Получить значения свойства у объекта source по пути propertyPath

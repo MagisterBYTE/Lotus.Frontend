@@ -16,7 +16,7 @@ export class GuidHelper {
      * @returns true, если объект соответствует типу TGuid, false в противном случае
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static checkOfGuid(value) {
+    static instanceOfGuid(value) {
         if (value) {
             return GuidHelper.TGuidRegex.test(value.toString());
         }

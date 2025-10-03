@@ -1,4 +1,4 @@
-export declare class BooleanConverter {
+export declare abstract class BooleanConverter {
     /**
      * Текстовые значение логического типа которые означает истинное значение
      */

@@ -1,5 +1,5 @@
-import { ISortPropertyCollection, ISortProperty } from './SortProperty';
-export declare class SortPropertyHelper {
+import { ISortProperty, ISortPropertyCollection } from './SortProperty';
+export declare abstract class SortPropertyHelper {
     /**
      * Сортировка массива по указанному свойству сортировки
      * @param massive Исходный массив

@@ -18,7 +18,7 @@ export const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light'
  * @returns Статус проверки
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfColorVariantName(value) {
+export function instanceOfColorVariantName(value) {
     return TColorVariantNames.includes(value);
 }
 //# sourceMappingURL=ColorVariantsTypes.js.map

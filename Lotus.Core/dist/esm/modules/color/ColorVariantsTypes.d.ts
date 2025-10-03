@@ -25,5 +25,5 @@ export declare const TColorVariantNames: readonly TColorVariantName[];
  * @param value Проверяемое значение
  * @returns Статус проверки
  */
-export declare function checkOfColorVariantName(value: any): value is TColorVariantName;
+export declare function instanceOfColorVariantName(value: any): value is TColorVariantName;
 //# sourceMappingURL=ColorVariantsTypes.d.ts.map

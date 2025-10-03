@@ -1,4 +1,4 @@
-import { IPropertyTypeDesc } from '../objectInfo';
+import { IPropertyTypeDesc } from "#modules/objectInfo";
 
 /**
  * Интерфейс для сортировки по одному свойству

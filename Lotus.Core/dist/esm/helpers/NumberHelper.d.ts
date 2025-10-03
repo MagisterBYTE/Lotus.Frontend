@@ -1,4 +1,4 @@
-export declare class NumberHelper {
+export declare abstract class NumberHelper {
     /**
      * Сравнение числовых значений
      * @param left Левое значение

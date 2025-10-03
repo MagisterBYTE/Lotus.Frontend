@@ -8,7 +8,7 @@ export const TColorSemantics = ['primary', 'secondary', 'error', 'warning', 'inf
  * @returns Статус проверки
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfColorSemantic(value) {
+export function instanceOfColorSemantic(value) {
     return TColorSemantics.includes(value);
 }
 //# sourceMappingURL=ColorSemantic.js.map

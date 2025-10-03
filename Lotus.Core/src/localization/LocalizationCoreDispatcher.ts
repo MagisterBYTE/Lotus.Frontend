@@ -3,7 +3,7 @@ import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 import { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
 
-export class LocalizationCoreDispatcher
+export abstract class LocalizationCoreDispatcher
 {
   // #region Static properties
   private static _currentLanguage: TLanguageType | undefined;

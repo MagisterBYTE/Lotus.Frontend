@@ -1,4 +1,4 @@
-export declare class BrowserHelper {
+export declare abstract class BrowserHelper {
     /**
      * Проверяет, выполняется ли код на localhost
      * @returns {boolean} Возвращает true, если текущий хост - localhost, IPv6 localhost [::1],

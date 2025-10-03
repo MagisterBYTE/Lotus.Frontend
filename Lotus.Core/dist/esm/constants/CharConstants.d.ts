@@ -1,4 +1,4 @@
-export declare class CharConstants {
+export declare abstract class CharConstants {
     /**
      * Неразрывный пробел (По ширине совпадает с межсловным пробелом.)
      * Мнемоника в HTML 4 - &nbsp;

@@ -1,17 +1,17 @@
 import { GuidHelper } from './GuidHelper';
 describe('GuidHelper', () => {
-    describe('checkOfGuid', () => {
+    describe('instanceOfGuid', () => {
         it('should return true for valid GUID', () => {
             const validGuid = '123e4567-e89b-12d3-a456-426614174000';
-            expect(GuidHelper.checkOfGuid(validGuid)).toBe(true);
+            expect(GuidHelper.instanceOfGuid(validGuid)).toBe(true);
         });
         it('should return false for invalid GUID', () => {
             const invalidGuid = '123e4567-e89b-12d3-a456-42661417400Z'; // Неверный символ "Z"
-            expect(GuidHelper.checkOfGuid(invalidGuid)).toBe(false);
+            expect(GuidHelper.instanceOfGuid(invalidGuid)).toBe(false);
         });
         it('should return false for non-GUID string', () => {
             const nonGuidString = 'hello-world';
-            expect(GuidHelper.checkOfGuid(nonGuidString)).toBe(false);
+            expect(GuidHelper.instanceOfGuid(nonGuidString)).toBe(false);
         });
     });
     describe('createGuid', () => {
@@ -26,7 +26,7 @@ describe('GuidHelper', () => {
         });
         it('should generate a valid GUID', () => {
             const guid = GuidHelper.createGuid();
-            expect(GuidHelper.checkOfGuid(guid)).toBe(true);
+            expect(GuidHelper.instanceOfGuid(guid)).toBe(true);
         });
         it('should generate a unique GUID each time', () => {
             const guid1 = GuidHelper.createGuid();

@@ -1,7 +1,7 @@
-import { LocalizationCore, LocalizationCoreDispatcher, TLanguageType } from '../localization';
+import { LocalizationCore, LocalizationCoreDispatcher, TLanguageType } from '#localization';
 import { NumberFormatter } from './NumberFormatter';
 
-export class ByteSizeFormatter
+export abstract class ByteSizeFormatter
 {
   /**
    * 

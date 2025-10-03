@@ -11,5 +11,5 @@ export declare const TColorSemantics: readonly TColorSemantic[];
  * @param value Проверяемое значение
  * @returns Статус проверки
  */
-export declare function checkOfColorSemantic(value: any): value is TColorSemantic;
+export declare function instanceOfColorSemantic(value: any): value is TColorSemantic;
 //# sourceMappingURL=ColorSemantic.d.ts.map

@@ -1,4 +1,4 @@
-import { IOption } from '../option';
+import { IOption } from '#modules/option';
 import { IPropertyEditable } from './PropertyEditable';
 import { IPropertyFiltering } from './PropertyFiltering';
 import { IPropertyGrouping } from './PropertyGrouping';

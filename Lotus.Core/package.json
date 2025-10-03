@@ -1,6 +1,6 @@
 {
   "name": "lotus-core",
-  "version": "3.0.1",
+  "version": "3.0.5",
   "scripts": {
     "test": "jest",
     "build": "tsc",
@@ -19,6 +19,11 @@
     "#helpers": "./src/helpers/index.ts",
     "#localization": "./src/localization/index.ts",
     "#math": "./src/math/index.ts",
+    "#modules/filter": "./src/modules/filter/index.ts",
+    "#modules/objectInfo": "./src/modules/objectInfo/index.ts",
+    "#modules/option": "./src/modules/option/index.ts",
+    "#modules/requestAndResponse": "./src/modules/requestAndResponse/index.ts",
+    "#modules/validation": "./src/modules/validation/index.ts",
     "#types": "./src/types/index.ts",
     "#utils": "./src/utils/index.ts"
   },

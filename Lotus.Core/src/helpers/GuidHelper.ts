@@ -1,6 +1,6 @@
 import { TGuid } from '../types';
 
-export class GuidHelper
+export abstract class GuidHelper
 {
   /**
    * Пустой Guid
@@ -23,7 +23,7 @@ export class GuidHelper
    * @returns true, если объект соответствует типу TGuid, false в противном случае
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static checkOfGuid(value?: any): value is TGuid
+  public static instanceOfGuid(value?: any): value is TGuid
   {
     if (value)
     {

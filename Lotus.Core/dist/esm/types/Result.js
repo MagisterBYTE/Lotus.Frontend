@@ -4,8 +4,8 @@
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfResult(value) {
-    if (value) {
+export function instanceOfResult(value) {
+    if (value && typeof value === "object") {
         return ('succeeded' in value) && ('code' in value);
     }
     return false;
@@ -16,8 +16,8 @@ export function checkOfResult(value) {
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfResult(value) {
-    if (checkOfResult(value)) {
+export function castToResult(value) {
+    if (instanceOfResult(value)) {
         return value;
     }
     else {

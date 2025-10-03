@@ -4,8 +4,8 @@
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfEditable(value) {
-    if (value) {
+export function instanceOfEditable(value) {
+    if (value && typeof value === "object") {
         return ('id' in value);
     }
     return false;
@@ -16,8 +16,8 @@ export function checkOfEditable(value) {
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfEditable(value) {
-    if (checkOfEditable(value)) {
+export function castToEditable(value) {
+    if (instanceOfEditable(value)) {
         return value;
     }
     else {

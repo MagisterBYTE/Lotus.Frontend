@@ -1,4 +1,4 @@
-import { TLanguageType } from '../localization';
+import { TLanguageType } from '#localization';
 export declare class NumberFormatter {
     /**
      * Форматирует число в соответствии с форматом и текущей локалью.

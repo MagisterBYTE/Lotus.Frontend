@@ -1,7 +1,7 @@
 /**
  * Вспомогательный класс для работы со строками
  */
-export class StringHelper
+export abstract class StringHelper
 {
   /**
    * Сравнивает строки без учета регистра

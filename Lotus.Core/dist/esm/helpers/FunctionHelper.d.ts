@@ -1,7 +1,7 @@
 /**
  * Вспомогательный класс для работы с функциями и методами
  */
-export declare class FunctionHelper {
+export declare abstract class FunctionHelper {
     /**
      * Привязывает все методы объекта к его контексту (this)
      *

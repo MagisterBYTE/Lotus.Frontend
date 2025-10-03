@@ -17,11 +17,11 @@ export interface IGrouping<TItem extends Record<string, any> = Record<string, an
  * @param value Проверяемый объект
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
-export declare function checkOfGrouping(value: any): value is IGrouping;
+export declare function instanceOfGrouping(value: any): value is IGrouping;
 /**
  * Преобразование объекта к интерфейсу IGrouping
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-export declare function instanceOfGrouping(value: any): IGrouping | undefined;
+export declare function castToGrouping(value: any): IGrouping | undefined;
 //# sourceMappingURL=Grouping.d.ts.map

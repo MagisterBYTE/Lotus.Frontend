@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { instanceOfResult } from '../../types/Result';
+import { castToResult } from '#types';
 /**
  * Базовый класс для сервисов Api
  */
@@ -30,7 +30,7 @@ export class ApiService {
         // Запрос был сделан, и сервер ответил кодом состояния, который выходит за пределы 2xx
         if (error.response) {
             // Все ошибки приводим к типу IResult для унификации обработки и реагирования
-            const result = instanceOfResult(error.response.data);
+            const result = castToResult(error.response.data);
             if (result) {
                 console.log(error.response.data);
                 return Promise.reject(result);

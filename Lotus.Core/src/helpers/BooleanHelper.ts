@@ -1,4 +1,4 @@
-export class BooleanHelper
+export abstract class BooleanHelper
 {
   /**
    * Сравнение логических значений

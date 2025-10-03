@@ -4,8 +4,8 @@
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfGrouping(value) {
-    if (value) {
+export function instanceOfGrouping(value) {
+    if (value && typeof value === "object") {
         return ('groupKey' in value) && ('items' in value) && (Array.isArray(value['items']));
     }
     return false;
@@ -16,8 +16,8 @@ export function checkOfGrouping(value) {
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfGrouping(value) {
-    if (checkOfGrouping(value)) {
+export function castToGrouping(value) {
+    if (instanceOfGrouping(value)) {
         return value;
     }
     else {

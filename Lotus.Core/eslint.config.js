@@ -48,7 +48,7 @@ export default tseslint.config(
       'max-len': ["error", { "code": 170, "tabWidth": 2, "ignoreComments": true }],
 
       // eslint-plugin-import
-      "import/order": ["warn", { "groups": ["builtin", "external", "internal", "parent", "sibling", "index"] }]
+      "import/order": ["warn", { "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "relative"] }]
     }
   }
 );

@@ -1,4 +1,4 @@
-import { LocalizationCoreDispatcher, TLanguageType } from '../localization';
+import { LocalizationCoreDispatcher, TLanguageType } from '#localization';
 
 export class NumberFormatter
 {

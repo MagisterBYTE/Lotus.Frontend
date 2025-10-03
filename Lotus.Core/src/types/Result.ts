@@ -32,9 +32,9 @@ export interface IResult<TData = any>
  */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function checkOfResult(value: any): value is IResult
+export function instanceOfResult(value: any): value is IResult
 {
-  if (value)
+  if (value && typeof value === "object")
   {
     return ('succeeded' in value) && ('code' in value);
   }
@@ -48,9 +48,9 @@ export function checkOfResult(value: any): value is IResult
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfResult(value: any): IResult | undefined
+export function castToResult(value: any): IResult | undefined
 {
-  if (checkOfResult(value))
+  if (instanceOfResult(value))
   {
     return value as IResult;
   }

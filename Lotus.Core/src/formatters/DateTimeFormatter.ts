@@ -1,4 +1,4 @@
-export class DateTimeFormatter 
+export abstract class DateTimeFormatter 
 {
   /**
    * Форматирует дату в строку с учетом указанной локали.

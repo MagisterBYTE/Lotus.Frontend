@@ -1,4 +1,4 @@
-export class BooleanConverter
+export abstract class BooleanConverter
 {
   /**
    * Текстовые значение логического типа которые означает истинное значение

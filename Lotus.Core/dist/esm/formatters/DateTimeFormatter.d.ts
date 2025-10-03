@@ -1,4 +1,4 @@
-export declare class DateTimeFormatter {
+export declare abstract class DateTimeFormatter {
     /**
      * Форматирует дату в строку с учетом указанной локали.
      * @param {Date} date - Объект Date, который нужно отформатировать.

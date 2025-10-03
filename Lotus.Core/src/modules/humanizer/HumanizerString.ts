@@ -1,5 +1,5 @@
 
-export class HumanizerString
+export abstract class HumanizerString
 {
 
 }

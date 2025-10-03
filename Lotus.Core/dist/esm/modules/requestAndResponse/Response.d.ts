@@ -1,4 +1,4 @@
-import { IResult } from '../../types';
+import { IResult } from '#types';
 import { IPageInfoResponse } from './PageInfo';
 /**
  * Интерфейса для получения данных

@@ -1,4 +1,4 @@
-export declare class BooleanHelper {
+export declare abstract class BooleanHelper {
     /**
      * Сравнение логических значений
      * @param left Левое значение

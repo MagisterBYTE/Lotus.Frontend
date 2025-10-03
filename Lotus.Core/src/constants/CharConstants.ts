@@ -1,5 +1,4 @@
-
-export class CharConstants
+export abstract class CharConstants
 {
   /**
    * Неразрывный пробел (По ширине совпадает с межсловным пробелом.)

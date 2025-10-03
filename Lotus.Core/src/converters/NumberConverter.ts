@@ -1,5 +1,4 @@
-
-export class NumberConverter
+export abstract class NumberConverter
 {
   // #region Integer
   /**

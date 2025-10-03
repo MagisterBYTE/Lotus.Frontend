@@ -3,7 +3,7 @@ import { ColorNames } from './ColorNames';
 import { TColorVariantIndex, TColorVariantName, TColorVariantNames, TColorVariantIndexMain, 
   TColorVariantIndexBlack, TColorVariantIndexWhite } from './ColorVariantsTypes';
 
-export class ColorVariantsHelper
+export abstract class ColorVariantsHelper
 {
   /**
    * Получить цвет по его индексу

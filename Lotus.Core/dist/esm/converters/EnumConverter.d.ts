@@ -1,4 +1,4 @@
-export declare class EnumConverter {
+export declare abstract class EnumConverter {
     /**
      * Метод для получения всех значений перечисления.
      * @param enumValue - объект перечисления, где ключи - это имена, а значения - это соответствующие значения.

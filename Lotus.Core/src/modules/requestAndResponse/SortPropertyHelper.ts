@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BooleanConverter, DateTimeConverter } from '../../converters';
-import { StringHelper, BooleanHelper, NumberHelper, DateTimeHelper } from '../../helpers';
-import { TPropertyType } from '../objectInfo';
-import { ISortPropertyCollection, ISortProperty } from './SortProperty';
+import { BooleanConverter, DateTimeConverter } from '#converters';
+import { BooleanHelper, DateTimeHelper, NumberHelper, StringHelper } from '#helpers';
+import { TPropertyType } from '#modules/objectInfo';
+import { ISortProperty, ISortPropertyCollection } from './SortProperty';
 
-export class SortPropertyHelper
+export abstract class SortPropertyHelper
 {
   /**
    * Сортировка массива по указанному свойству сортировки
