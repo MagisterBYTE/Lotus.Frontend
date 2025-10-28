@@ -60,6 +60,7 @@ export declare const LocalizationCoreDataRu: {
         Gb: string;
     };
     validation: {
+        invalidEmail: string;
         required: string;
         maxLength: (length: number) => string;
     };

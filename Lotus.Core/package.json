@@ -24,6 +24,7 @@
     "#modules/option": "./src/modules/option/index.ts",
     "#modules/requestAndResponse": "./src/modules/requestAndResponse/index.ts",
     "#modules/validation": "./src/modules/validation/index.ts",
+    "#modules/route": "./src/modules/route/index.ts",
     "#types": "./src/types/index.ts",
     "#utils": "./src/utils/index.ts"
   },
@@ -35,6 +36,10 @@
     "./constants": {
       "import": "./dist/esm/constants/index.js",
       "types": "./dist/esm/constants/index.d.ts"
+    },
+    "./converters": {
+      "import": "./dist/esm/converters/index.js",
+      "types": "./dist/esm/converters/index.d.ts"
     },
     "./formatters": {
       "import": "./dist/esm/formatters/index.js",

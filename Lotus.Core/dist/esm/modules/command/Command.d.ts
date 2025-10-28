@@ -1,4 +1,4 @@
-import { IRoute } from '#types';
+import { IRoute } from "#modules/route";
 /**
  * Делегат для интерфейса команды, возвращает any
  */

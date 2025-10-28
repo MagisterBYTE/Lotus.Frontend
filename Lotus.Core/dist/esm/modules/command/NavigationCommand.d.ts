@@ -1,4 +1,4 @@
-import { IRoute } from '../../types';
+import { IRoute } from '#modules/route';
 import { BaseCommand, ICommand } from './Command';
 /**
  * Интерфейс команды предназначенной для простой навигации

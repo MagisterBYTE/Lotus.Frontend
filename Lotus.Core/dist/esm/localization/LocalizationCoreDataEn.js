@@ -60,6 +60,7 @@ export const LocalizationCoreDataEn = {
         Gb: 'Gb'
     },
     validation: {
+        invalidEmail: 'Incorrect email',
         required: 'Field is required',
         maxLength: (length) => `Field length cannot exceed ${length} characters`
     }
