@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { castToResult } from '#types';
+import { LocalizationCore } from '#localization';
 /**
  * Базовый класс для сервисов Api
  */
@@ -36,6 +37,18 @@ export class ApiService {
                 return Promise.reject(result);
             }
             else {
+                // Проверяем типовые ошибки
+                // 404
+                if (error.response.status === 404) {
+                    const uri = error.request.responseURL ?? '';
+                    const message = LocalizationCore.data.api.errorNotFound.replace("{0}", uri);
+                    const resultNotFound = {
+                        succeeded: false,
+                        code: 404,
+                        message: message
+                    };
+                    return Promise.reject(resultNotFound);
+                }
                 const resultError = {
                     succeeded: false,
                     code: Number(error.response.status ?? 500),
@@ -49,7 +62,7 @@ export class ApiService {
             if (error.request) {
                 // Проверка на отдельные коды ошибок
                 if (error.code === 'ERR_NETWORK') {
-                    const result = { succeeded: false, code: 500, message: error.message };
+                    const result = { succeeded: false, code: 500, message: LocalizationCore.data.api.errorNotOnline };
                     return Promise.reject(result);
                 }
                 console.log(error);
@@ -60,7 +73,7 @@ export class ApiService {
                 // Произошло что-то при настройке запроса, вызвавшее ошибку
                 console.log(error);
                 console.log('Error is not result!!!');
-                return Promise.reject(error);
+                return Promise.reject(String(error));
             }
         }
     }

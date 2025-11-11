@@ -25,11 +25,8 @@ export interface ICommandService {
 }
 /**
  * Сервис для работы с командами
- * @description Все команды которые есть в приложении должны быть добавлены в данный сервис
  */
-export declare class CommandServiceClass implements ICommandService {
-    private static _CommandService;
-    static get Instance(): CommandServiceClass;
+export declare class CommandService implements ICommandService {
     commands: ICommand[];
     constructor();
     addCommands(commands: ICommand[]): void;
@@ -38,8 +35,4 @@ export declare class CommandServiceClass implements ICommandService {
     getCommandsByGroupAsName(group: string): string[];
     getCommandsByName(names?: string[]): ICommand[];
 }
-/**
- * Глобальный доступ к сервису для работы с командами
- */
-export declare const CommandService: CommandServiceClass;
 //# sourceMappingURL=CommandService.d.ts.map

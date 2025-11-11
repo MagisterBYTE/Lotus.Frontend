@@ -1,4 +1,3 @@
-
 export class Assert
 {
   /**
@@ -6,9 +5,9 @@ export class Assert
    * @param value Проверяемое значение
    * @returns Статус проверки
    */
-  public static empty(value: unknown):boolean
+  public static emptyValue(value: unknown): boolean
   {
-    return value == undefined || value == null;
+    return value == undefined || value == null || (typeof value === 'string' && value == '');
   }
 
   /**
@@ -16,9 +15,95 @@ export class Assert
    * @param value Проверяемое значение
    * @returns Статус проверки
    */
-  public static exist(value: unknown):boolean
+  public static existValue<TValue>(value: TValue|any): value is TValue
   {
-    return value != undefined && value != null;
+    const status = (value != undefined && value != null);
+    if (status)
+    {
+      if (typeof value === 'string')
+      {
+        if (value === '') return false;
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Метод возвращает true если хотя бы один из аргументов при преобразовании в Boolean дает true
+   * @param args Список аргументов
+   * @returns
+   */
+  public static anyTrue(...args: any[]): boolean
+  {
+    for (const arg of args)
+    {
+      if (Boolean(arg))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Метод возвращает true если все аргументы при преобразовании в Boolean дает true
+   * @param args Список аргументов
+   * @returns
+   */
+  public static allTrue(...args: any[]): boolean
+  {
+    // Перебираем все аргументы с помощью цикла for...of
+    for (const arg of args)
+    {
+      // Если хотя бы один аргумент преобразуется в false,
+      if (!Boolean(arg))
+      {
+        // немедленно возвращаем false (короткое замыкание)
+        return false;
+        // ↑
+        // Не проверяем остальные аргументы, так как уже нашли false
+      }
+    }
+    // Если ВСЕ аргументы преобразовались в true, возвращаем true
+    // Также возвращает true для пустого списка аргументов
+    return true;
+  }
+
+  /**
+   * Метод возвращает false если хотя бы один из аргументов при преобразовании в Boolean дает false
+   * @param args Список аргументов
+   * @returns
+   */
+  public static anyFalse(...args: any[]): boolean
+  {
+    for (const arg of args)
+    {
+      if (Boolean(arg) === false)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Метод возвращает true если все аргументы при преобразовании в Boolean дает true
+   * @param args Список аргументов
+   * @returns
+   */
+  public static allFalse(...args: any[]): boolean
+  {
+    for (const arg of args)
+    {
+      if (Boolean(arg))
+      {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -26,8 +111,8 @@ export class Assert
    * @param object Проверяемый объект
    * @returns Статус проверки
    */
-  public static allUndefined(object: object): boolean
+  public static objectPropertyEmpty(object: object): boolean
   {
-    return !Object.values(object).some((value) => value !== undefined)
+    return !Object.values(object).some((value) => value !== undefined);
   }
 }

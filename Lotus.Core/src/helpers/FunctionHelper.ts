@@ -11,6 +11,7 @@ export abstract class FunctionHelper
    * 
    * @template T - Тип объекта
    * @param {T} scope - Объект, методы которого нужно привязать (обычно передается `this`)
+   * @param exclude - Список свойств которые надо исключить 
    * @returns {T} Объект с привязанными методами
    * @example
    * class MyClass {
@@ -23,7 +24,7 @@ export abstract class FunctionHelper
    *   }
    * }
    */
-  public static bindAllMethods<T extends object>(scope: T): T 
+  public static bindAllMethods<T extends object>(scope: T, exclude?: string[]): T 
   {
     // Получаем все свойства объекта, включая унаследованные
     let currentObj = scope;
@@ -53,11 +54,14 @@ export abstract class FunctionHelper
 
       // Получаем значение свойства
       const value = scope[property as keyof T];
-      
+
       // Привязываем только функции
       if (typeof value === 'function') 
       {
-        scope[property as keyof T] = value.bind(scope);
+        if((exclude && exclude.includes(property)) === false)
+        {
+          scope[property as keyof T] = value.bind(scope);
+        }
       }
     }
 

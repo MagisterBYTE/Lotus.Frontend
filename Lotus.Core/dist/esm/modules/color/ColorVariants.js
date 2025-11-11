@@ -34,10 +34,10 @@ export class ColorVariants {
     }
     static createFromColorRelativeLightness(mainColor, lightColor, darkColor) {
         const main = new Color(mainColor);
-        const white = main.increaseLightness(0.95);
-        const palest = main.increaseLightness(0.87);
-        const pale = main.increaseLightness(0.82);
-        const lighter = main.increaseLightness(0.77);
+        const white = main.increaseLightness(0.4);
+        const palest = main.increaseLightness(0.3);
+        const pale = main.increaseLightness(0.2);
+        const lighter = main.increaseLightness(0.1);
         const light = new Color(lightColor);
         const dark = new Color(darkColor);
         const darker = main.decreaseLightness(0.40);

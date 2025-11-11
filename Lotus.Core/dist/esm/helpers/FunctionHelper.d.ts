@@ -10,6 +10,7 @@ export declare abstract class FunctionHelper {
      *
      * @template T - Тип объекта
      * @param {T} scope - Объект, методы которого нужно привязать (обычно передается `this`)
+     * @param exclude - Список свойств которые надо исключить
      * @returns {T} Объект с привязанными методами
      * @example
      * class MyClass {
@@ -22,6 +23,6 @@ export declare abstract class FunctionHelper {
      *   }
      * }
      */
-    static bindAllMethods<T extends object>(scope: T): T;
+    static bindAllMethods<T extends object>(scope: T, exclude?: string[]): T;
 }
 //# sourceMappingURL=FunctionHelper.d.ts.map

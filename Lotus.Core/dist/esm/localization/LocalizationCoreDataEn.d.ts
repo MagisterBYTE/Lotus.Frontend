@@ -1,4 +1,8 @@
 export declare const LocalizationCoreDataEn: {
+    api: {
+        errorNotOnline: string;
+        errorNotFound: string;
+    };
     common: {
         name: string;
         displayName: string;

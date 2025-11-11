@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IRoute } from "#modules/route";
+import { Assert } from "#utils";
 
 /**
  * Делегат для интерфейса команды, возвращает any
@@ -37,14 +38,14 @@ export interface ICommand
   execute: FunctionCommandDelegateAny;
 
   /**
-   * Метод определяющий возможность выполнения команды
+   * Статус определяющий возможность выполнения команды
    */
-  canExecute?: FunctionCommandDelegateBool;
+  canExecute?: FunctionCommandDelegateBool | boolean;
 
   /**
    * Статус выбора
    */
-  isSelected?: FunctionCommandDelegateBool;
+  isSelected?: FunctionCommandDelegateBool | boolean;
 
   //
   // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
@@ -103,14 +104,14 @@ export class BaseCommand implements ICommand
   public execute: FunctionCommandDelegateAny
 
   /**
-   * Метод определяющий возможность выполнения команды
+   * Статус определяющий возможность выполнения команды
    */
-  public canExecute?: FunctionCommandDelegateBool;
+  public canExecute?: FunctionCommandDelegateBool | boolean;
 
   /**
    * Статус выбора
    */
-  public isSelected?: FunctionCommandDelegateBool;
+  public isSelected?: FunctionCommandDelegateBool | boolean;
 
   //
   // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
@@ -150,7 +151,7 @@ export class BaseCommand implements ICommand
     this.executeCommand = this.executeCommand.bind(this);
     this.canExecuteCommand = this.canExecuteCommand.bind(this);
     this.isSelectedCommand = this.isSelectedCommand.bind(this);
-    this.execute = () => {};
+    this.execute = () => { };
   }
 
   /**
@@ -167,9 +168,13 @@ export class BaseCommand implements ICommand
    */
   public canExecuteCommand(context?: any): boolean
   {
-    if(this.canExecute)
+    if (Assert.existValue<FunctionCommandDelegateBool | boolean>(this.canExecute))
     {
-      return this.canExecute(this, context);
+      if (typeof this.canExecute === 'function')
+      {
+        return this.canExecute(this, context);
+      }
+      return this.canExecute;
     }
 
     return true;
@@ -180,11 +185,15 @@ export class BaseCommand implements ICommand
    */
   public isSelectedCommand(context?: any): boolean
   {
-    if(this.isSelected)
+    if (Assert.existValue<FunctionCommandDelegateBool | boolean>(this.isSelected))
     {
-      return this.isSelected(this, context);
+      if(typeof this.isSelected === 'function')
+      {
+        return this.isSelected(this, context);
+      }
+      return this.isSelected;
     }
-  
+
     return false;
   }
 }

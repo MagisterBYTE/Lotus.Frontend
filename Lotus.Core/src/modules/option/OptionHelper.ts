@@ -68,7 +68,7 @@ export abstract class OptionHelper
    */
   public static getValueOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): TValueOption
   {
-    if (Assert.exist(initialSelectedValue))
+    if (Assert.existValue(initialSelectedValue))
     {
       return initialSelectedValue!;
     }
@@ -84,7 +84,7 @@ export abstract class OptionHelper
    */
   public static getLabelOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): string
   {
-    if (Assert.exist(initialSelectedValue))
+    if (Assert.existValue(initialSelectedValue))
     {
       let text = '';
       options.forEach((element) =>
@@ -110,7 +110,7 @@ export abstract class OptionHelper
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static getIconOrFirst<TValueOption extends TKey = TKey>(options: IOption[], initialSelectedValue?: TValueOption): any
   {
-    if (Assert.exist(initialSelectedValue))
+    if (Assert.existValue(initialSelectedValue))
     {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let icon: any = undefined;
@@ -164,7 +164,7 @@ export abstract class OptionHelper
    */
   public static getOptionByValueOrFirst(options: IOption[], selectedValue?: TKey): IOption
   {
-    if (Assert.exist(selectedValue))
+    if (Assert.existValue(selectedValue))
     {
       for (const option of options)
       {
@@ -186,7 +186,7 @@ export abstract class OptionHelper
    */
   public static getOptionByValueOrUndefined(options: IOption[], selectedValue?: TKey): IOption|undefined
   {
-    if (Assert.exist(selectedValue))
+    if (Assert.existValue(selectedValue))
     {
       for (const element of options)
       {
@@ -210,7 +210,7 @@ export abstract class OptionHelper
   public static getLabelByValue(options: IOption[], selectedValue?: TKey): string
   {
     let text = '';
-    if (Assert.exist(selectedValue))
+    if (Assert.existValue(selectedValue))
     {
       options.forEach((element) =>
       {
@@ -235,7 +235,7 @@ export abstract class OptionHelper
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let icon: any = undefined;
-    if (Assert.exist(selectedValue))
+    if (Assert.existValue(selectedValue))
     {
       options.forEach((element) =>
       {
@@ -368,7 +368,7 @@ export abstract class OptionHelper
    */
   public static hasOption(options: IOption[], value?: TKey):boolean
   {
-    if(Assert.exist(value))
+    if(Assert.existValue(value))
     {
       return options.find((x) => x.value == value) !== undefined;
     }

@@ -53,7 +53,7 @@ export class OptionHelper {
      * @returns Значение по умолчанию или первого значения из списка опций
      */
     static getValueOrFirst(options, initialSelectedValue) {
-        if (Assert.exist(initialSelectedValue)) {
+        if (Assert.existValue(initialSelectedValue)) {
             return initialSelectedValue;
         }
         return options[0].value;
@@ -65,7 +65,7 @@ export class OptionHelper {
      * @returns Корректный текст по умолчанию или первое значения текста из списка опций
      */
     static getLabelOrFirst(options, initialSelectedValue) {
-        if (Assert.exist(initialSelectedValue)) {
+        if (Assert.existValue(initialSelectedValue)) {
             let text = '';
             options.forEach((element) => {
                 if (element.value === initialSelectedValue) {
@@ -84,7 +84,7 @@ export class OptionHelper {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static getIconOrFirst(options, initialSelectedValue) {
-        if (Assert.exist(initialSelectedValue)) {
+        if (Assert.existValue(initialSelectedValue)) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let icon = undefined;
             options.forEach((element) => {
@@ -123,7 +123,7 @@ export class OptionHelper {
      * @returns Опция
      */
     static getOptionByValueOrFirst(options, selectedValue) {
-        if (Assert.exist(selectedValue)) {
+        if (Assert.existValue(selectedValue)) {
             for (const option of options) {
                 if (option.value === selectedValue) {
                     return option;
@@ -139,7 +139,7 @@ export class OptionHelper {
      * @returns Опция или undefined
      */
     static getOptionByValueOrUndefined(options, selectedValue) {
-        if (Assert.exist(selectedValue)) {
+        if (Assert.existValue(selectedValue)) {
             for (const element of options) {
                 if (element.value === selectedValue) {
                     return element;
@@ -157,7 +157,7 @@ export class OptionHelper {
      */
     static getLabelByValue(options, selectedValue) {
         let text = '';
-        if (Assert.exist(selectedValue)) {
+        if (Assert.existValue(selectedValue)) {
             options.forEach((element) => {
                 if (element.value === selectedValue) {
                     text = element.label;
@@ -176,7 +176,7 @@ export class OptionHelper {
     static getIconByValue(options, selectedValue) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let icon = undefined;
-        if (Assert.exist(selectedValue)) {
+        if (Assert.existValue(selectedValue)) {
             options.forEach((element) => {
                 if (element.value === selectedValue) {
                     icon = element.icon;
@@ -271,7 +271,7 @@ export class OptionHelper {
      * @returns Статус наличия опции
      */
     static hasOption(options, value) {
-        if (Assert.exist(value)) {
+        if (Assert.existValue(value)) {
             return options.find((x) => x.value == value) !== undefined;
         }
         return false;

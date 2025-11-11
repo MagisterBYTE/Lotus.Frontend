@@ -1,5 +1,10 @@
 export const LocalizationCoreDataEn =
 {
+  api:
+  {
+    errorNotOnline: 'Failed to send request. Please check your internet access.',
+    errorNotFound: 'The specified address {0} could not be found. Please check that the server is available and that the address is correct'
+  },
   common:
   {
     name: 'Name',

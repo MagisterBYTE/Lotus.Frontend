@@ -1,3 +1,4 @@
+import { Assert } from "#utils";
 /**
  * Базовый класс команды
  */
@@ -18,7 +19,7 @@ export class BaseCommand {
      */
     execute;
     /**
-     * Метод определяющий возможность выполнения команды
+     * Статус определяющий возможность выполнения команды
      */
     canExecute;
     /**
@@ -69,8 +70,11 @@ export class BaseCommand {
      * Метод определяющий возможность выполнения команды
      */
     canExecuteCommand(context) {
-        if (this.canExecute) {
-            return this.canExecute(this, context);
+        if (Assert.existValue(this.canExecute)) {
+            if (typeof this.canExecute === 'function') {
+                return this.canExecute(this, context);
+            }
+            return this.canExecute;
         }
         return true;
     }
@@ -78,8 +82,11 @@ export class BaseCommand {
      * Статус выбора
      */
     isSelectedCommand(context) {
-        if (this.isSelected) {
-            return this.isSelected(this, context);
+        if (Assert.existValue(this.isSelected)) {
+            if (typeof this.isSelected === 'function') {
+                return this.isSelected(this, context);
+            }
+            return this.isSelected;
         }
         return false;
     }

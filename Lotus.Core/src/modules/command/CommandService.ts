@@ -31,18 +31,12 @@ export interface ICommandService
 
 /**
  * Сервис для работы с командами
- * @description Все команды которые есть в приложении должны быть добавлены в данный сервис
  */
-export class CommandServiceClass implements ICommandService
+export class CommandService implements ICommandService
 {
-  private static _CommandService: CommandServiceClass;
-
-  public static get Instance(): CommandServiceClass 
-  {
-    return (this._CommandService || (this._CommandService = new this()));
-  }
-
+  //#region Fields
   public commands: ICommand[];
+  //#endregion
 
   constructor() 
   {
@@ -56,10 +50,10 @@ export class CommandServiceClass implements ICommandService
 
   public addCommands(commands: ICommand[])
   {
-    commands.forEach(element => 
+    for(const command of commands)
     {
-      this.commands.push(element)
-    });
+      this.commands.push(command)
+    }
   }
 
   public getCommands(): ICommand[]
@@ -96,8 +90,3 @@ export class CommandServiceClass implements ICommandService
     return result;
   }
 }
-
-/**
- * Глобальный доступ к сервису для работы с командами
- */
-export const CommandService = CommandServiceClass.Instance;

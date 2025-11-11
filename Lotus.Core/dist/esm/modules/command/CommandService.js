@@ -1,13 +1,10 @@
 /**
  * Сервис для работы с командами
- * @description Все команды которые есть в приложении должны быть добавлены в данный сервис
  */
-export class CommandServiceClass {
-    static _CommandService;
-    static get Instance() {
-        return (this._CommandService || (this._CommandService = new this()));
-    }
+export class CommandService {
+    //#region Fields
     commands;
+    //#endregion
     constructor() {
         this.commands = [];
         this.getCommands = this.getCommands.bind(this);
@@ -16,9 +13,9 @@ export class CommandServiceClass {
         this.getCommandsByName = this.getCommandsByName.bind(this);
     }
     addCommands(commands) {
-        commands.forEach(element => {
-            this.commands.push(element);
-        });
+        for (const command of commands) {
+            this.commands.push(command);
+        }
     }
     getCommands() {
         return this.commands;
@@ -42,8 +39,4 @@ export class CommandServiceClass {
         return result;
     }
 }
-/**
- * Глобальный доступ к сервису для работы с командами
- */
-export const CommandService = CommandServiceClass.Instance;
 //# sourceMappingURL=CommandService.js.map

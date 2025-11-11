@@ -26,13 +26,13 @@ export interface ICommand {
      */
     execute: FunctionCommandDelegateAny;
     /**
-     * Метод определяющий возможность выполнения команды
+     * Статус определяющий возможность выполнения команды
      */
-    canExecute?: FunctionCommandDelegateBool;
+    canExecute?: FunctionCommandDelegateBool | boolean;
     /**
      * Статус выбора
      */
-    isSelected?: FunctionCommandDelegateBool;
+    isSelected?: FunctionCommandDelegateBool | boolean;
     /**
      * Маршрут команды
      */
@@ -71,13 +71,13 @@ export declare class BaseCommand implements ICommand {
      */
     execute: FunctionCommandDelegateAny;
     /**
-     * Метод определяющий возможность выполнения команды
+     * Статус определяющий возможность выполнения команды
      */
-    canExecute?: FunctionCommandDelegateBool;
+    canExecute?: FunctionCommandDelegateBool | boolean;
     /**
      * Статус выбора
      */
-    isSelected?: FunctionCommandDelegateBool;
+    isSelected?: FunctionCommandDelegateBool | boolean;
     /**
      * Маршрут команды
      */
