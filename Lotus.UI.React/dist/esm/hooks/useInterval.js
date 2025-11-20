@@ -16,3 +16,4 @@ export const useInterval = (callback, delay) => {
         }
     }, [delay]);
 };
+//# sourceMappingURL=useInterval.js.map

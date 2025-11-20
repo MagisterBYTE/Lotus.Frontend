@@ -167,3 +167,4 @@ function isTouchDeviceRippleEffect() {
         navigator.maxTouchPoints > 0 ||
         (navigator?.msMaxTouchPoints ?? 0 > 0));
 }
+//# sourceMappingURL=useRippleEffect.js.map

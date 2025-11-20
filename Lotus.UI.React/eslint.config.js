@@ -19,9 +19,9 @@ export default tseslint.config(
     }
   },
   {
-    ignores: ['dist', 'node_modules', 'coverage', 'eslint.config.js', 'jest.config.ts', '.storybook', 'src/.storydata']
+    ignores: ['dist', 'node_modules', 'coverage', 'eslint.config.js', 'jest.config.ts', '.storybook', 'src/.storydata', 'src/external']
   },
-  
+
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -43,6 +43,15 @@ export default tseslint.config(
   },
   {
     files: ['src/**/*.{ts,tsx}'],
+    settings: {
+      'import/internal-regex': '^#|^@/', // Регулярка для внутренних модулей
+      'import/resolver': {
+        node: {
+          paths: ['src'],
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }
+      }
+    },
     rules: {
       // eslint
       'quotes': ['error', 'single'],
@@ -70,7 +79,25 @@ export default tseslint.config(
       'react/self-closing-comp': ['error', { component: true, html: true }],
 
       // eslint-plugin-import
-      "import/order": ["warn", { "groups": ["builtin", "external", "internal", "parent", "sibling", "index"] }]
+      "import/order": ["warn",
+        {
+          "pathGroups": [
+            {
+              "pattern": "#*",           // Все импорты, начинающиеся с #
+              "group": "internal",       // Относим к внутренним модулям
+              "position": "after",        // После других internal-модулей
+              "patternOptions": { matchBase: true },
+            },
+            {
+              "pattern": "#*/**",        // Вложенные #-импорты  
+              "group": "internal",
+              "position": "after"
+            }
+          ],
+
+          "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "relative"],
+        }
+      ]
     }
   }
 );

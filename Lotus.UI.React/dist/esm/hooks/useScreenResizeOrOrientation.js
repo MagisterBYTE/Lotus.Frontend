@@ -18,3 +18,4 @@ export const useScreenResizeOrOrientation = (callback) => {
         };
     }, []);
 };
+//# sourceMappingURL=useScreenResizeOrOrientation.js.map

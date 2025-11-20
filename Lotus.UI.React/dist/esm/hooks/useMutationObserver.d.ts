@@ -3,3 +3,4 @@ export interface IMutationObserverProps {
     options: MutationObserverInit;
 }
 export declare const useMutationObserver: (props: IMutationObserverProps) => void;
+//# sourceMappingURL=useMutationObserver.d.ts.map

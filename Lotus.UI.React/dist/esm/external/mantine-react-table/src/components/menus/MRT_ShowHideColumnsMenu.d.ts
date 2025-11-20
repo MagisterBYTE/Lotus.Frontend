@@ -1,0 +1,7 @@
+import { type MRT_RowData, type MRT_TableInstance } from '../../types';
+interface Props<TData extends MRT_RowData> {
+    table: MRT_TableInstance<TData>;
+}
+export declare const MRT_ShowHideColumnsMenu: <TData extends MRT_RowData>({ table, }: Props<TData>) => import("react/jsx-runtime").JSX.Element;
+export {};
+//# sourceMappingURL=MRT_ShowHideColumnsMenu.d.ts.map

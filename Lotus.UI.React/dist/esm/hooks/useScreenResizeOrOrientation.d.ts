@@ -3,3 +3,4 @@
  * @param callback Вызываемая функция
  */
 export declare const useScreenResizeOrOrientation: (callback: Function) => void;
+//# sourceMappingURL=useScreenResizeOrOrientation.d.ts.map

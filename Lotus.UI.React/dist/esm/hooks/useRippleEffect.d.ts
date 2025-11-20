@@ -43,3 +43,4 @@ export declare function useRippleEffect<T extends HTMLElement = any>(inputOption
  * @returns Custom HOC useRipple hook
  */
 export declare function customRippleEffect<T extends HTMLElement = any>(inputOptions?: Partial<Omit<RippleOptions<T>, 'ref'>>): (overrideOptions?: Partial<RippleOptions<T>>) => readonly [import("react").RefObject<any>, (event: RippleMinimalEvent) => void];
+//# sourceMappingURL=useRippleEffect.d.ts.map

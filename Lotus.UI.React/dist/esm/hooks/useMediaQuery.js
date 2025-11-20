@@ -19,3 +19,4 @@ export const useMediaQuery = (mediaQuery) => {
     }, [mediaQuery]);
     return matches;
 };
+//# sourceMappingURL=useMediaQuery.js.map

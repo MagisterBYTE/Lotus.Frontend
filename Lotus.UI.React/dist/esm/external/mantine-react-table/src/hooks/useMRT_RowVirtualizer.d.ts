@@ -1,0 +1,3 @@
+import { type MRT_Row, type MRT_RowData, type MRT_RowVirtualizer, type MRT_TableInstance } from '../types';
+export declare const useMRT_RowVirtualizer: <TData extends MRT_RowData, TScrollElement extends Element | Window = HTMLDivElement, TItemElement extends Element = HTMLTableRowElement>(table: MRT_TableInstance<TData>, rows?: MRT_Row<TData>[]) => MRT_RowVirtualizer<TScrollElement, TItemElement> | undefined;
+//# sourceMappingURL=useMRT_RowVirtualizer.d.ts.map

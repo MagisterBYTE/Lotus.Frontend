@@ -1,0 +1,3 @@
+import { type MRT_RowData, type MRT_TableInstance } from '../types';
+export declare const useMRT_Effects: <TData extends MRT_RowData>(table: MRT_TableInstance<TData>) => void;
+//# sourceMappingURL=useMRT_Effects.d.ts.map

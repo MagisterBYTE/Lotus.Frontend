@@ -31,3 +31,4 @@ export const AlertTypeDescriptions = {
         name: 'Success'
     }
 };
+//# sourceMappingURL=AlertType.js.map

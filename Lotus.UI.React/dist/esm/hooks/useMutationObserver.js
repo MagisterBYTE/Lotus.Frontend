@@ -11,3 +11,4 @@ export const useMutationObserver = (props) => {
         }
     }, [callback, options]);
 };
+//# sourceMappingURL=useMutationObserver.js.map

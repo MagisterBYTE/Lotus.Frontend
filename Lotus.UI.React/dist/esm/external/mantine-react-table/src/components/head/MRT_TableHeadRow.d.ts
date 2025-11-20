@@ -1,0 +1,10 @@
+import { type TableTrProps } from '@mantine/core';
+import { type MRT_ColumnVirtualizer, type MRT_HeaderGroup, type MRT_RowData, type MRT_TableInstance } from '../../types';
+interface Props<TData extends MRT_RowData> extends TableTrProps {
+    columnVirtualizer?: MRT_ColumnVirtualizer;
+    headerGroup: MRT_HeaderGroup<TData>;
+    table: MRT_TableInstance<TData>;
+}
+export declare const MRT_TableHeadRow: <TData extends MRT_RowData>({ columnVirtualizer, headerGroup, table, ...rest }: Props<TData>) => import("react/jsx-runtime").JSX.Element;
+export {};
+//# sourceMappingURL=MRT_TableHeadRow.d.ts.map

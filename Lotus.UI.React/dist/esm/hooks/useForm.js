@@ -12,3 +12,4 @@ export const useForm = (defaultValues) => (handler) => async (event) => {
     await handler(data);
     form.reset();
 };
+//# sourceMappingURL=useForm.js.map

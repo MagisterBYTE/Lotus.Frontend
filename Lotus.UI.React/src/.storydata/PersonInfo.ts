@@ -1,5 +1,5 @@
 import { FilterFunctionDescriptors, IPropertyDescriptor, PropertyTypeDescriptors, ValidationResultSuccess, ObjectInfo } from 'lotus-core';
-import { OptionsTextRoles } from './OptionsData'
+import { OptionsStory } from './OptionsStory';
 
 export interface IPerson
 {
@@ -122,7 +122,7 @@ export class PersonInfoBase extends ObjectInfo
       desc: 'Роль пользователя',
       propertyTypeDesc: PropertyTypeDescriptors.Integer,
       isArray: true,
-      options: OptionsTextRoles,
+      options: OptionsStory.TextRoles,
       editing:
       {
         enabled: true,

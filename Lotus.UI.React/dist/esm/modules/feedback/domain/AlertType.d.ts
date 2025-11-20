@@ -9,3 +9,4 @@ export declare const AlertTypeDescriptions: Record<TAlertType, {
     id: number;
     name: TAlertType;
 }>;
+//# sourceMappingURL=AlertType.d.ts.map

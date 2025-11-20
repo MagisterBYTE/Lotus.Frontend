@@ -1,0 +1,3 @@
+import { type MRT_Row, type MRT_RowData, type MRT_TableInstance } from '../types';
+export declare const useMRT_Rows: <TData extends MRT_RowData>(table: MRT_TableInstance<TData>) => MRT_Row<TData>[];
+//# sourceMappingURL=useMRT_Rows.d.ts.map

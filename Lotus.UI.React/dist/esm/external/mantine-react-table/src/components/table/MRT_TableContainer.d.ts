@@ -1,0 +1,8 @@
+import { type BoxProps } from '@mantine/core';
+import { type MRT_RowData, type MRT_TableInstance } from '../../types';
+interface Props<TData extends MRT_RowData> extends BoxProps {
+    table: MRT_TableInstance<TData>;
+}
+export declare const MRT_TableContainer: <TData extends MRT_RowData>({ table, ...rest }: Props<TData>) => import("react/jsx-runtime").JSX.Element;
+export {};
+//# sourceMappingURL=MRT_TableContainer.d.ts.map

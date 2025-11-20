@@ -1,6 +1,6 @@
-import { FilterPropertyHelper, IRequest, IResponsePage, SortPropertyHelper } from 'lotus-core';
 import { IPerson } from './PersonInfo';
 import { Persons } from './PersonData';
+import { FilterPropertyHelper, IRequest, IResponsePage, SortPropertyHelper } from 'lotus-core/modules/requestAndResponse';
 
 class PersonApiClass
 {

@@ -9,3 +9,4 @@ export declare const FeedbackTypeDescriptions: Record<TFeedbackType, {
     id: number;
     name: TFeedbackType;
 }>;
+//# sourceMappingURL=FeedbackType.d.ts.map

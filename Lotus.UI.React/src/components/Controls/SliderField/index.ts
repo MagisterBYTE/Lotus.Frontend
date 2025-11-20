@@ -1,0 +1,1 @@
+export { SliderField, type ISliderFieldProps } from './SliderField';

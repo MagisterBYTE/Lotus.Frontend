@@ -1,0 +1,10 @@
+import { IGeneralElementProperties } from '#base';
+import { IInteractivityBackgroundProperties } from './InteractivityBackground';
+import { IInteractivityBorderProperties } from './InteractivityBorder';
+import { IInteractivityTextProperties } from './InteractivityText';
+/**
+ * Интерактивное взаимодействие элемента
+ */
+export interface IInteractivityElementProperties extends IGeneralElementProperties, IInteractivityBackgroundProperties, IInteractivityBorderProperties, IInteractivityTextProperties {
+}
+//# sourceMappingURL=InteractivityElement.d.ts.map
