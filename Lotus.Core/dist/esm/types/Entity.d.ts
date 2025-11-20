@@ -6,6 +6,6 @@ export interface IEntity<TKey = number | string | TGuid> {
     /**
      * Идентификатор сущности
      */
-    id: TKey;
+    readonly id: TKey;
 }
 //# sourceMappingURL=Entity.d.ts.map

@@ -81,6 +81,12 @@ export declare abstract class ColorHelper {
      * @param hsl - HSL объект {h, s, l}
      * @returns RGB массив [R, G, B]
      */
+    static hsl2rgbOld(hsl: any): number[];
+    /**
+   * Преобразует HSL цвет в RGB цвет (H в диапазоне 0-1)
+   * @param hsl - объект HSL цвета
+   * @returns объект RGB цвета
+   */
     static hsl2rgb(hsl: any): number[];
     /**
      * Конвертирует RGB массив в HSL объект

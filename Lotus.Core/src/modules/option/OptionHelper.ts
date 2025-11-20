@@ -6,6 +6,78 @@ import { Assert } from '#utils';
 export abstract class OptionHelper
 {
   /**
+   * Проверка объекта на поддержку интерфейса IOption
+   * @param value Проверяемый объект
+   * @returns true, если объект поддерживает интерфейс, false в противном случае
+   */
+  public static instanceOfOption(value: unknown): value is IOption
+  {
+    if (value && typeof value === "object")
+    {
+      return ('value' in value && 'label' in value);
+    }
+
+    return false;
+  }
+
+  /**
+   * Проверка проверка массива на поддержку любого его объекта интерфейса IOption
+   * @param value Проверяемый массив
+   * @returns true, если хотя бы один объект массива поддерживает интерфейс, false в противном случае
+   */
+  public static instanceOfOptions(value: unknown[]): value is IOption[]
+  {
+    if (value && Array.isArray(value))
+    {
+      for (const v of value)
+      {
+        if (OptionHelper.instanceOfOption(v))
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Преобразование объекта к интерфейсу IOption
+   * @param value Объект для преобразования
+   * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
+   */
+  public static castToOption(value: unknown): IOption | undefined
+  {
+    if (OptionHelper.instanceOfOption(value))
+    {
+      return value as IOption;
+    }
+    else
+    {
+      // eslint-disable-next-line consistent-return
+      return undefined;
+    }
+  }
+
+  /**
+   * Преобразование массива к массиву объектов интерфейса IOption
+   * @param value Объект для преобразования
+   * @returns Mассив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
+   */
+  public static castToOptions(value: unknown[]): IOption[] | undefined
+  {
+    if (OptionHelper.instanceOfOptions(value))
+    {
+      return value as IOption[];
+    }
+    else
+    {
+      // eslint-disable-next-line consistent-return
+      return undefined;
+    }
+  }
+
+  /**
    * Преобразование значение в значение корректного типа
    * @param options Список опций
    * @param value Значение
@@ -13,16 +85,16 @@ export abstract class OptionHelper
    */
   public static convertValue(options: IOption[], value: TKey): TKey
   {
-    if(typeof options[0].value == 'string')
+    if (typeof options[0].value == 'string')
     {
-      if(typeof value == 'string') return value;
-      if(typeof value == 'number') return value.toString();
+      if (typeof value == 'string') return value;
+      if (typeof value == 'number') return value.toString();
     }
 
-    if(typeof options[0].value == 'number')
+    if (typeof options[0].value == 'number')
     {
-      if(typeof value == 'string') return Number(value);
-      if(typeof value == 'number') return value;
+      if (typeof value == 'string') return Number(value);
+      if (typeof value == 'number') return value;
     }
 
     return value;
@@ -184,7 +256,7 @@ export abstract class OptionHelper
    * @param selectedValue Выбранное значение
    * @returns Опция или undefined
    */
-  public static getOptionByValueOrUndefined(options: IOption[], selectedValue?: TKey): IOption|undefined
+  public static getOptionByValueOrUndefined(options: IOption[], selectedValue?: TKey): IOption | undefined
   {
     if (Assert.existValue(selectedValue))
     {
@@ -255,16 +327,16 @@ export abstract class OptionHelper
    * @param selectedValues Выбранные значения
    * @returns Массив опций
    */
-  public static getOptionsByValues(options: IOption[], selectedValues?: TKey|TKey[]): IOption[]
+  public static getOptionsByValues(options: IOption[], selectedValues?: TKey | TKey[]): IOption[]
   {
-    if(selectedValues)
+    if (selectedValues)
     {
-      if(Array.isArray(selectedValues))
+      if (Array.isArray(selectedValues))
       {
-        if(selectedValues.length > 0)
+        if (selectedValues.length > 0)
         {
           const optionsSelected: IOption[] = [];
-      
+
           options.forEach((element) =>
           {
             if (selectedValues.find((x) => x === element.value))
@@ -272,7 +344,7 @@ export abstract class OptionHelper
               optionsSelected.push(element);
             }
           });
-      
+
           return optionsSelected;
         }
       }
@@ -366,9 +438,9 @@ export abstract class OptionHelper
    * @param value Выбранное значение
    * @returns Статус наличия опции
    */
-  public static hasOption(options: IOption[], value?: TKey):boolean
+  public static hasOption(options: IOption[], value?: TKey): boolean
   {
-    if(Assert.existValue(value))
+    if (Assert.existValue(value))
     {
       return options.find((x) => x.value == value) !== undefined;
     }
@@ -383,15 +455,15 @@ export abstract class OptionHelper
    * @returns Статус наличия иконки
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static hasIcons(options: IOption[], context?: any):boolean
+  public static hasIcons(options: IOption[], context?: any): boolean
   {
-    for(const option of options)
+    for (const option of options)
     {
-      if(option.icon)
+      if (option.icon)
       {
-        if(typeof option.icon == 'function')
+        if (typeof option.icon == 'function')
         {
-          if(option.icon(option, context)) return true;
+          if (option.icon(option, context)) return true;
         }
         else
         {

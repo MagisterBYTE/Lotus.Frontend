@@ -2,6 +2,30 @@ import { IOption } from './Option';
 import { TKey } from '#types';
 export declare abstract class OptionHelper {
     /**
+     * Проверка объекта на поддержку интерфейса IOption
+     * @param value Проверяемый объект
+     * @returns true, если объект поддерживает интерфейс, false в противном случае
+     */
+    static instanceOfOption(value: unknown): value is IOption;
+    /**
+     * Проверка проверка массива на поддержку любого его объекта интерфейса IOption
+     * @param value Проверяемый массив
+     * @returns true, если хотя бы один объект массива поддерживает интерфейс, false в противном случае
+     */
+    static instanceOfOptions(value: unknown[]): value is IOption[];
+    /**
+     * Преобразование объекта к интерфейсу IOption
+     * @param value Объект для преобразования
+     * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
+     */
+    static castToOption(value: unknown): IOption | undefined;
+    /**
+     * Преобразование массива к массиву объектов интерфейса IOption
+     * @param value Объект для преобразования
+     * @returns Mассив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
+     */
+    static castToOptions(value: unknown[]): IOption[] | undefined;
+    /**
      * Преобразование значение в значение корректного типа
      * @param options Список опций
      * @param value Значение

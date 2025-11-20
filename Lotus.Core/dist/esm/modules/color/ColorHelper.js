@@ -201,7 +201,7 @@ export class ColorHelper {
      * @returns RGB массив [R, G, B]
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static hsl2rgb(hsl) {
+    static hsl2rgbOld(hsl) {
         const h = hsl.h, s = hsl.s, l = hsl.l;
         let r, g, b;
         if (s === 0) {
@@ -216,6 +216,51 @@ export class ColorHelper {
             b = ColorHelper.hslval(x, y, h - 1 / 3);
         }
         return [Math.round(r), Math.round(g), Math.round(b)];
+    }
+    /**
+   * Преобразует HSL цвет в RGB цвет (H в диапазоне 0-1)
+   * @param hsl - объект HSL цвета
+   * @returns объект RGB цвета
+   */
+    static hsl2rgb(hsl) {
+        const { h, s, l } = hsl;
+        // Нормализуем hue в диапазон 0-1
+        let hue = h % 1;
+        if (hue < 0)
+            hue += 1;
+        // Если насыщенность равна 0, цвет является оттенком серого
+        if (s === 0) {
+            const value = Math.round(l * 255);
+            return [value, value, value];
+        }
+        // Вспомогательные вычисления для преобразования
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        // Функция для преобразования компонента hue в RGB
+        const hueToRgb = (t) => {
+            let normalizedT = t;
+            if (normalizedT < 0)
+                normalizedT += 1;
+            if (normalizedT > 1)
+                normalizedT -= 1;
+            if (normalizedT < 1 / 6)
+                return p + (q - p) * 6 * normalizedT;
+            if (normalizedT < 1 / 2)
+                return q;
+            if (normalizedT < 2 / 3)
+                return p + (q - p) * (2 / 3 - normalizedT) * 6;
+            return p;
+        };
+        // Вычисляем RGB компоненты
+        const r = hueToRgb(hue + 1 / 3);
+        const g = hueToRgb(hue);
+        const b = hueToRgb(hue - 1 / 3);
+        // Округляем и возвращаем результат
+        return [
+            Math.round(r * 255),
+            Math.round(g * 255),
+            Math.round(b * 255)
+        ];
     }
     /**
      * Конвертирует RGB массив в HSL объект

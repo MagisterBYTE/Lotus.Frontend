@@ -2,6 +2,60 @@ import { ArrayHelper } from '#helpers';
 import { Assert } from '#utils';
 export class OptionHelper {
     /**
+     * Проверка объекта на поддержку интерфейса IOption
+     * @param value Проверяемый объект
+     * @returns true, если объект поддерживает интерфейс, false в противном случае
+     */
+    static instanceOfOption(value) {
+        if (value && typeof value === "object") {
+            return ('value' in value && 'label' in value);
+        }
+        return false;
+    }
+    /**
+     * Проверка проверка массива на поддержку любого его объекта интерфейса IOption
+     * @param value Проверяемый массив
+     * @returns true, если хотя бы один объект массива поддерживает интерфейс, false в противном случае
+     */
+    static instanceOfOptions(value) {
+        if (value && Array.isArray(value)) {
+            for (const v of value) {
+                if (OptionHelper.instanceOfOption(v)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Преобразование объекта к интерфейсу IOption
+     * @param value Объект для преобразования
+     * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
+     */
+    static castToOption(value) {
+        if (OptionHelper.instanceOfOption(value)) {
+            return value;
+        }
+        else {
+            // eslint-disable-next-line consistent-return
+            return undefined;
+        }
+    }
+    /**
+     * Преобразование массива к массиву объектов интерфейса IOption
+     * @param value Объект для преобразования
+     * @returns Mассив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
+     */
+    static castToOptions(value) {
+        if (OptionHelper.instanceOfOptions(value)) {
+            return value;
+        }
+        else {
+            // eslint-disable-next-line consistent-return
+            return undefined;
+        }
+    }
+    /**
      * Преобразование значение в значение корректного типа
      * @param options Список опций
      * @param value Значение

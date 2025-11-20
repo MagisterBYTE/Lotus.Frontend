@@ -15,7 +15,7 @@ export interface IOption<TValueOption extends TKey = TKey> {
     /**
      * Статус доступности опции
      */
-    isDisabled?: boolean;
+    disabled?: boolean;
     /**
      * Путь к изображению / либо компонент иконки / либо индекс изображения в базе / либо делегат для рисования иконки
      */
@@ -24,5 +24,9 @@ export interface IOption<TValueOption extends TKey = TKey> {
      *  Делегат для рисования опции
      */
     render?: FunctionOptionDelegate;
+    /**
+     * Подсказка для опции
+     */
+    tooltip?: string;
 }
 //# sourceMappingURL=Option.d.ts.map

@@ -14,9 +14,9 @@ export class ColorVariants {
         const lighter = main.increaseLightness(0.77);
         const light = main.increaseLightness(0.67);
         const dark = main.decreaseLightness(0.15);
-        const darker = main.decreaseLightness(0.40);
-        const darkest = main.decreaseLightness(0.60);
-        const black = main.decreaseLightness(0.80);
+        const darker = main.decreaseLightness(0.4);
+        const darkest = main.decreaseLightness(0.6);
+        const black = main.decreaseLightness(0.8);
         return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     static createFromColorCombine(red, green, blue) {
@@ -27,22 +27,22 @@ export class ColorVariants {
         const lighter = main.combine(ColorNames['white'], 0.77);
         const light = main.combine(ColorNames['white'], 0.67);
         const dark = main.combine(ColorNames['black'], 0.15);
-        const darker = main.combine(ColorNames['black'], 0.40);
-        const darkest = main.combine(ColorNames['black'], 0.60);
-        const black = main.combine(ColorNames['black'], 0.80);
+        const darker = main.combine(ColorNames['black'], 0.4);
+        const darkest = main.combine(ColorNames['black'], 0.6);
+        const black = main.combine(ColorNames['black'], 0.8);
         return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     static createFromColorRelativeLightness(mainColor, lightColor, darkColor) {
         const main = new Color(mainColor);
-        const white = main.increaseLightness(0.4);
-        const palest = main.increaseLightness(0.3);
-        const pale = main.increaseLightness(0.2);
-        const lighter = main.increaseLightness(0.1);
         const light = new Color(lightColor);
+        const lighter = light.increaseLightness(0.1);
+        const pale = light.increaseLightness(0.2);
+        const palest = light.increaseLightness(0.3);
+        const white = light.increaseLightness(0.4);
         const dark = new Color(darkColor);
-        const darker = main.decreaseLightness(0.40);
-        const darkest = main.decreaseLightness(0.60);
-        const black = main.decreaseLightness(0.80);
+        const darker = dark.decreaseLightness(0.05);
+        const darkest = dark.decreaseLightness(0.15);
+        const black = dark.decreaseLightness(0.25);
         return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     // #endregion
