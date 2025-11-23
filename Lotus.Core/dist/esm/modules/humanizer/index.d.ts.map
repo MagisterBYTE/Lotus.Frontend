@@ -1,1 +1,1 @@
-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/modules/humanizer/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,MAAM,mBAAmB,CAAA;AACnD,OAAO,EAAE,eAAe,EAAE,MAAM,mBAAmB,CAAA"}
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/modules/humanizer/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,MAAM,mBAAmB,CAAC;AACpD,OAAO,EAAE,eAAe,EAAE,MAAM,mBAAmB,CAAC"}

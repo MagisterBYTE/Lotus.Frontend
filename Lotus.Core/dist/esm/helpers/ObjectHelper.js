@@ -11,7 +11,6 @@ export class ObjectHelper {
         if (source === undefined || source === null)
             return undefined;
         const value = _.get(source, propertyPath, defaultValue);
-        // eslint-disable-next-line consistent-return
         return value;
     }
     /**
@@ -34,7 +33,6 @@ export class ObjectHelper {
     static cloneDeep(source) {
         if (source === undefined || source === null)
             return undefined;
-        // eslint-disable-next-line consistent-return
         return _.cloneDeep(source);
     }
     /**

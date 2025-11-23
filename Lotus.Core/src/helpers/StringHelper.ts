@@ -90,7 +90,7 @@ export abstract class StringHelper
    */
   public static toPascalCase(value: string): string
   {
-    if(value.includes(' ') || value.includes('_') || value.includes('-'))
+    if (value.includes(' ') || value.includes('_') || value.includes('-'))
     {
       return value
         .split(/[\s\-_]+/)

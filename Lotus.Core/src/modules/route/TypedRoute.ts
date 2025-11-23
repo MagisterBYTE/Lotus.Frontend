@@ -1,4 +1,3 @@
-import { StringHelper } from '#helpers';
 import { ExtractRouteParams, IRoute, ParamValues, RouteParamConstraints } from './types';
 
 /**
@@ -6,7 +5,7 @@ import { ExtractRouteParams, IRoute, ParamValues, RouteParamConstraints } from '
  */
 export class TypedRoute<TPath extends string = string, TConstraints extends RouteParamConstraints<TPath> = RouteParamConstraints<TPath>> implements IRoute
 {
-  //#region Static
+  // #region Static
   /**
    * @param path Путь маршрута
    * @param isShouldBeAuthorized Требует ли маршрут аутентификации
@@ -14,22 +13,22 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
    */
   public static create<TPath extends string>(path: TPath, isShouldBeAuthorized?: boolean, permissions?: string[])
   {
-    return new TypedRoute<TPath, {}>(path, isShouldBeAuthorized, undefined, permissions);
+    return new TypedRoute<TPath, object>(path, isShouldBeAuthorized, undefined, permissions);
   }
 
-  public static createWithConstraints<TPath extends string, TConstraints extends RouteParamConstraints<TPath>>
-    (path: TPath, constraints: TConstraints, isShouldBeAuthorized?: boolean, permissions?: string[]): TypedRoute<TPath, TConstraints>
+  public static createWithConstraints<TPath extends string, TConstraints extends RouteParamConstraints<TPath>>(path: TPath, constraints: TConstraints, 
+    isShouldBeAuthorized?: boolean, permissions?: string[]): TypedRoute<TPath, TConstraints>
   {
     return new TypedRoute(path, isShouldBeAuthorized, constraints, permissions);
   }
-  //#endregion
+  // #endregion
 
-  //#region Fields
+  // #region Fields
   readonly path: string;
   readonly isShouldBeAuthorized: boolean;
   readonly permissions?: string[];
   readonly constraints?: TConstraints;
-  //#endregion
+  // #endregion
 
   /**
    * @param path Путь маршрута
@@ -45,7 +44,7 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
     this.permissions = permissions;
   }
 
-  //#region Methods
+  // #region Methods
   /**
    * Строит путь с типизированными параметрами
    * @param params - Параметры, соответствующие ограничениям
@@ -69,7 +68,7 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
   {
     this.validateParams(params);
 
-    let result = this.path as string;
+    let result = this.path;
 
     Object.entries(params).forEach(([key, value]) =>
     {
@@ -78,7 +77,8 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
       if (result.includes(paramPlaceholder))
       {
         result = result.replace(paramPlaceholder, encodeURIComponent(value as string));
-      } else
+      }
+      else
       {
         console.warn(`Параметр "${key}" не найден в пути: ${this.path}`);
       }
@@ -177,7 +177,7 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
    */
   public getAllowedValues<K extends ExtractRouteParams<TPath>>(paramName: K): readonly string[] | undefined
   {
-    return this.constraints?.[paramName] as readonly string[] | undefined;
+    return this.constraints?.[paramName];
   }
 
   /**
@@ -188,5 +188,5 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
     const allowedValues = this.getAllowedValues(paramName);
     return !allowedValues || allowedValues.includes(value);
   }
-  //#endregion
+  // #endregion
 }

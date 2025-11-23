@@ -1,7 +1,7 @@
-import { IOption } from './Option';
-import { ArrayHelper } from '#helpers';
+import { ArrayHelper, GuidHelper } from '#helpers';
 import { TKey } from '#types';
 import { Assert } from '#utils';
+import { IOption } from './Option';
 
 export abstract class OptionHelper
 {
@@ -12,9 +12,9 @@ export abstract class OptionHelper
    */
   public static instanceOfOption(value: unknown): value is IOption
   {
-    if (value && typeof value === "object")
+    if (value && typeof value === 'object')
     {
-      return ('value' in value && 'label' in value);
+      return 'value' in value && 'label' in value;
     }
 
     return false;
@@ -50,11 +50,10 @@ export abstract class OptionHelper
   {
     if (OptionHelper.instanceOfOption(value))
     {
-      return value as IOption;
+      return value;
     }
     else
     {
-      // eslint-disable-next-line consistent-return
       return undefined;
     }
   }
@@ -62,19 +61,63 @@ export abstract class OptionHelper
   /**
    * Преобразование массива к массиву объектов интерфейса IOption
    * @param value Объект для преобразования
-   * @returns Mассив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
+   * @returns Массив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
    */
   public static castToOptions(value: unknown[]): IOption[] | undefined
   {
     if (OptionHelper.instanceOfOptions(value))
     {
-      return value as IOption[];
+      return value;
     }
     else
     {
-      // eslint-disable-next-line consistent-return
       return undefined;
     }
+  }
+
+  /**
+   * Проверка опции на тип ключа number
+   * @param options Список опций
+   * @returns true, тип ключа number, false в противном случае
+   */
+  public static isNumber(options: IOption[]): boolean
+  {
+    if (options && options.length > 0)
+    {
+      return typeof options[0].value == 'number';
+    }
+
+    return false;
+  }
+
+  /**
+   * Проверка опции на тип ключа string
+   * @param options Список опций
+   * @returns true, тип ключа string, false в противном случае
+   */
+  public static isString(options: IOption[]): boolean
+  {
+    if (options && options.length > 0)
+    {
+      return typeof options[0].value == 'string';
+    }
+
+    return false;
+  }
+
+  /**
+   * Проверка опции на тип ключа guid
+   * @param options Список опций
+   * @returns true, тип ключа guid, false в противном случае
+   */
+  public static isGuid(options: IOption[]): boolean
+  {
+    if (options && options.length > 0)
+    {
+      return typeof options[0].value == 'string' && GuidHelper.instanceOfGuid(typeof options[0].value);
+    }
+
+    return false;
   }
 
   /**
@@ -105,11 +148,11 @@ export abstract class OptionHelper
    * @param options Список опций
    * @returns
    */
-  public static convertToNumber(options: IOption[]): IOption[]
+  public static convertToNumber(options: IOption[]): IOption<number>[]
   {
     const result = options.map((x) =>
     {
-      const value: IOption = { label: x.label, value: Number(x.value) };
+      const value: IOption<number> = { label: x.label, value: Number(x.value) };
       return value;
     });
 
@@ -121,11 +164,11 @@ export abstract class OptionHelper
    * @param options Список опций
    * @returns
    */
-  public static convertToString(options: IOption[]): IOption[]
+  public static convertToString(options: IOption[]): IOption<string>[]
   {
     const result = options.map((x) =>
     {
-      const value: IOption = { label: x.label, value: String(x.value) };
+      const value: IOption<string> = { label: x.label, value: String(x.value) };
       return value;
     });
 
@@ -145,7 +188,7 @@ export abstract class OptionHelper
       return initialSelectedValue!;
     }
 
-    return options[0]!.value as TValueOption;
+    return options[0].value as TValueOption;
   }
 
   /**
@@ -170,7 +213,7 @@ export abstract class OptionHelper
       return text;
     }
 
-    return options[0]!.label;
+    return options[0].label;
   }
 
   /**
@@ -197,7 +240,7 @@ export abstract class OptionHelper
       return icon;
     }
 
-    return options[0]!.icon;
+    return options[0].icon;
   }
 
   /**
@@ -269,7 +312,6 @@ export abstract class OptionHelper
       }
     }
 
-    // eslint-disable-next-line consistent-return
     return undefined;
   }
 

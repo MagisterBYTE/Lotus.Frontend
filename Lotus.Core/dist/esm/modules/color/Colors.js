@@ -507,5 +507,4 @@ export class Colors {
     static yellow_4 = new Color(139, 139, 0);
     static yellow_green = new Color(154, 205, 50);
 }
-;
 //# sourceMappingURL=Colors.js.map

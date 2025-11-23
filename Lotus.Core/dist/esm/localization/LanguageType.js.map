@@ -1,1 +1,1 @@
-{"version":3,"file":"LanguageType.js","sourceRoot":"","sources":["../../../src/localization/LanguageType.ts"],"names":[],"mappings":""}
+{"version":3,"file":"LanguageType.js","sourceRoot":"","sources":["../../../src/localization/LanguageType.ts"],"names":[],"mappings":"AAOA;;GAEG;AACH,MAAM,CAAC,MAAM,cAAc,GAA6B,CAAC,OAAO,EAAE,OAAO,CAAC,CAAC;AAE3E;;GAEG;AACH,MAAM,CAAC,MAAM,mBAAmB,GAA4B,cAAc,CAAC,GAAG,CAAC,CAAC,CAAC,EAAE,EAAE;IAEnF,OAAO;QACL,KAAK,EAAE,CAAC;QACR,KAAK,EAAE,CAAC;KACT,CAAC;AACJ,CAAC,CAAC,CAAC"}

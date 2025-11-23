@@ -1,5 +1,5 @@
-import { IOption } from './Option';
 import { TKey } from '#types';
+import { IOption } from './Option';
 export declare abstract class OptionHelper {
     /**
      * Проверка объекта на поддержку интерфейса IOption
@@ -22,9 +22,27 @@ export declare abstract class OptionHelper {
     /**
      * Преобразование массива к массиву объектов интерфейса IOption
      * @param value Объект для преобразования
-     * @returns Mассив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
+     * @returns Массив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
      */
     static castToOptions(value: unknown[]): IOption[] | undefined;
+    /**
+     * Проверка опции на тип ключа number
+     * @param options Список опций
+     * @returns true, тип ключа number, false в противном случае
+     */
+    static isNumber(options: IOption[]): boolean;
+    /**
+     * Проверка опции на тип ключа string
+     * @param options Список опций
+     * @returns true, тип ключа string, false в противном случае
+     */
+    static isString(options: IOption[]): boolean;
+    /**
+     * Проверка опции на тип ключа guid
+     * @param options Список опций
+     * @returns true, тип ключа guid, false в противном случае
+     */
+    static isGuid(options: IOption[]): boolean;
     /**
      * Преобразование значение в значение корректного типа
      * @param options Список опций
@@ -37,13 +55,13 @@ export declare abstract class OptionHelper {
      * @param options Список опций
      * @returns
      */
-    static convertToNumber(options: IOption[]): IOption[];
+    static convertToNumber(options: IOption[]): IOption<number>[];
     /**
      * Преобразование в типизированный массив
      * @param options Список опций
      * @returns
      */
-    static convertToString(options: IOption[]): IOption[];
+    static convertToString(options: IOption[]): IOption<string>[];
     /**
      * Получение корректного значения по умолчанию или первого значения из списка опций
      * @param options Список опций

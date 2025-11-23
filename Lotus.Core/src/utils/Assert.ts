@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class Assert
 {
   /**
@@ -39,6 +40,7 @@ export class Assert
   {
     for (const arg of args)
     {
+      // eslint-disable-next-line no-extra-boolean-cast
       if (Boolean(arg))
       {
         return true;
@@ -58,6 +60,7 @@ export class Assert
     for (const arg of args)
     {
       // Если хотя бы один аргумент преобразуется в false,
+      // eslint-disable-next-line no-extra-boolean-cast
       if (!Boolean(arg))
       {
         // немедленно возвращаем false (короткое замыкание)
@@ -97,6 +100,7 @@ export class Assert
   {
     for (const arg of args)
     {
+      // eslint-disable-next-line no-extra-boolean-cast
       if (Boolean(arg))
       {
         return false;

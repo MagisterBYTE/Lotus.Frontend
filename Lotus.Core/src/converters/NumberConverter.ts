@@ -10,16 +10,16 @@ export abstract class NumberConverter
   {
     let numberText: string = '';
 
-    let add_minus = false;
+    let addMinus = false;
     const max = 11;
     for (let i = 0; i < text.length; i++)
     {
-      const c = text[i]!;
+      const c = text[i];
 
-      if (c == '-' && (i != text.length - 1) && add_minus == false)
+      if (c == '-' && (i != text.length - 1) && addMinus == false)
       {
         numberText += c;
-        add_minus = true;
+        addMinus = true;
         continue;
       }
 
@@ -68,23 +68,23 @@ export abstract class NumberConverter
   {
     let numberText = '';
 
-    let add_minus = false;
-    let add_dot = false;
+    let addMinus = false;
+    let addDot = false;
     for (let i = 0; i < text.length; i++)
     {
-      const c = text[i]!;
+      const c = text[i];
 
-      if (c == '-' && (i != text.length - 1) && add_minus == false)
+      if (c == '-' && (i != text.length - 1) && addMinus == false)
       {
         numberText += c;
-        add_minus = true;
+        addMinus = true;
         continue;
       }
 
-      if ((c == ',' || c == '.') && (i != text.length - 1) && add_dot == false)
+      if ((c == ',' || c == '.') && (i != text.length - 1) && addDot == false)
       {
         numberText += '.';
-        add_dot = true;
+        addDot = true;
         continue;
       }
 

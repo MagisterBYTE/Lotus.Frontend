@@ -96,7 +96,6 @@ export abstract class ColorHelper
    * @param colorString - Строка цвета для парсинга
    * @returns Числовой массив цветовых компонент или undefined если не удалось распарсить
    */
-  // eslint-disable-next-line consistent-return
   public static parseColorString(colorString: string): number[] | undefined 
   {
     const c = colorString.replaceAll(' ', '');
@@ -161,7 +160,6 @@ export abstract class ColorHelper
    * @param colorString - Название цвета
    * @returns Числовой массив цветовых компонент или undefined если цвет не найден
    */
-  // eslint-disable-next-line consistent-return
   public static getColorName(colorString: string): number[] | undefined 
   {
     const colStr = colorString.toLowerCase();
@@ -208,9 +206,9 @@ export abstract class ColorHelper
     const b = ColorHelper.int2hex(Math.round(c[2]));
     if (r[0] === r[1] && g[0] === g[1] && b[0] === b[1]) 
     {
-      return '#' + r[0] + g[0] + b[0]; // Сокращенная форма (#RGB)
+      return `#${r[0]}${g[0]}${b[0]}`; // Сокращенная форма (#RGB)
     }
-    return '#' + r + g + b; // Полная форма (#RRGGBB)
+    return `#${r}${g}${b}`; // Полная форма (#RRGGBB)
   }
 
   /**
@@ -221,7 +219,7 @@ export abstract class ColorHelper
   private static int2hex(i: number): string 
   {
     const v = i.toString(16);
-    return v.length === 1 ? '0' + v : v;
+    return v.length === 1 ? `0${v}` : v;
   }
 
   /**
@@ -273,6 +271,7 @@ export abstract class ColorHelper
  * @param hsl - объект HSL цвета
  * @returns объект RGB цвета
  */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static hsl2rgb(hsl: any): number[]
   {
     const { h, s, l } = hsl;

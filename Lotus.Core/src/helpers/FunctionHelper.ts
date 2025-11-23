@@ -58,7 +58,7 @@ export abstract class FunctionHelper
       // Привязываем только функции
       if (typeof value === 'function') 
       {
-        if((exclude && exclude.includes(property)) === false)
+        if ((exclude && exclude.includes(property)) === false)
         {
           scope[property as keyof T] = value.bind(scope);
         }

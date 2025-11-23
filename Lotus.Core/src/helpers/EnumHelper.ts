@@ -9,9 +9,9 @@ export abstract class EnumHelper
    */
   public static isFlagSet(value?: number, flag?: number): boolean
   {
-    if(value)
+    if (value)
     {
-      if(flag)
+      if (flag)
       {
         return (value & flag) != 0;
       }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IRoute } from "#modules/route";
-import { Assert } from "#utils";
+import { IRoute } from '#modules/route';
+import { Assert } from '#utils';
 
 /**
  * Делегат для интерфейса команды, возвращает any
@@ -101,7 +101,7 @@ export class BaseCommand implements ICommand
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public execute: FunctionCommandDelegateAny
+  public execute: FunctionCommandDelegateAny;
 
   /**
    * Статус определяющий возможность выполнения команды
@@ -187,7 +187,7 @@ export class BaseCommand implements ICommand
   {
     if (Assert.existValue<FunctionCommandDelegateBool | boolean>(this.isSelected))
     {
-      if(typeof this.isSelected === 'function')
+      if (typeof this.isSelected === 'function')
       {
         return this.isSelected(this, context);
       }

@@ -508,5 +508,5 @@ export class Colors
   public static readonly yellow_2 = new Color(238, 238, 0);
   public static readonly yellow_3 = new Color(205, 205, 0);
   public static readonly yellow_4 = new Color(139, 139, 0);
-  public static readonly yellow_green = new Color(154, 205, 50)
-};
+  public static readonly yellow_green = new Color(154, 205, 50);
+}

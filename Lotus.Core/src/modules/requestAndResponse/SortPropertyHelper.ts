@@ -47,12 +47,12 @@ export abstract class SortPropertyHelper
             const l: string = String((a as any)[key]);
             const r: string = String((b as any)[key]);
             const status =  l.localeCompare(r);
-            if(sortProperty.isDesc)
+            if (sortProperty.isDesc)
             {
-              if(status > 0) return -1;
-              if(status < 0) return 1;
+              if (status > 0) return -1;
+              if (status < 0) return 1;
             }
-            return status
+            return status;
           });
         } break;
       case 'DateTime':
@@ -77,7 +77,7 @@ export abstract class SortPropertyHelper
    */
   public static sortArrayByProperties<TItem = object>(massive: TItem[], sortProperties?: ISortPropertyCollection): TItem[]
   {
-    if(!sortProperties) return massive;
+    if (!sortProperties) return massive;
 
     let result: TItem[] = [...massive];
 

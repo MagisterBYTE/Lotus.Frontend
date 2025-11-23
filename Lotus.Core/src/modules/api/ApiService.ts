@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { castToResult, IResult } from '#types';
 import { LocalizationCore } from '#localization';
+import { castToResult, IResult } from '#types';
 
 /**
  * Базовый класс для сервисов Api
@@ -25,6 +26,7 @@ export abstract class ApiService
   protected handleRequest(config: InternalAxiosRequestConfig<any>): InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>>
   {
     config.timeout = 10 * 60 * 1000;
+    // eslint-disable-next-line import/no-named-as-default-member
     config.cancelToken = axios.CancelToken.source().token;
 
     return config;
@@ -57,10 +59,10 @@ export abstract class ApiService
       {
         // Проверяем типовые ошибки
         // 404
-        if(error.response.status === 404)
+        if (error.response.status === 404)
         {
           const uri = (error.request as XMLHttpRequest).responseURL ?? '';
-          const message = LocalizationCore.data.api.errorNotFound.replace("{0}", uri);
+          const message = LocalizationCore.data.api.errorNotFound.replace('{0}', uri);
           const resultNotFound: IResult = {
             succeeded: false,
             code: 404,

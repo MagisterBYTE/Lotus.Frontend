@@ -10,9 +10,9 @@ export abstract class BooleanHelper
   public static compare(left?: boolean, right?: boolean, isDesc?: boolean):number
   {
     let status:number = 0;
-    if(left)
+    if (left)
     {
-      if(right)
+      if (right)
       {
         status = 0;
       }
@@ -23,7 +23,7 @@ export abstract class BooleanHelper
     }
     else
     {
-      if(right)
+      if (right)
       {
         status = -1;
       }
@@ -33,12 +33,12 @@ export abstract class BooleanHelper
       }
     }
 
-    if(isDesc)
+    if (isDesc)
     {
-      if(status > 0) return -1;
+      if (status > 0) return -1;
       else
       {
-        if(status < 0) return 1;
+        if (status < 0) return 1;
         else return 0;
       }
     }

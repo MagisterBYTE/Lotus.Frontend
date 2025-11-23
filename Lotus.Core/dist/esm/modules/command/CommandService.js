@@ -2,9 +2,9 @@
  * Сервис для работы с командами
  */
 export class CommandService {
-    //#region Fields
+    // #region Fields
     commands;
-    //#endregion
+    // #endregion
     constructor() {
         this.commands = [];
         this.getCommands = this.getCommands.bind(this);

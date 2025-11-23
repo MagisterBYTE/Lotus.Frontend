@@ -1,3 +1,3 @@
-export { HumanizerPerson } from './HumanizerPerson'
-export { HumanizerString } from './HumanizerString'
+export { HumanizerPerson } from './HumanizerPerson';
+export { HumanizerString } from './HumanizerString';
 

@@ -19,7 +19,7 @@ export interface IEditable
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfEditable(value: any): value is IEditable
 {
-  if (value && typeof value === "object")
+  if (value && typeof value === 'object')
   {
     return ('id' in value);
   }
@@ -37,11 +37,10 @@ export function castToEditable(value: any): IEditable | undefined
 {
   if (instanceOfEditable(value))
   {
-    return value as IEditable;
+    return value;
   }
   else
   {
-    // eslint-disable-next-line consistent-return
     return undefined;
   }
 }

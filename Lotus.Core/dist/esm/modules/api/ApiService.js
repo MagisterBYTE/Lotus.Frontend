@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import axios from 'axios';
-import { castToResult } from '#types';
 import { LocalizationCore } from '#localization';
+import { castToResult } from '#types';
 /**
  * Базовый класс для сервисов Api
  */
@@ -17,6 +18,7 @@ export class ApiService {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleRequest(config) {
         config.timeout = 10 * 60 * 1000;
+        // eslint-disable-next-line import/no-named-as-default-member
         config.cancelToken = axios.CancelToken.source().token;
         return config;
     }
@@ -41,7 +43,7 @@ export class ApiService {
                 // 404
                 if (error.response.status === 404) {
                     const uri = error.request.responseURL ?? '';
-                    const message = LocalizationCore.data.api.errorNotFound.replace("{0}", uri);
+                    const message = LocalizationCore.data.api.errorNotFound.replace('{0}', uri);
                     const resultNotFound = {
                         succeeded: false,
                         code: 404,

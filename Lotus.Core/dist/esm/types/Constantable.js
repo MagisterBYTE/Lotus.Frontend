@@ -5,7 +5,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfConstantable(value) {
-    if (value && typeof value === "object") {
+    if (value && typeof value === 'object') {
         return ('isConst' in value) && value.isConst === true;
     }
     return false;
@@ -21,7 +21,6 @@ export function castToConstantable(value) {
         return value;
     }
     else {
-        // eslint-disable-next-line consistent-return
         return undefined;
     }
 }

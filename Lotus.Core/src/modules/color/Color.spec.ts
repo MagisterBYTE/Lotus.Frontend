@@ -1,9 +1,9 @@
 import { Color } from './Color';
 import { ColorNames } from './ColorNames';
 
-describe('Color class constructor', function () 
+describe('Color class constructor', () => 
 {
-  it('accepts strings', function (done) 
+  it('accepts strings', (done) => 
   {
     expect(new Color('#f00').getRGB()).toStrictEqual([255, 0, 0]);
     expect(new Color('#ff0000').getRGB()).toStrictEqual([255, 0, 0]);
@@ -20,7 +20,7 @@ describe('Color class constructor', function ()
     expect(new Color('rgba(255, 0, 0, 0.5)', 0.1).getAlpha()).toBe(0.1);
     done();
   });
-  it('accepts rgb arrays', function (done) 
+  it('accepts rgb arrays', (done) => 
   {
     expect(new Color([255, 0, 0]).getRGB()).toStrictEqual([255, 0, 0]);
     expect(new Color([255, 0, 0], 0.5).toString()).toBe('rgba(255,0,0,0.5)');
@@ -28,7 +28,7 @@ describe('Color class constructor', function ()
     expect(new Color(255, 0, 0, 0.5).toString()).toBe('rgba(255,0,0,0.5)');
     done();
   });
-  it('accepts hsl objects', function (done) 
+  it('accepts hsl objects', (done) => 
   {
     expect(new Color({
       h: 0,
@@ -50,7 +50,7 @@ describe('Color class constructor', function ()
 
     done();
   });
-  it('accepts color class', function (done) 
+  it('accepts color class', (done) => 
   {
     expect(new Color(new Color(255, 0, 0)).getRGB()).toStrictEqual([255, 0, 0]);
     expect(new Color(new Color(255, 0, 0, 0.5)).toString()).toBe('rgba(255,0,0,0.5)');
@@ -58,7 +58,7 @@ describe('Color class constructor', function ()
     done();
   });
 
-  it('toString() converts the supplied color into a CSS compatible hex, rgb, rgba string', function (done) 
+  it('toString() converts the supplied color into a CSS compatible hex, rgb, rgba string', (done) => 
   {
     expect(new Color('red').toString(true)).toBe('#f00');
     expect(new Color('tan').toString(true)).toBe('#d2b48c');
@@ -71,7 +71,7 @@ describe('Color class constructor', function ()
     done();
   });
 
-  it('throws Error invalid color string', function (done) 
+  it('throws Error invalid color string', (done) => 
   {
     try 
     {
@@ -85,7 +85,7 @@ describe('Color class constructor', function ()
     }
   });
 
-  it('throws Error: invalid color data', function (done) 
+  it('throws Error: invalid color data', (done) => 
   {
     try 
     {
@@ -99,7 +99,7 @@ describe('Color class constructor', function ()
     }
   });
 
-  it('throws Error: invalid color data', function (done) 
+  it('throws Error: invalid color data', (done) => 
   {
     try 
     {
@@ -114,16 +114,16 @@ describe('Color class constructor', function ()
   });
 });
 
-describe('.setAlpha()', function () 
+describe('.setAlpha()', () => 
 {
-  it('converts to rgba()', function (done) 
+  it('converts to rgba()', (done) => 
   {
     expect(new Color('red').setAlpha(0.5).toString()).toBe('rgba(255,0,0,0.5)');
     expect(new Color('red').setAlpha(0).toString()).toBe('transparent');
     expect(new Color([255, 0, 0], 0.5).setAlpha(1).toString(true)).toBe('#f00');
     done();
   });
-  it('alpha does not modify existing color', function (done) 
+  it('alpha does not modify existing color', (done) => 
   {
     const myColor = new Color('red');
     expect(myColor.toString(true)).toBe('#f00');
@@ -133,9 +133,9 @@ describe('.setAlpha()', function ()
   });
 });
 
-describe('.setSaturation()', function () 
+describe('.setSaturation()', () => 
 {
-  it('sets the saturation value', function (done) 
+  it('sets the saturation value', (done) => 
   {
     expect(new Color(100, 50, 50).setSaturation(0).toString(true)).toBe('#4b4b4b');
     expect(new Color(100, 50, 50).setSaturation(1).toString(true)).toBe('#960000');
@@ -143,9 +143,9 @@ describe('.setSaturation()', function ()
   });
 });
 
-describe('.increaseSaturate()', function () 
+describe('.increaseSaturate()', () => 
 {
-  it('increases the saturation by a percentage (1.0 = 100%)', function (done) 
+  it('increases the saturation by a percentage (1.0 = 100%)', (done) => 
   {
     const cornsilk = new Color('corn silk 3');
     expect(cornsilk.getSaturation()).toBe(0.2187500000000001);
@@ -158,9 +158,9 @@ describe('.increaseSaturate()', function ()
   });
 });
 
-describe('.decreaseSaturate()', function () 
+describe('.decreaseSaturate()', () => 
 {
-  it('decreaseSaturate the saturation by a percentage (1.0 = 100%)', function (done) 
+  it('decreaseSaturate the saturation by a percentage (1.0 = 100%)', (done) => 
   {
     expect(new Color('#d3ccab').getSaturation()).toBe(0.31249999999999994); // not the same numbers as above due to hsl/rgb calculations
     expect(new Color('#d3ccab').decreaseSaturate(0.1).toString(true)).toBe('#cdc8b1');
@@ -170,9 +170,9 @@ describe('.decreaseSaturate()', function ()
   });
 });
 
-describe('.setHue', function () 
+describe('.setHue', () => 
 {
-  it('sets the hue', function (done) 
+  it('sets the hue', (done) => 
   {
     expect(new Color('red').setHue(2 / 3).toString(true)).toBe('#00f');
     expect(new Color('blue').setHue(1 / 3).toString(true)).toBe('#0f0');
@@ -181,9 +181,9 @@ describe('.setHue', function ()
   });
 });
 
-describe('.shiftHue()', function () 
+describe('.shiftHue()', () => 
 {
-  it('shifts the hue', function (done) 
+  it('shifts the hue', (done) => 
   {
     expect(new Color(255, 255, 0).shiftHue(0.25).toString(true)).toBe('#00ff7f');
     expect(new Color(255, 0, 0).shiftHue(0.1).toString(true)).toBe('#f90');
@@ -195,18 +195,18 @@ describe('.shiftHue()', function ()
   });
 });
 
-describe('.setLightness()', function () 
+describe('.setLightness()', () => 
 {
-  it('sets the lightness value', function (done) 
+  it('sets the lightness value', (done) => 
   {
     expect(new Color('#cdc8b1').setLightness(0.5).toString(true)).toBe('#9b9164');
     done();
   });
 });
 
-describe('.increaseLightness()', function () 
+describe('.increaseLightness()', () => 
 {
-  it('lightens', function (done) 
+  it('lightens', (done) => 
   {
     expect(new Color('red').increaseLightness(0.1).toString(true)).toBe('#f33');
     expect(new Color('blue').increaseLightness(0.1).toString(true)).toBe('#33f');
@@ -214,9 +214,9 @@ describe('.increaseLightness()', function ()
   });
 });
 
-describe('.decreaseLightness()', function () 
+describe('.decreaseLightness()', () => 
 {
-  it('darkens', function (done) 
+  it('darkens', (done) => 
   {
     expect(new Color('red').decreaseLightness(0.1).toString(true)).toBe('#c00');
     expect(new Color('tan').decreaseLightness(0.1).toString(true)).toBe('#c49c67');
@@ -224,30 +224,30 @@ describe('.decreaseLightness()', function ()
   });
 });
 
-describe('set colors', function () 
+describe('set colors', () => 
 {
-  it('also is used by .red()', function (done) 
+  it('also is used by .red()', (done) => 
   {
     expect(new Color('black').setRed(255).getRGB()).toStrictEqual([255, 0, 0]);
     done();
   });
 
-  it('also is used by .green()', function (done) 
+  it('also is used by .green()', (done) => 
   {
     expect(new Color('black').setGreen(255).getRGB()).toStrictEqual([0, 255, 0]);
     done();
   });
 
-  it('also is used by .blue()', function (done) 
+  it('also is used by .blue()', (done) => 
   {
     expect(new Color('black').setBlue(255).getRGB()).toStrictEqual([0, 0, 255]);
     done();
   });
 });
 
-describe('.combine', function () 
+describe('.combine', () => 
 {
-  it('combines colors', function (done) 
+  it('combines colors', (done) => 
   {
     expect(new Color('black').combine(new Color('red'), 0.5).toString(true)).toBe('#800000');
     expect(new Color('black').combine('red', 0.5).toString(true)).toBe('#800000');
@@ -259,16 +259,16 @@ describe('.combine', function ()
     expect(new Color(25, 135, 84).combine('white', 0.25).toString(true)).toBe('#53a57f');
     done();
   });
-  it('maintains alpha channel', function (done) 
+  it('maintains alpha channel', (done) => 
   {
     expect(new Color('red').setAlpha(0.5).combine('black', 0.5).toString()).toBe('rgba(128,0,0,0.5)');
     done();
   });
 });
 
-describe('.tint', function () 
+describe('.tint', () => 
 {
-  it('tint colors', function (done) 
+  it('tint colors', (done) => 
   {
     expect(new Color('red').tint('blue', 0.5).toString(true)).toBe('#0f0'); // green is half way between red and blue
     expect(new Color('red').tint('blue', 1).toString(true)).toBe('#00f');
@@ -276,22 +276,22 @@ describe('.tint', function ()
     expect(new Color('rgb(0,0,100)').tint('rgb(100,0,0)', 0.1).toString(true)).toBe('#002864');
     done();
   });
-  it('only adjusts the hue', function (done) 
+  it('only adjusts the hue', (done) => 
   {
     expect(new Color('red').tint([0, 0, 255], 0.5).toString(true)).toBe('#0f0');
     expect(new Color('red').tint([0, 0, 1], 0.5).toString(true)).toBe('#0f0'); // same as above, because tint only adjusts the hue
     done();
   });
-  it('maintains alpha channel', function (done) 
+  it('maintains alpha channel', (done) => 
   {
     expect(new Color('rgba(255,0,0,0.5)').tint([0, 0, 255], 0.5).toString()).toBe('rgba(0,255,0,0.5)');
     done();
   });
 });
 
-describe('.invert', function () 
+describe('.invert', () => 
 {
-  it('inverts', function (done) 
+  it('inverts', (done) => 
   {
     expect(new Color('#f00').invert().toString(true)).toBe('#0ff');
     expect(new Color('white').invert().toString(true)).toBe('#000');
@@ -299,34 +299,34 @@ describe('.invert', function ()
   });
 });
 
-describe('Getters', function () 
+describe('Getters', () => 
 {
-  it('.getRed()', function (done) 
+  it('.getRed()', (done) => 
   {
     expect(new Color('tan').getRed()).toBe(210);
     done();
   });
 
-  it('.getGreen()', function (done) 
+  it('.getGreen()', (done) => 
   {
     expect(new Color('tan').getGreen()).toBe(180);
     done();
   });
 
-  it('.getBlue()', function (done) 
+  it('.getBlue()', (done) => 
   {
     expect(new Color('tan').getBlue()).toBe(140);
     done();
   });
 
-  it('.getAlpha()', function (done) 
+  it('.getAlpha()', (done) => 
   {
     expect(new Color('rgba(255,0,0,0.5)').getAlpha()).toBe(0.5);
     expect(new Color('rgb(255,0,0)').getAlpha()).toBe(1);
     done();
   });
 
-  it('.getHSL()', function (done) 
+  it('.getHSL()', (done) => 
   {
     expect(new Color('tan').getHSL()).toStrictEqual({
       h: 0.09523809523809527,
@@ -336,7 +336,7 @@ describe('Getters', function ()
     done();
   });
 
-  it('.getHue()', function (done) 
+  it('.getHue()', (done) => 
   {
     expect(new Color('red').getHue()).toBe(0);
     expect(new Color('yellow').getHue()).toBe(0.16666666666666666);
@@ -348,7 +348,7 @@ describe('Getters', function ()
     done();
   });
 
-  it('.getSaturation()', function (done) 
+  it('.getSaturation()', (done) => 
   {
     expect(new Color([128, 0, 0]).getSaturation()).toBe(1);
     expect(new Color([128, 128, 0]).getSaturation()).toBe(1);
@@ -358,19 +358,19 @@ describe('Getters', function ()
     done();
   });
 
-  it('.getLightness()', function (done) 
+  it('.getLightness()', (done) => 
   {
     expect(new Color('tan').getLightness()).toBe(0.6862745098039216);
     done();
   });
 
-  it('.getHex()', function (done) 
+  it('.getHex()', (done) => 
   {
     expect(new Color('rgba(255,0,0,0.5)').getHex()).toBe('#f00');
     done();
   });
 
-  it('.getRGB()', function (done) 
+  it('.getRGB()', (done) => 
   {
     expect(new Color('rgb(255,0,0)').getRGB()).toStrictEqual([255, 0, 0]);
     expect(new Color('rgba(255,0,0,0.5)').getRGB()).toStrictEqual([255, 0, 0]);
@@ -378,18 +378,18 @@ describe('Getters', function ()
   });
 });
 
-describe('Color.getNames', function () 
+describe('Color.getNames', () => 
 {
-  it('returns the color names literal', function (done) 
+  it('returns the color names literal', (done) => 
   {
     expect(ColorNames['red']).toStrictEqual([255, 0, 0]);
     done();
   });
 });
 
-describe('Color.createHarmoniousColorAndShadow', function () 
+describe('Color.createHarmoniousColorAndShadow', () => 
 {
-  it('returns matchingColor', function (done) 
+  it('returns matchingColor', (done) => 
   {
     // background-color: rgb(221, 238, 224); color: rgb(0, 51, 10); text-shadow: rgb(187, 221, 194) 1px 2px 5px;
     expect(new Color(221, 238, 224).createHarmoniousColorAndShadow().text.toString()).toBe('rgb(0,51,9)');
@@ -400,9 +400,9 @@ describe('Color.createHarmoniousColorAndShadow', function ()
   });
 });
 
-describe('Color.toModifyAlpha', function () 
+describe('Color.toModifyAlpha', () => 
 {
-  it('toModifyAlpha', function (done) 
+  it('toModifyAlpha', (done) => 
   {
     expect(new Color(221, 238, 224).toModifyAlpha(0.5).toString()).toBe('rgba(221,238,224,0.5)');
     expect(new Color(0, 238, 224).toModifyAlpha(0.1).toString()).toBe('rgba(0,238,224,0.1)');

@@ -1,15 +1,15 @@
-import { IRoute } from "./types";
+import { IRoute } from './types';
 
 /**
  * Класс для определения маршрута в приложении
  */
 export class Route implements IRoute
 {
-  //#region Fields
+  // #region Fields
   readonly path: string;
   readonly isShouldBeAuthorized: boolean;
   readonly permissions?: string[];
-  //#endregion
+  // #endregion
 
   /**
    * @param path Путь маршрута
@@ -23,7 +23,7 @@ export class Route implements IRoute
     this.permissions = permissions;
   }
 
-  //#region Methods
+  // #region Methods
   /**
    * Заменяет path-параметры в маршруте реальными значениями
    * @param params - Объект с параметрами { paramName: value }
@@ -47,7 +47,8 @@ export class Route implements IRoute
       if (result.includes(paramPlaceholder))
       {
         result = result.replace(paramPlaceholder, encodeURIComponent(value));
-      } else
+      }
+      else
       {
         console.warn(`Параметр "${key}" не найден в пути: ${this.path}`);
       }
@@ -123,5 +124,5 @@ export class Route implements IRoute
   {
     return this.path;
   }
-  //#endregion
+  // #endregion
 }

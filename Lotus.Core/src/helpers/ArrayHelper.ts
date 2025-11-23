@@ -67,7 +67,7 @@ export abstract class ArrayHelper
   {
     const result: IGrouping<TItem>[] = [];
 
-    for(const item of array)
+    for (const item of array)
     {
       const value = item[key];
       const exist = result.find((x) => x.groupKey === value);
@@ -116,8 +116,8 @@ export abstract class ArrayHelper
    */
   public static hasDuplicatedByKey<TItem>(array: TItem[], key: keyof TItem): boolean
   {
-    const _array = array.map((element: TItem) => element[key]);
-    return new Set(_array).size !== _array.length;
+    const newArray = array.map((element: TItem) => element[key]);
+    return new Set(newArray).size !== newArray.length;
   }
 
   /**

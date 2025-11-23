@@ -2,7 +2,7 @@
  * Класс для определения маршрута в приложении
  */
 export class TypedRoute {
-    //#region Static
+    // #region Static
     /**
      * @param path Путь маршрута
      * @param isShouldBeAuthorized Требует ли маршрут аутентификации
@@ -14,13 +14,13 @@ export class TypedRoute {
     static createWithConstraints(path, constraints, isShouldBeAuthorized, permissions) {
         return new TypedRoute(path, isShouldBeAuthorized, constraints, permissions);
     }
-    //#endregion
-    //#region Fields
+    // #endregion
+    // #region Fields
     path;
     isShouldBeAuthorized;
     permissions;
     constraints;
-    //#endregion
+    // #endregion
     /**
      * @param path Путь маршрута
      * @param isShouldBeAuthorized Требует ли маршрут аутентификации
@@ -33,7 +33,7 @@ export class TypedRoute {
         this.constraints = constraints;
         this.permissions = permissions;
     }
-    //#region Methods
+    // #region Methods
     /**
      * Строит путь с типизированными параметрами
      * @param params - Параметры, соответствующие ограничениям

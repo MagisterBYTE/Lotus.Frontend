@@ -9,6 +9,7 @@ export const EventCommandKey = 'EventCommand';
  * Класс команды для генерирования пользовательских событий
  */
 export class EventCommand extends BaseCommand {
+    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
     constructor(name) {
         super(name);
     }

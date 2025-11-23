@@ -107,6 +107,7 @@ export class ColorVariants implements IColorVariants
 
   public readonly black: Color; // 10
 
+  // eslint-disable-next-line max-params
   constructor(white: Color, palest: Color, pale: Color, lighter: Color, light: Color, main: Color, dark: Color, darker: Color, darkest: Color, black: Color)
   {
     this.white = white;
@@ -132,20 +133,23 @@ export class ColorVariants implements IColorVariants
   {
     if (name)
     {
-      const color = this[name] as Color;
+      const color = this[name];
       if (modifyAlpha)
       {
         return color.toModifyAlpha(modifyAlpha);
-      } else
+      }
+      else
       {
         return color;
       }
-    } else
+    }
+    else
     {
       if (modifyAlpha)
       {
         return this.main.toModifyAlpha(modifyAlpha);
-      } else
+      }
+      else
       {
         return this.main;
       }
@@ -172,11 +176,12 @@ export class ColorVariants implements IColorVariants
   public getNextByName(name?: TColorVariantName, delta?: number, modifyAlpha?: number): Color
   {
     const nextName = ColorVariantsHelper.getNameByIndex(ColorVariantsHelper.getNextIndex(ColorVariantsHelper.getIndexByName(name), delta));
-    const color = this[nextName] as Color;
+    const color = this[nextName];
     if (modifyAlpha)
     {
       return color.toModifyAlpha(modifyAlpha);
-    } else
+    }
+    else
     {
       return color;
     }

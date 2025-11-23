@@ -68,7 +68,7 @@ export class ObjectInfo implements IObjectInfo
       {
         filterFunctions[`${x.fieldName}`] = x.filtering.functionDefaultDesc;
       }
-    })
+    });
 
     return filterFunctions;
   }

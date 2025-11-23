@@ -1,3 +1,5 @@
+export { createLanguageChangeEvent, LanguageChangeEventType } from './LanguageEvents';
+export { LanguageTypeOptions, TLanguageTypes } from './LanguageType';
 export { LocalizationCore } from './LocalizationCore';
 export { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 export { LocalizationCoreDataRu } from './LocalizationCoreDataRu';

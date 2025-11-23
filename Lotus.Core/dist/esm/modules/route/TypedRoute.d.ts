@@ -8,7 +8,7 @@ export declare class TypedRoute<TPath extends string = string, TConstraints exte
      * @param isShouldBeAuthorized Требует ли маршрут аутентификации
      * @param permissions Набор разрешений для перехода по данному маршруту
      */
-    static create<TPath extends string>(path: TPath, isShouldBeAuthorized?: boolean, permissions?: string[]): TypedRoute<TPath, {}>;
+    static create<TPath extends string>(path: TPath, isShouldBeAuthorized?: boolean, permissions?: string[]): TypedRoute<TPath, object>;
     static createWithConstraints<TPath extends string, TConstraints extends RouteParamConstraints<TPath>>(path: TPath, constraints: TConstraints, isShouldBeAuthorized?: boolean, permissions?: string[]): TypedRoute<TPath, TConstraints>;
     readonly path: string;
     readonly isShouldBeAuthorized: boolean;

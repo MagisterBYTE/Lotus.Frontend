@@ -18,7 +18,6 @@ export class PathHelper {
         }
         return [fileName, ''];
     }
-    ;
     /**
      * Проверяет, имеет ли файл расширение
      * @param {string} fileName - Имя файла для проверки

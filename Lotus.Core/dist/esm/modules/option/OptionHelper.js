@@ -1,4 +1,4 @@
-import { ArrayHelper } from '#helpers';
+import { ArrayHelper, GuidHelper } from '#helpers';
 import { Assert } from '#utils';
 export class OptionHelper {
     /**
@@ -7,8 +7,8 @@ export class OptionHelper {
      * @returns true, если объект поддерживает интерфейс, false в противном случае
      */
     static instanceOfOption(value) {
-        if (value && typeof value === "object") {
-            return ('value' in value && 'label' in value);
+        if (value && typeof value === 'object') {
+            return 'value' in value && 'label' in value;
         }
         return false;
     }
@@ -37,23 +37,54 @@ export class OptionHelper {
             return value;
         }
         else {
-            // eslint-disable-next-line consistent-return
             return undefined;
         }
     }
     /**
      * Преобразование массива к массиву объектов интерфейса IOption
      * @param value Объект для преобразования
-     * @returns Mассив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
+     * @returns Массив объектов интерфейса IOption или undefined если объект не поддерживает интерфейс
      */
     static castToOptions(value) {
         if (OptionHelper.instanceOfOptions(value)) {
             return value;
         }
         else {
-            // eslint-disable-next-line consistent-return
             return undefined;
         }
+    }
+    /**
+     * Проверка опции на тип ключа number
+     * @param options Список опций
+     * @returns true, тип ключа number, false в противном случае
+     */
+    static isNumber(options) {
+        if (options && options.length > 0) {
+            return typeof options[0].value == 'number';
+        }
+        return false;
+    }
+    /**
+     * Проверка опции на тип ключа string
+     * @param options Список опций
+     * @returns true, тип ключа string, false в противном случае
+     */
+    static isString(options) {
+        if (options && options.length > 0) {
+            return typeof options[0].value == 'string';
+        }
+        return false;
+    }
+    /**
+     * Проверка опции на тип ключа guid
+     * @param options Список опций
+     * @returns true, тип ключа guid, false в противном случае
+     */
+    static isGuid(options) {
+        if (options && options.length > 0) {
+            return typeof options[0].value == 'string' && GuidHelper.instanceOfGuid(typeof options[0].value);
+        }
+        return false;
     }
     /**
      * Преобразование значение в значение корректного типа
@@ -200,7 +231,6 @@ export class OptionHelper {
                 }
             }
         }
-        // eslint-disable-next-line consistent-return
         return undefined;
     }
     /**

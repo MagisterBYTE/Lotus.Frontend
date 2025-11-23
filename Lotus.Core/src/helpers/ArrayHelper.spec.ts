@@ -111,8 +111,11 @@ describe('ArrayHelper', () =>
       const result = ArrayHelper.groupByKey(testData, 'category');
 
       expect(result.length).toBe(3);
+      // eslint-disable-next-line max-nested-callbacks
       expect(result.find(g => g.groupKey == 'A')?.items.length).toBe(2);
+      // eslint-disable-next-line max-nested-callbacks
       expect(result.find(g => g.groupKey == 'B')?.items.length).toBe(1);
+      // eslint-disable-next-line max-nested-callbacks
       expect(result.find(g => g.groupKey == 'C')?.items.length).toBe(1);
     });
 
@@ -144,6 +147,7 @@ describe('ArrayHelper', () =>
     {
       const result = ArrayHelper.getUniqueByKey(testData, 'id');
       expect(result.length).toBe(3);
+      // eslint-disable-next-line max-nested-callbacks
       expect(result.map(i => i.id)).toEqual([1, 2, 3]);
     });
 
@@ -294,4 +298,4 @@ describe('ArrayHelper', () =>
       expect(removedCount).toBe(3); // Bob, Charlie и Eve
     });
   });
-})
+});

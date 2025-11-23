@@ -5,8 +5,8 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfGrouping(value) {
-    if (value && typeof value === "object") {
-        return ('groupKey' in value) && ('items' in value) && (Array.isArray(value['items']));
+    if (value && typeof value === 'object') {
+        return 'groupKey' in value && 'items' in value && Array.isArray(value['items']);
     }
     return false;
 }
@@ -21,7 +21,6 @@ export function castToGrouping(value) {
         return value;
     }
     else {
-        // eslint-disable-next-line consistent-return
         return undefined;
     }
 }

@@ -87,8 +87,8 @@ export class ArrayHelper {
      * @returns Статус проверки
      */
     static hasDuplicatedByKey(array, key) {
-        const _array = array.map((element) => element[key]);
-        return new Set(_array).size !== _array.length;
+        const newArray = array.map((element) => element[key]);
+        return new Set(newArray).size !== newArray.length;
     }
     /**
      * Удаляет элементы из массива по ключу и значению (или массиву значений)

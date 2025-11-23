@@ -11,9 +11,9 @@ export abstract class NumberHelper
   public static compare(left?: number, right?: number, isDesc?: boolean):number
   {
     let status:number = 0;
-    if(left)
+    if (left)
     {
-      if(right)
+      if (right)
       {
         status = Math.sign(left - right);
       }
@@ -24,7 +24,7 @@ export abstract class NumberHelper
     }
     else
     {
-      if(right)
+      if (right)
       {
         status = -1;
       }
@@ -34,12 +34,12 @@ export abstract class NumberHelper
       }
     }
 
-    if(isDesc)
+    if (isDesc)
     {
-      if(status > 0) return -1;
+      if (status > 0) return -1;
       else
       {
-        if(status < 0) return 1;
+        if (status < 0) return 1;
         else return 0;
       }
     }

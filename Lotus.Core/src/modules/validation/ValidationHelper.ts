@@ -12,11 +12,11 @@ export abstract class ValidationHelper
 
   public static validationEmail(email: string): IValidationResult 
   {
-    if(ValidationHelper.PatternEmail.test(email))
+    if (ValidationHelper.PatternEmail.test(email))
     {
       return ValidationResultSuccess;
     }
 
-    return { error: false, text: LocalizationCore.data.validation.invalidEmail }
+    return { error: false, text: LocalizationCore.data.validation.invalidEmail };
   }
 }

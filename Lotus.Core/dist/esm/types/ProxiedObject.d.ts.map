@@ -1,1 +1,1 @@
-{"version":3,"file":"ProxiedObject.d.ts","sourceRoot":"","sources":["../../../src/types/ProxiedObject.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,MAAM,WAAW,cAAc,CAAC,KAAK;IAEnC;;OAEG;IACH,MAAM,EAAE,KAAK,CAAC;IAEd;;;OAGG;IACH,OAAO,EAAE,CAAC,MAAM,CAAC,EAAE,GAAG,KAAK,IAAI,CAAC;CACjC"}
+{"version":3,"file":"ProxiedObject.d.ts","sourceRoot":"","sources":["../../../src/types/ProxiedObject.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,MAAM,WAAW,cAAc,CAAC,KAAK;IAEnC;;OAEG;IACH,MAAM,EAAE,KAAK,CAAC;IAEd;;;OAGG;IAEH,OAAO,EAAE,CAAC,MAAM,CAAC,EAAE,GAAG,KAAK,IAAI,CAAC;CACjC"}

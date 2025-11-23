@@ -18,6 +18,5 @@ export class ByteSizeFormatter {
         size = size / 1024;
         return `${NumberFormatter.numberFixed(size, 2, locale)} ${LocalizationCore.data.byteSize.Gb}`;
     }
-    ;
 }
 //# sourceMappingURL=ByteSizeFormatter.js.map

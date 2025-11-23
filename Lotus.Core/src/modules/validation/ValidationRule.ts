@@ -12,7 +12,6 @@ export interface IValidationRule<TValue = any>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class ValidationSuccess<TValue = any> implements IValidationRule<TValue>
 {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   validation(_: TValue | null): IValidationResult
   {
     return ValidationResultSuccess;

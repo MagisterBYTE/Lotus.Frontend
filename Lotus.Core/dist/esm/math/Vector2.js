@@ -364,7 +364,7 @@ export class Vector2 {
         return dest;
     }
     toString() {
-        return '(' + this.x + ', ' + this.y + ')';
+        return `(${this.x}, ${this.y})`;
     }
 }
 //# sourceMappingURL=Vector2.js.map

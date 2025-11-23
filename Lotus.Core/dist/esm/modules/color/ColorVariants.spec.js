@@ -1,7 +1,7 @@
 import { ColorVariantsHelper } from './ColorVariantsHelper';
 import { TColorVariantIndexBlack, TColorVariantIndexDark, TColorVariantIndexDarker, TColorVariantIndexDarkest, TColorVariantIndexLight, TColorVariantIndexLighter, TColorVariantIndexMain, TColorVariantIndexPale, TColorVariantIndexPalest, TColorVariantIndexWhite } from './ColorVariantsTypes';
-describe('ColorVarianHelper', function () {
-    it('getNameByIndex', function (done) {
+describe('ColorVarianHelper', () => {
+    it('getNameByIndex', (done) => {
         expect(ColorVariantsHelper.getNameByIndex(1)).toBe('white');
         expect(ColorVariantsHelper.getNameByIndex(2)).toBe('palest');
         expect(ColorVariantsHelper.getNameByIndex(3)).toBe('pale');
@@ -14,7 +14,7 @@ describe('ColorVarianHelper', function () {
         expect(ColorVariantsHelper.getNameByIndex(10)).toBe('black');
         done();
     });
-    it('getIndexByName', function (done) {
+    it('getIndexByName', (done) => {
         expect(ColorVariantsHelper.getIndexByName('white')).toBe(TColorVariantIndexWhite);
         expect(ColorVariantsHelper.getIndexByName('palest')).toBe(TColorVariantIndexPalest);
         expect(ColorVariantsHelper.getIndexByName('pale')).toBe(TColorVariantIndexPale);
@@ -27,7 +27,7 @@ describe('ColorVarianHelper', function () {
         expect(ColorVariantsHelper.getIndexByName('black')).toBe(TColorVariantIndexBlack);
         done();
     });
-    it('getIndexByName', function (done) {
+    it('getIndexByName', (done) => {
         expect(ColorVariantsHelper.getNextIndex(TColorVariantIndexWhite, 2)).toBe(TColorVariantIndexPale);
         expect(ColorVariantsHelper.getNextIndex(TColorVariantIndexMain, 2)).toBe(TColorVariantIndexDarker);
         expect(ColorVariantsHelper.getNextIndex(TColorVariantIndexDarker, 2)).toBe(TColorVariantIndexBlack);

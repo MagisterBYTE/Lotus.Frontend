@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class Assert {
     /**
      * Проверка значения на undefined или null
@@ -30,6 +31,7 @@ export class Assert {
      */
     static anyTrue(...args) {
         for (const arg of args) {
+            // eslint-disable-next-line no-extra-boolean-cast
             if (Boolean(arg)) {
                 return true;
             }
@@ -45,6 +47,7 @@ export class Assert {
         // Перебираем все аргументы с помощью цикла for...of
         for (const arg of args) {
             // Если хотя бы один аргумент преобразуется в false,
+            // eslint-disable-next-line no-extra-boolean-cast
             if (!Boolean(arg)) {
                 // немедленно возвращаем false (короткое замыкание)
                 return false;
@@ -76,6 +79,7 @@ export class Assert {
      */
     static allFalse(...args) {
         for (const arg of args) {
+            // eslint-disable-next-line no-extra-boolean-cast
             if (Boolean(arg)) {
                 return false;
             }

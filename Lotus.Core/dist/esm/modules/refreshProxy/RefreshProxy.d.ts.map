@@ -1,0 +1,1 @@
+{"version":3,"file":"RefreshProxy.d.ts","sourceRoot":"","sources":["../../../../src/modules/refreshProxy/RefreshProxy.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,MAAM,WAAW,aAAa;IAE5B,cAAc,EAAE,MAAM,IAAI,CAAC;CAC5B;AAED;;GAEG;AACH,qBAAa,YAAa,YAAW,aAAa;IAEzC,cAAc,EAAE,MAAM,IAAI,CAAC;;IAQlC;;;OAGG;IACI,mBAAmB;CAI3B"}

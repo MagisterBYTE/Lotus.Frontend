@@ -7,7 +7,7 @@ export class CookiesHelper {
     static get(name) {
         const matches = document.cookie.match(new RegExp(
         // eslint-disable-next-line no-useless-escape
-        '(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+        `(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`));
         return matches ? decodeURIComponent(matches[1]) : undefined;
     }
     /**
@@ -27,12 +27,12 @@ export class CookiesHelper {
         if (currentOptions['expires'] instanceof Date) {
             currentOptions['expires'] = currentOptions['expires'].toUTCString();
         }
-        let updatedCookie = encodeURIComponent(name) + '=' + (encodeValue ? encodeURIComponent(value) : value);
+        let updatedCookie = `${encodeURIComponent(name)}=${encodeValue ? encodeURIComponent(value) : value}`;
         for (const optionKey in currentOptions) {
-            updatedCookie += '; ' + optionKey;
+            updatedCookie += `; ${optionKey}`;
             const optionValue = currentOptions[optionKey];
             if (optionValue !== true) {
-                updatedCookie += '=' + optionValue;
+                updatedCookie += `=${optionValue}`;
             }
         }
         document.cookie = updatedCookie;
@@ -58,7 +58,7 @@ export class CookiesHelper {
             const cookie = cookies[i];
             const eqPos = cookie.indexOf('=');
             const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
         }
     }
 }

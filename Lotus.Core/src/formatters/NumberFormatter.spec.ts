@@ -44,13 +44,13 @@ describe('NumberFormatter', () =>
   {
     it('форматирует число как процент с учетом локали по умолчанию', () => 
     {
-      expect(NumberFormatter.percentage(0.1234, 'en-US', {minimumFractionDigits: 2})).toMatch(/12[,.]34%/);
+      expect(NumberFormatter.percentage(0.1234, 'en-US', { minimumFractionDigits: 2 })).toMatch(/12[,.]34%/);
     });
 
     it('форматирует число как процент с учетом указанной локали', () => 
     {
-      expect(NumberFormatter.percentage(0.1234, 'ru-RU', {minimumFractionDigits: 2})).toBe('12,34\u00A0%');
-      expect(NumberFormatter.percentage(0.1234, 'en-US', {minimumFractionDigits: 2})).toBe('12.34%');
+      expect(NumberFormatter.percentage(0.1234, 'ru-RU', { minimumFractionDigits: 2 })).toBe('12,34\u00A0%');
+      expect(NumberFormatter.percentage(0.1234, 'en-US', { minimumFractionDigits: 2 })).toBe('12.34%');
     });
 
     it('форматирует число как процент с дополнительными опциями', () => 

@@ -53,6 +53,5 @@ export class BrowserHelper {
         link.remove();
         URL.revokeObjectURL(downloadUrl);
     }
-    ;
 }
 //# sourceMappingURL=BrowserHelper.js.map

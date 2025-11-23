@@ -50,6 +50,7 @@ export class Color {
     rgb;
     hsl;
     a;
+    // eslint-disable-next-line complexity
     constructor(red, green, blue, alpha) {
         if (arguments.length === 0) {
             this.rgb = [0, 0, 0];
@@ -737,7 +738,7 @@ export class Color {
         }
         if (this.a < 1) {
             const rgb = this._getRGB();
-            return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ')';
+            return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${this.a})`;
         }
         else {
             if (isHex) {
@@ -745,7 +746,7 @@ export class Color {
             }
             else {
                 const rgb = this._getRGB();
-                return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+                return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
             }
         }
     }
@@ -759,9 +760,9 @@ export class Color {
         let textColor = '';
         if (modifyAlpha) {
             const rgb = this._getRGB();
-            textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + modifyAlpha + ')';
+            textColor = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${modifyAlpha})`;
             if (addSemicolon) {
-                textColor = textColor + ';';
+                textColor = `${textColor};`;
             }
             return textColor;
         }
@@ -770,14 +771,14 @@ export class Color {
         }
         if (this.a < 1) {
             const rgb = this._getRGB();
-            textColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + this.a + ')';
+            textColor = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${this.a})`;
         }
         else {
             const rgb = this._getRGB();
-            textColor = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+            textColor = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
         }
         if (addSemicolon) {
-            textColor = textColor + ';';
+            textColor = `${textColor};`;
         }
         return textColor;
     }
@@ -793,16 +794,17 @@ export class Color {
      * Получить цвет и цвет тени гармоничный к текущему
      * @returns Цвет и цвет тени гармоничный к текущему
      */
+    // eslint-disable-next-line complexity
     createHarmoniousColorAndShadow() {
         const hsl = this._getHSL();
         let h = hsl.h * 360;
         let s = hsl.s * 100;
         let l = hsl.l * 100;
         /* originals*/
-        const o_h = h, o_s = s, o_l = l;
+        const oHue = h, oSaturation = s, oLight = l;
         s = 100;
-        if (o_s <= 25) {
-            if (o_l > 60) {
+        if (oSaturation <= 25) {
+            if (oLight > 60) {
                 l = 10;
             }
             else {
@@ -810,10 +812,10 @@ export class Color {
             }
         }
         else {
-            if ((o_h >= 25 && o_h <= 195) || o_h >= 295) {
+            if ((oHue >= 25 && oHue <= 195) || oHue >= 295) {
                 l = 10;
             }
-            else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205)) {
+            else if ((oHue >= 285 && oHue < 295) || (oHue > 195 && oHue <= 205)) {
                 h = 60;
                 l = 50;
             }
@@ -821,30 +823,30 @@ export class Color {
                 l = 95;
             }
         }
-        if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35) {
+        if ((oHue >= 295 || (oHue > 20 && oHue < 200)) && oLight <= 35) {
             l = 95;
         }
-        else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)) {
+        else if (((oHue < 25 || oHue > 275) && oLight >= 60) || (oHue > 195 && oLight >= 70)) {
             l = 10;
         }
-        let s_l = l;
-        let s_h = h;
-        const s_s = o_s;
+        let sLight = l;
+        let sHeight = h;
+        const sSaturation = oSaturation;
         /* shadow*/
         if (l < 25) {
-            s_l = 80;
+            sLight = 80;
         }
         else {
-            s_l = 10;
+            sLight = 10;
         }
         if (h == 60 && (l < 90 || l > 20)) {
-            s_h = 320;
+            sHeight = 320;
         }
         else {
-            s_h = h;
+            sHeight = h;
         }
         const textColor = { h: h / 360, s: s / 100, l: l / 100 };
-        const shadowColor = { h: s_h / 360, s: s_s / 100, l: s_l / 100 };
+        const shadowColor = { h: sHeight / 360, s: sSaturation / 100, l: sLight / 100 };
         return { text: new Color(textColor, 1), shadow: new Color(shadowColor, 0.5) };
     }
     /**
@@ -857,10 +859,10 @@ export class Color {
         let s = hsl.s * 100;
         let l = hsl.l * 100;
         /* originals*/
-        const o_h = h, o_s = s, o_l = l;
+        const oHue = h, oSaturation = s, oLight = l;
         s = 100;
-        if (o_s <= 25) {
-            if (o_l > 60) {
+        if (oSaturation <= 25) {
+            if (oLight > 60) {
                 l = 10;
             }
             else {
@@ -868,10 +870,10 @@ export class Color {
             }
         }
         else {
-            if ((o_h >= 25 && o_h <= 195) || o_h >= 295) {
+            if ((oHue >= 25 && oHue <= 195) || oHue >= 295) {
                 l = 10;
             }
-            else if ((o_h >= 285 && o_h < 295) || (o_h > 195 && o_h <= 205)) {
+            else if ((oHue >= 285 && oHue < 295) || (oHue > 195 && oHue <= 205)) {
                 h = 60;
                 l = 50;
             }
@@ -879,10 +881,10 @@ export class Color {
                 l = 95;
             }
         }
-        if ((o_h >= 295 || (o_h > 20 && o_h < 200)) && o_l <= 35) {
+        if ((oHue >= 295 || (oHue > 20 && oHue < 200)) && oLight <= 35) {
             l = 95;
         }
-        else if (((o_h < 25 || o_h > 275) && o_l >= 60) || (o_h > 195 && o_l >= 70)) {
+        else if (((oHue < 25 || oHue > 275) && oLight >= 60) || (oHue > 195 && oLight >= 70)) {
             l = 10;
         }
         const textColor = { h: h / 360, s: s / 100, l: l / 100 };

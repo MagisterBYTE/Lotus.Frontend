@@ -5,7 +5,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfResult(value) {
-    if (value && typeof value === "object") {
+    if (value && typeof value === 'object') {
         return ('succeeded' in value) && ('code' in value);
     }
     return false;
@@ -21,7 +21,6 @@ export function castToResult(value) {
         return value;
     }
     else {
-        // eslint-disable-next-line consistent-return
         return undefined;
     }
 }

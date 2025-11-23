@@ -34,9 +34,9 @@ export interface ICommandService
  */
 export class CommandService implements ICommandService
 {
-  //#region Fields
+  // #region Fields
   public commands: ICommand[];
-  //#endregion
+  // #endregion
 
   constructor() 
   {
@@ -50,9 +50,9 @@ export class CommandService implements ICommandService
 
   public addCommands(commands: ICommand[])
   {
-    for(const command of commands)
+    for (const command of commands)
     {
-      this.commands.push(command)
+      this.commands.push(command);
     }
   }
 
@@ -82,9 +82,9 @@ export class CommandService implements ICommandService
         const command = this.commands.find(c => c.name === x);
         if (command)
         {
-          result.push(command)
+          result.push(command);
         }
-      })
+      });
     }
 
     return result;

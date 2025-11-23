@@ -12,7 +12,7 @@ export abstract class ColorVariantsHelper
    */
   public static getNameByIndex(index?: TColorVariantIndex): TColorVariantName
   {
-    return TColorVariantNames[(index ?? TColorVariantIndexMain) - 1]
+    return TColorVariantNames[(index ?? TColorVariantIndexMain) - 1];
   }
 
   /**
@@ -63,9 +63,9 @@ export abstract class ColorVariantsHelper
    */
   public static calcColor(baseColor:Color, name?: TColorVariantName):Color
   {
-    if(name)
+    if (name)
     {
-      switch(name)
+      switch (name)
       {
         case 'white': return baseColor.combine(ColorNames['white'], 0.95);
         case 'palest': return baseColor.combine(ColorNames['white'], 0.87);

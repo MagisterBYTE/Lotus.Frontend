@@ -10,7 +10,7 @@ export abstract class RequestHelper
 
       if (request.pageInfo)
       {
-        search.append('pageInfo.pageNumber', request.pageInfo.pageNumber.toString())
+        search.append('pageInfo.pageNumber', request.pageInfo.pageNumber.toString());
         search.append('pageInfo.pageSize', request.pageInfo.pageSize.toString());
       }
 
@@ -25,7 +25,7 @@ export abstract class RequestHelper
             search.append(`sorting[${index}].isDesc`, 'true');
           }
           index++;
-        })
+        });
       }
       if (request.filtering)
       {
@@ -56,11 +56,11 @@ export abstract class RequestHelper
               search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
               for (let iv = 0; iv < values.length; iv++) 
               {
-                const val = values[iv]!;
+                const val = values[iv];
                 search.append(`filtering[${index}].values[${iv}]`, val);
               }
             }
-        })
+        });
       }
 
       return search;
@@ -68,7 +68,7 @@ export abstract class RequestHelper
     else
     {
       const search: URLSearchParams = new URLSearchParams();
-      search.append('pageInfo.pageNumber', '0')
+      search.append('pageInfo.pageNumber', '0');
       search.append('pageInfo.pageSize', '9999');
       return search;
     }

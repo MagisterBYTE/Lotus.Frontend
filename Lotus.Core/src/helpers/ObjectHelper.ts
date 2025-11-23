@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash';
 
 export abstract class ObjectHelper
 {
@@ -13,7 +13,7 @@ export abstract class ObjectHelper
   {
     if (source === undefined || source === null) return undefined;
     const value = _.get(source, propertyPath, defaultValue) as TValue;
-    // eslint-disable-next-line consistent-return
+
     return value;
   }
 
@@ -38,7 +38,7 @@ export abstract class ObjectHelper
   public static cloneDeep<TValue = any>(source?: TValue|null): TValue|undefined
   {
     if (source === undefined || source === null) return undefined; 
-    // eslint-disable-next-line consistent-return
+
     return _.cloneDeep(source) as TValue;
   }
 
@@ -50,7 +50,7 @@ export abstract class ObjectHelper
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static equality(a: any, b: any): boolean
   {
-    return _.isEqual(a, b)
+    return _.isEqual(a, b);
   }
 
   /**

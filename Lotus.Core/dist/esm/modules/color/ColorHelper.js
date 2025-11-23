@@ -75,7 +75,6 @@ export class ColorHelper {
      * @param colorString - Строка цвета для парсинга
      * @returns Числовой массив цветовых компонент или undefined если не удалось распарсить
      */
-    // eslint-disable-next-line consistent-return
     static parseColorString(colorString) {
         const c = colorString.replaceAll(' ', '');
         // Обработка HEX форматов
@@ -126,7 +125,6 @@ export class ColorHelper {
      * @param colorString - Название цвета
      * @returns Числовой массив цветовых компонент или undefined если цвет не найден
      */
-    // eslint-disable-next-line consistent-return
     static getColorName(colorString) {
         const colStr = colorString.toLowerCase();
         if (colStr in ColorNames) {
@@ -163,9 +161,9 @@ export class ColorHelper {
         const g = ColorHelper.int2hex(Math.round(c[1]));
         const b = ColorHelper.int2hex(Math.round(c[2]));
         if (r[0] === r[1] && g[0] === g[1] && b[0] === b[1]) {
-            return '#' + r[0] + g[0] + b[0]; // Сокращенная форма (#RGB)
+            return `#${r[0]}${g[0]}${b[0]}`; // Сокращенная форма (#RGB)
         }
-        return '#' + r + g + b; // Полная форма (#RRGGBB)
+        return `#${r}${g}${b}`; // Полная форма (#RRGGBB)
     }
     /**
      * Конвертирует число в HEX строку с ведущим нулем при необходимости
@@ -174,7 +172,7 @@ export class ColorHelper {
      */
     static int2hex(i) {
         const v = i.toString(16);
-        return v.length === 1 ? '0' + v : v;
+        return v.length === 1 ? `0${v}` : v;
     }
     /**
      * Вспомогательная функция для HSL преобразований
@@ -222,6 +220,7 @@ export class ColorHelper {
    * @param hsl - объект HSL цвета
    * @returns объект RGB цвета
    */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static hsl2rgb(hsl) {
         const { h, s, l } = hsl;
         // Нормализуем hue в диапазон 0-1

@@ -64,5 +64,5 @@ export abstract class BrowserHelper
     link.click();
     link.remove();
     URL.revokeObjectURL(downloadUrl);
-  };
+  }
 }

@@ -22,7 +22,7 @@ export abstract class PathHelper
     }
 
     return [fileName, ''];
-  };
+  }
 
   /**
    * Проверяет, имеет ли файл расширение

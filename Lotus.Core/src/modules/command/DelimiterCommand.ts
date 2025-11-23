@@ -14,9 +14,10 @@ export interface IDelimiterCommand extends ICommand
  */
 export class DelimiterCommand extends BaseCommand implements IDelimiterCommand
 {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(name: string) 
   {
-    super(name)
+    super(name);
   }
 }
 

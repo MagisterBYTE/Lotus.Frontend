@@ -1,13 +1,28 @@
 import { TLanguageType } from './LanguageType';
-export declare abstract class LocalizationCoreDispatcher {
-    private static _currentLanguage;
+import { ILocalizationDispatcher } from './LocalizationDispatcher';
+/**
+ * Диспетчер локализации модуля Core
+ */
+export declare class LocalizationCoreDispatcherClass implements ILocalizationDispatcher {
+    private static _localizationCore;
+    static get Instance(): LocalizationCoreDispatcherClass;
+    private _currentLanguage;
     /**
      * Получить текущую язык
      */
-    static get currentLanguage(): TLanguageType;
+    get currentLanguage(): TLanguageType;
     /**
      * Установить текущий язык
      */
-    static set currentLanguage(language: TLanguageType);
+    set currentLanguage(language: TLanguageType);
+    /**
+     * Установить текущий язык
+     * @param language Язык
+     */
+    setLanguage(language: TLanguageType | undefined): void;
 }
+/**
+ * Глобальный доступ к диспетчеру локализации модуля Core
+ */
+export declare const LocalizationCoreDispatcher: LocalizationCoreDispatcherClass;
 //# sourceMappingURL=LocalizationCoreDispatcher.d.ts.map

@@ -3,6 +3,7 @@ import { BaseCommand } from './Command';
  * Фейковая команда предназначенная для визуального разделения команд в списках
  */
 export class DelimiterCommand extends BaseCommand {
+    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
     constructor(name) {
         super(name);
     }

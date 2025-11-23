@@ -10,9 +10,9 @@ export abstract class CookiesHelper
   {
     const matches = document.cookie.match(new RegExp(
       // eslint-disable-next-line no-useless-escape
-      '(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'
+      `(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`
     ));
-    return matches ? decodeURIComponent(matches[1]!) : undefined;
+    return matches ? decodeURIComponent(matches[1]) : undefined;
   }
 
   /**
@@ -36,15 +36,15 @@ export abstract class CookiesHelper
       currentOptions['expires'] = currentOptions['expires'].toUTCString();
     }
 
-    let updatedCookie = encodeURIComponent(name) + '=' + (encodeValue ? encodeURIComponent(value) : value);
+    let updatedCookie = `${encodeURIComponent(name)}=${encodeValue ? encodeURIComponent(value) : value}`;
 
     for (const optionKey in currentOptions) 
     {
-      updatedCookie += '; ' + optionKey;
+      updatedCookie += `; ${optionKey}`;
       const optionValue = currentOptions[optionKey];
       if (optionValue !== true) 
       {
-        updatedCookie += '=' + optionValue;
+        updatedCookie += `=${optionValue}`;
       }
     }
 
@@ -62,7 +62,7 @@ export abstract class CookiesHelper
     CookiesHelper.set(name, '', encodeValue, {
       'max-age': -1,
       ...options
-    })
+    });
   }
 
   /**
@@ -74,10 +74,10 @@ export abstract class CookiesHelper
 
     for (let i = 0; i < cookies.length; i++) 
     {
-      const cookie = cookies[i]!;
+      const cookie = cookies[i];
       const eqPos = cookie.indexOf('=');
       const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     }
   }
 }

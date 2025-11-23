@@ -32,6 +32,7 @@ export interface IEventCommand extends ICommand
  */
 export class EventCommand extends BaseCommand implements IEventCommand
 {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(name: string) 
   {
     super(name);

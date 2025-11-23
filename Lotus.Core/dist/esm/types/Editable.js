@@ -5,7 +5,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfEditable(value) {
-    if (value && typeof value === "object") {
+    if (value && typeof value === 'object') {
         return ('id' in value);
     }
     return false;
@@ -21,7 +21,6 @@ export function castToEditable(value) {
         return value;
     }
     else {
-        // eslint-disable-next-line consistent-return
         return undefined;
     }
 }

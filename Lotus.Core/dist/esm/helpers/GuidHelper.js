@@ -54,7 +54,7 @@ export class GuidHelper {
         const byteArray = new Uint8Array(length);
         window.crypto.getRandomValues(byteArray);
         return Array.from(byteArray)
-            .map((b) => ('0' + b.toString(16)).slice(-2))
+            .map((b) => (`0${b.toString(16)}`).slice(-2))
             .join('');
     }
 }

@@ -1,7 +1,6 @@
-import { TypedRoute } from "./TypedRoute";
+import { TypedRoute } from './TypedRoute';
 // Тестовые литеральные типы
 const USER_ROLES = ['admin', 'user', 'moderator'];
-const PRODUCT_CATEGORIES = ['electronics', 'books', 'clothing'];
 describe('TypedRoute', () => {
     // Базовые тесты
     describe('Basic functionality', () => {
@@ -57,7 +56,8 @@ describe('TypedRoute', () => {
         });
         test('should warn on invalid parameter values', () => {
             const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-            //@ts-expect-error
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             constrainedRoute.build({ role: 'invalid', action: 'view' });
             // expect(consoleSpy).toHaveBeenCalledWith(
             //   expect.stringContaining('Недопустимое значение "invalid" для параметра "role"')
@@ -67,7 +67,9 @@ describe('TypedRoute', () => {
         test('should validate parameters in development', () => {
             const originalNodeEnv = process.env.NODE_ENV;
             process.env.NODE_ENV = 'development';
+            // eslint-disable-next-line max-nested-callbacks
             expect(() => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-expect-error
                 constrainedRoute.build({ role: 'invalid', action: 'view' });
             }).toThrow('Invalid parameter value for role');
@@ -93,7 +95,9 @@ describe('TypedRoute', () => {
             const result = searchRoute.withQuery({
                 q: 'test',
                 empty: '',
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 undefined: undefined,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 null: null
             });
             expect(result).toBe('/search?q=test');

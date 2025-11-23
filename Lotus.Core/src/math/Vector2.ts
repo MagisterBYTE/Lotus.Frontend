@@ -1,4 +1,4 @@
-import { XMath } from './Common'
+import { XMath } from './Common';
 import { Vector3 } from './Vector3';
 
 /**
@@ -54,14 +54,14 @@ export class Vector2 implements IVector2
   // #region Static methods
   static cross(vector: Vector2, vector2: Vector2, dest?: Vector3): Vector3 
   {
-    if (!dest) dest = new Vector3()
-    const x = vector.x
-    const y = vector.y
-    const x2 = vector2.x
-    const y2 = vector2.y
-    const z = x * y2 - y * x2
-    dest.xyz = [0, 0, z]
-    return dest
+    if (!dest) dest = new Vector3();
+    const x = vector.x;
+    const y = vector.y;
+    const x2 = vector2.x;
+    const y2 = vector2.y;
+    const z = x * y2 - y * x2;
+    dest.xyz = [0, 0, z];
+    return dest;
   }
 
   /**
@@ -72,7 +72,7 @@ export class Vector2 implements IVector2
    */
   static dot(vector: Vector2, vector2: Vector2): number 
   {
-    return vector.x * vector2.x + vector.y * vector2.y
+    return vector.x * vector2.x + vector.y * vector2.y;
   }
 
   /**
@@ -83,7 +83,7 @@ export class Vector2 implements IVector2
    */
   static distance(vector: Vector2, vector2: Vector2): number 
   {
-    return Math.sqrt(this.squaredDistance(vector, vector2))
+    return Math.sqrt(this.squaredDistance(vector, vector2));
   }
 
   /**
@@ -94,9 +94,9 @@ export class Vector2 implements IVector2
    */
   static squaredDistance(vector: Vector2, vector2: Vector2) 
   {
-    const x = vector2.x - vector.x
-    const y = vector2.y - vector.y
-    return x * x + y * y
+    const x = vector2.x - vector.x;
+    const y = vector2.y - vector.y;
+    return x * x + y * y;
   }
 
   /**
@@ -109,19 +109,19 @@ export class Vector2 implements IVector2
    */
   static direction(vector: Vector2, vector2: Vector2, dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
-    const x = vector.x - vector2.x
-    const y = vector.y - vector2.y
-    let length = Math.sqrt(x * x + y * y)
+    if (!dest) dest = new Vector2(0, 0);
+    const x = vector.x - vector2.x;
+    const y = vector.y - vector2.y;
+    let length = Math.sqrt(x * x + y * y);
     if (length === 0) 
     {
-      dest.reset()
-      return dest
+      dest.reset();
+      return dest;
     }
-    length = 1.0 / length
-    dest.x = x * length
-    dest.y = y * length
-    return dest
+    length = 1.0 / length;
+    dest.x = x * length;
+    dest.y = y * length;
+    return dest;
   }
 
   /**
@@ -135,10 +135,10 @@ export class Vector2 implements IVector2
    */
   static lerp(a: Vector2, b: Vector2, t: number, dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
-    dest.x = a.x + t * (b.x - a.x)
-    dest.y = a.y + t * (b.y - a.y)
-    return dest
+    if (!dest) dest = new Vector2(0, 0);
+    dest.x = a.x + t * (b.x - a.x);
+    dest.y = a.y + t * (b.y - a.y);
+    return dest;
   }
 
   /**
@@ -151,10 +151,10 @@ export class Vector2 implements IVector2
    */
   static sum(vector: Vector2, vector2: Vector2, dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
-    dest.x = vector.x + vector2.x
-    dest.y = vector.y + vector2.y
-    return dest
+    if (!dest) dest = new Vector2(0, 0);
+    dest.x = vector.x + vector2.x;
+    dest.y = vector.y + vector2.y;
+    return dest;
   }
 
   /**
@@ -167,12 +167,12 @@ export class Vector2 implements IVector2
    */
   static difference(vector: Vector2, vector2: Vector2, dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
+    if (!dest) dest = new Vector2(0, 0);
 
-    dest.x = vector.x - vector2.x
-    dest.y = vector.y - vector2.y
+    dest.x = vector.x - vector2.x;
+    dest.y = vector.y - vector2.y;
 
-    return dest
+    return dest;
   }
 
   /**
@@ -185,12 +185,12 @@ export class Vector2 implements IVector2
    */
   static product(vector: Vector2, vector2: Vector2, dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
+    if (!dest) dest = new Vector2(0, 0);
 
-    dest.x = vector.x * vector2.x
-    dest.y = vector.y * vector2.y
+    dest.x = vector.x * vector2.x;
+    dest.y = vector.y * vector2.y;
 
-    return dest
+    return dest;
   }
 
   /**
@@ -203,12 +203,12 @@ export class Vector2 implements IVector2
    */
   static quotient(vector: Vector2, vector2: Vector2, dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
+    if (!dest) dest = new Vector2(0, 0);
 
-    dest.x = vector.x / vector2.x
-    dest.y = vector.y / vector2.y
+    dest.x = vector.x / vector2.x;
+    dest.y = vector.y / vector2.y;
 
-    return dest
+    return dest;
   }
   // #endregion
 
@@ -230,7 +230,7 @@ export class Vector2 implements IVector2
    */
   get xy(): number[] 
   {
-    return [this.x, this.y]
+    return [this.x, this.y];
   }
 
   /**
@@ -238,8 +238,8 @@ export class Vector2 implements IVector2
    */
   set xy(values: number[]) 
   {
-    this.x = values[0]
-    this.y = values[1]
+    this.x = values[0];
+    this.y = values[1];
   }
   // #endregion
 
@@ -266,8 +266,8 @@ export class Vector2 implements IVector2
    */
   reset(): void 
   {
-    this.x = 0
-    this.y = 0
+    this.x = 0;
+    this.y = 0;
   }
 
   /**
@@ -278,9 +278,9 @@ export class Vector2 implements IVector2
    */
   copy(dest?: Vector2): Vector2 
   {
-    if (!dest) dest = new Vector2(0, 0)
-    dest.xy = this.xy
-    return dest
+    if (!dest) dest = new Vector2(0, 0);
+    dest.xy = this.xy;
+    return dest;
   }
 
   /**
@@ -292,9 +292,9 @@ export class Vector2 implements IVector2
   negate(dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.x = -this.x
-    dest.y = -this.y
-    return dest
+    dest.x = -this.x;
+    dest.y = -this.y;
+    return dest;
   }
 
   /**
@@ -307,13 +307,13 @@ export class Vector2 implements IVector2
   {
     if (Math.abs(this.x - other.x) > threshold) 
     {
-      return false
+      return false;
     }
     if (Math.abs(this.y - other.y) > threshold) 
     {
-      return false
+      return false;
     }
-    return true
+    return true;
   }
 
   /**
@@ -322,7 +322,7 @@ export class Vector2 implements IVector2
    */
   length(): number 
   {
-    return Math.sqrt(this.squaredLength())
+    return Math.sqrt(this.squaredLength());
   }
 
   /**
@@ -331,9 +331,9 @@ export class Vector2 implements IVector2
    */
   squaredLength(): number 
   {
-    const x = this.x
-    const y = this.y
-    return x * x + y * y
+    const x = this.x;
+    const y = this.y;
+    return x * x + y * y;
   }
 
   /**
@@ -346,9 +346,9 @@ export class Vector2 implements IVector2
   add(vector: Vector2, dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.x = this.x + vector.x
-    dest.y = this.y + vector.y
-    return dest
+    dest.x = this.x + vector.x;
+    dest.y = this.y + vector.y;
+    return dest;
   }
 
   /**
@@ -361,9 +361,9 @@ export class Vector2 implements IVector2
   subtract(vector: Vector2, dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.x = this.x - vector.x
-    dest.y = this.y - vector.y
-    return dest
+    dest.x = this.x - vector.x;
+    dest.y = this.y - vector.y;
+    return dest;
   }
 
   /**
@@ -376,9 +376,9 @@ export class Vector2 implements IVector2
   multiply(vector: Vector2, dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.x = this.x * vector.x
-    dest.y = this.y * vector.y
-    return dest
+    dest.x = this.x * vector.x;
+    dest.y = this.y * vector.y;
+    return dest;
   }
 
   /**
@@ -390,9 +390,9 @@ export class Vector2 implements IVector2
   divide(vector: Vector2, dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.x = this.x / vector.x
-    dest.y = this.y / vector.y
-    return dest
+    dest.x = this.x / vector.x;
+    dest.y = this.y / vector.y;
+    return dest;
   }
 
   /**
@@ -405,9 +405,9 @@ export class Vector2 implements IVector2
   scale(value: number, dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.x = this.x * value
-    dest.y = this.y * value
-    return dest
+    dest.x = this.x * value;
+    dest.y = this.y * value;
+    return dest;
   }
 
   /**
@@ -419,26 +419,26 @@ export class Vector2 implements IVector2
   normalize(dest?: Vector2): Vector2 
   {
     if (!dest) dest = new Vector2(this.x, this.y);
-    dest.xy = this.xy
-    let length = dest.length()
+    dest.xy = this.xy;
+    let length = dest.length();
     if (length === 1) 
     {
-      return dest
+      return dest;
     }
     if (length === 0) 
     {
-      dest.reset()
-      return dest
+      dest.reset();
+      return dest;
     }
-    length = 1.0 / length
-    dest.x *= length
-    dest.y *= length
-    return dest
+    length = 1.0 / length;
+    dest.x *= length;
+    dest.y *= length;
+    return dest;
   }
 
   toString(): string 
   {
-    return '(' + this.x + ', ' + this.y + ')'
+    return `(${this.x}, ${this.y})`;
   }
   // #endregion
 }

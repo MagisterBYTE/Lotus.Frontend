@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { Assert } from './Assert'; // путь к вашему файлу
 describe('Assert', () => {
     describe('emptyValue', () => {
@@ -64,7 +65,7 @@ describe('Assert', () => {
             const mockFn = jest.fn(() => true);
             // Первый аргумент уже true, остальные не должны вычисляться
             Assert.anyTrue(true, mockFn());
-            //expect(mockFn).not.toHaveBeenCalled();
+            // expect(mockFn).not.toHaveBeenCalled();
         });
     });
     describe('allTrue', () => {
@@ -84,7 +85,7 @@ describe('Assert', () => {
             const mockFn = jest.fn(() => true);
             // Первый аргумент false, остальные не должны вычисляться
             Assert.allTrue(false, mockFn());
-            //expect(mockFn).not.toHaveBeenCalled();
+            // expect(mockFn).not.toHaveBeenCalled();
         });
     });
     describe('anyFalse', () => {
@@ -103,7 +104,7 @@ describe('Assert', () => {
             const mockFn = jest.fn(() => false);
             // Первый аргумент уже false, остальные не должны вычисляться
             Assert.anyFalse(false, mockFn());
-            //expect(mockFn).not.toHaveBeenCalled();
+            // expect(mockFn).not.toHaveBeenCalled();
         });
     });
     describe('allFalse', () => {
@@ -122,7 +123,7 @@ describe('Assert', () => {
             const mockFn = jest.fn(() => false);
             // Первый аргумент уже truthy, остальные не должны вычисляться
             Assert.allFalse(true, mockFn());
-            //expect(mockFn).not.toHaveBeenCalled();
+            // expect(mockFn).not.toHaveBeenCalled();
         });
     });
     describe('objectPropertyEmpty', () => {

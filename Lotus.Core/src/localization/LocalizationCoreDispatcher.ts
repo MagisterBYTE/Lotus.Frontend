@@ -2,29 +2,61 @@ import { TLanguageType } from './LanguageType';
 import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 import { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
+import { ILocalizationDispatcher } from './LocalizationDispatcher';
 
-export abstract class LocalizationCoreDispatcher
+/**
+ * Диспетчер локализации модуля Core
+ */
+export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
 {
-  // #region Static properties
-  private static _currentLanguage: TLanguageType | undefined;
+  // #region Static fields
+  private static _localizationCore: LocalizationCoreDispatcherClass;
+
+  public static get Instance(): LocalizationCoreDispatcherClass
+  {
+    return this._localizationCore || (this._localizationCore = new this());
+  }
+  // #endregion
+
+  private _currentLanguage: TLanguageType | undefined;
 
   /**
    * Получить текущую язык
    */
-  public static get currentLanguage(): TLanguageType
+  public get currentLanguage(): TLanguageType
   {
-    if (LocalizationCoreDispatcher._currentLanguage) return LocalizationCoreDispatcher._currentLanguage;
+    if (this._currentLanguage) return this._currentLanguage;
     return 'ru-RU';
   }
 
   /**
    * Установить текущий язык
    */
-  public static set currentLanguage(language: TLanguageType)
+  public set currentLanguage(language: TLanguageType)
   {
-    LocalizationCoreDispatcher._currentLanguage = language;
+    this._currentLanguage = language;
     if (language == 'en-US') LocalizationCore.data = LocalizationCoreDataEn;
     if (language == 'ru-RU') LocalizationCore.data = LocalizationCoreDataRu;
   }
+
+  /**
+   * Установить текущий язык
+   * @param language Язык
+   */
+  public setLanguage(language: TLanguageType | undefined)
+  {
+    if (language)
+    {
+      this._currentLanguage = language;
+      if (language == 'en-US') LocalizationCore.data = LocalizationCoreDataEn;
+      if (language == 'ru-RU') LocalizationCore.data = LocalizationCoreDataRu;
+    }
+  }
   // #endregion
-};
+}
+
+
+/**
+ * Глобальный доступ к диспетчеру локализации модуля Core
+ */
+export const LocalizationCoreDispatcher = LocalizationCoreDispatcherClass.Instance;

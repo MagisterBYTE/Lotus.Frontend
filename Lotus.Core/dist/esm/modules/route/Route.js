@@ -2,11 +2,11 @@
  * Класс для определения маршрута в приложении
  */
 export class Route {
-    //#region Fields
+    // #region Fields
     path;
     isShouldBeAuthorized;
     permissions;
-    //#endregion
+    // #endregion
     /**
      * @param path Путь маршрута
      * @param isShouldBeAuthorized Требует ли маршрут аутентификации
@@ -17,7 +17,7 @@ export class Route {
         this.isShouldBeAuthorized = Boolean(isShouldBeAuthorized);
         this.permissions = permissions;
     }
-    //#region Methods
+    // #region Methods
     /**
      * Заменяет path-параметры в маршруте реальными значениями
      * @param params - Объект с параметрами { paramName: value }

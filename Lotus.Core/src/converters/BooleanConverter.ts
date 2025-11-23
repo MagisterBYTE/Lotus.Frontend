@@ -29,15 +29,15 @@ export abstract class BooleanConverter
     {
       if (typeof item == 'boolean')
       {
-        return item as boolean;
+        return item;
       }
       if (typeof item == 'string')
       {
-        return BooleanConverter.TrueValues.indexOf(item as string) > -1;
+        return BooleanConverter.TrueValues.indexOf(item) > -1;
       }
       if (typeof item == 'number')
       {
-        return Boolean(item as number);
+        return Boolean(item);
       }
     }
     return defaultValue;

@@ -10,7 +10,7 @@
 
 * Установка Eslint `npm init @eslint/config@latest`
   + Установка плагина Eslint(eslint-plugin-import) `npm install eslint-plugin-import --save-dev`
-  + Копирование файла настроек `eslint.config.js`
+  + Копирование файла настроек `eslint.config.ts`
 * Установка Prettier `npm install --save-dev --save-exact prettier`
 * Установка Jest `npm install --save-dev jest` // Основная библиотека для тестирования.
   + Установка Jest Types `npm install --save-dev @types/jest` // Типы для Jest, чтобы TypeScript мог корректно работать с Jest.

@@ -34,7 +34,7 @@ export interface IResult<TData = any>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfResult(value: any): value is IResult
 {
-  if (value && typeof value === "object")
+  if (value && typeof value === 'object')
   {
     return ('succeeded' in value) && ('code' in value);
   }
@@ -52,11 +52,10 @@ export function castToResult(value: any): IResult | undefined
 {
   if (instanceOfResult(value))
   {
-    return value as IResult;
+    return value;
   }
   else
   {
-    // eslint-disable-next-line consistent-return
     return undefined;
   }
 }
