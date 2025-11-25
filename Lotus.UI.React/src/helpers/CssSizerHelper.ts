@@ -1,4 +1,4 @@
-import { TElementSize } from "#types";
+import { TElementSize } from '#types';
 
 export class CssSizerHelper
 {

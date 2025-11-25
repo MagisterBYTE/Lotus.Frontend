@@ -37,7 +37,7 @@ export { instanceOfElementSpacing, castToElementSpacing, TElementSpacings, type 
 export { instanceOfLineSpacing, castToLineSpacing, TLineSpacings, type TLineSpacing } from './LineSpacing';
 export { instanceOfFontSize, castToFontSize, TFontSizes, type TFontSize } from './FontSize';
 export { TIconPlacements, type TIconPlacement } from './IconPlacement';
-export { TOrientations, type TOrientation} from './Orientation';
+export { TOrientations, type TOrientation } from './Orientation';
 export { TShadowElevations, type TShadowElevation } from './ShadowElevation';
 export { TTextEffects, type TTextEffect } from './TextEffect';
 export { TCenterContents, type TCenterContent } from './CenterContent';

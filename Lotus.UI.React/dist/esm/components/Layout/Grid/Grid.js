@@ -1,4 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { css } from '@emotion/css';
 import { BuilderCssProperties } from '#builder';
 import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 export function Grid(props) {
@@ -13,12 +14,12 @@ export function Grid(props) {
         alignContent: vAlign ?? 'center',
         justifyItems: hContentAlign ?? 'start',
         alignItems: vContentAlign ?? 'center',
-        ...otherProps.style
+        ...BuilderCssProperties.buildContainer(props),
+        ...BuilderCssProperties.buildBackground(props)
     };
-    BuilderCssProperties.fillContainer(styleDiv, props, false);
-    BuilderCssProperties.fillBackground(styleDiv, props, false);
+    const gridClass = css({ ...styleDiv, label: 'Grid' });
     // Фильтруем кастомные пропсы перед передачей в div
     const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
-    return (_jsx("div", { ...domProps, style: styleDiv, children: children }));
+    return (_jsx("div", { className: gridClass, ...domProps, children: children }));
 }
 //# sourceMappingURL=Grid.js.map

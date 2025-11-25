@@ -2,12 +2,11 @@ import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
-    ignores: ['dist', 'node_modules', 'coverage', 'eslint.config.ts', 'jest.config.ts'],
     plugins: {
       js
     },
@@ -253,5 +252,14 @@ export default defineConfig([
       'import/no-useless-path-segments': 'error'
     }
   },
+
+  globalIgnores([
+    'dist/*', 
+    'node_modules/*',
+    'coverage/*',
+    'eslint.config.ts', 
+    'jest.config.ts'
+  ]),
+
   tseslint.configs.recommended
 ]);

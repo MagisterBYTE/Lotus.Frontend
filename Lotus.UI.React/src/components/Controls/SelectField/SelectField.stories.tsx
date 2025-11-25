@@ -33,7 +33,7 @@ const meta = {
 
     // Hide
     ...ArgTypesStory.BaseField,
-    data: { table: { disable: true } },
+    options: { table: { disable: true } },
     selectProps: { table: { disable: true } },
     children: { table: { disable: true } }
   }

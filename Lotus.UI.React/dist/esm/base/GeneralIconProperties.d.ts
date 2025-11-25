@@ -1,6 +1,6 @@
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { TThemeColor } from '../theme/types';
-import { TCssProperties, TIconPlacement } from '../types';
+import { TCssProperties, TElementSize, TIconPlacement } from '../types';
 export type FunctionGeneralIconDelegate = (props: IGeneralIconProperties, context?: any) => any;
 /**
  * Общие свойства иконки для элемента UI
@@ -10,6 +10,10 @@ export interface IGeneralIconProperties {
      * Путь к изображению / либо компонент иконки / либо индекс изображения в базе
      */
     icon?: any | FunctionGeneralIconDelegate;
+    /**
+     * Размер иконки
+     */
+    iconSize?: TElementSize;
     /**
      * Цвет иконки (влияет только на векторные)
      */

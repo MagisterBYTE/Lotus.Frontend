@@ -1,4 +1,4 @@
 export * from './constants';
-export * from './helpers';
 export * from './types';
+export { Theme, ThemeInstance } from './Theme';
 //# sourceMappingURL=index.js.map

@@ -12,7 +12,8 @@ export function hasBorderProperties(borderStyle, borderWidth, borderColor) {
  * @param borderProps Общие свойства для границы элемента UI
  */
 export function hasBorderProps(borderProps) {
-    return (!!borderProps.borderStyle ||
+    return (!!borderProps.withBorder ||
+        !!borderProps.borderStyle ||
         !!borderProps.borderWidth ||
         !!borderProps.borderColor ||
         !!borderProps.borderRadius ||

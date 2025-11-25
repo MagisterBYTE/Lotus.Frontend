@@ -1,7 +1,7 @@
-import { CssPropertiesHelper } from '#helpers';
-import { ThemePaletteHelper } from '#theme/helpers';
 import { Colors } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
+import { CssPropertiesHelper } from '#helpers';
+import { ThemeInstance } from '#theme';
 export class CssBackgroundHelper {
     // #region BackgroundColor
     /**
@@ -23,7 +23,10 @@ export class CssBackgroundHelper {
      */
     static getBackgroundProps(props) {
         const backProps = {};
-        backProps.backgroundColor = CssBackgroundHelper.getBackgroundColorPropsValue(props.backColor);
+        const backgroundColor = CssBackgroundHelper.getBackgroundColorPropsValue(props.backColor);
+        if (Assert.existValue(backgroundColor)) {
+            backProps.backgroundColor = backgroundColor;
+        }
         return backProps;
     }
     /**
@@ -34,7 +37,7 @@ export class CssBackgroundHelper {
     static getBackgroundColorPropsValue(value) {
         if (Assert.emptyValue(value))
             return undefined;
-        const color = ThemePaletteHelper.getBackgroundColor(value, true);
+        const color = ThemeInstance.getBackgroundColor(value);
         return color.toCSSRgbValue();
     }
     // #endregion
@@ -58,7 +61,10 @@ export class CssBackgroundHelper {
      */
     static getBoxShadowProps(props) {
         const backProps = {};
-        backProps.boxShadow = CssBackgroundHelper.getBoxShadowPropsValue(props.shadow, props.backColor);
+        const boxShadow = CssBackgroundHelper.getBoxShadowPropsValue(props.shadow, props.backColor);
+        if (Assert.existValue(boxShadow)) {
+            backProps.boxShadow = boxShadow;
+        }
         return backProps;
     }
     /**
@@ -67,10 +73,11 @@ export class CssBackgroundHelper {
      * @param color Вариант цвета темы
      * @returns Свойства CSS по тени в виде TCssBoxShadow
      */
+    // eslint-disable-next-line complexity
     static getBoxShadowPropsValue(elevation, color) {
         if (Assert.emptyValue(elevation))
             return undefined;
-        const colorShadow = Assert.emptyValue(color) ? Colors.black : ThemePaletteHelper.getBackgroundColor(color, true);
+        const colorShadow = Assert.emptyValue(color) ? Colors.black : ThemeInstance.getBackgroundColor(color);
         const rgba02 = colorShadow.toCSSRgbValue(0.2);
         const rgba014 = colorShadow.toCSSRgbValue(0.14);
         const rgba012 = colorShadow.toCSSRgbValue(0.12);

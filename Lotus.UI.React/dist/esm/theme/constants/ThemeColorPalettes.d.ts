@@ -1,4 +1,4 @@
-import { IThemePalette, TThemeMode } from '#theme/types';
+import { IThemePalette, TThemeColorMode } from '#theme/types';
 /**
  * Наборы палитр тем
  */
@@ -12,6 +12,6 @@ export declare abstract class ThemeColorPalettes {
     private static getMuiAmberColor;
     private static getMuiRedColor;
     private static getMuiBrownColor;
-    static readonly Palettes: Record<TThemeMode, IThemePalette>;
+    static readonly Palettes: Record<TThemeColorMode, IThemePalette>;
 }
 //# sourceMappingURL=ThemeColorPalettes.d.ts.map

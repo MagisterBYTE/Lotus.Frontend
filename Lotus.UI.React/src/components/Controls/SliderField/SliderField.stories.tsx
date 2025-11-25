@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgTypesStory } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { SliderField } from './SliderField';

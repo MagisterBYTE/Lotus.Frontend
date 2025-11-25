@@ -5,6 +5,10 @@ import { TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TElementRadius, TSh
  */
 export interface IGeneralBorderProperties {
     /**
+     * статус наличия границы
+     */
+    withBorder?: boolean;
+    /**
      * Тип стиля границы
      */
     borderStyle?: TCssBorderStyle;

@@ -1,11 +1,12 @@
-import { CssBorderHelper, CssContainerHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
+/* eslint-disable react/destructuring-assignment */
 import { css } from '@emotion/css';
-import { CSSProperties } from 'react';
-import { ITextProps } from '../Text';
-import { IGeneralIconProperties } from '#base';
 import { Assert } from 'lotus-core/utils';
+import { CSSProperties } from 'react';
+import { IGeneralIconProperties } from '#base';
+import { CssBorderHelper, CssContainerHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 import { RenderIcon } from '#render';
 import { TCssGap, TElementSpacing, TIconPlacement } from '#types';
+import { ITextProps } from '../Text';
 
 export interface ILabelProps extends ITextProps, IGeneralIconProperties
 {
@@ -23,7 +24,7 @@ const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TElementSpacing 
   }
 
   return undefined;
-}
+};
 
 export function Label(props: ILabelProps)
 {

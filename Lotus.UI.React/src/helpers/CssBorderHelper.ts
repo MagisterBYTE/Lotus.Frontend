@@ -1,19 +1,19 @@
+import { Assert } from 'lotus-core/utils';
 import { hasBorderProps, hasNonShorthandBorderRadiusProps, IGeneralBorderProperties } from '#base';
 import { CssFontHelper, CssPropertiesHelper } from '#helpers';
 import { ThemeInstance } from '#theme';
 import { TThemeColor } from '#theme/types';
 import
-  {
-    TCssProperties,
-    TCssBorderRadius,
-    TCssBorderWidth,
-    TElementRadius,
-    instanceOfElementRadius,
-    TShadowElevation,
-    TCssBoxShadow,
-    TCssBorderColor
-  } from '#types';
-import { Assert } from 'lotus-core/utils';
+{
+  TCssProperties,
+  TCssBorderRadius,
+  TCssBorderWidth,
+  TElementRadius,
+  instanceOfElementRadius,
+  TShadowElevation,
+  TCssBoxShadow,
+  TCssBorderColor
+} from '#types';
 
 export abstract class CssBorderHelper
 {
@@ -55,7 +55,8 @@ export abstract class CssBorderHelper
         CssBorderHelper.getBorderRadiusPropsValue(props.borderRadiusBottomRight),
         override
       );
-    } else
+    }
+    else
     {
       CssPropertiesHelper.overrideStyleValue(style, 'borderRadius', CssBorderHelper.getBorderRadiusPropsValue(props.borderRadius), override);
     }
@@ -83,7 +84,8 @@ export abstract class CssBorderHelper
         borderProps.borderTopRightRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadiusTopRight);
         borderProps.borderBottomLeftRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadiusBottomLeft);
         borderProps.borderBottomRightRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadiusBottomRight);
-      } else
+      }
+      else
       {
         borderProps.borderRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadius);
       }
@@ -237,7 +239,8 @@ export abstract class CssBorderHelper
     if (Assert.emptyValue(color))
     {
       return `0px 0px ${elevation}px ${elevation}px var(--mantine-primary-color-light)`;
-    } else
+    }
+    else
     {
       const colorShadow = ThemeInstance.getElementColor(color!);
       return `0px 0px ${elevation}px ${elevation}px ${colorShadow.toCSSRgbValue(shadowAlpha ?? 0.5)}`;

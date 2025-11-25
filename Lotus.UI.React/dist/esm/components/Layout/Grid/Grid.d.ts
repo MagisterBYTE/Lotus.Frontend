@@ -1,6 +1,6 @@
+import { ComponentPropsWithRef } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { TCssAlignContent, TCssAlignItems, TCssGap, TCssGridTemplateColumns, TCssGridTemplateRows, TCssJustifyContent, TCssJustifyItems, TElementSpacing } from '#types';
-import { ComponentPropsWithRef } from 'react';
 export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
     gridTemplateColumns?: TCssGridTemplateColumns;
     gridTemplateRows?: TCssGridTemplateRows;

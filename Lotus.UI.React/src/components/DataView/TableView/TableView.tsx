@@ -1,18 +1,16 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ReactElement, useEffect, useState } from 'react';
-import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
 import { Button, MantineProvider } from '@mantine/core';
-import { toastError, toastPromise, ToastWrapper } from '../../Feedback/Toast';
-import { MantineReactTableHelper } from '../../../helpers';
+import { StringHelper } from 'lotus-core/helpers';
+import { LocalizationCore } from 'lotus-core/localization';
 import { IObjectInfo } from 'lotus-core/modules/objectInfo';
+import { OptionHelper } from 'lotus-core/modules/option';
 import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage, ISortObject, ISortProperty } from 'lotus-core/modules/requestAndResponse';
 import { IEditable, TKey } from 'lotus-core/types';
-import { StringHelper } from 'lotus-core/helpers';
-import { OptionHelper } from 'lotus-core/modules/option';
-import { LocalizationCore } from 'lotus-core/localization';
+import { ReactElement, useEffect, useState } from 'react';
 import {
   MantineReactTable,
   MRT_ColumnDef,
@@ -23,6 +21,9 @@ import {
   MRT_TableInstance,
   MRT_TableOptions
 } from '#external/mantine-react-table';
+import { toastError, toastPromise, ToastWrapper } from '../../Feedback/Toast';
+import { MantineReactTableHelper } from './MantineReactTableHelper';
+import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
 
 export interface IFormCreatedItem<TItem extends Record<string, any> | null> {
   open: boolean;
@@ -52,7 +53,8 @@ export interface ITableViewProps<TItem extends Record<string, any>> extends Omit
 
 type Updater<T> = T | ((old: T) => T);
 
-export const TableView = <TItem extends Record<string, any> & IEditable>(props: ITableViewProps<TItem>) => {
+export const TableView = <TItem extends Record<string, any> & IEditable>(props: ITableViewProps<TItem>) => 
+{
   const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem, formCreated, formDeleted } = props;
 
   const properties = objectInfo.getProperties();
@@ -86,7 +88,8 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   const [autoCloseToastify, setAutoCloseToastify] = useState<number | false>(2000);
 
   // Служебные методы для получения данных текущего редактируемого объекта
-  const setSelectedValues = (accessorKey: string, newSelectedValues: any[]) => {
+  const setSelectedValues = (accessorKey: string, newSelectedValues: any[]) => 
+  {
     const newItem: TItem = { ...currentItem! };
 
     // @ts-ignore
@@ -94,7 +97,8 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     setCurrentItem(newItem);
   };
 
-  const setSelectedValue = (accessorKey: string, newSelectedValue: TKey) => {
+  const setSelectedValue = (accessorKey: string, newSelectedValue: TKey) => 
+  {
     const newItem: TItem = { ...currentItem! };
 
     // @ts-ignore
@@ -103,30 +107,36 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   };
 
   // Модифицированные столбцы
-  const editColumns = properties.map((property) => {
+  const editColumns = properties.map((property) => 
+  {
     const column: MRT_ColumnDef<TItem> = MantineReactTableHelper.convertPropertyDescriptorToColumn(property);
 
-    if (property.editing?.editorType === 'text') {
+    if (property.editing?.editorType === 'text') 
+    {
       column.mantineEditTextInputProps = {
         error: property.editing?.onValidation(currentItem).text,
         required: property.editing?.required,
         variant: 'outlined',
         size: 'small',
         type: 'text',
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) => 
+        {
           const newItem: TItem = { ...currentItem! };
-          newItem![column.accessorKey!] = event.target.value as any;
+          newItem[column.accessorKey!] = event.target.value as any;
           setCurrentItem(newItem);
 
           let isErrorValidation = false;
-          properties.forEach((c) => {
+          properties.forEach((c) => 
+          {
             const errorValidation = c.editing?.onValidation(newItem).error;
-            if (errorValidation) {
+            if (errorValidation) 
+            {
               isErrorValidation = true;
               setCurrentItemInvalid(true);
             }
           });
-          if (isErrorValidation === false) {
+          if (isErrorValidation === false) 
+          {
             setCurrentItemInvalid(false);
           }
         }
@@ -135,8 +145,11 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
       column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
     }
 
-    if (property.editing?.editorType === 'select') {
-      column.Cell = function ({ cell }) {
+    if (property.editing?.editorType === 'select') 
+    {
+      // eslint-disable-next-line react/display-name
+      column.Cell = function ({ cell }) 
+      {
         const id = cell.getValue() as TKey;
         const options = property.options!;
         const text = OptionHelper.getLabelByValue(options, id);
@@ -166,8 +179,11 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
       column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnum(column, onSelectFilterMode);
     }
 
-    if (property.editing?.editorType === 'multi-select') {
-      column.Cell = function ({ cell }) {
+    if (property.editing?.editorType === 'multi-select') 
+    {
+      // eslint-disable-next-line react/display-name
+      column.Cell = function ({ cell }) 
+      {
         const massive = cell.getValue() as any[];
         const options = property.options!;
 
@@ -197,7 +213,8 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
       column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
     }
 
-    if (property.viewImage) {
+    if (property.viewImage) 
+    {
       // column.Cell = function({ cell, row })
       // {
       //   const id = cell.getValue() as number;
@@ -220,10 +237,12 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // #region Получение данных
   //
-  const getFilterQueryItems = (): IRequest => {
+  const getFilterQueryItems = (): IRequest => 
+  {
     const pageInfo: IPageInfoRequest = { pageNumber: paginationModel.pageIndex, pageSize: paginationModel.pageSize };
 
-    const sorting: ISortObject = sortingColumn.map((column) => {
+    const sorting: ISortObject = sortingColumn.map((column) => 
+    {
       const sort: ISortProperty = {
         propertyPath: StringHelper.capitalizeFirstLetter(column.id),
         propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
@@ -237,19 +256,27 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
 
     const request = { pageInfo: pageInfo, sorting: sorting, filtering: filtering };
 
-    if (onTransformFilterRequest) {
+    if (onTransformFilterRequest) 
+    {
       const transformRequest = onTransformFilterRequest(request);
       return transformRequest;
-    } else {
+    }
+    else 
+    {
       return request;
     }
   };
 
-  const refreshItems = async (filter: IRequest) => {
-    try {
-      if (!items.length) {
+  const refreshItems = async (filter: IRequest) => 
+  {
+    try 
+    {
+      if (!items.length) 
+      {
         setIsLoading(true);
-      } else {
+      }
+      else 
+      {
         setIsRefetching(true);
       }
 
@@ -260,7 +287,9 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
 
       setIsLoading(false);
       setIsRefetching(false);
-    } catch (exc) {
+    }
+    catch (exc) 
+    {
       setIsLoading(false);
       setIsRefetching(false);
       toastError(exc, LocalizationCore.data.actions.gettingFailed);
@@ -271,8 +300,10 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // #region Добавление данных
   //
-  const handleAddRow = async () => {
-    if (onAddItem) {
+  const handleAddRow = () => 
+  {
+    if (onAddItem) 
+    {
       const result = toastPromise(
         onAddItem(),
         LocalizationCore.data.actions.adding,
@@ -280,20 +311,26 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
         LocalizationCore.data.actions.addingFailed
       );
 
-      result.then(() => {
-        refreshItems(getFilterQueryItems());
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      result.then(async () => 
+      {
+        await refreshItems(getFilterQueryItems());
       });
-    } else {
+    }
+    else 
+    {
       setCreatedItem(null);
       setOpenCreatedDialog(true);
     }
   };
 
-  const handleCloseCreatedDialog = () => {
+  const handleCloseCreatedDialog = () => 
+  {
     setOpenCreatedDialog(false);
   };
 
-  const handleOkCreatedDialog = async () => {
+  const handleOkCreatedDialog = async () => 
+  {
     setOpenCreatedDialog(false);
     await refreshItems(getFilterQueryItems());
   };
@@ -302,13 +339,15 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // #region Редактирование данных
   //
-  const handleEditRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => (event: any) => {
+  const handleEditRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => (event: any) => 
+  {
     table.setEditingRow(row);
     setCurrentEditRow(row);
-    setCurrentItem(row.original as TItem);
+    setCurrentItem(row.original);
   };
 
-  const handleCancelRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => {
+  const handleCancelRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => 
+  {
     table.setEditingRow(null);
     setCurrentEditRow(null);
     setCurrentItem(null);
@@ -324,10 +363,12 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // #region Обновление данных
   //
-  const handleSaveRow = async (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => {
+  const handleSaveRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => 
+  {
     const updateItem: TItem = { ...currentItem } as TItem;
 
-    if (onUpdateItem) {
+    if (onUpdateItem) 
+    {
       const result = toastPromise(
         onUpdateItem(updateItem),
         LocalizationCore.data.actions.saving,
@@ -335,7 +376,9 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
         LocalizationCore.data.actions.savingFailed
       );
 
-      result.then((value) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      result.then((value) => 
+      {
         const newItems = [...items];
         newItems[currentEditRow!.index] = value.payload!;
         setItems(newItems);
@@ -350,19 +393,23 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // #region Удаление данных
   //
-  const handleDeleteRow = (row: MRT_Row<TItem>) => {
-    setDeleteItem(row.original as TItem);
+  const handleDeleteRow = (row: MRT_Row<TItem>) => 
+  {
+    setDeleteItem(row.original);
     setOpenDeleteDialog(true);
   };
 
-  const handleCloseDeleteDialog = () => {
+  const handleCloseDeleteDialog = () => 
+  {
     setOpenDeleteDialog(false);
   };
 
-  const handleOkDeleteDialog = async () => {
+  const handleOkDeleteDialog = () => 
+  {
     setOpenDeleteDialog(false);
 
-    if (onDeleteItem) {
+    if (onDeleteItem) 
+    {
       const result = toastPromise(
         onDeleteItem(deleteItem!.id),
         LocalizationCore.data.actions.deleting,
@@ -370,7 +417,9 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
         LocalizationCore.data.actions.deletingFailed
       );
 
-      result.then(() => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      result.then(() => 
+      {
         const newItems = items.filter((x) => x.id !== deleteItem!.id);
         setItems(newItems);
       });
@@ -383,17 +432,20 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // Фильтрация
   //
-  const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) => {
+  const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) => 
+  {
     const data = updaterOrValue as Record<string, MRT_FilterOption>;
     setColumnFiltersFns(data);
   };
 
   //
   // Методы оформления
-  const renderTopToolbarCustomActions = (props: { table: MRT_TableInstance<TItem> }) => {
-    if (onAddItem || formCreated) {
+  const renderTopToolbarCustomActions = (props: { table: MRT_TableInstance<TItem> }) => 
+  {
+    if (onAddItem || formCreated) 
+    {
       return (
-        <Button color="secondary" onClick={() => handleAddRow()} variant="contained">
+        <Button color="secondary" variant="contained" onClick={() => handleAddRow()}>
           {LocalizationCore.data.actions.add}
         </Button>
       );
@@ -406,12 +458,14 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   // Методы жизненного цикла
   //
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     const filter = getFilterQueryItems();
-    refreshItems(filter);
+    void refreshItems(filter);
   }, [paginationModel.pageIndex, paginationModel.pageSize, sortingColumn, columnFilters, columnFiltersFns, globalFilter]);
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     const initialColumnFiltersFns: Record<string, MRT_FilterOption> = MantineReactTableHelper.getFilterOptions(objectInfo);
     setColumnFiltersFns(initialColumnFiltersFns);
   }, []);
@@ -427,35 +481,33 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     <>
       <MantineReactTable
         {...props}
-        table={undefined}
         columns={editColumns}
         data={items}
         editDisplayMode="row"
-        manualSorting={true}
-        manualFiltering={true}
         enablePagination={true}
-        manualPagination={true}
-        renderTopToolbarCustomActions={props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions}
-        rowCount={pageInfo.totalCount}
-        onColumnFiltersChange={setColumnFilters}
-        onColumnFilterFnsChange={handleColumnFilterFnsChange}
-        onGlobalFilterChange={setGlobalFilter}
         filterFns={{
-          includeAny: (row, id, filterValue) => {
+          includeAny: (row, id, filterValue) => 
+          {
             return true;
           },
-          includeAll: (row, id, filterValue) => {
+          includeAll: (row, id, filterValue) => 
+          {
             return true;
           },
-          includeEquals: (row, id, filterValue) => {
+          includeEquals: (row, id, filterValue) => 
+          {
             return true;
           },
-          includeNone: (row, id, filterValue) => {
+          includeNone: (row, id, filterValue) => 
+          {
             return true;
           }
         }}
-        onSortingChange={setSortingColumn}
-        onPaginationChange={setPaginationModel}
+        manualFiltering={true}
+        manualPagination={true}
+        manualSorting={true}
+        renderTopToolbarCustomActions={props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions}
+        rowCount={pageInfo.totalCount}
         state={{
           isLoading: isLoading,
           showProgressBars: isRefetching,
@@ -466,12 +518,19 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
           globalFilter: globalFilter,
           sorting: sortingColumn
         }}
+        table={undefined}
+        onColumnFilterFnsChange={handleColumnFilterFnsChange}
+        onColumnFiltersChange={setColumnFilters}
+        onGlobalFilterChange={setGlobalFilter}
+        onPaginationChange={setPaginationModel}
+        onSortingChange={setSortingColumn}
       />
       <ToastWrapper autoClose={autoCloseToastify} />
       {formCreated &&
         formCreated({
           open: openCreatedDialog,
           onClose: handleCloseCreatedDialog,
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onCreate: handleOkCreatedDialog,
           onCreatedItem: setCreatedItem
         })}

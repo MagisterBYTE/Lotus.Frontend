@@ -1,5 +1,5 @@
-import { IGeneralTextProperties } from "#base";
-import { TThemeColor } from "#theme/types";
+import { IGeneralTextProperties } from '#base';
+import { TThemeColor } from '#theme/types';
 
 /**
  * Интерактивное взаимодействие текста элемента

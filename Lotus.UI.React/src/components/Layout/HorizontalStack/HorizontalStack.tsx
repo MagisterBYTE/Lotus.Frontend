@@ -1,9 +1,9 @@
+import { css } from '@emotion/css';
+import { ComponentPropsWithRef, CSSProperties } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { BuilderCssProperties } from '#builder';
 import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 import { TCssAlignItems, TCssGap, TCssJustifyContent, TElementSpacing } from '#types';
-import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
 
 export interface IHorizontalStackProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'>
 {
@@ -23,9 +23,9 @@ export function HorizontalStack(props: IHorizontalStackProps)
     alignItems: vAlign,
     justifyContent: hAlign ?? 'flex-start',
     columnGap: CssSpacingHelper.getGapPropsValue(spacing),
-    flexWrap: Boolean(wrap) ? 'wrap' : 'nowrap',
+    flexWrap: wrap ? 'wrap' : 'nowrap',
     ...BuilderCssProperties.buildContainer(props),
-    ...BuilderCssProperties.buildBackground(props),
+    ...BuilderCssProperties.buildBackground(props)
   };
 
   const stackClass = css({ ...styleDiv, label: 'HorizontalStack' });
@@ -34,4 +34,4 @@ export function HorizontalStack(props: IHorizontalStackProps)
   const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
 
   return <div className={stackClass} {...domProps}>{children}</div>;
-};
+}

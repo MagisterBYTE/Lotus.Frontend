@@ -5,6 +5,7 @@ export * from './helpers';
 export * from './hooks';
 export * from './interactivity';
 export * from './modules';
+export * from './render';
 export * from './theme';
 export * from './types';
 //# sourceMappingURL=index.d.ts.map

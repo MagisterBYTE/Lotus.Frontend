@@ -1,6 +1,6 @@
 import { StringHelper } from 'lotus-core/helpers';
+import { ColorVariantsHelper, TColorSemantic, TColorSemantics, TColorVariantName, TColorVariantNames } from 'lotus-core/modules/color';
 import { TThemeColorPalette, TThemeColorPalettes } from './ThemeColorPalette';
-import { ColorVariantsHelper, instanceOfColorSemantic, TColorSemantic, TColorSemantics, TColorVariantName, TColorVariantNames } from 'lotus-core/modules/color';
 
 /**
  * Доступный цвет темы (может быть цветом темы палитры, семантическим цветом, в том числе с учетом вариативности)
@@ -221,7 +221,7 @@ const themeColorsSet = new Set(TThemeColors);
  * @param color Проверяемый цвет
  * @returns Статус проверки
  */
-export function instanceOfThemeColor(color: any): color is TThemeColor
+export function instanceOfThemeColor(color: unknown): color is TThemeColor
 {
   if (typeof color === 'string')
   {
@@ -248,7 +248,7 @@ export function createThemeColor(color: TThemeColorPalette | TColorSemantic, col
  * @param color Доступный цвет темы
  * @returns Соответствующий кортеж данных или undefined
  */
-export function deconstructionThemeColor(color: any): TThemeColorTuple | undefined
+export function deconstructionThemeColor(color: unknown): TThemeColorTuple | undefined
 {
   // Если color не строка, возвращаем undefined
   if (typeof color !== 'string')

@@ -1,5 +1,5 @@
-import { IThemePalette, TThemeColorMode } from '#theme/types';
 import { Color, Colors, ColorVariants, ColorVariantsHelper, TColorVariantName } from 'lotus-core/modules/color';
+import { IThemePalette, TThemeColorMode } from '#theme/types';
 import { ThemeColorVariants } from './ThemeColorVariants';
 
 /**
@@ -13,7 +13,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiBlue.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 5 ? Colors.black : Colors.white;
     }
@@ -24,7 +25,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiBlueGrey.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 5 ? Colors.black : Colors.white;
     }
@@ -35,7 +37,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiIndigo.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 3 ? Colors.black : Colors.white;
     }
@@ -46,7 +49,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiGreen.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 6 ? Colors.black : Colors.white;
     }
@@ -57,7 +61,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiTeal.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 4 ? Colors.black : Colors.white;
     }
@@ -68,7 +73,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiYellow.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return Colors.black;
     }
@@ -79,7 +85,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiAmber.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return Colors.black;
     }
@@ -90,7 +97,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiRed.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 4 ? Colors.black : Colors.white;
     }
@@ -101,7 +109,8 @@ export abstract class ThemeColorPalettes
     if (isHarmonious)
     {
       return ThemeColorVariants.MuiBrown.getByName(colorVariant).createHarmoniousColor();
-    } else
+    }
+    else
     {
       return ColorVariantsHelper.getIndexByName(colorVariant) <= 3 ? Colors.black : Colors.white;
     }

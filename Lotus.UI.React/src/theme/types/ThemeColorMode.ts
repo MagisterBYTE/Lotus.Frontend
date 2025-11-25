@@ -19,5 +19,5 @@ export const ThemeColorModeOptions:IOption<TThemeColorMode>[] = TThemeColorModes
   return {
     label: StringHelper.capitalizeFirstLetter(x),
     value: x
-  }
-})
+  };
+});

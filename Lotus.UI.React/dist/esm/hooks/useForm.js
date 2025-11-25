@@ -9,6 +9,7 @@ export const useForm = (defaultValues) => (handler) => async (event) => {
         ...object,
         [`${element.getAttribute('name')}`]: element.value
     }), defaultValues);
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     await handler(data);
     form.reset();
 };

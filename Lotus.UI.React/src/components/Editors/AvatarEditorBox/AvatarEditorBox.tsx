@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useRef, useCallback } from 'react';
 import { Box, Grid } from '#components/Layout';
 import { AvatarEditor, Position } from '#external/react-avatar-editor';
-import React, { useState, useRef, useCallback } from 'react';
 
 export interface IImageEditorProps
 {
@@ -91,7 +92,6 @@ export function ImageEditor(props: IImageEditorProps)
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }} />
   );
-};
+}

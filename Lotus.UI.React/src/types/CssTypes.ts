@@ -111,7 +111,7 @@ export type TCssAlignContent = Property.AlignContent;
  */
 export type TCssAlignItems = Property.AlignItems;
 
-export const TCssContentAligns:TCssJustifyContent|TCssAlignItems[] = ['flex-start', 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly', 'stretch']
+export const TCssContentAligns:TCssJustifyContent|TCssAlignItems[] = ['flex-start', 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly', 'stretch'];
 
 /**
  * Тип свойства промежутка Css

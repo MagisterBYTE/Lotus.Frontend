@@ -1,10 +1,10 @@
+import { Colors } from 'lotus-core/modules/color';
+import { Assert } from 'lotus-core/utils';
 import { IGeneralBackgroundProperties } from '#base';
 import { CssPropertiesHelper } from '#helpers';
 import { ThemeInstance } from '#theme';
 import { TThemeColor } from '#theme/types';
 import { TCssBackgroundColor, TCssBoxShadow, TCssProperties, TShadowElevation } from '#types';
-import { Colors } from 'lotus-core/modules/color';
-import { Assert } from 'lotus-core/utils';
 
 export abstract class CssBackgroundHelper
 {
@@ -34,7 +34,7 @@ export abstract class CssBackgroundHelper
   {
     const backProps: TCssProperties = {};
     const backgroundColor = CssBackgroundHelper.getBackgroundColorPropsValue(props.backColor);
-    if(Assert.existValue(backgroundColor))
+    if (Assert.existValue(backgroundColor))
     {
       backProps.backgroundColor = backgroundColor;
     }
@@ -82,7 +82,7 @@ export abstract class CssBackgroundHelper
   {
     const backProps: TCssProperties = {};
     const boxShadow = CssBackgroundHelper.getBoxShadowPropsValue(props.shadow, props.backColor);
-    if(Assert.existValue(boxShadow))
+    if (Assert.existValue(boxShadow))
     {
       backProps.boxShadow = boxShadow;
     }
@@ -95,6 +95,7 @@ export abstract class CssBackgroundHelper
    * @param color Вариант цвета темы
    * @returns Свойства CSS по тени в виде TCssBoxShadow
    */
+  // eslint-disable-next-line complexity
   public static getBoxShadowPropsValue(elevation?: TShadowElevation, color?: TThemeColor): TCssBoxShadow | undefined
   {
     if (Assert.emptyValue(elevation)) return undefined;

@@ -1,5 +1,5 @@
-import { IGeneralBackgroundProperties } from "#base";
-import { TThemeColor } from "#theme/types";
+import { IGeneralBackgroundProperties } from '#base';
+import { TThemeColor } from '#theme/types';
 
 /**
  * Интерактивное взаимодействие фона элемента

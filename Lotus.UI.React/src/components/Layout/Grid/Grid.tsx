@@ -1,19 +1,19 @@
+import { css } from '@emotion/css';
+import { ComponentPropsWithRef, CSSProperties } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { BuilderCssProperties } from '#builder';
 import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 import
-  {
-    TCssAlignContent,
-    TCssAlignItems,
-    TCssGap,
-    TCssGridTemplateColumns,
-    TCssGridTemplateRows,
-    TCssJustifyContent,
-    TCssJustifyItems,
-    TElementSpacing
-  } from '#types';
-import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
+{
+  TCssAlignContent,
+  TCssAlignItems,
+  TCssGap,
+  TCssGridTemplateColumns,
+  TCssGridTemplateRows,
+  TCssJustifyContent,
+  TCssJustifyItems,
+  TElementSpacing
+} from '#types';
 
 export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
   gridTemplateColumns?: TCssGridTemplateColumns;
@@ -26,7 +26,8 @@ export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgro
   vContentAlign?: TCssAlignItems;
 }
 
-export function Grid(props: IGridProps) {
+export function Grid(props: IGridProps) 
+{
   const { gridTemplateColumns, gridTemplateRows, columnGap, rowGap, hAlign, vAlign, hContentAlign, vContentAlign, children, ...otherProps } = props;
 
   const styleDiv: CSSProperties = {

@@ -1,5 +1,5 @@
-export { InteractivityBackgroundLogic } from './InteractivityBackground';
-export { InteractivityBorderLogic } from './InteractivityBorder';
+export * from './background';
+export * from './border';
 export { InteractivityLogic } from './InteractivityLogic';
-export { InteractivityTextLogic } from './InteractivityText';
+export * from './text';
 //# sourceMappingURL=index.js.map

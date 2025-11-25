@@ -1,6 +1,8 @@
-import { ThemeConstant } from '#theme/constants';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Assert } from 'lotus-core/utils';
+import { Theme } from '#theme';
 export class CssPropertiesHelper {
+    // #region Common
     static filterDOMProps(props) {
         const domProps = {};
         const nonDOMProps = [
@@ -9,6 +11,7 @@ export class CssPropertiesHelper {
             'backImage',
             'shadow',
             // IGeneralBorderProperties
+            'withBorder',
             'borderStyle',
             'borderWidth',
             'borderColor',
@@ -40,12 +43,21 @@ export class CssPropertiesHelper {
             'pr',
             'pb',
             // IGeneralTextProperties
+            'fontSize',
             'fontBold',
             'fontAccent',
             'textEffect',
             'textAlign',
             'textColorHarmonious',
-            'textColor'
+            'textColor',
+            'textLineSpacing',
+            // IGeneralIconProperties
+            'icon',
+            'iconSize',
+            'iconStyle',
+            'iconColor',
+            'iconPlacement',
+            'imageDatabase'
         ];
         for (const key in props) {
             if (!nonDOMProps.includes(key)) {
@@ -67,7 +79,6 @@ export class CssPropertiesHelper {
             }
         }
     }
-    // #region Common
     static overrideStyle(source, override) {
         for (const key in override) {
             // @ts-expect-error prop
@@ -82,106 +93,6 @@ export class CssPropertiesHelper {
         }
     }
     // #endregion
-    // #region Font
-    /**
-     * Получить свойства CSS по настройкам шрифта в виде TCssProperties
-     * @param size Размере элемента UI
-     * @param isBold Жирный шрифт
-     * @param isFontAccent  Использовать шрифт для акцента внимания
-     * @returns Свойства CSS по настройкам шрифта в виде TCssProperties
-     */
-    static getFontProps(size, isBold, isFontAccent) {
-        const fontProps = {};
-        if (isFontAccent) {
-            fontProps.fontFamily = ThemeConstant.FontDefault;
-        }
-        else {
-            fontProps.fontFamily = ThemeConstant.FontAccent;
-        }
-        if (size) {
-            switch (size) {
-                case 'smaller':
-                    fontProps.fontSize = 'x-small';
-                    break;
-                case 'small':
-                    fontProps.fontSize = 'small';
-                    break;
-                case 'medium':
-                    fontProps.fontSize = 'medium';
-                    break;
-                case 'large':
-                    fontProps.fontSize = 'large';
-                    break;
-            }
-        }
-        if (isBold) {
-            fontProps.fontWeight = 'bold';
-        }
-        return fontProps;
-    }
-    // #endregion
-    // #region TextEffect
-    /**
-     * Получить свойства CSS по эффектам текста в виде TCssProperties
-     * @param size Размере элемента UI
-     * @param effect Эффекты текста
-     * @param textAlign Выравнивание текста по горизонтали внутри блока
-     * @returns Свойства CSS по эффектам текста в виде TCssProperties
-     */
-    static getTextEffectProps(size, effect, textAlign) {
-        const textProps = {};
-        const getSizeShadow = () => {
-            if (size) {
-                switch (size) {
-                    case 'smaller':
-                        return 0.05;
-                    case 'small':
-                        return 0.07;
-                    case 'medium':
-                        return 0.085;
-                    case 'large':
-                        return 0.1;
-                }
-            }
-            return 0.07;
-        };
-        const getSizeStroke = () => {
-            if (size) {
-                switch (size) {
-                    case 'smaller':
-                        return 0.4;
-                    case 'small':
-                        return 0.5;
-                    case 'medium':
-                        return 0.7;
-                    case 'large':
-                        return 1;
-                }
-            }
-            return 0.5;
-        };
-        if (effect) {
-            switch (effect) {
-                case 'shadow':
-                    {
-                        const sizeShadow = getSizeShadow();
-                        textProps.textShadow = `${sizeShadow}rem ${sizeShadow}rem 0 rgba(0, 0, 0, 0.15)`;
-                    }
-                    break;
-                case 'stroke':
-                    {
-                        const sizeStroke = getSizeStroke();
-                        textProps.WebkitTextStroke = `${sizeStroke}px black`;
-                    }
-                    break;
-            }
-        }
-        if (textAlign) {
-            textProps.textAlign = textAlign;
-        }
-        return textProps;
-    }
-    // #endregion
     // #region TransitionColors
     /**
      * Получить свойства CSS по переходу цвета и тени в виде TCssProperties
@@ -189,10 +100,10 @@ export class CssPropertiesHelper {
      */
     static getTransitionColorsProps() {
         return {
-            transition: `background-color ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
-    box-shadow ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
-    border-color ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
-    color ${ThemeConstant.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1);`
+            transition: `background-color ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    box-shadow ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    border-color ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    color ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1);`
         };
     }
     // #endregion

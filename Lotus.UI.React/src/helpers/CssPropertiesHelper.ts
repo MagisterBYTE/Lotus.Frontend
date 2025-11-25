@@ -1,17 +1,18 @@
-import
-  {
-    IGeneralBackgroundProperties,
-    IGeneralBorderProperties,
-    IGeneralContainerProperties,
-    IGeneralIconProperties,
-    IGeneralMarginProperties,
-    IGeneralPaddingProperties,
-    IGeneralTextProperties
-  } from '#base';
-import { Theme } from '#theme';
-import { TCssProperties } from '#types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Assert } from 'lotus-core/utils';
 import { CSSProperties } from 'react';
+import
+{
+  IGeneralBackgroundProperties,
+  IGeneralBorderProperties,
+  IGeneralContainerProperties,
+  IGeneralIconProperties,
+  IGeneralMarginProperties,
+  IGeneralPaddingProperties,
+  IGeneralTextProperties
+} from '#base';
+import { Theme } from '#theme';
+import { TCssProperties } from '#types';
 
 type TLotusCustomProps =
   | keyof IGeneralBackgroundProperties
@@ -113,7 +114,8 @@ export class CssPropertiesHelper
         {
           source[key] = value;
         }
-      } else
+      }
+      else
       {
         source[key] = value;
       }

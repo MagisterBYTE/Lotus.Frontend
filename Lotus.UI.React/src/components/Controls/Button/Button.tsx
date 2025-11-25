@@ -1,11 +1,12 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useRippleEffect } from '#hooks';
+import { Colors } from 'lotus-core/modules/color';
 import React, { ComponentPropsWithRef, CSSProperties, useEffect, useState } from 'react';
 import { IGeneralIconProperties } from '#base';
+import { useRippleEffect } from '#hooks';
 import { IInteractivityBackgroundEffect, IInteractivityElementProperties } from '#interactivity';
-import { TButtonVariant } from './ButtonVariant';
-import { Colors } from 'lotus-core/modules/color';
 import { Theme } from '#theme';
+import { TButtonVariant } from './ButtonVariant';
 
 export interface IButtonProps extends ComponentPropsWithRef<'button'>, IGeneralIconProperties, IInteractivityElementProperties, IInteractivityBackgroundEffect
 {
@@ -51,9 +52,9 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
       icon, iconColor, iconStyle, iconPlacement = 'left', imageDatabase,
       hasRippleEffect, hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect,
       ...propsButton
-    } = props
+    } = props;
 
-  const [selectedButton, setSelectedButton] = useState<boolean | undefined>(isSelected)
+  const [selectedButton, setSelectedButton] = useState<boolean | undefined>(isSelected);
 
   // const cssProperties = CssPropertiesBuilder.buildInteractivityElement(variant, props, { isSelected: selectedButton });
 
@@ -62,7 +63,7 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
   //   CssPropertiesHelper.overrideStyle(cssProperties, overrideButtonStyle);
   // }
 
-  //const buttonClass = css({ ...cssProperties })
+  // const buttonClass = css({ ...cssProperties })
 
   const rippleColor = Colors.red_2.toCSSRgbValue();
   const [ripple, event] = useRippleEffect({ duration: Theme.TransitionSpeed * 2, color: rippleColor, disabled: props.disabled });
@@ -87,12 +88,12 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
     if (onSelected) onSelected(!selectedButton, event.currentTarget.value);
 
     if (props.onClick) props.onClick(event);
-  }
+  };
 
-  useEffect(()=>
+  useEffect(() =>
   {
     setSelectedButton(isSelected);
-  }, [isSelected])
+  }, [isSelected]);
 
   // if (icon)
   // {
@@ -111,5 +112,5 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
   //       {propsButton.children}
   //     </button>);
   // }
-  return <></>
+  return <></>;
 };

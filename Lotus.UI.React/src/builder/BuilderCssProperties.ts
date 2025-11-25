@@ -1,6 +1,6 @@
-import { TCssProperties } from '#types';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { CssSpacingHelper, CssBorderHelper, CssBackgroundHelper, CssContainerHelper } from '#helpers';
+import { TCssProperties } from '#types';
 
 /**
  * Абстрактный класс, предоставляющий методы для построения и заполнения CSS-свойств
@@ -9,7 +9,7 @@ import { CssSpacingHelper, CssBorderHelper, CssBackgroundHelper, CssContainerHel
  */
 export abstract class BuilderCssProperties
 {
-  //#region Container
+  // #region Container
 
   /**
    * Заполняет переданный объект стилей CSS-свойствами, связанными с контейнером.
@@ -55,9 +55,9 @@ export abstract class BuilderCssProperties
       ...CssContainerHelper.getContainerProps(props)
     };
   }
-  //#endregion
+  // #endregion
 
-  //#region Background
+  // #region Background
 
   /**
    * Заполняет переданный объект стилей CSS-свойствами, связанными с фоном.
@@ -89,5 +89,5 @@ export abstract class BuilderCssProperties
       ...CssBackgroundHelper.getBoxShadowProps(props)
     };
   }
-  //#endregion
+  // #endregion
 }

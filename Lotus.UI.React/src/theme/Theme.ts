@@ -1,18 +1,18 @@
-import { ThemeColorPalettes } from '#theme/constants';
 import { Color, Colors, TColorSemantic, TColorVariantName } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
+import { ThemeColorPalettes } from '#theme/constants';
 import
-  {
-    createThemeColor,
-    deconstructionThemeColor,
-    IThemePalette,
-    IThemePaletteColor,
-    TThemeColor,
-    TThemeColorPalette,
-    TThemeData,
-    TThemePaletteActionType,
-    TThemePaletteComponentStructuralPart
-  } from './types';
+{
+  createThemeColor,
+  deconstructionThemeColor,
+  IThemePalette,
+  IThemePaletteColor,
+  TThemeColor,
+  TThemeColorPalette,
+  TThemeData,
+  TThemePaletteActionType,
+  TThemePaletteComponentStructuralPart
+} from './types';
 
 /**
  * Тема приложения
@@ -78,16 +78,16 @@ export class Theme
   {
     return this._Instance || (this._Instance = new this());
   }
-  //#endregion
+  // #endregion
 
   // #region Static properties
 
-  //#endregion
+  // #endregion
 
   // #region Fields
   private _currentPalette: IThemePalette;
   private _currentColor: TThemeColorPalette;
-  //#endregion
+  // #endregion
 
   // #region Properties
   /**
@@ -177,7 +177,7 @@ export class Theme
       ? this.currentPalette.colors[colorData.colorPalette!]
       : this.currentPalette.colors[colorData.colorSemantic!];
 
-    // eslint-disable-next-line consistent-return
+     
     return palette;
   }
 
@@ -247,18 +247,20 @@ export class Theme
       }
 
       // Остальные берем из темы
-      const palette = this.currentPalette.colors[colorData.colorSemantic!];
+      const palette = this.currentPalette.colors[colorData.colorSemantic];
       return palette.variants.getByName('main', opacity);
-    } else if (colorData.colorPalette)
+    }
+    else if (colorData.colorPalette)
     {
       // Берем из темы
-      const palette = this.currentPalette.colors[colorData.colorPalette!];
+      const palette = this.currentPalette.colors[colorData.colorPalette];
 
       // Если есть вариант то берем его
       if (colorData.colorVariant)
       {
         return palette.variants.getByName(colorData.colorVariant, opacity);
-      } else
+      }
+      else
       {
         return palette.variants.getByName('main', opacity);
       }
@@ -315,12 +317,13 @@ export class Theme
       }
 
       // Остальные берем из темы
-      const palette = this.currentPalette.colors[colorData.colorSemantic!];
+      const palette = this.currentPalette.colors[colorData.colorSemantic];
       return palette.variants.getByName(colorData.colorVariant ?? 'main', opacity);
-    } else if (colorData.colorPalette)
+    }
+    else if (colorData.colorPalette)
     {
       // Берем из темы
-      const palette = this.currentPalette.colors[colorData.colorPalette!];
+      const palette = this.currentPalette.colors[colorData.colorPalette];
 
       // Если есть вариант то берем его
       return palette.variants.getByName(colorData.colorVariant ?? 'main', opacity);
@@ -377,18 +380,20 @@ export class Theme
       }
 
       // Остальные берем из темы
-      const palette = this.currentPalette.colors[colorData.colorSemantic!];
+      const palette = this.currentPalette.colors[colorData.colorSemantic];
       return palette.variants.getByName('main', opacity);
-    } else if (colorData.colorPalette)
+    }
+    else if (colorData.colorPalette)
     {
       // Берем из темы
-      const palette = this.currentPalette.colors[colorData.colorPalette!];
+      const palette = this.currentPalette.colors[colorData.colorPalette];
 
       // Если есть вариант то берем его
       if (colorData.colorVariant)
       {
         return palette.variants.getByName(colorData.colorVariant, opacity);
-      } else
+      }
+      else
       {
         return palette.variants.getByName('main', opacity);
       }
@@ -427,7 +432,7 @@ export class Theme
     const hsl = color.getHSL();
     return `h=${hsl.h.toFixed(3)}, s=${hsl.s.toFixed(3)}, l=${hsl.l.toFixed(3)}`; 
   }
-  //#endregion
+  // #endregion
 
   // #region Load/Save
   /**
@@ -440,7 +445,8 @@ export class Theme
     if (value)
     {
       return JSON.parse(value);
-    } else
+    }
+    else
     {
       return { mode: 'light', color: 'blue' };
     }

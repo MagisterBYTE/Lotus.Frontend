@@ -1,4 +1,4 @@
-import { CssPropertiesHelper } from '#helpers';
+import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 export class CssContainerHelper {
     // #region Container
     /**
@@ -59,6 +59,42 @@ export class CssContainerHelper {
             containerProps.flexShrink = props.shrink;
         }
         return containerProps;
+    }
+    // #endregion
+    // #region FlexContainer
+    /**
+     * Получить оптимальные настройки Flex контейнера по горизонтали в виде CSSProperties
+     * @param padding Внутренний отступ
+     * @param isReverse Обратный порядок элементов
+     * @param horizontalAlign Распределение элементов по ширине
+     * @param verticalAlign Выравнивание элементов по вертикали
+     * @returns Настройки Flex контейнера в виде CSSProperties
+     */
+    static getFlexRowContainer(padding, isReverse = false, horizontalAlign = 'flex-start', verticalAlign = 'center') {
+        return {
+            display: 'flex',
+            flexDirection: isReverse ? 'row-reverse' : 'row',
+            justifyContent: horizontalAlign,
+            alignItems: verticalAlign,
+            columnGap: CssSpacingHelper.getGapPropsValue(padding)
+        };
+    }
+    /**
+     * Получить оптимальные настройки Flex контейнера по вертикали в виде CSSProperties
+     * @param padding Внутренний отступ
+     * @param isReverse Обратный порядок элементов
+     * @param verticalAlign Распределение элементов по высоте
+     * @param horizontalAlign Выравнивание элементов по горизонтали
+     * @returns Настройки Flex контейнера в виде CSSProperties
+     */
+    static getFlexColumnContainer(padding, isReverse = false, verticalAlign = 'flex-start', horizontalAlign = 'center') {
+        return {
+            display: 'flex',
+            flexDirection: isReverse ? 'column-reverse' : 'column',
+            justifyContent: verticalAlign,
+            alignItems: horizontalAlign,
+            rowGap: CssSpacingHelper.getGapPropsValue(padding)
+        };
     }
 }
 //# sourceMappingURL=CssContainerHelper.js.map

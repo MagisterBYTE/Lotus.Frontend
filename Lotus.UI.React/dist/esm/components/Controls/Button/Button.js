@@ -1,8 +1,10 @@
 import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
-import { useRippleEffect } from '#hooks';
-import { useEffect, useState } from 'react';
-import { ThemeConstant } from '#theme/constants';
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Colors } from 'lotus-core/modules/color';
+import { useEffect, useState } from 'react';
+import { useRippleEffect } from '#hooks';
+import { Theme } from '#theme';
 export const Button = (props) => {
     const { fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor, hoverTextColor, pressedTextColor, backColor, backImage, hoverBackColor, pressedBackColor, borderRadius, borderStyle, borderWidth, borderColor, hoverBorderColor, pressedBorderColor, size = 'medium', extraClass, overrideButtonStyle, variant = 'filled', isSelectedStatus, isSelected, onSelected, icon, iconColor, iconStyle, iconPlacement = 'left', imageDatabase, hasRippleEffect, hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect, ...propsButton } = props;
     const [selectedButton, setSelectedButton] = useState(isSelected);
@@ -11,9 +13,9 @@ export const Button = (props) => {
     // {
     //   CssPropertiesHelper.overrideStyle(cssProperties, overrideButtonStyle);
     // }
-    //const buttonClass = css({ ...cssProperties })
+    // const buttonClass = css({ ...cssProperties })
     const rippleColor = Colors.red_2.toCSSRgbValue();
-    const [ripple, event] = useRippleEffect({ duration: ThemeConstant.TransitionSpeed * 2, color: rippleColor, disabled: props.disabled });
+    const [ripple, event] = useRippleEffect({ duration: Theme.TransitionSpeed * 2, color: rippleColor, disabled: props.disabled });
     // const getFlexContainer = (): CSSProperties =>
     // {
     //   switch (iconPlacement)

@@ -1,16 +1,17 @@
 import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from 'react';
-import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
 import { Button } from '@mantine/core';
-import { toastError, toastPromise, ToastWrapper } from '../../Feedback/Toast';
-import { MantineReactTableHelper } from '../../../helpers';
 import { StringHelper } from 'lotus-core/helpers';
-import { OptionHelper } from 'lotus-core/modules/option';
 import { LocalizationCore } from 'lotus-core/localization';
+import { OptionHelper } from 'lotus-core/modules/option';
+import { useEffect, useState } from 'react';
 import { MantineReactTable } from '#external/mantine-react-table';
+import { toastError, toastPromise, ToastWrapper } from '../../Feedback/Toast';
+import { MantineReactTableHelper } from './MantineReactTableHelper';
+import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
 export const TableView = (props) => {
     const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem, formCreated, formDeleted } = props;
     const properties = objectInfo.getProperties();
@@ -79,6 +80,7 @@ export const TableView = (props) => {
             column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
         }
         if (property.editing?.editorType === 'select') {
+            // eslint-disable-next-line react/display-name
             column.Cell = function ({ cell }) {
                 const id = cell.getValue();
                 const options = property.options;
@@ -105,6 +107,7 @@ export const TableView = (props) => {
             column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnum(column, onSelectFilterMode);
         }
         if (property.editing?.editorType === 'multi-select') {
+            // eslint-disable-next-line react/display-name
             column.Cell = function ({ cell }) {
                 const massive = cell.getValue();
                 const options = property.options;
@@ -196,11 +199,12 @@ export const TableView = (props) => {
     //
     // #region Добавление данных
     //
-    const handleAddRow = async () => {
+    const handleAddRow = () => {
         if (onAddItem) {
             const result = toastPromise(onAddItem(), LocalizationCore.data.actions.adding, LocalizationCore.data.actions.addingSucceed, LocalizationCore.data.actions.addingFailed);
-            result.then(() => {
-                refreshItems(getFilterQueryItems());
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            result.then(async () => {
+                await refreshItems(getFilterQueryItems());
             });
         }
         else {
@@ -238,10 +242,11 @@ export const TableView = (props) => {
     //
     // #region Обновление данных
     //
-    const handleSaveRow = async (table, row) => {
+    const handleSaveRow = (table, row) => {
         const updateItem = { ...currentItem };
         if (onUpdateItem) {
             const result = toastPromise(onUpdateItem(updateItem), LocalizationCore.data.actions.saving, LocalizationCore.data.actions.savingSucceed, LocalizationCore.data.actions.savingFailed);
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             result.then((value) => {
                 const newItems = [...items];
                 newItems[currentEditRow.index] = value.payload;
@@ -262,10 +267,11 @@ export const TableView = (props) => {
     const handleCloseDeleteDialog = () => {
         setOpenDeleteDialog(false);
     };
-    const handleOkDeleteDialog = async () => {
+    const handleOkDeleteDialog = () => {
         setOpenDeleteDialog(false);
         if (onDeleteItem) {
             const result = toastPromise(onDeleteItem(deleteItem.id), LocalizationCore.data.actions.deleting, LocalizationCore.data.actions.deletingSucceed, LocalizationCore.data.actions.deletingFailed);
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             result.then(() => {
                 const newItems = items.filter((x) => x.id !== deleteItem.id);
                 setItems(newItems);
@@ -285,7 +291,7 @@ export const TableView = (props) => {
     // Методы оформления
     const renderTopToolbarCustomActions = (props) => {
         if (onAddItem || formCreated) {
-            return (_jsx(Button, { color: "secondary", onClick: () => handleAddRow(), variant: "contained", children: LocalizationCore.data.actions.add }));
+            return (_jsx(Button, { color: "secondary", variant: "contained", onClick: () => handleAddRow(), children: LocalizationCore.data.actions.add }));
         }
         return _jsx(_Fragment, { children: " " });
     };
@@ -294,7 +300,7 @@ export const TableView = (props) => {
     //
     useEffect(() => {
         const filter = getFilterQueryItems();
-        refreshItems(filter);
+        void refreshItems(filter);
     }, [paginationModel.pageIndex, paginationModel.pageSize, sortingColumn, columnFilters, columnFiltersFns, globalFilter]);
     useEffect(() => {
         const initialColumnFiltersFns = MantineReactTableHelper.getFilterOptions(objectInfo);
@@ -306,7 +312,7 @@ export const TableView = (props) => {
         filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
         filterIncludeNone: LocalizationCore.data.filters.includeNone
     };
-    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { ...props, table: undefined, columns: editColumns, data: items, editDisplayMode: "row", manualSorting: true, manualFiltering: true, enablePagination: true, manualPagination: true, renderTopToolbarCustomActions: props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions, rowCount: pageInfo.totalCount, onColumnFiltersChange: setColumnFilters, onColumnFilterFnsChange: handleColumnFilterFnsChange, onGlobalFilterChange: setGlobalFilter, filterFns: {
+    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { ...props, columns: editColumns, data: items, editDisplayMode: "row", enablePagination: true, filterFns: {
                     includeAny: (row, id, filterValue) => {
                         return true;
                     },
@@ -319,7 +325,7 @@ export const TableView = (props) => {
                     includeNone: (row, id, filterValue) => {
                         return true;
                     }
-                }, onSortingChange: setSortingColumn, onPaginationChange: setPaginationModel, state: {
+                }, manualFiltering: true, manualPagination: true, manualSorting: true, renderTopToolbarCustomActions: props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions, rowCount: pageInfo.totalCount, state: {
                     isLoading: isLoading,
                     showProgressBars: isRefetching,
                     showSkeletons: false,
@@ -328,10 +334,11 @@ export const TableView = (props) => {
                     columnFilterFns: columnFiltersFns,
                     globalFilter: globalFilter,
                     sorting: sortingColumn
-                } }), _jsx(ToastWrapper, { autoClose: autoCloseToastify }), formCreated &&
+                }, table: undefined, onColumnFilterFnsChange: handleColumnFilterFnsChange, onColumnFiltersChange: setColumnFilters, onGlobalFilterChange: setGlobalFilter, onPaginationChange: setPaginationModel, onSortingChange: setSortingColumn }), _jsx(ToastWrapper, { autoClose: autoCloseToastify }), formCreated &&
                 formCreated({
                     open: openCreatedDialog,
                     onClose: handleCloseCreatedDialog,
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onCreate: handleOkCreatedDialog,
                     onCreatedItem: setCreatedItem
                 })] }));

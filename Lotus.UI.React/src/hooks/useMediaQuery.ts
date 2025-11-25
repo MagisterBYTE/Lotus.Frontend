@@ -23,7 +23,6 @@ export const useMediaQuery = (mediaQuery: string) =>
     mediaQueryList.addEventListener('resize', listener);
     mediaQueryList.addEventListener('orientationchange', listener);
 
-    // eslint-disable-next-line consistent-return
     return () => 
     {
       mediaQueryList.removeEventListener('resize', listener);
@@ -32,4 +31,4 @@ export const useMediaQuery = (mediaQuery: string) =>
   }, [mediaQuery]);
 
   return matches;
-}
+};

@@ -1,4 +1,6 @@
+import { Assert } from 'lotus-core/utils';
 import { IGeneralTextProperties } from '#base';
+import { Theme, ThemeInstance } from '#theme';
 import
 {
   TCssProperties,
@@ -13,9 +15,7 @@ import
   instanceOfLineSpacing,
   instanceOfFontSize
 } from '#types';
-import { Assert } from 'lotus-core/utils';
 import { CssPropertiesHelper } from './CssPropertiesHelper';
-import { Theme, ThemeInstance } from '#theme';
 
 export abstract class CssFontHelper
 {
@@ -29,9 +29,9 @@ export abstract class CssFontHelper
    */
   public static fillFontProps(style: TCssProperties, props: IGeneralTextProperties, override: boolean): TCssProperties
   {
-    const fontWeight: TCssFontWeight | undefined = Boolean(props.fontBold) ? 'bold' : undefined;
+    const fontWeight: TCssFontWeight | undefined = props.fontBold ? 'bold' : undefined;
     const fontSize: TCssFontSize | undefined = CssFontHelper.getFontSizePropsValue(props.fontSize);
-    const fontFamily: TCssFontFamily | undefined = Boolean(props.fontAccent) ? Theme.FontAccent : undefined;
+    const fontFamily: TCssFontFamily | undefined = props.fontAccent ? Theme.FontAccent : undefined;
 
     CssPropertiesHelper.overrideStyleValue(style, 'fontSize', fontSize, override);
     CssPropertiesHelper.overrideStyleValue(style, 'fontWeight', fontWeight, override);
@@ -49,7 +49,7 @@ export abstract class CssFontHelper
   {
     const fontProps: TCssProperties = {};
 
-    if (Boolean(props.fontAccent))
+    if (props.fontAccent)
     {
       fontProps.fontFamily = Theme.FontAccent;
     }
@@ -59,7 +59,7 @@ export abstract class CssFontHelper
       fontProps.fontSize = CssFontHelper.getFontSizePropsValue(props.fontSize);
     }
 
-    if (Boolean(props.fontBold))
+    if (props.fontBold)
     {
       fontProps.fontWeight = 'bold';
     }
@@ -78,14 +78,14 @@ export abstract class CssFontHelper
   {
     const fontProps: TCssProperties = {};
 
-    if (Boolean(isFontAccent))
+    if (isFontAccent)
     {
       fontProps.fontFamily = Theme.FontAccent;
     }
 
     fontProps.fontSize = CssFontHelper.getFontSizePropsValue(size);
 
-    if (Boolean(isBold))
+    if (isBold)
     {
       fontProps.fontWeight = 'bold';
     }
@@ -226,7 +226,8 @@ export abstract class CssFontHelper
         {
           style.color = ThemeInstance.getTextColor(props.textColor!).toCSSRgbValue();
         }
-      } else
+      }
+      else
       {
         style.color = ThemeInstance.getTextColor(props.textColor!).toCSSRgbValue();
       }
@@ -335,7 +336,7 @@ export abstract class CssFontHelper
       }
     }
 
-    if (Boolean(textAlign))
+    if (textAlign)
     {
       textProps.textAlign = textAlign;
     }

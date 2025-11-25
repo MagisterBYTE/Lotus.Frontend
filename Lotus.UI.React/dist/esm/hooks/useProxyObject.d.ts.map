@@ -1,0 +1,1 @@
+{"version":3,"file":"useProxyObject.d.ts","sourceRoot":"","sources":["../../../src/hooks/useProxyObject.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,aAAa,EAAE,MAAM,iCAAiC,CAAC;AAGrE,MAAM,WAAW,iBAAiB,CAAC,KAAK,SAAS,aAAa;IAE5D,MAAM,EAAE,KAAK,CAAC;CACf;AAED,wBAAgB,cAAc,CAAC,KAAK,SAAS,aAAa,EAAE,KAAK,EAAE,iBAAiB,CAAC,KAAK,CAAC,GAAG,KAAK,CAclG"}

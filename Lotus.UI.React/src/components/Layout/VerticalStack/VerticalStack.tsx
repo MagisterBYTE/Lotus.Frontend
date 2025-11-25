@@ -1,9 +1,9 @@
+import { css } from '@emotion/css';
+import { ComponentPropsWithRef, CSSProperties } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { BuilderCssProperties } from '#builder';
 import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 import { TCssAlignItems, TCssGap, TCssJustifyContent, TElementSpacing } from '#types';
-import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
 
 export interface IVerticalStackProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'>
 {
@@ -15,7 +15,7 @@ export interface IVerticalStackProps extends IGeneralContainerProperties, IGener
 
 export function VerticalStack(props: IVerticalStackProps)
 {
-  const { spacing, vAlign, hAlign, wrap, children, ...otherProps } = props;
+  const { spacing, vAlign, hAlign, wrap = false, children, ...otherProps } = props;
 
   const styleDiv: CSSProperties = {
     display: 'flex',
@@ -23,9 +23,9 @@ export function VerticalStack(props: IVerticalStackProps)
     alignItems: hAlign,
     justifyContent: vAlign ?? 'flex-start',
     rowGap: CssSpacingHelper.getGapPropsValue(spacing),
-    flexWrap: Boolean(wrap) ? 'wrap' : 'nowrap',
+    flexWrap: wrap ? 'wrap' : 'nowrap',
     ...BuilderCssProperties.buildContainer(props),
-    ...BuilderCssProperties.buildBackground(props),
+    ...BuilderCssProperties.buildBackground(props)
   };
 
   const stackClass = css({ ...styleDiv, label: 'HorizontalStack' });

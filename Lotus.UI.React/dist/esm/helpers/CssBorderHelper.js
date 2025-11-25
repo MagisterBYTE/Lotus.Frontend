@@ -1,8 +1,8 @@
-import { hasBorderProps, hasNonShorthandBorderRadiusProps } from '#base';
-import { CssPropertiesHelper } from '#helpers';
-import { ThemePaletteHelper } from '#theme/helpers';
-import { instanceOfElementRadius } from '#types';
 import { Assert } from 'lotus-core/utils';
+import { hasBorderProps, hasNonShorthandBorderRadiusProps } from '#base';
+import { CssFontHelper, CssPropertiesHelper } from '#helpers';
+import { ThemeInstance } from '#theme';
+import { instanceOfElementRadius } from '#types';
 export class CssBorderHelper {
     // #region Border
     /**
@@ -51,7 +51,7 @@ export class CssBorderHelper {
                 borderProps.borderBottomRightRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadiusBottomRight);
             }
             else {
-                borderProps.borderRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadius) ?? '0.25rem';
+                borderProps.borderRadius = CssBorderHelper.getBorderRadiusPropsValue(props.borderRadius);
             }
         }
         return borderProps;
@@ -64,7 +64,7 @@ export class CssBorderHelper {
     static getBorderColorPropsValue(value) {
         if (Assert.emptyValue(value))
             return 'var(--mantine-color-default-border)';
-        const colorBorder = ThemePaletteHelper.getElementColor(value);
+        const colorBorder = ThemeInstance.getElementColor(value);
         return colorBorder.toCSSRgbValue();
     }
     /**
@@ -105,6 +105,40 @@ export class CssBorderHelper {
             return `${value}px`;
         return value;
     }
+    /**
+     * Конвертирует значение ширины границы в пиксели
+     * @param margin - значение ширины границы в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+     * @returns число - размер в пикселях
+     */
+    static getBorderWidthPixels(width) {
+        if (typeof width === 'number') {
+            return width; // предполагаем, что число уже в пикселях
+        }
+        const value = parseFloat(width);
+        const unit = width.replace(value.toString(), '').toLowerCase();
+        switch (unit) {
+            case 'px':
+                return value;
+            case 'rem':
+                return value * CssFontHelper.getRootFontSize();
+            case 'em':
+                // Для em нужно знать контекст, возвращаем приблизительное значение
+                return value * 16; // предполагаем базовый размер 16px
+            case 'pt':
+                return value * 1.333; // 1pt = 1.333px
+            case 'mm':
+                return value * 3.7795; // 1mm = 3.7795px
+            case 'cm':
+                return value * 37.795; // 1cm = 37.795px
+            case 'in':
+                return value * 96; // 1inch = 96px
+            case '%':
+                return (value * 16) / 100; // предполагаем базовый размер 16px
+            default:
+                // Если единица не распознана, возвращаем как есть (предполагаем px)
+                return value;
+        }
+    }
     // #endregion
     // #region BorderShadow
     /**
@@ -126,7 +160,10 @@ export class CssBorderHelper {
      */
     static getBorderShadowProps(props) {
         const borderProps = {};
-        borderProps.boxShadow = CssBorderHelper.getBorderShadowPropsValue(props.borderShadow, props.borderColor);
+        const boxShadow = CssBorderHelper.getBorderShadowPropsValue(props.borderShadow, props.borderColor);
+        if (Assert.existValue(boxShadow)) {
+            borderProps.boxShadow = boxShadow;
+        }
         return borderProps;
     }
     /**
@@ -143,7 +180,7 @@ export class CssBorderHelper {
             return `0px 0px ${elevation}px ${elevation}px var(--mantine-primary-color-light)`;
         }
         else {
-            const colorShadow = ThemePaletteHelper.getElementColor(color);
+            const colorShadow = ThemeInstance.getElementColor(color);
             return `0px 0px ${elevation}px ${elevation}px ${colorShadow.toCSSRgbValue(shadowAlpha ?? 0.5)}`;
         }
     }

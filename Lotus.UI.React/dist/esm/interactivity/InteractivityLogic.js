@@ -1,6 +1,6 @@
-import { InteractivityBorderLogic } from './InteractivityBorder';
-import { InteractivityBackgroundLogic } from './InteractivityBackground';
-import { InteractivityTextLogic } from './InteractivityText';
+import { InteractivityBackgroundLogic } from './background';
+import { InteractivityBorderLogic } from './border';
+import { InteractivityTextLogic } from './text';
 /**
  * Логика применения визуальных эффектов к элементу UI в зависимости от модель применения и состояния интерактивности элемента
  */
@@ -13,6 +13,7 @@ export class InteractivityLogic {
      * @param isSelected Контекст элемента UI для применения визуального эффекта
      * @returns Свойства CSSProperties
      */
+    // eslint-disable-next-line complexity
     static getEffectProps(model, state, element, context) {
         const isSelected = Boolean(context?.isSelected);
         const isDisabled = Boolean(context?.isDisabled);

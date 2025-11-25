@@ -35,6 +35,12 @@ export declare abstract class CssBorderHelper {
      */
     static getBorderWidthPropsValue(value?: TCssBorderWidth | number): TCssBorderWidth | undefined;
     /**
+     * Конвертирует значение ширины границы в пиксели
+     * @param margin - значение ширины границы в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+     * @returns число - размер в пикселях
+     */
+    static getBorderWidthPixels(width: TCssBorderWidth | number): number;
+    /**
      * Заполнить свойства CSS по границе тени в виде TCssProperties
      * @param style Текущие свойства
      * @param props Общие свойства для границы элемента UI

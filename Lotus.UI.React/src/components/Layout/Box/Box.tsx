@@ -1,9 +1,9 @@
+import { css } from '@emotion/css';
+import { ComponentPropsWithRef, CSSProperties } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { BuilderCssProperties } from '#builder';
 import { CssPropertiesHelper } from '#helpers';
 import { TCenterContent } from '#types';
-import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
 
 export interface IBoxProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'>
 {
@@ -17,38 +17,39 @@ function buildBoxProps(props: IBoxProps): CSSProperties
     return {
       display: 'grid',
       justifyItems: 'center',
-      alignItems: 'start',
-    }
+      alignItems: 'start'
+    };
   }
   if (props.centerContent === 'vertically')
   {
     return {
       display: 'grid',
-      alignItems: 'center',
-    }
+      alignItems: 'center'
+    };
   }
   if (props.centerContent === 'center')
   {
     return {
       display: 'grid',
       justifyItems: 'center',
-      alignItems: 'center',
-    }
+      alignItems: 'center'
+    };
   }
-  return {}
+  return {};
 }
 
 export function Box(props: IBoxProps)
 {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { centerContent, children, ...otherProps } = props;
 
   const styleDiv: CSSProperties = {
     ...BuilderCssProperties.buildContainer(props),
     ...BuilderCssProperties.buildBackground(props),
-    ...buildBoxProps(props),
+    ...buildBoxProps(props)
   };
 
-  const boxClass = css({...styleDiv, label: 'Box'});
+  const boxClass = css({ ...styleDiv, label: 'Box' });
 
   // Фильтруем кастомные пропсы перед передачей в div
   const domProps = CssPropertiesHelper.filterDOMProps(otherProps);

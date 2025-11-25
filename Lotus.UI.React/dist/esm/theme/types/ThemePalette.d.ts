@@ -1,6 +1,6 @@
-import { TColorSemantic } from 'node_modules/lotus-core/dist/esm/modules/color/ColorSemantic';
-import { TThemeColor } from './ThemeColor';
-import { TThemeMode } from './ThemeMode';
+import { TColorSemantic } from 'lotus-core/modules/color';
+import { TThemeColorMode } from './ThemeColorMode';
+import { TThemeColorPalette } from './ThemeColorPalette';
 import { IThemePaletteAction, IThemePaletteBackground, IThemePaletteBorder, IThemePaletteColor, IThemePaletteText } from './ThemePaletteTypes';
 /**
  * Палитра цвета
@@ -10,7 +10,7 @@ export interface IThemePalette {
     /**
      * Тема
      */
-    mode: TThemeMode;
+    mode: TThemeColorMode;
     /**
      * Цвета текста
      */
@@ -30,6 +30,6 @@ export interface IThemePalette {
     /**
      * Массив цветов
      */
-    colors: Record<TThemeColor | TColorSemantic, IThemePaletteColor>;
+    colors: Record<TThemeColorPalette | TColorSemantic, IThemePaletteColor>;
 }
 //# sourceMappingURL=ThemePalette.d.ts.map

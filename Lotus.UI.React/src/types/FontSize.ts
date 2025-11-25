@@ -5,7 +5,7 @@ export type TFontSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export const TFontSizes: readonly TFontSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-export const instanceOfFontSize = (value: any): value is TFontSize =>
+export const instanceOfFontSize = (value: unknown): value is TFontSize =>
 {
   if (value && typeof value === 'string')
   {
@@ -13,16 +13,16 @@ export const instanceOfFontSize = (value: any): value is TFontSize =>
   }
 
   return false;
-}
+};
 
-export const castToFontSize = (value: any): TFontSize | undefined =>
+export const castToFontSize = (value: unknown): TFontSize | undefined =>
 {
   if (instanceOfFontSize(value))
   {
-    return value as TFontSize;
+    return value;
   }
   else
   {
     return undefined;
   }
-}
+};

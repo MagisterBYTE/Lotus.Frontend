@@ -1,5 +1,5 @@
-import { TThemeColor } from "#theme/types";
-import { TTextEffect, TCssTextAlign, TCssFontSize, TFontSize, TCssLineHeight, TLineSpacing } from "#types";
+import { TThemeColor } from '#theme/types';
+import { TTextEffect, TCssTextAlign, TCssFontSize, TFontSize, TCssLineHeight, TLineSpacing } from '#types';
 
 /**
  * Общие свойства текста для элемента UI

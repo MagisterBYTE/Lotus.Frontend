@@ -46,7 +46,8 @@ export interface IGeneralContainerProperties extends IGeneralMarginProperties, I
   gridRowSpan?: TCssGridColumn;
 }
 
-export function getContainerProperties(props: IGeneralContainerProperties) {
-  const { w, h, p, pl, pt, pr, pb, m, ml, mt, mr, mb, ...rest } = props;
+export function getContainerProperties(props: IGeneralContainerProperties) 
+{
+  const { w, h, p, pl, pt, pr, pb, m, ml, mt, mr, mb } = props;
   return { w, h, p, pl, pt, pr, pb, m, ml, mt, mr, mb };
 }

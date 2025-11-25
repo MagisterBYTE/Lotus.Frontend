@@ -11,7 +11,6 @@ export const useMutationObserver = (props: IMutationObserverProps) =>
   const { callback, options } = props;
   const mutationRef = useRef(document.documentElement);
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => 
   {
     if (mutationRef.current) 

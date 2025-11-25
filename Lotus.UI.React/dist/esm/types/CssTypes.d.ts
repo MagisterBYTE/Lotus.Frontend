@@ -24,6 +24,14 @@ export type TCssMargin = Property.Margin;
  */
 export type TCssFontSize = Property.FontSize<number | string>;
 /**
+ * Тип свойства вес шрифта Css
+ */
+export type TCssFontWeight = Property.FontWeight;
+/**
+ * Тип свойства семейства шрифта Css
+ */
+export type TCssFontFamily = Property.FontFamily;
+/**
  * Тип свойства стиля границы Css
  */
 export type TCssBorderStyle = 'solid' | 'inset' | 'outset' | 'double' | 'groove' | 'ridge' | 'dotted';
@@ -48,6 +56,10 @@ export type TCssTransform = Property.Transform;
  * Тип свойства выравнивания текста Css
  */
 export type TCssTextAlign = Property.TextAlign;
+/**
+ * Тип свойства межстрочного интервала текста Css
+ */
+export type TCssLineHeight = Property.LineHeight;
 /**
  * Тип свойства тени границы Css
  */

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgTypesStory } from '#storydata';
 import { TCssContentAligns, TElementSpacings } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';

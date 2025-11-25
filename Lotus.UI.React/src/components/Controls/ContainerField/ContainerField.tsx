@@ -1,9 +1,9 @@
-import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
-import { HorizontalStack, IHorizontalStackProps } from '#components/Layout';
-import { TElementSize } from '#types';
 import { DataAttributes, InputDescription, InputDescriptionProps, InputErrorProps, InputLabel, InputLabelProps, Stack } from '@mantine/core';
 import { Assert } from 'lotus-core/utils';
 import { JSX } from 'react/jsx-runtime';
+import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
+import { HorizontalStack, IHorizontalStackProps } from '#components/Layout';
+import { TElementSize } from '#types';
 
 /**
  * Базовый компонент для представления поля для ввода и управления различными данными
@@ -59,17 +59,19 @@ export interface IContainerFieldProps extends IBaseFieldProps, IHorizontalStackP
   componentField: JSX.Element;
 }
 
-export function ContainerField(props: IContainerFieldProps) {
+export function ContainerField(props: IContainerFieldProps) 
+{
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { componentField, inlinePlace = false, size, required, label, labelProps, description, descriptionProps, error, errorProps, ...otherProps } = props;
 
   const vAlign = Assert.existValue(otherProps.vAlign) ? otherProps.vAlign : Assert.existValue(description) ? 'center' : 'baseline';
   const spacing = Assert.existValue(otherProps.spacing) ? otherProps.spacing : Assert.existValue(labelProps?.w) ? 'undefined' : (size ?? 'md');
 
   return (
-    <HorizontalStack {...otherProps} vAlign={vAlign} spacing={spacing}>
-      <Stack justify="flex-start" gap={0} w={labelProps?.w}>
+    <HorizontalStack {...otherProps} spacing={spacing} vAlign={vAlign}>
+      <Stack gap={0} justify="flex-start" w={labelProps?.w}>
         {label && (
-          <InputLabel {...labelProps} required={required} w={undefined} size={labelProps?.size ?? size}>
+          <InputLabel {...labelProps} required={required} size={labelProps?.size ?? size} w={undefined}>
             {label}
           </InputLabel>
         )}

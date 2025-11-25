@@ -6,7 +6,6 @@ export const useInterval = (callback, delay) => {
     useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
-    // eslint-disable-next-line consistent-return
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handler = (...args) => savedCallback.current?.(...args);

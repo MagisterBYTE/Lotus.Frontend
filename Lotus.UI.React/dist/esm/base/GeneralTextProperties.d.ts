@@ -1,9 +1,13 @@
-import { TThemeColor } from "#theme/types";
-import { TTextEffect, TCssTextAlign } from "#types";
+import { TThemeColor } from '#theme/types';
+import { TTextEffect, TCssTextAlign, TCssFontSize, TFontSize, TCssLineHeight, TLineSpacing } from '#types';
 /**
  * Общие свойства текста для элемента UI
  */
 export interface IGeneralTextProperties {
+    /**
+     * Размер шрифта
+     */
+    fontSize?: TCssFontSize | TFontSize;
     /**
      * Статус жирного шрифта
      */
@@ -28,5 +32,9 @@ export interface IGeneralTextProperties {
      * Цвет текста
      */
     textColor?: TThemeColor;
+    /**
+     * Межстрочный интервал текста
+     */
+    textLineSpacing?: TCssLineHeight | TLineSpacing;
 }
 //# sourceMappingURL=GeneralTextProperties.d.ts.map

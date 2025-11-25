@@ -1,1 +1,1 @@
-{"version":3,"file":"useInterval.d.ts","sourceRoot":"","sources":["../../../src/hooks/useInterval.ts"],"names":[],"mappings":"AAIA,eAAO,MAAM,WAAW,GAAI,UAAU,QAAQ,EAAE,OAAO,MAAM,SAqB5D,CAAA"}
+{"version":3,"file":"useInterval.d.ts","sourceRoot":"","sources":["../../../src/hooks/useInterval.ts"],"names":[],"mappings":"AAIA,eAAO,MAAM,WAAW,GAAI,UAAU,QAAQ,EAAE,OAAO,MAAM,SAqB5D,CAAC"}

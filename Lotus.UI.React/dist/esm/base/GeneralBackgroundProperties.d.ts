@@ -1,5 +1,5 @@
-import { TThemeColor } from "#theme/types";
-import { TCssBackgroundImage, TShadowElevation } from "#types";
+import { TThemeColor } from '#theme/types';
+import { TCssBackgroundImage, TShadowElevation } from '#types';
 /**
  * Общие свойства для фона элемента UI
  */

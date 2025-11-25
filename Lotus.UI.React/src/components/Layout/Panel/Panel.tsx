@@ -1,12 +1,14 @@
-import { BuilderCssProperties } from '#builder';
-import { CssBackgroundHelper, CssBorderHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css } from '@emotion/css';
 import { Assert } from 'lotus-core/utils';
-import { ComponentPropsWithRef, CSSProperties, isValidElement, ReactNode } from 'react';
-import { IBoxProps } from '../Box';
-import { ILabelProps, Label } from '#components/Display';
-import { TElementSize } from '#types';
+import { CSSProperties, isValidElement, ReactNode } from 'react';
 import { hasBorderProps } from '#base';
+import { BuilderCssProperties } from '#builder';
+import { ILabelProps, Label } from '#components/Display';
+import { CssBackgroundHelper, CssBorderHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
+import { TElementSize } from '#types';
+import { IBoxProps } from '../Box';
 
 export interface IPanelProps extends IBoxProps
 {
@@ -43,6 +45,7 @@ function buildPanelProps(props: IPanelProps): CSSProperties
   return {};
 }
 
+// eslint-disable-next-line complexity
 export function Panel(props: IPanelProps)
 {
   const { centerContent, size = 'md', header, headerProps, children, ...otherProps } = props;
@@ -55,6 +58,7 @@ export function Panel(props: IPanelProps)
     ...buildPanelProps(props)
   };
 
+  // eslint-disable-next-line complexity
   function getHeaderStyle(): CSSProperties
   {
     const hFontSize = CssFontHelper.getFontSizeInPixels(size ?? headerProps?.fontSize ?? 'md');
@@ -69,7 +73,7 @@ export function Panel(props: IPanelProps)
       position: 'absolute',
       background: headerProps?.style?.backgroundColor ?? CssBackgroundHelper.getBackgroundColorPropsValue(otherProps.backColor) ?? 'var(--mantine-color-default)',
       top: headerProps?.style?.top ?? `${topOffset + CssSpacingHelper.getSpacingInPixels(props.m ?? props.mt ?? 0)}px`,
-      left: headerProps?.style?.left ?? `${40 + CssSpacingHelper.getSpacingInPixels(props.m ?? props.ml ?? 0)}px`,
+      left: headerProps?.style?.left ?? `${40 + CssSpacingHelper.getSpacingInPixels(props.m ?? props.ml ?? 0)}px`
     };
 
     return { ...headerStyle, ...headerProps?.style };
@@ -88,15 +92,16 @@ export function Panel(props: IPanelProps)
         {isHeaderComponent === false && (
           <Label
             {...headerProps}
+            // eslint-disable-next-line react/no-children-prop
             children={isHeaderText ? header : headerProps?.children}
-            withBorder={headerProps?.withBorder ?? otherProps.withBorder}
             borderColor={headerProps?.borderColor ?? otherProps.borderColor}
-            borderWidth={headerProps?.borderWidth ?? otherProps.borderWidth}
-            borderStyle={headerProps?.borderStyle ?? otherProps.borderStyle}
             borderRadius={headerProps?.borderRadius ?? otherProps.borderRadius}
             borderShadow={headerProps?.borderShadow ?? otherProps.borderShadow}
+            borderStyle={headerProps?.borderStyle ?? otherProps.borderStyle}
+            borderWidth={headerProps?.borderWidth ?? otherProps.borderWidth}
             p={headerProps?.p ?? 'xxs'}
             style={getHeaderStyle()}
+            withBorder={headerProps?.withBorder ?? otherProps.withBorder}
           />
         )}
         {children}

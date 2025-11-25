@@ -1,6 +1,6 @@
+import { ComponentPropsWithRef } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { TCenterContent } from '#types';
-import { ComponentPropsWithRef } from 'react';
 export interface IBoxProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
     centerContent?: TCenterContent;
 }

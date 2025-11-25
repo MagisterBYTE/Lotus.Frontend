@@ -1,7 +1,7 @@
-import { getContainerProperties } from '#base';
-import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
 import { InputLabel, Slider, SliderProps } from '@mantine/core';
 import { JSX } from 'react';
+import { getContainerProperties } from '#base';
+import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
 
 export interface ISliderFieldProps extends IBaseFieldProps, IHorizontalStackProps
@@ -20,11 +20,12 @@ export function SliderField(props: ISliderFieldProps): JSX.Element
     return (
       <ContainerField
         {...otherProps}
+        componentField={<Slider h={undefined} size={otherProps.size} style={{ flex: 1 }} w={undefined} {...sliderProps} />}
         vAlign="center"
-        componentField={<Slider w={undefined} h={undefined} size={otherProps.size} style={{ flex: 1 }} {...sliderProps} />}
-      ></ContainerField>
+      />
     );
-  } else
+  }
+  else
   {
     if (otherProps.label)
     {
@@ -36,7 +37,8 @@ export function SliderField(props: ISliderFieldProps): JSX.Element
           <Slider {...containerProps} size={otherProps.size} {...sliderProps} />
         </VerticalStack>
       );
-    } else
+    }
+    else
     {
       return <Slider {...containerProps} size={otherProps.size} {...sliderProps} />;
     }

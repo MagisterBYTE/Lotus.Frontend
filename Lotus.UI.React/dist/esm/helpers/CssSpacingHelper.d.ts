@@ -2,6 +2,12 @@ import { IGeneralMarginProperties, IGeneralPaddingProperties } from '#base';
 import { TCssGap, TCssMargin, TCssPadding, TCssProperties, TElementSpacing } from '#types';
 export declare abstract class CssSpacingHelper {
     /**
+     * Конвертирует значение отступа в пиксели
+     * @param spacing - размер отступа в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+     * @returns число - размер в пикселях
+     */
+    static getSpacingInPixels(spacing: TCssMargin | TCssPadding | TElementSpacing): number;
+    /**
      * Заполнить свойства CSS по внутреннему отступу в виде TCssProperties
      * @param style Текущие свойства
      * @param props Общие свойства внутренних отступов элемента UI

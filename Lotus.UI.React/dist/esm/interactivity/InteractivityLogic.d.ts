@@ -1,7 +1,7 @@
 import { TCssProperties } from '#types';
+import { IInteractivityElementProperties } from './InteractivityElement';
 import { TInteractivityModel } from './InteractivityModel';
 import { TInteractivityState } from './InteractivityState';
-import { IInteractivityElementProperties } from './InteractivityElement';
 /**
  * Контекст элемента UI для применения визуального эффекта
  */

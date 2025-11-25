@@ -1,7 +1,7 @@
 import { IGeneralElementProperties } from '#base';
-import { IInteractivityBackgroundProperties } from './InteractivityBackground';
-import { IInteractivityBorderProperties } from './InteractivityBorder';
-import { IInteractivityTextProperties } from './InteractivityText';
+import { IInteractivityBackgroundProperties } from './background';
+import { IInteractivityBorderProperties } from './border';
+import { IInteractivityTextProperties } from './text';
 /**
  * Интерактивное взаимодействие элемента
  */

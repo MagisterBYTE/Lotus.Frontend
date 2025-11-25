@@ -2,10 +2,11 @@ import { ToastOptions, toast } from 'react-toastify';
 import { ToastErrorPanel } from './ToastErrorPanel';
 
 
-export const toastPromise = <TData,>(promise: Promise<TData> | (() => Promise<TData>),
+export const toastPromise = <TData, >(promise: Promise<TData> | (() => Promise<TData>),
   textPending: string,
   textSuccess: string,
   textFailed: string,
+  // eslint-disable-next-line max-params
   options?: ToastOptions<TData>): Promise<TData> =>
 {
   return toast.promise<TData>(promise,
@@ -16,8 +17,8 @@ export const toastPromise = <TData,>(promise: Promise<TData> | (() => Promise<TD
       {
         render({ data })
         {
-          return <ToastErrorPanel error={data} title={textFailed} />
+          return <ToastErrorPanel error={data} title={textFailed} />;
         }
       }
     }, options);
-}
+};

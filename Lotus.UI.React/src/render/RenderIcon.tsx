@@ -1,10 +1,13 @@
+/* eslint-disable jsx-a11y/alt-text */
+import { IImageDatabase } from 'lotus-core/resources/image';
+import { Assert } from 'lotus-core/utils';
+import React, { CSSProperties, ReactElement, ReactNode } from 'react';
+import { IconContext } from 'react-icons';
 import { CssSizerHelper } from '#helpers';
 import { ThemeInstance } from '#theme';
 import { TThemeColor } from '#theme/types';
 import { TElementSize } from '#types';
-import { IImageDatabase } from 'lotus-core/resources/image';
-import { CSSProperties, ReactElement, ReactNode } from 'react';
-import { IconContext } from 'react-icons';
+
 
 /**
  * Отрисовка иконки
@@ -22,68 +25,70 @@ export abstract class RenderIcon
    * @param wrapDiv Следует ли обвернуть в блок div
    * @returns ReactElement
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, max-params
   public static renderIcon(size: TElementSize, icon:any, other?:ReactNode, iconStyle?:CSSProperties, 
-    iconColor?: TThemeColor, imageDatabase?:IImageDatabase, wrapDiv?: boolean, wrapDivStyle?:CSSProperties):ReactElement
+    iconColor?: TThemeColor, imageDatabase?:IImageDatabase, wrapDiv?: boolean, wrapDivStyle?:CSSProperties):ReactElement|undefined
   {
+    if (Assert.emptyValue(icon)) return undefined;
+
     const iconColorText = (iconColor !== undefined) ? ThemeInstance.getElementColor(iconColor)?.toCSSRgbValue() : undefined;
 
     // Если строка
     if (typeof icon === 'string')
     {
       const sizeIcon = `${CssSizerHelper.convertSizeToIconInPixel(size)}px`;
-      if(other)
+      if (other)
       {
-        if(wrapDiv)
+        if (wrapDiv)
         {
-          return <div style={wrapDivStyle}>
-            <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+          return (<div style={wrapDivStyle}>
+            <img height={sizeIcon} src={icon} style={iconStyle} width={sizeIcon} />
             {other}
-          </div>
+          </div>);
         }
         else
         {
-          return <>
-            <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+          return (<>
+            <img height={sizeIcon} src={icon} style={iconStyle} width={sizeIcon} />
             {other}
-          </>
+          </>);
         }
       }
       else
       {
-        return <img src={icon} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+        return <img height={sizeIcon} src={icon} style={iconStyle} width={sizeIcon} />;
       }
     }
 
     // Если это число есть база данных
-    if(typeof icon === 'number' && imageDatabase)
+    if (typeof icon === 'number' && imageDatabase)
     {
       const iconData = imageDatabase.getImageByIdOrName(icon);
       
-      if(iconData)
+      if (iconData)
       {
         const sizeIcon = `${CssSizerHelper.convertSizeToIconInPixel(size)}px`;
 
-        if(other)
+        if (other)
         {
-          if(wrapDiv)
+          if (wrapDiv)
           {
-            return <div style={wrapDivStyle}>
-              <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+            return (<div style={wrapDivStyle}>
+              <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />
               {other}
-            </div>
+            </div>);
           }
           else
           {
-            return <>
-              <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+            return (<>
+              <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />
               {other}
-            </>
+            </>);
           }
         }
         else
         {
-          return <img src={iconData.source} width={sizeIcon} height={sizeIcon} style={iconStyle} />
+          return <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />;
         }
       }
 
@@ -94,32 +99,32 @@ export abstract class RenderIcon
     else
     {
       const sizeIcon = `${CssSizerHelper.convertSizeToIconInRem(size)}rem`;
-      if(other)
+      if (other)
       {
-        if(wrapDiv)
+        if (wrapDiv)
         {
-          return <div style={wrapDivStyle}>
-            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}} >
+          return (<div style={wrapDivStyle}>
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
               {icon}
             </IconContext.Provider>
             {other}
-          </div>
+          </div>);
         }
         else
         {
-          return <>
-            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}} >
+          return (<>
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
               {icon}
             </IconContext.Provider>
             {other}
-          </>
+          </>);
         }
       }
       else
       {
-        return <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle}}>
+        return (<IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
           {icon}
-        </IconContext.Provider>
+        </IconContext.Provider>);
       }
     }
   }

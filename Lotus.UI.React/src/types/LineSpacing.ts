@@ -5,7 +5,7 @@ export type TLineSpacing = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export const TLineSpacings: readonly TLineSpacing[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-export const instanceOfLineSpacing = (value: any): value is TLineSpacing =>
+export const instanceOfLineSpacing = (value: unknown): value is TLineSpacing =>
 {
   if (value && typeof value === 'string')
   {
@@ -13,16 +13,16 @@ export const instanceOfLineSpacing = (value: any): value is TLineSpacing =>
   }
 
   return false;
-}
+};
 
-export const castToLineSpacing = (value: any): TLineSpacing | undefined =>
+export const castToLineSpacing = (value: unknown): TLineSpacing | undefined =>
 {
   if (instanceOfLineSpacing(value))
   {
-    return value as TLineSpacing;
+    return value;
   }
   else
   {
     return undefined;
   }
-}
+};

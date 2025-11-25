@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ObjectHelper } from 'lotus-core/helpers';
+import { MaybeUndef } from 'lotus-core/types';
 import { hasBorderProperties } from '#base';
 import { TInteractivityState } from '#interactivity';
 import { ThemeInstance } from '#theme';
 import { nextThemeColor, TThemeColor, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '#theme/types';
 import { TCssBorderStyle, TCssBorderWidth, TCssProperties } from '#types';
-import { ObjectHelper } from 'lotus-core/helpers';
-import { MaybeUndef } from 'lotus-core/types';
 import { TInteractivityBorderType } from './InteractivityBorderType';
 
 export abstract class InteractivityBorderLogic
@@ -23,23 +24,24 @@ export abstract class InteractivityBorderLogic
     {
       case 'normal':
         {
-          borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primary', actionType).toCSSRgbValue()
+          borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
         } break;
       case 'hover':
         {
           borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, hoverBorderColor ??
-            nextThemeColor(borderColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue()
+            nextThemeColor(borderColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
         } break;
       case 'pressed':
         {
           borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, pressedBorderColor ??
-            nextThemeColor(borderColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue()
+            nextThemeColor(borderColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
         } break;
     }
 
     return borderProps;
   }
 
+  // eslint-disable-next-line max-params
   public static getProperties(element: any, type: TInteractivityBorderType, state: TInteractivityState,
     part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
   {
@@ -48,6 +50,7 @@ export abstract class InteractivityBorderLogic
     return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, part, actionType);
   }
 
+  // eslint-disable-next-line max-params
   public static fillProperties(target: TCssProperties, element: any, type: TInteractivityBorderType, state: TInteractivityState,
     part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
   {

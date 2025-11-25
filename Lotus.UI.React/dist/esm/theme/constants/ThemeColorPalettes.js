@@ -10,7 +10,7 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiBlue.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 5 ? Colors.black : Colors.white;
         }
     }
     static getMuiBlueGreyColor(colorVariant, isHarmonious) {
@@ -18,7 +18,7 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiBlueGrey.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 5) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 5 ? Colors.black : Colors.white;
         }
     }
     static getMuiIndigoColor(colorVariant, isHarmonious) {
@@ -26,7 +26,7 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiIndigo.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 3 ? Colors.black : Colors.white;
         }
     }
     static getMuiGreenColor(colorVariant, isHarmonious) {
@@ -34,7 +34,7 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiGreen.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 6) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 6 ? Colors.black : Colors.white;
         }
     }
     static getMuiTealColor(colorVariant, isHarmonious) {
@@ -42,7 +42,7 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiTeal.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 4 ? Colors.black : Colors.white;
         }
     }
     static getMuiYellowColor(colorVariant, isHarmonious) {
@@ -66,7 +66,7 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiRed.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 4) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 4 ? Colors.black : Colors.white;
         }
     }
     static getMuiBrownColor(colorVariant, isHarmonious) {
@@ -74,12 +74,12 @@ export class ThemeColorPalettes {
             return ThemeColorVariants.MuiBrown.getByName(colorVariant).createHarmoniousColor();
         }
         else {
-            return (ColorVariantsHelper.getIndexByName(colorVariant) <= 3) ? Colors.black : Colors.white;
+            return ColorVariantsHelper.getIndexByName(colorVariant) <= 3 ? Colors.black : Colors.white;
         }
     }
     // #endregion
     static Palettes = {
-        'light': {
+        light: {
             mode: 'light',
             text: {
                 primary: new Color('rgba(0, 0, 0, 0.87)'),
@@ -104,69 +104,69 @@ export class ThemeColorPalettes {
                 focusOpacity: 0.12
             },
             colors: {
-                'primary': {
+                primary: {
                     variants: ColorVariants.createFromColorRelativeLightness('#1976d2', '#42a5f5', '#1565c0'),
                     onText: () => Colors.white
                 },
-                'secondary': {
+                secondary: {
                     variants: ColorVariants.createFromColorRelativeLightness('#9c27b0', '#ba68c8', '#7b1fa2'),
                     onText: () => Colors.white
                 },
-                'error': {
+                error: {
                     variants: ColorVariants.createFromColorRelativeLightness('#d32f2f', '#ef5350', '#c62828'),
                     onText: () => Colors.white
                 },
-                'warning': {
+                warning: {
                     variants: ColorVariants.createFromColorRelativeLightness('#ed6c02', '#ff9800', '#e65100'),
                     onText: () => Colors.white
                 },
-                'info': {
+                info: {
                     variants: ColorVariants.createFromColorRelativeLightness('#0288d1', '#03a9f4', '#01579b'),
                     onText: () => Colors.white
                 },
-                'success': {
+                success: {
                     variants: ColorVariants.createFromColorRelativeLightness('#2e7d32', '#4caf50', '#1b5e20'),
                     onText: () => Colors.white
                 },
-                'blue': {
+                blue: {
                     variants: ThemeColorVariants.MuiBlue,
                     onText: ThemeColorPalettes.getMuiBlueColor
                 },
-                'blueGrey': {
+                blueGrey: {
                     variants: ThemeColorVariants.MuiBlueGrey,
                     onText: ThemeColorPalettes.getMuiBlueGreyColor
                 },
-                'indigo': {
+                indigo: {
                     variants: ThemeColorVariants.MuiIndigo,
                     onText: ThemeColorPalettes.getMuiIndigoColor
                 },
-                'green': {
+                green: {
                     variants: ThemeColorVariants.MuiGreen,
                     onText: ThemeColorPalettes.getMuiGreenColor
                 },
-                'teal': {
+                teal: {
                     variants: ThemeColorVariants.MuiTeal,
                     onText: ThemeColorPalettes.getMuiTealColor
                 },
-                'yellow': {
+                yellow: {
                     variants: ThemeColorVariants.MuiYellow,
                     onText: ThemeColorPalettes.getMuiYellowColor
                 },
-                'amber': {
+                amber: {
                     variants: ThemeColorVariants.MuiAmber,
                     onText: ThemeColorPalettes.getMuiAmberColor
                 },
-                'red': {
+                red: {
                     variants: ThemeColorVariants.MuiRed,
                     onText: ThemeColorPalettes.getMuiRedColor
                 },
-                'brown': {
+                brown: {
                     variants: ThemeColorVariants.MuiBrown,
                     onText: ThemeColorPalettes.getMuiBrownColor
                 }
             }
         },
-        'dark': {
+        dark: {
             mode: 'dark',
             text: {
                 primary: new Color('rgba(255, 255, 255, 0.9)'),
@@ -191,63 +191,63 @@ export class ThemeColorPalettes {
                 focusOpacity: 0.12
             },
             colors: {
-                'primary': {
+                primary: {
                     variants: ColorVariants.createFromColorRelativeLightness('#90caf9', '#e3f2fd', '#42a5f5'),
                     onText: () => new Color('rgba(0, 0, 0, 0.87)')
                 },
-                'secondary': {
+                secondary: {
                     variants: ColorVariants.createFromColorRelativeLightness('#ce93d8', '#f3e5f5', '#ab47bc'),
                     onText: () => new Color('rgba(0, 0, 0, 0.87)')
                 },
-                'error': {
+                error: {
                     variants: ColorVariants.createFromColorRelativeLightness('#f44336', '#e57373', '#d32f2f'),
                     onText: () => Colors.white
                 },
-                'warning': {
+                warning: {
                     variants: ColorVariants.createFromColorRelativeLightness('#ffa726', '#ffb74d', '#f57c00'),
                     onText: () => new Color('rgba(0, 0, 0, 0.87)')
                 },
-                'info': {
+                info: {
                     variants: ColorVariants.createFromColorRelativeLightness('#29b6f6', '#4fc3f7', '#4fc3f7'),
                     onText: () => new Color('rgba(0, 0, 0, 0.87)')
                 },
-                'success': {
+                success: {
                     variants: ColorVariants.createFromColorRelativeLightness('#66bb6a', '#81c784', '#388e3c'),
                     onText: () => new Color('rgba(0, 0, 0, 0.87)')
                 },
-                'blue': {
+                blue: {
                     variants: ThemeColorVariants.MuiBlue,
                     onText: ThemeColorPalettes.getMuiBlueColor
                 },
-                'blueGrey': {
+                blueGrey: {
                     variants: ThemeColorVariants.MuiBlueGrey,
                     onText: ThemeColorPalettes.getMuiBlueGreyColor
                 },
-                'indigo': {
+                indigo: {
                     variants: ThemeColorVariants.MuiIndigo,
                     onText: ThemeColorPalettes.getMuiIndigoColor
                 },
-                'green': {
+                green: {
                     variants: ThemeColorVariants.MuiGreen,
                     onText: ThemeColorPalettes.getMuiGreenColor
                 },
-                'teal': {
+                teal: {
                     variants: ThemeColorVariants.MuiTeal,
                     onText: ThemeColorPalettes.getMuiTealColor
                 },
-                'yellow': {
+                yellow: {
                     variants: ThemeColorVariants.MuiYellow,
                     onText: ThemeColorPalettes.getMuiYellowColor
                 },
-                'amber': {
+                amber: {
                     variants: ThemeColorVariants.MuiAmber,
                     onText: ThemeColorPalettes.getMuiAmberColor
                 },
-                'red': {
+                red: {
                     variants: ThemeColorVariants.MuiRed,
                     onText: ThemeColorPalettes.getMuiRedColor
                 },
-                'brown': {
+                brown: {
                     variants: ThemeColorVariants.MuiBrown,
                     onText: ThemeColorPalettes.getMuiBrownColor
                 }

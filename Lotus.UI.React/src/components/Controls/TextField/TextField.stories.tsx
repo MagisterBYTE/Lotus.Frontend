@@ -41,6 +41,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const TextFieldEmpty: Story = {
+  name: 'TextField Empty',
+  args: {
+  }
+};
+
 export const TextFieldDefault: Story = {
   name: 'TextField Default',
   args: {

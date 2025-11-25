@@ -1,7 +1,7 @@
 import { MenuItem } from '@mantine/core';
 import { LocalizationCore } from 'lotus-core';
-import { MRT_FilterOption } from '#external/mantine-react-table';
 import React from 'react';
+import { MRT_FilterOption } from '#external/mantine-react-table';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const EditTableFilterString = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
@@ -9,7 +9,7 @@ export const EditTableFilterString = (column: any, onSelectFilterMode: (filterMo
   return [
     <MenuItem
       key='stringContains'
-      onClick={() => { onSelectFilterMode('contains'); column.filterFn = 'contains' }}>
+      onClick={() => { onSelectFilterMode('contains'); column.filterFn = 'contains'; }}>
       {LocalizationCore.data.filters.contains}
     </MenuItem>,
     <MenuItem
@@ -36,8 +36,8 @@ export const EditTableFilterString = (column: any, onSelectFilterMode: (filterMo
       key='stringNotEmpty'
       onClick={() => onSelectFilterMode('notEmpty')}>
       {LocalizationCore.data.filters.notEmpty}
-    </MenuItem>]
-}
+    </MenuItem>];
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const EditTableFilterEnum = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
@@ -52,8 +52,8 @@ export const EditTableFilterEnum = (column: any, onSelectFilterMode: (filterMode
       key='notEquals'
       onClick={() => { onSelectFilterMode('notEquals'); }}>
       {LocalizationCore.data.filters.notEqual}
-    </MenuItem>]
-}
+    </MenuItem>];
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const EditTableFilterArray = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
@@ -78,5 +78,5 @@ export const EditTableFilterArray = (column: any, onSelectFilterMode: (filterMod
       key='includeNone'
       onClick={() => { onSelectFilterMode('includeNone'); }}>
       {LocalizationCore.data.filters.includeNone}
-    </MenuItem>]
-} 
+    </MenuItem>];
+}; 

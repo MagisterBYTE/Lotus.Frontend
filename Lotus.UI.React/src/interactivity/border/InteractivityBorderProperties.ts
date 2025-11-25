@@ -1,5 +1,5 @@
-import { IGeneralBorderProperties } from "#base";
-import { TThemeColor } from "#theme/types";
+import { IGeneralBorderProperties } from '#base';
+import { TThemeColor } from '#theme/types';
 
 /**
  * Интерактивное взаимодействие границы элемента

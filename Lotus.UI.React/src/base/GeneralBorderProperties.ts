@@ -1,5 +1,5 @@
 import { TThemeColor } from '#theme/types';
-import { TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TElementRadius, TElementSize, TShadowElevation } from '#types';
+import { TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TElementRadius, TShadowElevation } from '#types';
 
 /**
  * Общие свойства для границы элемента UI

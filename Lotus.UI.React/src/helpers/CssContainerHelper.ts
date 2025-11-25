@@ -1,9 +1,10 @@
+import { CSSProperties } from 'react';
 import { IGeneralContainerProperties } from '#base';
 import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 import { TCssAlignItems, TCssGap, TCssJustifyContent, TCssProperties, TElementSpacing } from '#types';
-import { CSSProperties } from 'react';
 
-export abstract class CssContainerHelper {
+export abstract class CssContainerHelper 
+{
   // #region Container
   /**
    * Заполнить свойства CSS по контейнеру в виде TCssProperties
@@ -12,31 +13,42 @@ export abstract class CssContainerHelper {
    * @param override Перезаписать если эти свойства уже есть
    * @returns Свойства CSS по контейнеру в виде TCssProperties
    */
-  public static fillContainerProps(style: TCssProperties, props: IGeneralContainerProperties, override: boolean): TCssProperties {
+  public static fillContainerProps(style: TCssProperties, props: IGeneralContainerProperties, override: boolean): TCssProperties 
+  {
     CssPropertiesHelper.overrideStyleValue(style, 'width', props.w, override);
     CssPropertiesHelper.overrideStyleValue(style, 'height', props.h, override);
     CssPropertiesHelper.overrideStyleValue(style, 'flexGrow', props.grow, override);
     CssPropertiesHelper.overrideStyleValue(style, 'flexShrink', props.shrink, override);
 
-    if (props.gridColumn && props.gridColumnSpan) {
+    if (props.gridColumn && props.gridColumnSpan) 
+    {
       CssPropertiesHelper.overrideStyleValue(style, 'gridColumnStart', props.gridColumn, override);
       CssPropertiesHelper.overrideStyleValue(style, 'gridColumnEnd', props.gridColumnSpan, override);
-    } else {
-      if (props.gridColumn) {
+    }
+    else 
+    {
+      if (props.gridColumn) 
+      {
         CssPropertiesHelper.overrideStyleValue(style, 'gridColumnStart', props.gridColumn, override);
-        if (typeof props.gridColumn === 'number') {
+        if (typeof props.gridColumn === 'number') 
+        {
           CssPropertiesHelper.overrideStyleValue(style, 'gridColumnEnd', props.gridColumn + 1, override);
         }
       }
     }
 
-    if (props.gridRow && props.gridRowSpan) {
+    if (props.gridRow && props.gridRowSpan) 
+    {
       CssPropertiesHelper.overrideStyleValue(style, 'gridRowStart', props.gridRow, override);
       CssPropertiesHelper.overrideStyleValue(style, 'gridRowEnd', props.gridRowSpan, override);
-    } else {
-      if (props.gridColumn) {
+    }
+    else 
+    {
+      if (props.gridColumn) 
+      {
         CssPropertiesHelper.overrideStyleValue(style, 'gridRowStart', props.gridRow, override);
-        if (typeof props.gridRow === 'number') {
+        if (typeof props.gridRow === 'number') 
+        {
           CssPropertiesHelper.overrideStyleValue(style, 'gridRowEnd', props.gridRow + 1, override);
         }
       }
@@ -50,26 +62,31 @@ export abstract class CssContainerHelper {
    * @param props Общие свойства элемента UI выступающего в качестве базового контейнера
    * @returns Свойства CSS по контейнеру в виде TCssProperties
    */
-  public static getContainerProps(props: IGeneralContainerProperties): TCssProperties {
+  public static getContainerProps(props: IGeneralContainerProperties): TCssProperties 
+  {
     const containerProps: TCssProperties = {};
 
-    if (props.w) {
+    if (props.w) 
+    {
       containerProps.width = props.w;
     }
-    if (props.h) {
+    if (props.h) 
+    {
       containerProps.height = props.h;
     }
 
-    if (props.grow) {
+    if (props.grow) 
+    {
       containerProps.flexGrow = props.grow;
     }
-    if (props.shrink) {
+    if (props.shrink) 
+    {
       containerProps.flexShrink = props.shrink;
     }
 
     return containerProps;
   }
-  //#endregion
+  // #endregion
 
   // #region FlexContainer
   /**
@@ -85,7 +102,8 @@ export abstract class CssContainerHelper {
     isReverse: boolean = false,
     horizontalAlign: TCssJustifyContent = 'flex-start',
     verticalAlign: TCssAlignItems = 'center'
-  ): CSSProperties {
+  ): CSSProperties 
+  {
     return {
       display: 'flex',
       flexDirection: isReverse ? 'row-reverse' : 'row',
@@ -108,7 +126,8 @@ export abstract class CssContainerHelper {
     isReverse: boolean = false,
     verticalAlign: TCssJustifyContent = 'flex-start',
     horizontalAlign: TCssAlignItems = 'center'
-  ): CSSProperties {
+  ): CSSProperties 
+  {
     return {
       display: 'flex',
       flexDirection: isReverse ? 'column-reverse' : 'column',

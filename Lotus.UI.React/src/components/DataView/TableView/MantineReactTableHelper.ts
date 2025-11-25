@@ -1,8 +1,8 @@
-import { MRT_ColumnDef, MRT_ColumnFiltersState, MRT_FilterOption } from '#external/mantine-react-table';
 import { StringHelper } from 'lotus-core/helpers';
 import { FilterFunctionDescriptors, IFilterFunctionDesc } from 'lotus-core/modules/filter';
 import { IObjectInfo, IPropertyDescriptor, PropertyTypeDescriptors } from 'lotus-core/modules/objectInfo';
 import { IFilterProperty, IFilterPropertyCollection } from 'lotus-core/modules/requestAndResponse';
+import { MRT_ColumnDef, MRT_ColumnFiltersState, MRT_FilterOption } from '#external/mantine-react-table';
 
 export class MantineReactTableHelper
 {
@@ -36,7 +36,7 @@ export class MantineReactTableHelper
 
       // Редактирование
       enableEditing: (property.editing && property.editing.enabled) ?? false
-    }
+    };
 
     return column;
   }
@@ -70,7 +70,7 @@ export class MantineReactTableHelper
         value: ''
       };
 
-      const property = properties.find((x) => x.fieldName === column.id)
+      const property = properties.find((x) => x.fieldName === column.id);
 
       if (property?.filtering && property?.filtering.enabled && columnFiltersFns) 
       {
@@ -163,7 +163,7 @@ export class MantineReactTableHelper
       {
         filterFunctions[`${x.fieldName}`] = MantineReactTableHelper.convertFromFilterFunctionDesc(x.filtering.functionDefaultDesc);
       }
-    })
+    });
 
     return filterFunctions;
   }

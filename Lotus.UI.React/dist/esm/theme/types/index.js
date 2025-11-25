@@ -1,4 +1,4 @@
-export { Theme } from './Theme';
-export { TThemeColors, ThemeColorOptions, instanceOfThemeColor } from './ThemeColor';
-export { TThemeModes, ThemeModeOptions } from './ThemeMode';
+export { TThemeColors, createThemeColor, deconstructionThemeColor, instanceOfThemeColor, nextThemeColor } from './ThemeColor';
+export { TThemeColorModes, ThemeColorModeOptions } from './ThemeColorMode';
+export { TThemeColorPalettes, ThemeColorPaletteOptions, instanceOfThemeColorPalette } from './ThemeColorPalette';
 //# sourceMappingURL=index.js.map

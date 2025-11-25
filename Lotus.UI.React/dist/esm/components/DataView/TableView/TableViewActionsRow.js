@@ -1,4 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+/* eslint-disable react/destructuring-assignment */
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
 import { LocalizationCore } from 'lotus-core';

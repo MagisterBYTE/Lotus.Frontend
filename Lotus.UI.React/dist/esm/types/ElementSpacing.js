@@ -1,4 +1,4 @@
-export const TElementSpacings = ['xs', 'sm', 'md', 'lg', 'xl'];
+export const TElementSpacings = ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 export const instanceOfElementSpacing = (value) => {
     if (value && typeof value === 'string') {
         return TElementSpacings.includes(value);

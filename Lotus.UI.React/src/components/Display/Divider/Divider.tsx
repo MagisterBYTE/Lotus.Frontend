@@ -1,9 +1,11 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { css } from '@emotion/css';
+import { ComponentPropsWithRef, CSSProperties } from 'react';
 import { IGeneralBorderProperties, IGeneralContainerProperties } from '#base';
 import { CssBorderHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 import { TThemeColor } from '#theme/types';
 import { TCssBorderStyle, TCssBorderWidth } from '#types';
-import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
 
 export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof IGeneralBorderProperties>, ComponentPropsWithRef<'div'>
 {
@@ -26,25 +28,25 @@ export function Divider(props: IDividerProps)
     borderTopWidth: lineThickness,
     borderTopColor: CssBorderHelper.getBorderColorPropsValue(lineColor),
     ...CssSpacingHelper.getPaddingProps(props),
-    ...CssSpacingHelper.getMarginProps(props),
+    ...CssSpacingHelper.getMarginProps(props)
   };
 
-  if (Boolean(nml))
+  if (nml)
   {
     styleDiv.marginLeft = CssSpacingHelper.getMarginPropsValue(props.ml, true);
   }
 
-  if (Boolean(nmr))
+  if (nmr)
   {
     styleDiv.marginRight = CssSpacingHelper.getMarginPropsValue(props.mr, true);
   }
 
-  if (Boolean(nmt))
+  if (nmt)
   {
     styleDiv.marginTop = CssSpacingHelper.getMarginPropsValue(props.mt, true);
   }
 
-  if (Boolean(nmb))
+  if (nmb)
   {
     styleDiv.marginBottom = CssSpacingHelper.getMarginPropsValue(props.mb, true);
   }

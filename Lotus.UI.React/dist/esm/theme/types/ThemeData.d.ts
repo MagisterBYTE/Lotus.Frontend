@@ -1,5 +1,5 @@
-import { TThemeColor } from './ThemeColor';
-import { TThemeMode } from './ThemeMode';
+import { TThemeColorMode } from './ThemeColorMode';
+import { TThemeColorPalette } from './ThemeColorPalette';
 /**
  * Данные темы
  */
@@ -7,10 +7,10 @@ export type TThemeData = {
     /**
      * Тема
      */
-    mode: TThemeMode;
+    mode: TThemeColorMode;
     /**
      * Основной цвет по умолчанию
      */
-    color: TThemeColor;
+    color: TThemeColorPalette;
 };
 //# sourceMappingURL=ThemeData.d.ts.map

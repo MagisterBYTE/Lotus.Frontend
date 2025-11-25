@@ -1,11 +1,11 @@
+import { Assert } from 'lotus-core/utils';
 import { IGeneralMarginProperties, IGeneralPaddingProperties } from '#base';
 import { CssFontHelper, CssPropertiesHelper } from '#helpers';
 import { instanceOfElementSpacing, TCssGap, TCssMargin, TCssPadding, TCssProperties, TElementSpacing } from '#types';
-import { Assert } from 'lotus-core/utils';
 
 export abstract class CssSpacingHelper
 {
-  //#region Common
+  // #region Common
   /**
    * Конвертирует значение отступа в пиксели
    * @param spacing - размер отступа в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
@@ -66,7 +66,7 @@ export abstract class CssSpacingHelper
         return value;
     }
   }
-  //#endregion
+  // #endregion
 
   // #region Padding
   /**
@@ -82,7 +82,8 @@ export abstract class CssSpacingHelper
     if (padding)
     {
       CssPropertiesHelper.overrideStyleValue(style, 'padding', padding, override);
-    } else
+    }
+    else
     {
       CssPropertiesHelper.overrideStyleValue(style, 'paddingLeft', CssSpacingHelper.getPaddingPropsValue(props.pl), override);
       CssPropertiesHelper.overrideStyleValue(style, 'paddingRight', CssSpacingHelper.getPaddingPropsValue(props.pr), override);
@@ -104,7 +105,8 @@ export abstract class CssSpacingHelper
     if (props.p)
     {
       paddingProps.padding = CssSpacingHelper.getPaddingPropsValue(props.p);
-    } else
+    }
+    else
     {
       paddingProps.paddingLeft = CssSpacingHelper.getPaddingPropsValue(props.pl);
       paddingProps.paddingRight = CssSpacingHelper.getPaddingPropsValue(props.pr);
@@ -146,7 +148,7 @@ export abstract class CssSpacingHelper
 
     return value;
   }
-  //#endregion
+  // #endregion
 
   // #region Margin
   /**
@@ -162,7 +164,8 @@ export abstract class CssSpacingHelper
     if (margin)
     {
       CssPropertiesHelper.overrideStyleValue(style, 'margin', margin, override);
-    } else
+    }
+    else
     {
       CssPropertiesHelper.overrideStyleValue(style, 'marginLeft', CssSpacingHelper.getMarginPropsValue(props.ml), override);
       CssPropertiesHelper.overrideStyleValue(style, 'marginRight', CssSpacingHelper.getMarginPropsValue(props.mr), override);
@@ -184,7 +187,8 @@ export abstract class CssSpacingHelper
     if (props.m)
     {
       marginProps.margin = CssSpacingHelper.getMarginPropsValue(props.m);
-    } else
+    }
+    else
     {
       marginProps.marginLeft = CssSpacingHelper.getMarginPropsValue(props.ml);
       marginProps.marginRight = CssSpacingHelper.getMarginPropsValue(props.mr);
@@ -209,25 +213,25 @@ export abstract class CssSpacingHelper
       switch (value)
       {
         case 'xxs':
-          return Boolean(negative) ? '-0.5rem' : '0.5rem';
+          return negative ? '-0.5rem' : '0.5rem';
         case 'xs':
-          return Boolean(negative) ? '-0.625rem' : '0.625rem';
+          return negative ? '-0.625rem' : '0.625rem';
         case 'sm':
-          return Boolean(negative) ? '-0.75rem' : '0.75rem';
+          return negative ? '-0.75rem' : '0.75rem';
         case 'md':
-          return Boolean(negative) ? '-1rem' : '1rem';
+          return negative ? '-1rem' : '1rem';
         case 'lg':
-          return Boolean(negative) ? '-1.25rem' : '1.25rem';
+          return negative ? '-1.25rem' : '1.25rem';
         case 'xl':
-          return Boolean(negative) ? '-1.5rem' : '1.5rem';
+          return negative ? '-1.5rem' : '1.5rem';
         case 'xxl':
-          return Boolean(negative) ? '-2rem' : '2rem';
+          return negative ? '-2rem' : '2rem';
       }
     }
 
     return value;
   }
-  //#endregion
+  // #endregion
 
   // #region Gap
   /**
@@ -261,5 +265,5 @@ export abstract class CssSpacingHelper
 
     return value;
   }
-  //#endregion
+  // #endregion
 }

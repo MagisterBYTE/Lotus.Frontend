@@ -5,7 +5,7 @@ export type TElementRadius = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export const TElementRadiuses: readonly TElementRadius[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-export const instanceOfElementRadius = (value: any): value is TElementRadius =>
+export const instanceOfElementRadius = (value: unknown): value is TElementRadius =>
 {
   if (value && typeof value === 'string')
   {
@@ -13,16 +13,16 @@ export const instanceOfElementRadius = (value: any): value is TElementRadius =>
   }
 
   return false;
-}
+};
 
-export const castToElementRadius = (value: any): TElementRadius | undefined =>
+export const castToElementRadius = (value: unknown): TElementRadius | undefined =>
 {
   if (instanceOfElementRadius(value))
   {
-    return value as TElementRadius;
+    return value;
   }
   else
   {
     return undefined;
   }
-}
+};

@@ -1,7 +1,7 @@
+import { ComponentPropsWithRef } from 'react';
 import { IGeneralBorderProperties, IGeneralContainerProperties } from '#base';
 import { TThemeColor } from '#theme/types';
 import { TCssBorderStyle, TCssBorderWidth } from '#types';
-import { ComponentPropsWithRef } from 'react';
 export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof IGeneralBorderProperties>, ComponentPropsWithRef<'div'> {
     isVertical?: boolean;
     lineStyle?: TCssBorderStyle;

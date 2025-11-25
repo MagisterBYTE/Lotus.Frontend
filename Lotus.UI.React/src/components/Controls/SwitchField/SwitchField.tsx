@@ -1,7 +1,7 @@
 import { CSSProperties, Switch, SwitchProps } from '@mantine/core';
-import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
-import { IHorizontalStackProps } from '#components/Layout';
 import { getContainerProperties } from '#base';
+import { IHorizontalStackProps } from '#components/Layout';
+import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
 
 export interface ISwitchFieldProps extends IBaseFieldProps, IHorizontalStackProps
 {
@@ -27,28 +27,29 @@ export function SwitchField(props: ISwitchFieldProps)
     return (
       <ContainerField
         {...otherProps}
-        vAlign='center'
         componentField={
           <Switch
             {...processedSwitchProps}
             error={otherProps.error}
-            w={switchProps?.width}
             h={switchProps?.height}
             size={otherProps.size}
+            w={switchProps?.width}
           />
         }
-      ></ContainerField>
+        vAlign='center'
+      />
     );
-  } else
+  }
+  else
   {
     return (
       <Switch
         {...containerProps}
-        size={otherProps.size}
-        required={otherProps.required}
-        label={otherProps.label}
         description={otherProps.description}
         error={otherProps.error}
+        label={otherProps.label}
+        required={otherProps.required}
+        size={otherProps.size}
         {...switchProps}
       />
     );

@@ -19,8 +19,8 @@ export const ThemeColorPaletteOptions:IOption<TThemeColorPalette>[] = TThemeColo
   return {
     label: StringHelper.capitalizeFirstLetter(x),
     value: x
-  }
-})
+  };
+});
 
 /**
  * Функция для проверки, является ли цвет типом цвета палитры
@@ -30,7 +30,7 @@ export const ThemeColorPaletteOptions:IOption<TThemeColorPalette>[] = TThemeColo
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfThemeColorPalette(color: any): color is TThemeColorPalette 
 {
-  if(typeof color === 'string')
+  if (typeof color === 'string')
   {
     return TThemeColorPalettes.includes(color as TThemeColorPalette);
   }

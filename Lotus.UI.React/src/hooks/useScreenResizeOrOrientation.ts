@@ -11,7 +11,7 @@ export const useScreenResizeOrOrientation = (callback: Function) =>
   const handleScreenResizeOrOrientation = () =>
   {
     callback();
-  }
+  };
 
   useLayoutEffect(() => 
   {
@@ -25,5 +25,5 @@ export const useScreenResizeOrOrientation = (callback: Function) =>
       window.removeEventListener('resize', handleScreenResizeOrOrientation);
       window.removeEventListener('orientationchange', handleScreenResizeOrOrientation);
     };
-  }, [])
-}
+  }, []);
+};
