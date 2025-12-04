@@ -11,7 +11,7 @@ export { type IPoint } from './Point';
 export { type IProxiedObject } from './ProxiedObject';
 export { type IRect } from './Rect';
 export { type IRectOffset, type IRectSizeOffset } from './RectOffset';
-export { castToResult, instanceOfResult, type IResult } from './Result';
+export { castToResult, instanceOfResult, type IResult, type IResultMessage } from './Result';
 export { type ISize } from './Size';
 export { type IStorage } from './Storage';
 //# sourceMappingURL=index.d.ts.map

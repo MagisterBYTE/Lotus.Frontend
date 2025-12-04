@@ -8,7 +8,9 @@ export const LocalizationCoreDataRu =
   common:
   {
     name: 'Наименование',
-    displayName: 'Отображаемое наименование'
+    displayName: 'Отображаемое наименование',
+    failed: 'Ошибка',
+    succeed: 'Успешно'
   },
   actions: {
     get: 'Получить',

@@ -62,6 +62,10 @@ export abstract class FunctionHelper
         {
           scope[property as keyof T] = value.bind(scope);
         }
+        else
+        {
+          scope[property as keyof T] = value.bind(scope);
+        }
       }
     }
 

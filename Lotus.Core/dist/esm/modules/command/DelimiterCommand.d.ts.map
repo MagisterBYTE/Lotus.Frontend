@@ -1,1 +1,0 @@
-{"version":3,"file":"DelimiterCommand.d.ts","sourceRoot":"","sources":["../../../../src/modules/command/DelimiterCommand.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,QAAQ,EAAE,MAAM,WAAW,CAAC;AAElD;;GAEG;AAEH,MAAM,WAAW,iBAAkB,SAAQ,QAAQ;CAGlD;AAED;;GAEG;AACH,qBAAa,gBAAiB,SAAQ,WAAY,YAAW,iBAAiB;gBAGhE,IAAI,EAAE,MAAM;CAIzB;AAED;;GAEG;AACH,eAAO,MAAM,uBAAuB,kBAAoC,CAAC"}

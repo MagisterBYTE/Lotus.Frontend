@@ -6,7 +6,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfResult(value) {
     if (value && typeof value === 'object') {
-        return ('succeeded' in value) && ('code' in value);
+        return ('succeeded' in value);
     }
     return false;
 }

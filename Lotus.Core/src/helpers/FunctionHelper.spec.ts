@@ -13,7 +13,6 @@ describe('FunctionHelper', () =>
         constructor() 
         {
           FunctionHelper.bindAllMethods(this);
-          FunctionHelper.bindAllMethods(this);
         }
 
         getValue() 

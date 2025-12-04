@@ -6,6 +6,8 @@ export declare const LocalizationCoreDataRu: {
     common: {
         name: string;
         displayName: string;
+        failed: string;
+        succeed: string;
     };
     actions: {
         get: string;

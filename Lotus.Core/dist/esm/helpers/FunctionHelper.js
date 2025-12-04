@@ -51,6 +51,9 @@ export class FunctionHelper {
                 if ((exclude && exclude.includes(property)) === false) {
                     scope[property] = value.bind(scope);
                 }
+                else {
+                    scope[property] = value.bind(scope);
+                }
             }
         }
         return scope;

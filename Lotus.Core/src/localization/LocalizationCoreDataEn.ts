@@ -8,7 +8,9 @@ export const LocalizationCoreDataEn =
   common:
   {
     name: 'Name',
-    displayName: 'Display Name'
+    displayName: 'Display Name',
+    failed: 'Error',
+    succeed: 'Successfully'
   },
   actions: {
     get: 'Get',

@@ -9,7 +9,7 @@ export interface IResult<TData = any> {
     /**
      * Код
      */
-    code: number | string;
+    code?: number | string;
     /**
      * Сообщение о результате выполнения операции
      */
@@ -18,6 +18,20 @@ export interface IResult<TData = any> {
      * Дополнительные данные
      */
     data?: TData;
+}
+/**
+ * Произвольный текст ответа/результата операции
+ */
+export interface IResultMessage {
+    /**
+     * Условный уровень текста
+     * @description В зависимости от контекста, уровень текста может по-разному интерпретироваться или его вообще не может быть
+     */
+    level?: number | string;
+    /**
+     * Произвольный текст.
+     */
+    text: string;
 }
 /**
  * Проверка объекта на поддержку интерфейса IResult

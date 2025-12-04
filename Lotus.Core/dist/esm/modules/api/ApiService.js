@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
+import { ObjectHelper } from '#helpers';
 import { LocalizationCore } from '#localization';
 import { castToResult } from '#types';
 /**
@@ -35,6 +36,11 @@ export class ApiService {
             // Все ошибки приводим к типу IResult для унификации обработки и реагирования
             const result = castToResult(error.response.data);
             if (result) {
+                // Дополнительная проверка на value
+                const value = ObjectHelper.getValue(error.response.data, 'value', undefined);
+                if (value !== undefined) {
+                    result.data = value;
+                }
                 console.log(error.response.data);
                 return Promise.reject(result);
             }

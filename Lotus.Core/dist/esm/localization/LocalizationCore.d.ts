@@ -11,6 +11,8 @@ export declare const LocalizationCore: {
         common: {
             name: string;
             displayName: string;
+            failed: string;
+            succeed: string;
         };
         actions: {
             get: string;
