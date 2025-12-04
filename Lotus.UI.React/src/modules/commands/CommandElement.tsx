@@ -1,0 +1,129 @@
+import { ActionIcon, ActionIconProps, Button, ButtonProps, Menu, MenuItemProps, NavLink, NavLinkProps } from '@mantine/core';
+import { ActionCommandTypes, BaseActionCommand } from 'lotus-core/modules/actionCommand';
+import { Assert } from 'lotus-core/utils';
+import { ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router';
+import { RenderIcon } from '#render';
+import { TElementSize } from '#types';
+
+/**
+ * Базовый интерфейс с общими свойствами
+ */
+interface ICommandElementBaseProps {
+  /**
+   * Размер элемента
+   */
+  size?: TElementSize;
+
+  /**
+   * Команда
+   */
+  command: BaseActionCommand;
+}
+
+export type ICommandElementProps =
+  | (ICommandElementBaseProps & {
+      elementType: 'icon';
+    } & ActionIconProps)
+  | (ICommandElementBaseProps & {
+      elementType: 'button';
+    } & ButtonProps)
+  | (ICommandElementBaseProps & {
+      elementType: 'listItem';
+    } & NavLinkProps)
+  | (ICommandElementBaseProps & {
+      elementType: 'menuItem';
+    } & MenuItemProps);
+
+export function CommandElement(props: ICommandElementProps) 
+{
+  const { size = 'md', elementType, command, ...propsComponent } = props;
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isSelected = command.isSelectedCommand();
+  const disabled = !command.canExecuteCommand();
+  const isDelimiter = command.commandType === ActionCommandTypes.Delimiter;
+
+  const handleClick = () => 
+  {
+    if (command) 
+    {
+      if (command.commandType === ActionCommandTypes.Navigation) 
+      {
+        if (command.route!.path !== '' && location.pathname !== command.route!.path) 
+        {
+          void navigate(command.route!.path);
+        }
+      }
+      else 
+      {
+        command.executeCommand();
+      }
+    }
+  };
+
+  const renderLabel = ():ReactNode => 
+  {
+    if (command.label && Assert.isString(command.label)) 
+    {
+      return command.label;
+    } 
+    if (command.label && Assert.isFunction(command.label)) 
+    {
+      return command.label(command);
+    }
+
+    return undefined;
+  };
+
+  switch (elementType) 
+  {
+    case 'icon': {
+      const actionIconProps = propsComponent as ActionIconProps;
+      return (
+        <ActionIcon {...actionIconProps} disabled={actionIconProps.disabled ?? disabled} size={actionIconProps.size ?? size} onClick={handleClick}>
+          {RenderIcon.renderIcon(size, command.icon)}
+        </ActionIcon>
+      );
+    }
+    case 'button': {
+      const buttonProps = propsComponent as ButtonProps;
+      return (
+        <Button {...buttonProps} disabled={buttonProps.disabled ?? disabled} 
+          leftSection={RenderIcon.renderIcon(size, command.icon)} size={buttonProps.size ?? size} onClick={handleClick}>
+          {renderLabel()}
+        </Button>
+      );
+    }
+    case 'listItem': {
+      const navLinkProps = propsComponent as NavLinkProps;
+      return (
+        <NavLink {...navLinkProps} active={navLinkProps.active ?? isSelected} 
+          disabled={navLinkProps.disabled ?? disabled} 
+          leftSection={RenderIcon.renderIcon(size, command.icon)}
+          onClick={handleClick}>
+          {renderLabel()}
+        </NavLink>
+      );
+    }
+    case 'menuItem': {
+      if (isDelimiter)
+      {
+        return <Menu.Divider />;
+      }
+
+      const menuItemProps = propsComponent as MenuItemProps;
+      return (
+        <Menu.Item {...menuItemProps}
+          disabled={menuItemProps.disabled ?? disabled} 
+          leftSection={RenderIcon.renderIcon(size, command.icon)}
+          onClick={handleClick}>
+          {renderLabel()}
+        </Menu.Item>
+      );
+    }
+  }
+  return <></>;
+}

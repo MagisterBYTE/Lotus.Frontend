@@ -1,6 +1,6 @@
 {
   "name": "lotus-ui-react",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "scripts": {
     "test": "jest",
     "build": "tsc && npm run copy-assets",
@@ -82,6 +82,14 @@
       "import": "./dist/esm/interactivity/index.js",
       "types": "./dist/esm/interactivity/index.d.ts"
     },
+    "./modules/feedback": {
+      "import": "./dist/esm/modules/feedback/index.js",
+      "types": "./dist/esm/modules/feedback/index.d.ts"
+    },
+    "./modules/commands": {
+      "import": "./dist/esm/modules/commands/index.js",
+      "types": "./dist/esm/modules/commands/index.d.ts"
+    },
     "./render": {
       "import": "./dist/esm/render/index.js",
       "types": "./dist/esm/render/index.d.ts"
@@ -129,6 +137,7 @@
     "@mantine/dates": "^8.3.9",
     "@mantine/hooks": "^8.3.9",
     "@mantine/modals": "^8.3.9",
+    "@mantine/notifications": "^8.3.9",
     "@mantine/nprogress": "^8.3.9",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/match-sorter-utils": "^8.19.4",
@@ -141,12 +150,14 @@
     "react-draggable": "^4.5.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
+    "react-router-dom": "^7.10.0",
     "react-select": "^5.10.2",
     "react-toastify": "^11.0.5"
   },
   "peerDependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.10.0"
   },
   "type": "module",
   "main": "dist/cjs/index.js",

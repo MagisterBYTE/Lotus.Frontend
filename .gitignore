@@ -399,3 +399,5 @@ FodyWeavers.xsd
 Lotus.Core/coverage/
 
 *storybook.log
+
+storybook-static
