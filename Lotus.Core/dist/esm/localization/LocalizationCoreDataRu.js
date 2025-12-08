@@ -67,8 +67,23 @@ export const LocalizationCoreDataRu = {
     },
     validation: {
         invalidEmail: 'Некорректный email',
+        invalidFormat: 'Некорректный формат',
+        invalidPhone: 'Некорректный телефонный номер',
+        invalidUrl: 'Некорректный адрес Url',
         required: 'Поле обязательно для ввода',
-        maxLength: (length) => `Длина поля не может превышать ${length} символов`
+        positive: 'Значение поля должно быть больше нуля',
+        negative: 'Значение поля должно быть меньше нуля',
+        minNumber: (min) => `Значение поля не может быть меньше ${min}`,
+        maxNumber: (min) => `Значение поля не может быть больше ${min}`,
+        rangeNumber: (min, max) => `Значение поля должно быть в диапазоне от ${min} до ${max}`,
+        minDate: (min) => `Значение поля не может быть меньше ${min}`,
+        maxDate: (min) => `Значение поля не может быть больше ${min}`,
+        rangeDate: (min, max) => `Значение поля должно быть в диапазоне от ${min} до ${max}`,
+        maxString: (length) => `Длина поля не может превышать ${length} символов`,
+        minString: (length) => `Длина поля не может быть меньше ${length} символов`,
+        rangeString: (min, max) => `Значение поля должно быть в диапазоне от ${min} до ${max}`,
+        minCount: (count) => `Количество элементов в массиве не может быть меньше ${count}`,
+        maxCount: (count) => `Количество элементов в массиве не может быть больше ${count}`
     }
 };
 //# sourceMappingURL=LocalizationCoreDataRu.js.map

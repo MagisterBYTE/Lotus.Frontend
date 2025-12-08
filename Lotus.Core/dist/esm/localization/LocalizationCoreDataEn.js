@@ -1,37 +1,37 @@
 export const LocalizationCoreDataEn = {
     api: {
-        errorNotOnline: 'Failed to send request. Please check your internet access.',
-        errorNotFound: 'The specified address {0} could not be found. Please check that the server is available and that the address is correct'
+        errorNotOnline: 'Failed to send the request. Please check your internet connection',
+        errorNotFound: 'Could not find the specified address {0}. Please check server availability and the correctness of the address'
     },
     common: {
         name: 'Name',
         displayName: 'Display Name',
-        failed: 'Error',
-        succeed: 'Successfully'
+        failed: 'Failed',
+        succeed: 'Succeeded'
     },
     actions: {
         get: 'Get',
         getting: 'Getting...',
-        gettingSucceed: 'Data retrieval was successful',
+        gettingSucceed: 'Data retrieved successfully',
         gettingFailed: 'An error occurred while retrieving data',
         add: 'Add',
         adding: 'Adding...',
-        addingSucceed: 'Addition was successful',
+        addingSucceed: 'Addition succeeded',
         addingFailed: 'An error occurred while adding',
         edit: 'Edit',
         save: 'Save',
         saving: 'Saving...',
-        savingSucceed: 'Saving was successful',
+        savingSucceed: 'Save succeeded',
         savingFailed: 'An error occurred while saving',
         duplicate: 'Duplicate',
         delete: 'Delete',
         deleting: 'Deleting...',
-        deletingSucceed: 'Deletion was successful',
+        deletingSucceed: 'Deletion succeeded',
         deletingFailed: 'An error occurred while deleting',
         deleteObject: 'Delete object?',
         cancel: 'Cancel',
         clear: 'Clear',
-        confirm: 'Confirm'
+        confirm: 'I confirm'
     },
     filters: {
         equals: 'Equals',
@@ -52,23 +52,38 @@ export const LocalizationCoreDataEn = {
         startsWith: 'Starts with',
         endsWith: 'Ends with',
         like: 'Contains',
-        notEmpty: 'Not empty',
-        empty: 'Empty',
+        notEmpty: 'Is not empty',
+        empty: 'Is empty',
         includeAny: 'Any of the elements',
         includeAll: 'All of the elements',
-        includeEquals: 'Only these elements',
+        includeEquals: 'Exactly these elements',
         includeNone: 'None of the elements'
     },
     byteSize: {
         bytes: 'bytes',
-        Kb: 'Kb',
-        Mb: 'Mb',
-        Gb: 'Gb'
+        Kb: 'KB',
+        Mb: 'MB',
+        Gb: 'GB'
     },
     validation: {
-        invalidEmail: 'Incorrect email',
+        invalidEmail: 'Invalid email',
+        invalidFormat: 'Invalid format',
+        invalidPhone: 'Invalid phone number',
+        invalidUrl: 'Invalid URL',
         required: 'Field is required',
-        maxLength: (length) => `Field length cannot exceed ${length} characters`
+        positive: 'Value must be greater than zero',
+        negative: 'Value must be less than zero',
+        minNumber: (min) => `Value cannot be less than ${min}`,
+        maxNumber: (max) => `Value cannot be greater than ${max}`,
+        rangeNumber: (min, max) => `Value must be between ${min} and ${max}`,
+        minDate: (min) => `Value cannot be earlier than ${min}`,
+        maxDate: (max) => `Value cannot be later than ${max}`,
+        rangeDate: (min, max) => `Value must be between ${min} and ${max}`,
+        maxString: (length) => `Length cannot exceed ${length} characters`,
+        minString: (length) => `Length cannot be less than ${length} characters`,
+        rangeString: (min, max) => `Length must be between ${min} and ${max} characters`,
+        minCount: (count) => `Array cannot contain less than ${count} elements`,
+        maxCount: (count) => `Array cannot contain more than ${count} elements`
     }
 };
 //# sourceMappingURL=LocalizationCoreDataEn.js.map

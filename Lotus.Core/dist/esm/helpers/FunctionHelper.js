@@ -48,8 +48,10 @@ export class FunctionHelper {
             const value = scope[property];
             // Привязываем только функции
             if (typeof value === 'function') {
-                if ((exclude && exclude.includes(property)) === false) {
-                    scope[property] = value.bind(scope);
+                if (exclude) {
+                    if ((exclude.includes(property)) === false) {
+                        scope[property] = value.bind(scope);
+                    }
                 }
                 else {
                     scope[property] = value.bind(scope);

@@ -67,8 +67,23 @@ export declare const LocalizationCoreDataEn: {
     };
     validation: {
         invalidEmail: string;
+        invalidFormat: string;
+        invalidPhone: string;
+        invalidUrl: string;
         required: string;
-        maxLength: (length: number) => string;
+        positive: string;
+        negative: string;
+        minNumber: (min: number) => string;
+        maxNumber: (max: number) => string;
+        rangeNumber: (min: number, max: number) => string;
+        minDate: (min: string) => string;
+        maxDate: (max: string) => string;
+        rangeDate: (min: string, max: string) => string;
+        maxString: (length: number) => string;
+        minString: (length: number) => string;
+        rangeString: (min: number, max: number) => string;
+        minCount: (count: number) => string;
+        maxCount: (count: number) => string;
     };
 };
 //# sourceMappingURL=LocalizationCoreDataEn.d.ts.map

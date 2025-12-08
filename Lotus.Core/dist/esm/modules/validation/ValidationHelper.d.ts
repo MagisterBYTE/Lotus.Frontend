@@ -1,7 +1,7 @@
-import { IValidationResult } from './ValidationResult';
 export declare abstract class ValidationHelper {
     static readonly PatternEmail: RegExp;
+    static readonly PatternPhone: RegExp;
     static isValidEmail(email: string): boolean;
-    static validationEmail(email: string): IValidationResult;
+    static isValidPhone(phone: string): boolean;
 }
 //# sourceMappingURL=ValidationHelper.d.ts.map

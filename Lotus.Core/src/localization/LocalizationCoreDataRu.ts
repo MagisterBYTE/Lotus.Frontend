@@ -73,7 +73,22 @@ export const LocalizationCoreDataRu =
   validation:
   {
     invalidEmail: 'Некорректный email',
+    invalidFormat: 'Некорректный формат',
+    invalidPhone: 'Некорректный телефонный номер',
+    invalidUrl: 'Некорректный адрес Url',
     required: 'Поле обязательно для ввода',
-    maxLength: (length: number) => `Длина поля не может превышать ${length} символов`
+    positive: 'Значение поля должно быть больше нуля',
+    negative: 'Значение поля должно быть меньше нуля',
+    minNumber: (min: number) => `Значение поля не может быть меньше ${min}`,
+    maxNumber: (min: number) => `Значение поля не может быть больше ${min}`,
+    rangeNumber: (min: number, max: number) => `Значение поля должно быть в диапазоне от ${min} до ${max}`,
+    minDate: (min: string) => `Значение поля не может быть меньше ${min}`,
+    maxDate: (min: string) => `Значение поля не может быть больше ${min}`,
+    rangeDate: (min: string, max: string) => `Значение поля должно быть в диапазоне от ${min} до ${max}`,
+    maxString: (length: number) => `Длина поля не может превышать ${length} символов`,
+    minString: (length: number) => `Длина поля не может быть меньше ${length} символов`,
+    rangeString: (min: number, max: number) => `Значение поля должно быть в диапазоне от ${min} до ${max}`,
+    minCount: (count: number) => `Количество элементов в массиве не может быть меньше ${count}`,
+    maxCount: (count: number) => `Количество элементов в массиве не может быть больше ${count}`
   }
 };
