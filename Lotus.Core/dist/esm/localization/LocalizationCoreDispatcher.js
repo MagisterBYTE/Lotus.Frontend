@@ -1,3 +1,4 @@
+import { FunctionHelper } from '#helpers';
 import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 import { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
@@ -12,6 +13,7 @@ export class LocalizationCoreDispatcherClass {
     }
     // #endregion
     _currentLanguage;
+    // #region Properties
     /**
      * Получить текущую язык
      */
@@ -30,6 +32,13 @@ export class LocalizationCoreDispatcherClass {
         if (language == 'ru-RU')
             LocalizationCore.data = LocalizationCoreDataRu;
     }
+    // #endregion
+    // #region Constructor
+    constructor() {
+        FunctionHelper.bindAllMethods(this);
+    }
+    // #endregion
+    // #region Main methods
     /**
      * Установить текущий язык
      * @param language Язык

@@ -1,3 +1,4 @@
+import { FunctionHelper } from '#helpers';
 import { TLanguageType } from './LanguageType';
 import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
@@ -20,6 +21,7 @@ export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
 
   private _currentLanguage: TLanguageType | undefined;
 
+  // #region Properties
   /**
    * Получить текущую язык
    */
@@ -38,7 +40,16 @@ export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
     if (language == 'en-US') LocalizationCore.data = LocalizationCoreDataEn;
     if (language == 'ru-RU') LocalizationCore.data = LocalizationCoreDataRu;
   }
+  // #endregion
 
+  // #region Constructor
+  constructor()
+  {
+    FunctionHelper.bindAllMethods(this);
+  }
+  // #endregion
+
+  // #region Main methods
   /**
    * Установить текущий язык
    * @param language Язык
@@ -54,7 +65,6 @@ export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
   }
   // #endregion
 }
-
 
 /**
  * Глобальный доступ к диспетчеру локализации модуля Core

@@ -96,5 +96,22 @@ export declare abstract class StringHelper {
      * StringHelper.toKebabCase('someTextHere'); // 'some-text-here'
      */
     static toKebabCase(value: string): string;
+    /**
+     * Заменить символы отдельных пробелов на стандартный пробел
+     * @param {string} value - Исходная строка
+     * @returns {string} Строка
+     */
+    static replaceToSpace(value: string): string;
+    /**
+   * Форматирует строку с поддержкой:
+   * 1. Позиционных параметров: {0}, {1}, {2}
+   * 2. Именованных параметров: {name}, {age}
+   * 3. Смешанного использования с приоритетом: именованные > позиционные
+   *
+   * @param format Строка формата с плейсхолдерами в фигурных скобках
+   * @param args Аргументы для подстановки (могут быть отдельными значениями или объектом)
+   * @returns Отформатированная строка
+   */
+    static stringFormat(format: string, ...args: any[]): string;
 }
 //# sourceMappingURL=StringHelper.d.ts.map

@@ -15,6 +15,7 @@ export declare class LocalizationCoreDispatcherClass implements ILocalizationDis
      * Установить текущий язык
      */
     set currentLanguage(language: TLanguageType);
+    constructor();
     /**
      * Установить текущий язык
      * @param language Язык

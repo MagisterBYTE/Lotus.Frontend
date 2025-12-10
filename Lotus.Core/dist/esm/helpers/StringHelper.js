@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CharConstants } from '#constants';
 /**
  * Вспомогательный класс для работы со строками
  */
@@ -137,6 +139,73 @@ export class StringHelper {
      */
     static toKebabCase(value) {
         return this.toSnakeCase(value).replace(/_/g, '-');
+    }
+    /**
+     * Заменить символы отдельных пробелов на стандартный пробел
+     * @param {string} value - Исходная строка
+     * @returns {string} Строка
+     */
+    static replaceToSpace(value) {
+        let result = value.replaceAll(CharConstants.NonBreakingSpace, CharConstants.Space);
+        result = result.replaceAll(CharConstants.FigureSpace, CharConstants.Space);
+        result = result.replaceAll(CharConstants.NarrowNoBreakSpace, CharConstants.Space);
+        result = result.replaceAll(CharConstants.WordJoiner, CharConstants.Space);
+        return result;
+    }
+    /**
+   * Форматирует строку с поддержкой:
+   * 1. Позиционных параметров: {0}, {1}, {2}
+   * 2. Именованных параметров: {name}, {age}
+   * 3. Смешанного использования с приоритетом: именованные > позиционные
+   *
+   * @param format Строка формата с плейсхолдерами в фигурных скобках
+   * @param args Аргументы для подстановки (могут быть отдельными значениями или объектом)
+   * @returns Отформатированная строка
+   */
+    static stringFormat(format, ...args) {
+        // Если первый аргумент после format - это объект и это единственный аргумент,
+        // используем его как именованные параметры
+        if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null && !Array.isArray(args[0])) {
+            const params = args[0];
+            return format.replace(/{(\w+)}/g, (match, key) => {
+                return key in params ? params[key] : match;
+            });
+        }
+        // В противном случае работаем с позиционными параметрами,
+        // но также поддерживаем именованные в объекте если он есть
+        let positionalArgs = args;
+        let namedParams = {};
+        // Проверяем, есть ли среди аргументов объект с именованными параметрами
+        const namedParamIndex = args.findIndex(arg => typeof arg === 'object' &&
+            arg !== null &&
+            !Array.isArray(arg) &&
+            Object.keys(arg).some(key => typeof key === 'string'));
+        if (namedParamIndex !== -1) {
+            namedParams = args[namedParamIndex];
+            // Удаляем объект из позиционных аргументов
+            positionalArgs = args.filter((_, index) => index !== namedParamIndex);
+        }
+        // Заменяем плейсхолдеры с приоритетом: именованные > позиционные
+        let indexArg = 0;
+        return format.replace(/{(\w+)}/g, (match, key) => {
+            // Сначала проверяем именованные параметры
+            if (key in namedParams) {
+                return namedParams[key];
+            }
+            // Затем проверяем, может ли ключ быть числовым индексом
+            const numericIndex = parseInt(key, 10);
+            if (!isNaN(numericIndex) && numericIndex >= 0 && numericIndex < positionalArgs.length) {
+                return positionalArgs[numericIndex];
+            }
+            // заменяем по индексу
+            if (indexArg < args.length) {
+                const result = args[indexArg];
+                indexArg++;
+                return result;
+            }
+            // Если ничего не найдено, оставляем плейсхолдер как есть
+            return match;
+        });
     }
 }
 //# sourceMappingURL=StringHelper.js.map

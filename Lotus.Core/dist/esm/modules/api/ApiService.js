@@ -12,8 +12,9 @@ export class ApiService {
         const api = axios.create({
             baseURL: baseURL
         });
-        api.interceptors.request.use(this.handleRequest, this.handleRequestError);
-        api.interceptors.response.use(this.handleResponse, this.handleResponseError);
+        // Используем стрелочные функции для сохранения контекста
+        api.interceptors.request.use((config) => this.handleRequest(config), (error) => this.handleRequestError(error));
+        api.interceptors.response.use((response) => this.handleResponse(response), (error) => this.handleResponseError(error));
         this.api = api;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
