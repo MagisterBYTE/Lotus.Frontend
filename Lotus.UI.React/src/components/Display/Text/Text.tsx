@@ -6,14 +6,16 @@ import { CssBorderHelper, CssContainerHelper, CssFontHelper, CssPropertiesHelper
 
 export interface ITextProps extends IGeneralContainerProperties, IGeneralTextProperties, ComponentPropsWithRef<'div'>
 {
-
+  isBlock?: boolean;
 }
 
 export function Text(props: ITextProps)
 {
+  const { isBlock = false } = props;
+
   const styleSpan: CSSProperties = {
     lineHeight: 'normal',
-    display: 'inline-block',
+    display: isBlock ? 'block' : 'inline-block',
     ...CssSpacingHelper.getPaddingProps(props),
     ...CssSpacingHelper.getMarginProps(props),
     ...CssContainerHelper.getContainerProps(props),

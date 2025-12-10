@@ -3,9 +3,10 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { css } from '@emotion/css';
 import { CssBorderHelper, CssContainerHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
 export function Text(props) {
+    const { isBlock = false } = props;
     const styleSpan = {
         lineHeight: 'normal',
-        display: 'inline-block',
+        display: isBlock ? 'block' : 'inline-block',
         ...CssSpacingHelper.getPaddingProps(props),
         ...CssSpacingHelper.getMarginProps(props),
         ...CssContainerHelper.getContainerProps(props),
