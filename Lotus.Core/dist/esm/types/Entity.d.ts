@@ -1,11 +1,11 @@
-import { TGuid } from './Guid';
+import { TKey } from '#types';
 /**
  * Определение интерфейса для представления сущности предметной области
  */
-export interface IEntity<TKey = number | string | TGuid> {
+export interface IEntity<TypeId = TKey> {
     /**
      * Идентификатор сущности
      */
-    readonly id: TKey;
+    readonly id: TypeId;
 }
 //# sourceMappingURL=Entity.d.ts.map

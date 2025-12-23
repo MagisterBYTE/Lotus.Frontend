@@ -1,3 +1,4 @@
+import { Environment } from '#environment';
 import { ExtractRouteParams, IRoute, ParamValues, RouteParamConstraints } from './types';
 
 /**
@@ -109,7 +110,7 @@ export class TypedRoute<TPath extends string = string, TConstraints extends Rout
       {
         console.error(`Недопустимое значение "${value}" для параметра "${key}". ` + `Допустимые значения: ${allowedValues.join(', ')}`);
         // В development можно выбросить ошибку
-        if (process.env.NODE_ENV === 'development')
+        if (Environment.isDevelopment)
         {
           throw new Error(`Invalid parameter value for ${key}`);
         }

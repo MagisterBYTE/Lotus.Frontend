@@ -72,38 +72,38 @@ describe('test HumanizerPerson.getFullName', () =>
 {
   it('should return full name if all arguments (except subtitude) were passed', () => 
   {
-    expect(HumanizerPerson.getFullName('last', 'first', 'patronymic', ['sub1, sub2'])).toBe('Last First Patronymic');
-    expect(HumanizerPerson.getFullName('Last', 'First', 'patronymic', ['sub1, sub2'])).toBe('Last First Patronymic');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('last', 'first', 'patronymic', ['sub1, sub2'])).toBe('Last First Patronymic');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('Last', 'First', 'patronymic', ['sub1, sub2'])).toBe('Last First Patronymic');
   });
 
   it('should return first non-empty substitude if no firstName and lastName were passed', () => 
   {
-    expect(HumanizerPerson.getFullName('', '', 'patronymic', ['', '', 'sub3'])).toBe('sub3');
-    expect(HumanizerPerson.getFullName('', '', '', ['', 'sub2', 'sub3'])).toBe('sub2');
-    expect(HumanizerPerson.getFullName('', '', 'Patronymic', ['sub1', '', 'sub3'])).toBe('sub1');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', '', 'patronymic', ['', '', 'sub3'])).toBe('sub3');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', '', '', ['', 'sub2', 'sub3'])).toBe('sub2');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', '', 'Patronymic', ['sub1', '', 'sub3'])).toBe('sub1');
   });
 
   it('should return empty string if no firstName, lastName or substitudes were passed', () => 
   {
-    expect(HumanizerPerson.getFullName('', '', 'patronymic', ['', ''])).toBe('');
-    expect(HumanizerPerson.getFullName('', '', '', [''])).toBe('');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', '', 'patronymic', ['', ''])).toBe('');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', '', '', [''])).toBe('');
   });
 
   it('should return firstName + patronymic if no lastName was passed', () => 
   {
-    expect(HumanizerPerson.getFullName('', 'first', 'patronymic', ['sub1, sub2'])).toBe('First Patronymic');
-    expect(HumanizerPerson.getFullName('', 'first', 'patronymic', ['sub1, sub2'])).toBe('First Patronymic');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', 'first', 'patronymic', ['sub1, sub2'])).toBe('First Patronymic');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', 'first', 'patronymic', ['sub1, sub2'])).toBe('First Patronymic');
   });
 
   it('should return only lastName if no firstName and patronymic was passed', () => 
   {
-    expect(HumanizerPerson.getFullName('last', '', '', ['sub1', 'sub2'])).toBe('Last');
-    expect(HumanizerPerson.getFullName('Last', '', '', ['sub1', 'sub2'])).toBe('Last');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('last', '', '', ['sub1', 'sub2'])).toBe('Last');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('Last', '', '', ['sub1', 'sub2'])).toBe('Last');
   });
 
   it('should return only firstName if no lastName and patronymic was passed', () => 
   {
-    expect(HumanizerPerson.getFullName('', 'first', '', ['sub1', 'sub2'])).toBe('First');
-    expect(HumanizerPerson.getFullName('', 'First', '', ['sub1', 'sub2'])).toBe('First');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', 'first', '', ['sub1', 'sub2'])).toBe('First');
+    expect(HumanizerPerson.getNameWithLastNameWithPatronymic('', 'First', '', ['sub1', 'sub2'])).toBe('First');
   });
 });

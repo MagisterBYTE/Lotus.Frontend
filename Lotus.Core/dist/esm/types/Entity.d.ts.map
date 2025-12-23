@@ -1,1 +1,1 @@
-{"version":3,"file":"Entity.d.ts","sourceRoot":"","sources":["../../../src/types/Entity.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,QAAQ,CAAC;AAE/B;;GAEG;AACH,MAAM,WAAW,OAAO,CAAC,IAAI,GAAG,MAAM,GAAG,MAAM,GAAG,KAAK;IAErD;;OAEG;IACH,QAAQ,CAAC,EAAE,EAAE,IAAI,CAAC;CACnB"}
+{"version":3,"file":"Entity.d.ts","sourceRoot":"","sources":["../../../src/types/Entity.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,QAAQ,CAAC;AAE9B;;GAEG;AACH,MAAM,WAAW,OAAO,CAAC,MAAM,GAAG,IAAI;IAEpC;;OAEG;IACH,QAAQ,CAAC,EAAE,EAAE,MAAM,CAAC;CACrB"}

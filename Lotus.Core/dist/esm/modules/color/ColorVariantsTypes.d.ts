@@ -21,6 +21,21 @@ export type TColorVariantName = 'white' | 'palest' | 'pale' | 'lighter' | 'light
  */
 export declare const TColorVariantNames: readonly TColorVariantName[];
 /**
+ * Кортеж с цветами в вариативности цветов
+ */
+export type TColorVariantTuple = readonly [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+];
+/**
  * Функция для проверки, является ли значение именованным типом в вариативности цветов
  * @param value Проверяемое значение
  * @returns Статус проверки

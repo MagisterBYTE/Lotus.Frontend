@@ -16,6 +16,7 @@
   "imports": {
     "#constants": "./src/constants/index.ts",
     "#converters": "./src/converters/index.ts",
+    "#environment": "./src/environment/index.ts",
     "#formatters": "./src/formatters/index.ts",
     "#helpers": "./src/helpers/index.ts",
     "#localization": "./src/localization/index.ts",
@@ -38,6 +39,10 @@
     "./constants": {
       "import": "./dist/esm/constants/index.js",
       "types": "./dist/esm/constants/index.d.ts"
+    },
+    "./environment": {
+      "import": "./dist/esm/environment/index.js",
+      "types": "./dist/esm/environment/index.d.ts"
     },
     "./converters": {
       "import": "./dist/esm/converters/index.js",

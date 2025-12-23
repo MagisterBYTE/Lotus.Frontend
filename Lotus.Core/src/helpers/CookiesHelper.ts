@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Environment } from '#environment';
+
 /**
  * Вспомогательный класс для работы с HTTP cookies в браузере
  * Предоставляет безопасные методы для установки, получения и удаления cookies
@@ -434,7 +437,7 @@ export abstract class CookiesHelper
     }
     catch (error) 
     {
-      if (process.env.NODE_ENV === 'development') 
+      if (Environment.isDevelopment) 
       {
         console.error(`CookiesHelper: Неверный JSON в cookie "${name}":`, error);
       }

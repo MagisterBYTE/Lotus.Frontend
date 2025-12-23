@@ -1,4 +1,6 @@
-export abstract class DateTimeConverter 
+import { Assert } from '#utils';
+
+export abstract class DateTimeConverter
 {
   /**
    * Преобразование объекта в значение даты-времени.
@@ -7,9 +9,13 @@ export abstract class DateTimeConverter
    * @returns Значение.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static toDateTime(value: any, defaultValue: Date = new Date(Date.now())): Date 
+  public static toDateTime(value: any, defaultValue: Date = new Date(Date.now())): Date
   {
-    if (value == null) return defaultValue;
+    if (value === null || value === undefined) return defaultValue;
+    if (value instanceof Date) 
+    {
+      return new Date(value.getTime()); // Создаем копию
+    }
     if (typeof value === 'number') return DateTimeConverter.fromTimestamp(value);
     if (typeof value === 'string') return DateTimeConverter.parse(value, defaultValue);
     return defaultValue;
@@ -21,7 +27,7 @@ export abstract class DateTimeConverter
    * @param formatDate Формат даты-времени.
    * @returns Текст или null, если сконвертировать невозможно.
    */
-  public static parsableText(text: string, formatDate: string): string | null 
+  public static parsableText(text: string, formatDate: string): string | null
   {
     if (!text) return null;
 
@@ -30,7 +36,7 @@ export abstract class DateTimeConverter
 
     if (!formatDate) return null;
 
-    switch (formatDate) 
+    switch (formatDate)
     {
       case '%s':
         return new Date(
@@ -51,23 +57,9 @@ export abstract class DateTimeConverter
           0
         ).toLocaleString();
       case '%H':
-        return new Date(
-          new Date().getFullYear(),
-          new Date().getMonth(),
-          new Date().getDate(),
-          DateTimeConverter.parseHour(text),
-          0,
-          0
-        ).toLocaleString();
+        return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), DateTimeConverter.parseHour(text), 0, 0).toLocaleString();
       case 'H:m:s':
-        return new Date(
-          new Date().getFullYear(),
-          new Date().getMonth(),
-          new Date().getDate(),
-          DateTimeConverter.parseHour(text),
-          0,
-          0
-        ).toLocaleString();
+        return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), DateTimeConverter.parseHour(text), 0, 0).toLocaleString();
       default:
         return null;
     }
@@ -79,9 +71,9 @@ export abstract class DateTimeConverter
    * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
    * @returns Значение.
    */
-  public static parse(text: string, defaultValue: Date = new Date(0)): Date 
+  public static parse(text: string, defaultValue: Date = new Date(Date.now())): Date
   {
-    if (!text) return defaultValue;
+    if (Assert.emptyValue(text)) return defaultValue;
 
     const date = DateTimeConverter.tryParseDate(text);
     return date ? date : defaultValue;
@@ -93,16 +85,16 @@ export abstract class DateTimeConverter
    * @param result Значение.
    * @returns Статус успешности преобразования.
    */
-  public static tryParse(text: string, result: Date): boolean 
+  public static tryParse(text: string, result: Date): boolean
   {
-    if (!text) 
+    if (!text)
     {
       result = new Date(0);
       return false;
     }
 
     const date = DateTimeConverter.tryParseDate(text);
-    if (date) 
+    if (date)
     {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       result = date;
@@ -117,7 +109,7 @@ export abstract class DateTimeConverter
    * @param text Текст.
    * @returns Значение часа в пределах от 0 до 24.
    */
-  public static parseHour(text: string): number 
+  public static parseHour(text: string): number
   {
     const value = parseInt(text, 10);
     return Math.min(23, value);
@@ -128,7 +120,7 @@ export abstract class DateTimeConverter
    * @param text Текст.
    * @returns Значение минуты в пределах от 0 до 59.
    */
-  public static parseMinute(text: string): number 
+  public static parseMinute(text: string): number
   {
     const value = parseInt(text, 10);
     return Math.min(59, value);
@@ -139,7 +131,7 @@ export abstract class DateTimeConverter
    * @param text Текст.
    * @returns Значение секунды в пределах от 0 до 59.
    */
-  public static parseSecond(text: string): number 
+  public static parseSecond(text: string): number
   {
     const value = parseInt(text, 10);
     return Math.min(59, value);
@@ -150,7 +142,7 @@ export abstract class DateTimeConverter
    * @param value Временная метка.
    * @returns Значение даты-времени.
    */
-  public static fromTimestamp(value: number): Date 
+  public static fromTimestamp(value: number): Date
   {
     return new Date(value * 1000);
   }
@@ -160,12 +152,12 @@ export abstract class DateTimeConverter
    * @param value Значение даты-времени.
    * @returns Временная метка.
    */
-  public static toTimestamp(value: Date): number 
+  public static toTimestamp(value: Date): number
   {
     return Math.floor(value.getTime() / 1000);
   }
 
-  private static tryParseDate(text: string): Date | null 
+  private static tryParseDate(text: string): Date | null
   {
     let date = new Date(text);
     if (!isNaN(date.getTime())) return date;

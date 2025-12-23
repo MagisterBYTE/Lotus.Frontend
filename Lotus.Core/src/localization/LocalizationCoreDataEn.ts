@@ -3,7 +3,18 @@ export const LocalizationCoreDataEn =
   api:
   {
     errorNotOnline: 'Failed to send the request. Please check your internet connection',
-    errorNotFound: 'Could not find the specified address {0}. Please check server availability and the correctness of the address'
+    errorNotFound: 'Could not find the specified address {0}. Please check server availability and the correctness of the address',
+    errorAuth: 'The user is not logged in',
+    auth:
+    {
+      invalid_request: 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed',
+      unauthorized_client: 'The client is not authorized to request an authorization code using this method',
+      access_denied: 'The resource owner or authorization server denied the request',
+      unsupported_response_type: 'The authorization server does not support obtaining an authorization code using this method',
+      invalid_scope: 'The requested scope is invalid, unknown, or malformed',
+      server_error: 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request',
+      temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server'
+    }
   },
   common:
   {

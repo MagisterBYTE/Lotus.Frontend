@@ -1,5 +1,5 @@
 import { Color } from './Color';
-import { TColorVariantIndex, TColorVariantName } from './ColorVariantsTypes';
+import { TColorVariantIndex, TColorVariantName, TColorVariantTuple } from './ColorVariantsTypes';
 /**
  * Интерфейс вариативности цветов
  * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
@@ -53,5 +53,11 @@ export declare class ColorVariants implements IColorVariants {
      * @param modifyAlpha Модификация значения альфы от 0 до 1
      */
     getNextByName(name?: TColorVariantName, delta?: number, modifyAlpha?: number): Color;
+    /**
+     * Преобразовать в массив цветовых значений Css
+     * @param isHex Статус шестнадцатеричного представления
+     * @returns Массив
+     */
+    toArrayCss(isHex: boolean): TColorVariantTuple;
 }
 //# sourceMappingURL=ColorVariants.d.ts.map

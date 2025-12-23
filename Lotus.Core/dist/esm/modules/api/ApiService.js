@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import axios from 'axios';
 import { ObjectHelper } from '#helpers';
 import { LocalizationCore } from '#localization';
 import { castToResult } from '#types';
+import { Assert } from '#utils';
 /**
  * Базовый класс для сервисов Api
  */
@@ -17,11 +19,8 @@ export class ApiService {
         api.interceptors.response.use((response) => this.handleResponse(response), (error) => this.handleResponseError(error));
         this.api = api;
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleRequest(config) {
         config.timeout = 10 * 60 * 1000;
-        // eslint-disable-next-line import/no-named-as-default-member
-        config.cancelToken = axios.CancelToken.source().token;
         return config;
     }
     handleRequestError(error) {
@@ -58,7 +57,41 @@ export class ApiService {
                     };
                     return Promise.reject(resultNotFound);
                 }
+                // 401
+                if (error.response.status === 401) {
+                    const message = LocalizationCore.data.api.errorAuth;
+                    const resultNotAuth = {
+                        succeeded: false,
+                        code: 401,
+                        message: message
+                    };
+                    return Promise.reject(resultNotAuth);
+                }
+                // Ошибка аутентификации по стандарту RFC 6749
+                const errorAuthResponse = error.response.data;
+                if (errorAuthResponse && typeof errorAuthResponse === 'object' && 'error' in errorAuthResponse && 'error_description' in errorAuthResponse) {
+                    const errorAuth = errorAuthResponse.error;
+                    const errorDescAuth = errorAuthResponse.error_description;
+                    if (Assert.existValue(errorDescAuth)) {
+                        const resultAuth = {
+                            succeeded: false,
+                            code: Number(error.response.status ?? 500),
+                            message: errorDescAuth
+                        };
+                        return Promise.reject(resultAuth);
+                    }
+                    const message = ObjectHelper.getValue(LocalizationCore.data.api.auth, errorAuth, undefined);
+                    if (Assert.existValue(message)) {
+                        const resultAuth = {
+                            succeeded: false,
+                            code: Number(error.response.status ?? 500),
+                            message: message
+                        };
+                        return Promise.reject(resultAuth);
+                    }
+                }
                 const resultError = {
+                    data: error.response.data, // Сохраняем данные оригинальной ошибки
                     succeeded: false,
                     code: Number(error.response.status ?? 500),
                     message: error.message
@@ -86,19 +119,15 @@ export class ApiService {
             }
         }
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     get(path, config) {
         return this.api.get(path, config);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     post(path, payload) {
         return this.api.post(path, payload);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     put(path, payload) {
         return this.api.put(path, payload);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete(path, config) {
         return this.api.delete(path, config);
     }

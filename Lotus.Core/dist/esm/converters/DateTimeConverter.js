@@ -1,3 +1,4 @@
+import { Assert } from '#utils';
 export class DateTimeConverter {
     /**
      * Преобразование объекта в значение даты-времени.
@@ -7,8 +8,11 @@ export class DateTimeConverter {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static toDateTime(value, defaultValue = new Date(Date.now())) {
-        if (value == null)
+        if (value === null || value === undefined)
             return defaultValue;
+        if (value instanceof Date) {
+            return new Date(value.getTime()); // Создаем копию
+        }
         if (typeof value === 'number')
             return DateTimeConverter.fromTimestamp(value);
         if (typeof value === 'string')
@@ -48,8 +52,8 @@ export class DateTimeConverter {
      * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
      * @returns Значение.
      */
-    static parse(text, defaultValue = new Date(0)) {
-        if (!text)
+    static parse(text, defaultValue = new Date(Date.now())) {
+        if (Assert.emptyValue(text))
             return defaultValue;
         const date = DateTimeConverter.tryParseDate(text);
         return date ? date : defaultValue;

@@ -120,5 +120,24 @@ export class ColorVariants {
             return color;
         }
     }
+    /**
+     * Преобразовать в массив цветовых значений Css
+     * @param isHex Статус шестнадцатеричного представления
+     * @returns Массив
+     */
+    toArrayCss(isHex) {
+        return [
+            this.white.toString(isHex),
+            this.palest.toString(isHex),
+            this.pale.toString(isHex),
+            this.lighter.toString(isHex),
+            this.light.toString(isHex),
+            this.main.toString(isHex),
+            this.dark.toString(isHex),
+            this.darker.toString(isHex),
+            this.darkest.toString(isHex),
+            this.black.toString(isHex)
+        ];
+    }
 }
 //# sourceMappingURL=ColorVariants.js.map

@@ -1,5 +1,6 @@
 export * from './constants';
 export * from './converters';
+export * from './environment';
 export * from './formatters';
 export * from './helpers';
 export * from './localization';

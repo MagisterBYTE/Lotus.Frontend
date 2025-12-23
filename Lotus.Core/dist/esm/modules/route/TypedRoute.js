@@ -1,3 +1,4 @@
+import { Environment } from '#environment';
 /**
  * Класс для определения маршрута в приложении
  */
@@ -77,7 +78,7 @@ export class TypedRoute {
             if (allowedValues && !allowedValues.includes(value)) {
                 console.error(`Недопустимое значение "${value}" для параметра "${key}". ` + `Допустимые значения: ${allowedValues.join(', ')}`);
                 // В development можно выбросить ошибку
-                if (process.env.NODE_ENV === 'development') {
+                if (Environment.isDevelopment) {
                     throw new Error(`Invalid parameter value for ${key}`);
                 }
             }

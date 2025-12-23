@@ -2,6 +2,16 @@ export declare const LocalizationCoreDataRu: {
     api: {
         errorNotOnline: string;
         errorNotFound: string;
+        errorAuth: string;
+        auth: {
+            invalid_request: string;
+            unauthorized_client: string;
+            access_denied: string;
+            unsupported_response_type: string;
+            invalid_scope: string;
+            server_error: string;
+            temporarily_unavailable: string;
+        };
     };
     common: {
         name: string;

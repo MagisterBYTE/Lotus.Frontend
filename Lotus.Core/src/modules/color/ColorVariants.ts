@@ -1,7 +1,7 @@
 import { Color } from './Color';
 import { ColorNames } from './ColorNames';
 import { ColorVariantsHelper } from './ColorVariantsHelper';
-import { TColorVariantIndex, TColorVariantName } from './ColorVariantsTypes';
+import { TColorVariantIndex, TColorVariantName, TColorVariantTuple } from './ColorVariantsTypes';
 
 /**
  * Интерфейс вариативности цветов
@@ -185,5 +185,26 @@ export class ColorVariants implements IColorVariants
     {
       return color;
     }
+  }
+
+  /**
+   * Преобразовать в массив цветовых значений Css
+   * @param isHex Статус шестнадцатеричного представления
+   * @returns Массив
+   */
+  public toArrayCss(isHex:boolean): TColorVariantTuple
+  {
+    return [
+      this.white.toString(isHex),
+      this.palest.toString(isHex),
+      this.pale.toString(isHex),
+      this.lighter.toString(isHex),
+      this.light.toString(isHex),
+      this.main.toString(isHex),
+      this.dark.toString(isHex),
+      this.darker.toString(isHex),
+      this.darkest.toString(isHex),
+      this.black.toString(isHex)
+    ];
   }
 }

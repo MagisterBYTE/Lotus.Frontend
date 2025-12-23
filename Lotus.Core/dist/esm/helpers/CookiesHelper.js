@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Environment } from '#environment';
 export class CookiesHelper {
     /**
      * Получает значение cookie по имени
@@ -306,7 +308,7 @@ export class CookiesHelper {
             return JSON.parse(value);
         }
         catch (error) {
-            if (process.env.NODE_ENV === 'development') {
+            if (Environment.isDevelopment) {
                 console.error(`CookiesHelper: Неверный JSON в cookie "${name}":`, error);
             }
             return null;
