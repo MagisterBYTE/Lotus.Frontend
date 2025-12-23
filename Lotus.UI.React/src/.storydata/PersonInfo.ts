@@ -1,4 +1,4 @@
-import { FilterFunctionDescriptors, IPropertyDescriptor, PropertyTypeDescriptors, ValidationResultSuccess, ObjectInfo } from 'lotus-core';
+import { FilterFunctionDescriptors, IPropertyDescriptor, PropertyTypeDescriptors, ObjectInfo, ValidationResult } from 'lotus-core';
 import { OptionsStory } from './OptionsStory';
 
 export interface IPerson
@@ -54,15 +54,16 @@ export class PersonInfoBase extends ObjectInfo
         editorType: 'text',
         onValidation: (item: IPerson | null) =>
         {
+          const v: ValidationResult = new ValidationResult();
           if (item && item.name === '')
           {
-            return { error: true, text: 'Имя не может быть пустым' };
+            v.addErrorCustom('nameEmpty', true, 'Имя не может быть пустым')
           }
           if (item && item.name.length > 20)
           {
-            return { error: true, text: 'Имя не может быть больше 20 символов' };
+            v.addErrorCustom('nameLength', true, 'Имя не может быть больше 20 символов')
           }
-          return { error: false, text: '' };
+          return v;
         }
       },
       filtering:
@@ -91,15 +92,16 @@ export class PersonInfoBase extends ObjectInfo
         editorType: 'text',
         onValidation: (item: IPerson | null) =>
         {
+          const v: ValidationResult = new ValidationResult();
           if (item && item.surname === '')
           {
-            return { error: true, text: 'Фамилия не может быть пустая' };
+            v.addErrorCustom('nameEmpty', true, 'Фамилия не может быть пустая')
           }
-          if (item && item.surname && item.surname.length > 40)
+          if (item && item.surname.length > 20)
           {
-            return { error: true, text: 'Фамилия не может быть больше 40 символов' };
+            v.addErrorCustom('nameLength', true, 'Фамилия не может быть больше 40 символов')
           }
-          return { error: false, text: '' };
+          return v;
         }
       },
       filtering:
@@ -129,7 +131,7 @@ export class PersonInfoBase extends ObjectInfo
         required: true,
         editorType: 'select',
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        onValidation: (_: IPerson | null) => { return ValidationResultSuccess }
+        onValidation: (_: IPerson | null) => { return ValidationResult.Success }
       },
       filtering:
       {

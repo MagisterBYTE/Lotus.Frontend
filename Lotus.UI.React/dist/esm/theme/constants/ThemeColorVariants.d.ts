@@ -3,6 +3,12 @@ import { ColorVariants } from 'lotus-core/modules/color';
  * Наборы типовых вариантов цвета
  */
 export declare class ThemeColorVariants {
+    static readonly Primary: ColorVariants;
+    static readonly Secondary: ColorVariants;
+    static readonly Error: ColorVariants;
+    static readonly Warning: ColorVariants;
+    static readonly Info: ColorVariants;
+    static readonly Success: ColorVariants;
     static readonly AntPrimary: ColorVariants;
     static readonly MuiBlue: ColorVariants;
     static readonly MuiBlueGrey: ColorVariants;

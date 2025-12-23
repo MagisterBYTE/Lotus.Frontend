@@ -14,7 +14,7 @@ export function VerticalStack(props) {
         ...BuilderCssProperties.buildContainer(props),
         ...BuilderCssProperties.buildBackground(props)
     };
-    const stackClass = css({ ...styleDiv, label: 'HorizontalStack' });
+    const stackClass = css({ ...styleDiv, label: 'VerticalStack' });
     // Фильтруем кастомные пропсы перед передачей в div
     const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
     return _jsx("div", { className: stackClass, ...domProps, children: children });

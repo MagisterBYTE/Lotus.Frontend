@@ -3,6 +3,77 @@ import { Color, ColorVariants } from 'lotus-core/modules/color';
  * Наборы типовых вариантов цвета
  */
 export class ThemeColorVariants {
+    static Primary = new ColorVariants(new Color('#e3f2fd'), // 0
+    new Color('#bbdefb'), // 1
+    new Color('#90caf9'), // 2
+    new Color('#64b5f6'), // 3
+    new Color('#42a5f5'), // 4
+    new Color('#2196f3'), // 5 - основной
+    new Color('#1e88e5'), // 6
+    new Color('#1976d2'), // 7
+    new Color('#1565c0'), // 8
+    new Color('#0d47a1') // 9
+    );
+    // Secondary - фиолетовая палитра MUI
+    static Secondary = new ColorVariants(new Color('#f3e5f5'), // 0
+    new Color('#e1bee7'), // 1
+    new Color('#ce93d8'), // 2
+    new Color('#ba68c8'), // 3
+    new Color('#ab47bc'), // 4
+    new Color('#9c27b0'), // 5 - основной
+    new Color('#8e24aa'), // 6
+    new Color('#7b1fa2'), // 7
+    new Color('#6a1b9a'), // 8
+    new Color('#4a148c') // 9
+    );
+    // Error - красная палитра MUI
+    static Error = new ColorVariants(new Color('#ffebee'), // 0
+    new Color('#ffcdd2'), // 1
+    new Color('#ef9a9a'), // 2
+    new Color('#e57373'), // 3
+    new Color('#ef5350'), // 4
+    new Color('#f44336'), // 5 - основной
+    new Color('#e53935'), // 6
+    new Color('#d32f2f'), // 7
+    new Color('#c62828'), // 8
+    new Color('#b71c1c') // 9
+    );
+    // Warning - оранжевая палитра MUI
+    static Warning = new ColorVariants(new Color('#fff3e0'), // 0
+    new Color('#ffe0b2'), // 1
+    new Color('#ffcc80'), // 2
+    new Color('#ffb74d'), // 3
+    new Color('#ffa726'), // 4
+    new Color('#ff9800'), // 5 - основной
+    new Color('#fb8c00'), // 6
+    new Color('#f57c00'), // 7
+    new Color('#ef6c00'), // 8
+    new Color('#e65100') // 9
+    );
+    // Info - голубая палитра MUI
+    static Info = new ColorVariants(new Color('#e1f5fe'), // 0
+    new Color('#b3e5fc'), // 1
+    new Color('#81d4fa'), // 2
+    new Color('#4fc3f7'), // 3
+    new Color('#29b6f6'), // 4
+    new Color('#03a8f49d'), // 5 - основной
+    new Color('#039be5'), // 6
+    new Color('#0288d1'), // 7
+    new Color('#0277bd'), // 8
+    new Color('#01579b') // 9
+    );
+    // Success - зеленая палитра MUI
+    static Success = new ColorVariants(new Color('#e8f5e8'), // 0
+    new Color('#c8e6c9'), // 1
+    new Color('#a5d6a7'), // 2
+    new Color('#81c784'), // 3
+    new Color('#66bb6a'), // 4
+    new Color('#4caf50'), // 5 - основной
+    new Color('#43a047'), // 6
+    new Color('#388e3c'), // 7
+    new Color('#2e7d32'), // 8
+    new Color('#1b5e20') // 9
+    );
     static AntPrimary = new ColorVariants(new Color(230, 247, 255), // white
     new Color(186, 234, 255), // palest
     new Color(145, 213, 255), // pale

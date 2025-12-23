@@ -114,7 +114,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     if (property.editing?.editorType === 'text') 
     {
       column.mantineEditTextInputProps = {
-        error: property.editing?.onValidation(currentItem).text,
+        // error: property.editing?.onValidation(currentItem).h,
         required: property.editing?.required,
         variant: 'outlined',
         size: 'small',
@@ -125,20 +125,20 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
           newItem[column.accessorKey!] = event.target.value as any;
           setCurrentItem(newItem);
 
-          let isErrorValidation = false;
+          // let isErrorValidation = false;
           properties.forEach((c) => 
           {
-            const errorValidation = c.editing?.onValidation(newItem).error;
-            if (errorValidation) 
-            {
-              isErrorValidation = true;
-              setCurrentItemInvalid(true);
-            }
+            // const errorValidation = c.editing?.onValidation(newItem).error;
+            // if (errorValidation) 
+            // {
+            //   isErrorValidation = true;
+            //   setCurrentItemInvalid(true);
+            // }
           });
-          if (isErrorValidation === false) 
-          {
-            setCurrentItemInvalid(false);
-          }
+          // if (isErrorValidation === false) 
+          // {
+          //   setCurrentItemInvalid(false);
+          // }
         }
       };
 
@@ -170,7 +170,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
       // }
 
       column.mantineEditTextInputProps = {
-        error: property.editing?.onValidation(currentItem).text,
+        // error: property.editing?.onValidation(currentItem).text,
         required: property.editing?.required,
         size: 'small',
         variant: 'outlined'
@@ -204,7 +204,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
       // }
 
       column.mantineEditTextInputProps = {
-        error: property.editing?.onValidation(currentItem).text,
+        // error: property.editing?.onValidation(currentItem).text,
         required: property.editing?.required,
         size: 'small',
         variant: 'outlined'

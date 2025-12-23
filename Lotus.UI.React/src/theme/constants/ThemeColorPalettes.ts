@@ -1,4 +1,4 @@
-import { Color, Colors, ColorVariants, ColorVariantsHelper, TColorVariantName } from 'lotus-core/modules/color';
+import { Color, Colors, ColorVariantsHelper, TColorVariantName } from 'lotus-core/modules/color';
 import { IThemePalette, TThemeColorMode } from '#theme/types';
 import { ThemeColorVariants } from './ThemeColorVariants';
 
@@ -144,27 +144,27 @@ export abstract class ThemeColorPalettes
       },
       colors: {
         primary: {
-          variants: ColorVariants.createFromColorRelativeLightness('#1976d2', '#42a5f5', '#1565c0'),
+          variants: ThemeColorVariants.Primary,
           onText: () => Colors.white
         },
         secondary: {
-          variants: ColorVariants.createFromColorRelativeLightness('#9c27b0', '#ba68c8', '#7b1fa2'),
+          variants: ThemeColorVariants.Secondary,
           onText: () => Colors.white
         },
         error: {
-          variants: ColorVariants.createFromColorRelativeLightness('#d32f2f', '#ef5350', '#c62828'),
+          variants: ThemeColorVariants.Error,
           onText: () => Colors.white
         },
         warning: {
-          variants: ColorVariants.createFromColorRelativeLightness('#ed6c02', '#ff9800', '#e65100'),
+          variants: ThemeColorVariants.Warning,
           onText: () => Colors.white
         },
         info: {
-          variants: ColorVariants.createFromColorRelativeLightness('#0288d1', '#03a9f4', '#01579b'),
+          variants: ThemeColorVariants.Info,
           onText: () => Colors.white
         },
         success: {
-          variants: ColorVariants.createFromColorRelativeLightness('#2e7d32', '#4caf50', '#1b5e20'),
+          variants: ThemeColorVariants.Success,
           onText: () => Colors.white
         },
         blue: {
@@ -231,27 +231,27 @@ export abstract class ThemeColorPalettes
       },
       colors: {
         primary: {
-          variants: ColorVariants.createFromColorRelativeLightness('#90caf9', '#e3f2fd', '#42a5f5'),
+          variants: ThemeColorVariants.Primary,
           onText: () => new Color('rgba(0, 0, 0, 0.87)')
         },
         secondary: {
-          variants: ColorVariants.createFromColorRelativeLightness('#ce93d8', '#f3e5f5', '#ab47bc'),
+          variants: ThemeColorVariants.Secondary,
           onText: () => new Color('rgba(0, 0, 0, 0.87)')
         },
         error: {
-          variants: ColorVariants.createFromColorRelativeLightness('#f44336', '#e57373', '#d32f2f'),
+          variants: ThemeColorVariants.Error,
           onText: () => Colors.white
         },
         warning: {
-          variants: ColorVariants.createFromColorRelativeLightness('#ffa726', '#ffb74d', '#f57c00'),
+          variants: ThemeColorVariants.Warning,
           onText: () => new Color('rgba(0, 0, 0, 0.87)')
         },
         info: {
-          variants: ColorVariants.createFromColorRelativeLightness('#29b6f6', '#4fc3f7', '#4fc3f7'),
+          variants: ThemeColorVariants.Info,
           onText: () => new Color('rgba(0, 0, 0, 0.87)')
         },
         success: {
-          variants: ColorVariants.createFromColorRelativeLightness('#66bb6a', '#81c784', '#388e3c'),
+          variants: ThemeColorVariants.Success,
           onText: () => new Color('rgba(0, 0, 0, 0.87)')
         },
         blue: {
