@@ -1,8 +1,8 @@
 import { ComponentPropsWithRef } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
-import { TCssAlignItems, TCssGap, TCssJustifyContent, TElementSpacing } from '#types';
+import { TCssAlignItems, TCssGap, TCssJustifyContent, TSizeType } from '#types';
 export interface IHorizontalStackProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
-    spacing?: TCssGap | TElementSpacing;
+    spacing?: TCssGap | TSizeType;
     hAlign?: TCssJustifyContent;
     vAlign?: TCssAlignItems;
     wrap?: boolean;

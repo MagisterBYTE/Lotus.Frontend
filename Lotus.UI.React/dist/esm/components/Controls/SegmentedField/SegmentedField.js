@@ -3,7 +3,7 @@ import { InputLabel, SegmentedControl } from '@mantine/core';
 import { OptionHelper } from 'lotus-core/modules/option';
 import { Assert } from 'lotus-core/utils';
 import { useEffect, useState } from 'react';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { VerticalStack } from '#components/Layout';
 import { RenderOption } from '#render';
 import { ContainerField } from '../ContainerField/ContainerField';
@@ -11,7 +11,7 @@ export function SegmentedField(props) {
     const { options, onChanged, value, segmentedProps, ...otherProps } = props;
     const isNumber = OptionHelper.isNumber(options);
     const [data, setData] = useState([]);
-    const containerProps = getContainerProperties(otherProps);
+    const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
     const prepareData = () => {
         const newData = [];
         for (const option of options) {

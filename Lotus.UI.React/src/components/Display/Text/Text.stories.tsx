@@ -2,6 +2,8 @@
 import { ArgTypesStory, OptionsStory } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Text } from './Text';
+import { TColorTokens } from 'lotus-core/modules/color';
+
 
 const meta = {
   title: 'Display/Text',
@@ -10,7 +12,9 @@ const meta = {
   args: {},
 
   argTypes: {
-    children: { control: 'text', table: { category: 'Text' } },
+    children: { control: 'text', table: { category: 'Text Component' } },
+    asBadge: { control: 'select', options: [undefined, ...TColorTokens], table: { category: 'Text Component' } },
+    isBlock: { control: 'boolean', table: { category: 'Text Component' } },
 
     // Text
     ...ArgTypesStory.Text,
@@ -23,7 +27,7 @@ const meta = {
     ...ArgTypesStory.Margin,
 
     // Border
-    ...ArgTypesStory.Border,
+    ...ArgTypesStory.Border
   }
 } satisfies Meta<typeof Text>;
 
@@ -35,20 +39,38 @@ export const TextDefault: Story = {
   args: {
     p: 'xs',
     m: 'sm',
-    children: 'Иконка Image',
+    children: 'Иконка Image'
   }
 };
 
 export const TextLabel: Story = {
   name: 'Text Label',
   args: {
-    children: 'Иконка React',
+    children: 'Иконка React'
   }
 };
 
-export const TextStyle: Story = {
-  name: 'Text Style',
+export const TextBorder: Story = {
+  name: 'Text Border',
   args: {
-    children: 'Иконка React'
+    children: 'Иконка React',
+    withBorder: true,
+    bdStyle: 'solid',
+    bdRadius: 'md',
+    p: 'xxs',
+    isBlock: false
+  }
+};
+
+export const TextBadge: Story = {
+  name: 'Text Badge',
+  args: {
+    children: 'Badge',
+    asBadge: 'blue',
+    p: 'md',
+    withBorder: true,
+    bdStyle: 'solid',
+    bdRadius: 'md',
+    bdColor: 'blue'
   }
 };

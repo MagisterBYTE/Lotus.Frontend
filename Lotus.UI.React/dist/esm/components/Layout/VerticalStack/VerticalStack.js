@@ -1,7 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { css } from '@emotion/css';
-import { BuilderCssProperties } from '#builder';
-import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
+import { BackgroundPropertiesHelper, BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
+import { GapSizes } from '#designSystem/sizes';
+import { CssPropertiesHelper } from '#helpers';
 export function VerticalStack(props) {
     const { spacing, vAlign, hAlign, wrap = false, children, ...otherProps } = props;
     const styleDiv = {
@@ -9,14 +10,19 @@ export function VerticalStack(props) {
         flexDirection: 'column',
         alignItems: hAlign,
         justifyContent: vAlign ?? 'flex-start',
-        rowGap: CssSpacingHelper.getGapPropsValue(spacing),
+        rowGap: GapSizes.getFromCssVariable(spacing),
         flexWrap: wrap ? 'wrap' : 'nowrap',
-        ...BuilderCssProperties.buildContainer(props),
-        ...BuilderCssProperties.buildBackground(props)
+        ...MarginPropertiesHelper.createMarginProps(props),
+        ...PaddingPropertiesHelper.createPaddingProps(props),
+        ...ContainerPropertiesHelper.createContainerProps(props),
+        ...BackgroundPropertiesHelper.createBackgroundProps(props),
+        ...BackgroundPropertiesHelper.createBoxShadowProps(props),
+        ...BorderPropertiesHelper.createBorderProps(props),
+        ...BorderPropertiesHelper.createBorderShadowProps(props)
     };
     const stackClass = css({ ...styleDiv, label: 'VerticalStack' });
     // Фильтруем кастомные пропсы перед передачей в div
     const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
-    return _jsx("div", { className: stackClass, ...domProps, children: children });
+    return (_jsx("div", { className: stackClass, ...domProps, children: children }));
 }
 //# sourceMappingURL=VerticalStack.js.map

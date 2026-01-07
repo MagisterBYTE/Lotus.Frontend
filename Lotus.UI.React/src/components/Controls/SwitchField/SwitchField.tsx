@@ -1,5 +1,5 @@
 import { CSSProperties, Switch, SwitchProps } from '@mantine/core';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps } from '#components/Layout';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
 
@@ -12,7 +12,7 @@ export function SwitchField(props: ISwitchFieldProps)
 {
   const { switchProps, ...otherProps } = props;
 
-  const containerProps = getContainerProperties(otherProps);
+  const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   // Создаем обработанные пропсы для Switch
   const processedSwitchProps = {

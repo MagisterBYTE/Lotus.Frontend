@@ -2,7 +2,7 @@ import { DataAttributes, InputDescriptionProps, InputErrorProps, InputLabelProps
 import { JSX } from 'react/jsx-runtime';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
 import { IHorizontalStackProps } from '#components/Layout';
-import { TElementSize } from '#types';
+import { TSizeType } from '#types';
 /**
  * Базовый компонент для представления поля для ввода и управления различными данными
  */
@@ -14,7 +14,7 @@ export interface IBaseFieldProps extends IGeneralContainerProperties, IGeneralBa
     /**
      * Размер элемента
      */
-    size?: TElementSize;
+    size?: TSizeType;
     /**
      * Статус обязательности поля
      */

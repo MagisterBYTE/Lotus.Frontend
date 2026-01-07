@@ -1,10 +1,17 @@
 import { css } from '@emotion/css';
 import { ComponentPropsWithRef, CSSProperties } from 'react';
-import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
-import { BuilderCssProperties } from '#builder';
-import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
-import
-{
+import {
+  BackgroundPropertiesHelper,
+  BorderPropertiesHelper,
+  ContainerPropertiesHelper,
+  IGeneralBackgroundProperties,
+  IGeneralContainerProperties,
+  MarginPropertiesHelper,
+  PaddingPropertiesHelper
+} from '#base';
+import { GapSizes } from '#designSystem/sizes';
+import { CssPropertiesHelper } from '#helpers';
+import {
   TCssAlignContent,
   TCssAlignItems,
   TCssGap,
@@ -12,14 +19,14 @@ import
   TCssGridTemplateRows,
   TCssJustifyContent,
   TCssJustifyItems,
-  TElementSpacing
+  TSizeType
 } from '#types';
 
 export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
   gridTemplateColumns?: TCssGridTemplateColumns;
   gridTemplateRows?: TCssGridTemplateRows;
-  columnGap?: TCssGap | TElementSpacing;
-  rowGap?: TCssGap | TElementSpacing;
+  columnGap?: TCssGap | TSizeType;
+  rowGap?: TCssGap | TSizeType;
   hAlign?: TCssJustifyContent;
   vAlign?: TCssAlignContent;
   hContentAlign?: TCssJustifyItems;
@@ -34,14 +41,19 @@ export function Grid(props: IGridProps)
     display: 'grid',
     gridTemplateColumns: gridTemplateColumns,
     gridTemplateRows: gridTemplateRows,
-    columnGap: CssSpacingHelper.getGapPropsValue(columnGap),
-    rowGap: CssSpacingHelper.getGapPropsValue(rowGap),
+    columnGap: GapSizes.getFromCssVariable(columnGap),
+    rowGap: GapSizes.getFromCssVariable(rowGap),
     justifyContent: hAlign ?? 'stretch',
     alignContent: vAlign ?? 'center',
     justifyItems: hContentAlign ?? 'start',
     alignItems: vContentAlign ?? 'center',
-    ...BuilderCssProperties.buildContainer(props),
-    ...BuilderCssProperties.buildBackground(props)
+    ...MarginPropertiesHelper.createMarginProps(props),
+    ...PaddingPropertiesHelper.createPaddingProps(props),
+    ...ContainerPropertiesHelper.createContainerProps(props),
+    ...BackgroundPropertiesHelper.createBackgroundProps(props),
+    ...BackgroundPropertiesHelper.createBoxShadowProps(props),
+    ...BorderPropertiesHelper.createBorderProps(props),
+    ...BorderPropertiesHelper.createBorderShadowProps(props)
   };
 
   const gridClass = css({ ...styleDiv, label: 'Grid' });

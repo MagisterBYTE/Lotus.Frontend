@@ -1,19 +1,26 @@
 import { css } from '@emotion/css';
 import { ComponentPropsWithRef, CSSProperties } from 'react';
-import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
-import { BuilderCssProperties } from '#builder';
-import { CssPropertiesHelper, CssSpacingHelper } from '#helpers';
-import { TCssAlignItems, TCssGap, TCssJustifyContent, TElementSpacing } from '#types';
+import {
+  BackgroundPropertiesHelper,
+  BorderPropertiesHelper,
+  ContainerPropertiesHelper,
+  IGeneralBackgroundProperties,
+  IGeneralContainerProperties,
+  MarginPropertiesHelper,
+  PaddingPropertiesHelper
+} from '#base';
+import { GapSizes } from '#designSystem/sizes';
+import { CssPropertiesHelper } from '#helpers';
+import { TCssAlignItems, TCssGap, TCssJustifyContent, TSizeType } from '#types';
 
-export interface IHorizontalStackProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'>
-{
-  spacing?: TCssGap | TElementSpacing;
+export interface IHorizontalStackProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
+  spacing?: TCssGap | TSizeType;
   hAlign?: TCssJustifyContent;
   vAlign?: TCssAlignItems;
   wrap?: boolean;
 }
 
-export function HorizontalStack(props: IHorizontalStackProps)
+export function HorizontalStack(props: IHorizontalStackProps) 
 {
   const { spacing, vAlign, hAlign, wrap, children, ...otherProps } = props;
 
@@ -22,10 +29,15 @@ export function HorizontalStack(props: IHorizontalStackProps)
     flexDirection: 'row',
     alignItems: vAlign,
     justifyContent: hAlign ?? 'flex-start',
-    columnGap: CssSpacingHelper.getGapPropsValue(spacing),
+    columnGap: GapSizes.getFromCssVariable(spacing),
     flexWrap: wrap ? 'wrap' : 'nowrap',
-    ...BuilderCssProperties.buildContainer(props),
-    ...BuilderCssProperties.buildBackground(props)
+    ...MarginPropertiesHelper.createMarginProps(props),
+    ...PaddingPropertiesHelper.createPaddingProps(props),
+    ...ContainerPropertiesHelper.createContainerProps(props),
+    ...BackgroundPropertiesHelper.createBackgroundProps(props),
+    ...BackgroundPropertiesHelper.createBoxShadowProps(props),
+    ...BorderPropertiesHelper.createBorderProps(props),
+    ...BorderPropertiesHelper.createBorderShadowProps(props)
   };
 
   const stackClass = css({ ...styleDiv, label: 'HorizontalStack' });
@@ -33,5 +45,9 @@ export function HorizontalStack(props: IHorizontalStackProps)
   // Фильтруем кастомные пропсы перед передачей в div
   const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
 
-  return <div className={stackClass} {...domProps}>{children}</div>;
+  return (
+    <div className={stackClass} {...domProps}>
+      {children}
+    </div>
+  );
 }

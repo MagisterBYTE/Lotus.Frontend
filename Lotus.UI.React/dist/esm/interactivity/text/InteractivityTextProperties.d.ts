@@ -1,5 +1,6 @@
+import { TColorToken } from 'lotus-core/modules/color';
 import { IGeneralTextProperties } from '#base';
-import { TThemeColor } from '#theme/types';
+import { TCssColor } from '#types';
 /**
  * Интерактивное взаимодействие текста элемента
  */
@@ -7,10 +8,10 @@ export interface IInteractivityTextProperties extends IGeneralTextProperties {
     /**
      * Цвет текста при наведении
      */
-    hoverTextColor?: TThemeColor;
+    textHoverColor?: TCssColor | TColorToken;
     /**
      * Цвет текста при нажатии
      */
-    pressedTextColor?: TThemeColor;
+    textPressedColor?: TCssColor | TColorToken;
 }
 //# sourceMappingURL=InteractivityTextProperties.d.ts.map

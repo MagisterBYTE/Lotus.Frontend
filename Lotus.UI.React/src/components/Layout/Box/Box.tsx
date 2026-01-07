@@ -1,18 +1,24 @@
 import { css } from '@emotion/css';
 import { ComponentPropsWithRef, CSSProperties } from 'react';
-import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
-import { BuilderCssProperties } from '#builder';
+import {
+  BackgroundPropertiesHelper,
+  BorderPropertiesHelper,
+  ContainerPropertiesHelper,
+  IGeneralBackgroundProperties,
+  IGeneralContainerProperties,
+  MarginPropertiesHelper,
+  PaddingPropertiesHelper
+} from '#base';
 import { CssPropertiesHelper } from '#helpers';
 import { TCenterContent } from '#types';
 
-export interface IBoxProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'>
-{
+export interface IBoxProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
   centerContent?: TCenterContent;
 }
 
-function buildBoxProps(props: IBoxProps): CSSProperties
+function buildBoxProps(props: IBoxProps): CSSProperties 
 {
-  if (props.centerContent === 'horizontally')
+  if (props.centerContent === 'horizontally') 
   {
     return {
       display: 'grid',
@@ -20,14 +26,14 @@ function buildBoxProps(props: IBoxProps): CSSProperties
       alignItems: 'start'
     };
   }
-  if (props.centerContent === 'vertically')
+  if (props.centerContent === 'vertically') 
   {
     return {
       display: 'grid',
       alignItems: 'center'
     };
   }
-  if (props.centerContent === 'center')
+  if (props.centerContent === 'center') 
   {
     return {
       display: 'grid',
@@ -38,14 +44,19 @@ function buildBoxProps(props: IBoxProps): CSSProperties
   return {};
 }
 
-export function Box(props: IBoxProps)
+export function Box(props: IBoxProps) 
 {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { centerContent, children, ...otherProps } = props;
 
   const styleDiv: CSSProperties = {
-    ...BuilderCssProperties.buildContainer(props),
-    ...BuilderCssProperties.buildBackground(props),
+    ...MarginPropertiesHelper.createMarginProps(props),
+    ...PaddingPropertiesHelper.createPaddingProps(props),
+    ...ContainerPropertiesHelper.createContainerProps(props),
+    ...BackgroundPropertiesHelper.createBackgroundProps(props),
+    ...BackgroundPropertiesHelper.createBoxShadowProps(props),
+    ...BorderPropertiesHelper.createBorderProps(props),
+    ...BorderPropertiesHelper.createBorderShadowProps(props),
     ...buildBoxProps(props)
   };
 
@@ -54,5 +65,9 @@ export function Box(props: IBoxProps)
   // Фильтруем кастомные пропсы перед передачей в div
   const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
 
-  return <div className={boxClass} {...domProps}>{children}</div>;
+  return (
+    <div className={boxClass} {...domProps}>
+      {children}
+    </div>
+  );
 }

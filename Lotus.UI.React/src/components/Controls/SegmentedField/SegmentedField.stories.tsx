@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgTypesStory, OptionsStory } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { SegmentedField } from './SegmentedField';
@@ -31,7 +30,7 @@ const meta = {
 
     // Hide
     ...ArgTypesStory.BaseField,
-    selectProps: { table: { disable: true } },
+    segmentedProps: { table: { disable: true } },
     children: { table: { disable: true } }
   }
 } satisfies Meta<typeof SegmentedField>;

@@ -3,15 +3,22 @@ import { Assert } from 'lotus-core/utils';
 import { CSSProperties } from 'react';
 import
 {
+  BackgroundPropertiesHelper,
+  BorderPropertiesHelper,
+  ContainerPropertiesHelper,
   IGeneralBackgroundProperties,
   IGeneralBorderProperties,
   IGeneralContainerProperties,
   IGeneralIconProperties,
   IGeneralMarginProperties,
   IGeneralPaddingProperties,
-  IGeneralTextProperties
+  IGeneralTextProperties,
+  MarginPropertiesHelper,
+  PaddingPropertiesHelper,
+  TextPropertiesHelper
 } from '#base';
-import { Theme } from '#theme';
+import { DesignSystemConstants } from '#designSystem';
+import { IEffectContextProps, IInteractivityElementProperties, InteractivityLogic, TInteractivityModel } from '#interactivity';
 import { TCssProperties } from '#types';
 
 type TLotusCustomProps =
@@ -25,6 +32,62 @@ type TLotusCustomProps =
 
 export class CssPropertiesHelper
 {
+  // eslint-disable-next-line complexity
+  public static buildInteractivityElement(model: TInteractivityModel, props: IInteractivityElementProperties, 
+    context?: IEffectContextProps): CSSProperties
+  {
+    const isDisabled: boolean = Boolean(context?.isDisabled);
+    const isSelected: boolean = Boolean(context?.isSelected);
+    const { 
+      bgColor, 
+
+      // @ts-expect-error hasScaleEffect
+      hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect  
+    } = props;
+
+    return {
+      cursor: 'pointer',
+      display: 'inline-block',
+      ...MarginPropertiesHelper.createMarginProps(props),
+      ...PaddingPropertiesHelper.createPaddingProps(props),
+      ...ContainerPropertiesHelper.createContainerProps(props),
+      ...BorderPropertiesHelper.createBorderProps(props),
+      ...TextPropertiesHelper.createTextProps(props),
+      ...CssPropertiesHelper.getTransitionColorsProps(),
+      ...InteractivityLogic.getEffectProps(model, 'normal', props, context),
+      ...((!isDisabled && hasShadowBoxEffect) ? BackgroundPropertiesHelper.createBoxShadowProps({ bgColor: bgColor, bgShadow: isSelected ? 8 : 2 }) : {}),
+      ...((!isDisabled && hasShadowBorderEffect && isSelected) ? BorderPropertiesHelper.createBorderShadowProps({ bdColor: bgColor, bdShadow: 6 }) : {}),
+      ...((!isDisabled && hasScaleEffect && isSelected) ? CssPropertiesHelper.getTransformScaleProps(1.2) : {}),
+
+      // @ts-expect-error IInteractivityBackgroundEffect 
+      '&:hover':
+      {
+        ...InteractivityLogic.getEffectProps(model, 'hover', props, context),
+        ...((!isDisabled && hasShadowBoxEffect && !isSelected) ? BackgroundPropertiesHelper.createBoxShadowProps({ bgColor: bgColor, bgShadow: 4 }) : {}),
+        ...((!isDisabled && hasShadowBorderEffect && !isSelected) ? BorderPropertiesHelper.createBorderShadowProps({ bdColor: bgColor, bdShadow: 4 }): {}),
+        ...((!isDisabled && hasScaleEffect && !isSelected) ? CssPropertiesHelper.getTransformScaleProps(1.05) : {})
+      },
+      '&:active':
+      {
+        ...InteractivityLogic.getEffectProps(model, 'pressed', props, context),
+        ...((!isDisabled && hasShadowBoxEffect) ? BackgroundPropertiesHelper.createBoxShadowProps({ bgColor: bgColor, bgShadow: 8 }) : {}),
+        ...((!isDisabled && hasShadowBorderEffect) ? BorderPropertiesHelper.createBorderShadowProps({ bdColor: bgColor, bdShadow: 6 }) : {}),
+        ...((!isDisabled && hasScaleEffect && !isSelected) ? CssPropertiesHelper.getTransformScaleProps(1.05) : {})
+      },
+      '&:checked':
+      {
+        ...InteractivityLogic.getEffectProps(model, 'normal', props, context),
+        ...((!isDisabled && hasShadowBoxEffect) ? BackgroundPropertiesHelper.createBoxShadowProps({ bgColor: bgColor, bgShadow: 8 }) : {}),
+        ...((!isDisabled && hasShadowBorderEffect) ? BorderPropertiesHelper.createBorderShadowProps({ bdColor: bgColor, bdShadow: 6 }) : {}),
+        ...((!isDisabled && hasScaleEffect) ? CssPropertiesHelper.getTransformScaleProps(1.05) : {})
+      },
+      '&:disabled':
+      {
+        ...InteractivityLogic.getEffectProps(model, 'normal', props, context)
+      }
+    };
+  }
+
   // #region Common
   public static filterDOMProps<T extends Record<string, any>>(props: T): Omit<T, TLotusCustomProps>
   {
@@ -32,21 +95,22 @@ export class CssPropertiesHelper
 
     const nonDOMProps: TLotusCustomProps[] = [
       // IGeneralBackgroundProperties
-      'backColor',
-      'backImage',
-      'shadow',
+      'bgColor',
+      'bgImage',
+      'bgShadow',
 
       // IGeneralBorderProperties
       'withBorder',
-      'borderStyle',
-      'borderWidth',
-      'borderColor',
-      'borderRadius',
-      'borderRadiusTopLeft',
-      'borderRadiusBottomLeft',
-      'borderRadiusTopRight',
-      'borderRadiusBottomRight',
-      'borderShadow',
+      'bdRadius',
+      'bdWidth',
+      'bdStyle',
+      'bdColor',
+      'bdRadius',
+      'bdRadiusTopLeft',
+      'bdRadiusBottomLeft',
+      'bdRadiusTopRight',
+      'bdRadiusBottomRight',
+      'bdShadow',
 
       // IGeneralContainerProperties
       'w',
@@ -149,10 +213,10 @@ export class CssPropertiesHelper
   public static getTransitionColorsProps(): TCssProperties
   {
     return {
-      transition: `background-color ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
-    box-shadow ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
-    border-color ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
-    color ${Theme.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1);`
+      transition: `background-color ${DesignSystemConstants.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    box-shadow ${DesignSystemConstants.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    border-color ${DesignSystemConstants.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1), 
+    color ${DesignSystemConstants.TransitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1);`
     };
   }
   // #endregion

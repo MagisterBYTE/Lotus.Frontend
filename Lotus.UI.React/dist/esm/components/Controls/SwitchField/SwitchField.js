@@ -1,10 +1,10 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { Switch } from '@mantine/core';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { ContainerField } from '../ContainerField/ContainerField';
 export function SwitchField(props) {
     const { switchProps, ...otherProps } = props;
-    const containerProps = getContainerProperties(otherProps);
+    const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
     // Создаем обработанные пропсы для Switch
     const processedSwitchProps = {
         ...switchProps,

@@ -1,46 +1,74 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectHelper } from 'lotus-core/helpers';
-import { hasBorderProperties } from '#base';
-import { ThemeInstance } from '#theme';
-import { nextThemeColor } from '#theme/types';
+import { ColorCssHelper, ColorTokenHelper } from 'lotus-core/modules/color';
+import { BorderPropertiesHelper } from '#base';
+import { CssVariables } from '#designSystem/сssVariables';
+/**
+ * Класс для применения логики интерактивности к границе элемента
+ */
 export class InteractivityBorderLogic {
-    static getEffectByState(element, state, part, actionType) {
+    /**
+     * Построить свойства Css на основании контекста и указанного состояния элемента
+     * @param element Элемент (его пропсы)
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    static getEffectByState(element, state, context) {
         const borderProps = {};
-        const backColor = ObjectHelper.getValue(element, 'backColor');
-        const borderColor = ObjectHelper.getValue(element, 'borderColor');
-        const hoverBorderColor = ObjectHelper.getValue(element, 'hoverBorderColor');
-        const pressedBorderColor = ObjectHelper.getValue(element, 'pressedBorderColor');
+        const backColor = ObjectHelper.getValue(element, 'bgColor');
+        const borderColor = ObjectHelper.getValue(element, 'bdColor');
+        const borderHoverColor = ObjectHelper.getValue(element, 'bdHoverColor');
+        const borderPressedColor = ObjectHelper.getValue(element, 'bdPressedColor');
         switch (state) {
             case 'normal':
                 {
-                    borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
+                    const color = borderColor ?? backColor ?? CssVariables.BorderColor;
+                    borderProps.borderColor = ColorCssHelper.getColorCss(color);
                 }
                 break;
             case 'hover':
                 {
-                    borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, hoverBorderColor ??
-                        nextThemeColor(borderColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+                    const color = borderHoverColor ?? ColorTokenHelper.next(borderColor ?? backColor, -2) ?? CssVariables.PrimaryColor3;
+                    borderProps.borderColor = ColorCssHelper.getColorCss(color);
                 }
                 break;
             case 'pressed':
                 {
-                    borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, pressedBorderColor ??
-                        nextThemeColor(borderColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+                    const color = borderPressedColor ?? ColorTokenHelper.next(borderColor ?? backColor, 2) ?? CssVariables.PrimaryColor7;
+                    borderProps.borderColor = ColorCssHelper.getColorCss(color);
                 }
                 break;
         }
         return borderProps;
     }
-    // eslint-disable-next-line max-params
-    static getProperties(element, type, state, part, actionType) {
+    /**
+     * Создать свойства Css
+     * @param element Элемент (его пропсы)
+     * @param type Тии интерактивности фона
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
+    static createProperties(element, type, state, context) {
         const borderProps = {};
-        return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, part, actionType);
+        return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, context);
     }
+    /**
+     * Заполнить указанные свойства Css
+     * @param target Свойства Css
+     * @param element Элемент (его пропсы)
+     * @param type Тип интерактивности границы
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
     // eslint-disable-next-line max-params
-    static fillProperties(target, element, type, state, part, actionType) {
-        const borderStyle = ObjectHelper.getValue(element, 'borderStyle');
-        const borderWidth = ObjectHelper.getValue(element, 'borderWidth');
-        const borderColor = ObjectHelper.getValue(element, 'borderColor');
+    static fillProperties(target, element, type, state, context) {
+        const borderStyle = ObjectHelper.getValue(element, 'bdStyle');
+        const borderWidth = ObjectHelper.getValue(element, 'bdWidth');
+        const borderColor = ObjectHelper.getValue(element, 'bdColor');
         switch (type) {
             // Границы нет
             case 'none':
@@ -52,10 +80,10 @@ export class InteractivityBorderLogic {
             // Граница может быть
             case 'maybe':
                 {
-                    if (hasBorderProperties(borderStyle, borderWidth, borderColor)) {
-                        target.borderWidth = borderWidth ?? '1px';
+                    if (BorderPropertiesHelper.hasBorderArgs(borderStyle, borderWidth, borderColor)) {
+                        target.borderWidth = borderWidth ?? CssVariables.BorderWidth;
                         target.borderStyle = borderStyle ?? 'solid';
-                        target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, part, actionType).borderColor;
+                        target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, context).borderColor;
                     }
                     else {
                         target.border = 'none';
@@ -67,15 +95,15 @@ export class InteractivityBorderLogic {
             case 'invisible':
                 {
                     target.borderColor = 'transparent';
-                    target.borderWidth = borderWidth ?? '1px';
+                    target.borderWidth = borderWidth ?? CssVariables.BorderWidth;
                 }
                 break;
             // Граница обязательна
             case 'mandatory':
                 {
-                    target.borderWidth = borderWidth ?? '1px';
+                    target.borderWidth = borderWidth ?? CssVariables.BorderWidth;
                     target.borderStyle = borderStyle ?? 'solid';
-                    target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, part, actionType).borderColor;
+                    target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, context).borderColor;
                 }
                 break;
         }

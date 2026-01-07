@@ -1,0 +1,1 @@
+export { BackgroundDesignSystem } from './BackgroundDesignSystem';

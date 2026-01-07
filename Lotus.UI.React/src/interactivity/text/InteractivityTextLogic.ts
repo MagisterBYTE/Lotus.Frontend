@@ -1,77 +1,105 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectHelper } from 'lotus-core/helpers';
+import { ColorCssHelper, ColorTokenHelper, TColorToken } from 'lotus-core/modules/color';
 import { MaybeUndef } from 'lotus-core/types';
-import { TInteractivityState } from '#interactivity';
-import { ThemeInstance } from '#theme';
-import { nextThemeColor, TThemeColor, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '#theme/types';
-import { TCssProperties } from '#types';
+import { CssVariables } from '#designSystem/сssVariables';
+import { TCssColor, TCssProperties } from '#types';
+import { IEffectContextProps, TInteractivityState } from '../types';
 import { TInteractivityTextType } from './InteractivityTextType';
 
 
+type TColor = TCssColor|TColorToken;
+
+/**
+ * Класс для применения логики интерактивности к тексту элемента
+ */
 export abstract class InteractivityTextLogic
 {
-  public static getEffectByState(element: any, state: TInteractivityState, part: TThemePaletteComponentStructuralPart,
-    actionType?: TThemePaletteActionType): TCssProperties
+  /**
+   * Построить свойства Css на основании контекста и указанного состояния элемента
+   * @param element Элемент (его пропсы)
+   * @param state Состояние интерактивности элемента UI
+   * @param context Текущий контекст элемента
+   * @returns 
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public static getEffectByState(element: any, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
   {
     const textProps: TCssProperties = {};
 
-    const backColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'backColor');
-    const textColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'textColor');
-    const hoverTextColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'hoverTextColor');
-    const pressedTextColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'pressedTextColor');
+    const backColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bgColor');
+    const textColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'textColor');
+    const textHoverColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'textHoverColor');
+    const textPressedColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'textPressedColor');
 
     switch (state)
     {
       case 'normal':
         {
-          textProps.color = ThemeInstance.getColorByStructuralPart(part, textColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
+          const color = textColor ?? CssVariables.TextColor;
+          textProps.color = ColorCssHelper.getColorCss(color);
         } break;
       case 'hover':
         {
-          textProps.color = ThemeInstance.getColorByStructuralPart(part, hoverTextColor ??
-            nextThemeColor(textColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+          const color = textHoverColor ?? ColorTokenHelper.next(textColor ?? backColor, -2) ?? CssVariables.TextColor;
+          textProps.color = ColorCssHelper.getColorCss(color);
         } break;
       case 'pressed':
         {
-          textProps.color = ThemeInstance.getColorByStructuralPart(part, pressedTextColor ??
-            nextThemeColor(textColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+          const color = textPressedColor ?? ColorTokenHelper.next(textColor ?? backColor, 2) ?? CssVariables.TextColor;
+          textProps.color = ColorCssHelper.getColorCss(color);
         } break;
     }
 
     return textProps;
   }
 
-  // eslint-disable-next-line max-params
-  public static getProperties(element: any, type: TInteractivityTextType, state: TInteractivityState,
-    part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
+  /**
+   * Создать свойства Css 
+   * @param element Элемент (его пропсы)
+   * @param type Тии интерактивности фона
+   * @param state Состояние интерактивности элемента UI
+   * @param context Текущий контекст элемента
+   * @returns 
+   */
+  public static createProperties(element: any, type: TInteractivityTextType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
   {
     const textProps: TCssProperties = {};
-    return InteractivityTextLogic.fillProperties(textProps, element, type, state, part, actionType);
+    return InteractivityTextLogic.fillProperties(textProps, element, type, state, context);
   }
 
+  /**
+   * Заполнить указанные свойства Css 
+   * @param target Свойства Css
+   * @param element Элемент (его пропсы)
+   * @param type Тип интерактивности текста
+   * @param state Состояние интерактивности элемента UI
+   * @param context Текущий контекст элемента
+   * @returns 
+   */
   // eslint-disable-next-line max-params
-  public static fillProperties(target: TCssProperties, element: any, type: TInteractivityTextType, state: TInteractivityState,
-    part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
+  public static fillProperties(target: TCssProperties, element: any, type: TInteractivityTextType, state: TInteractivityState, 
+    context?: IEffectContextProps): TCssProperties
   {
-    const backColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'backColor');
-    const textColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'textColor');
+    const backColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bgColor');
+    const textColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'textColor');
 
     switch (type)
     {
       case 'default':
         {
-          target.color = InteractivityTextLogic.getEffectByState(element, state, part, actionType).color;
+          target.color = InteractivityTextLogic.getEffectByState(element, state, context).color;
         } break;
   
       case 'background':
         {
           if (textColor)
           {
-            target.color = InteractivityTextLogic.getEffectByState(element, state, part, actionType).color;
+            target.color = InteractivityTextLogic.getEffectByState(element, state, context).color;
           }
           else
           {
-            target.color = ThemeInstance.getPaletteColor(backColor ?? 'primary')?.onText('main').toCSSRgbValue();
+            target.color = ColorCssHelper.getColorContrastCss(backColor ?? 'primary');
           }
         } break;
     }

@@ -1,59 +1,63 @@
-import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Colors } from 'lotus-core/modules/color';
+import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+import { css } from '@emotion/css';
+import { Assert } from 'lotus-core/utils';
 import { useEffect, useState } from 'react';
-import { useRippleEffect } from '#hooks';
-import { Theme } from '#theme';
+import { ContainerPropertiesHelper } from '#base';
+import { CssPropertiesHelper } from '#helpers';
+import { RenderIcon } from '#render';
+const getFlexContainer = (iconPlacement, gap) => {
+    switch (iconPlacement) {
+        case 'left':
+            return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md');
+        case 'right':
+            return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md', true);
+        case 'top':
+            return ContainerPropertiesHelper.getFlexColumnContainer(gap ?? 'md');
+        case 'bottom':
+            return ContainerPropertiesHelper.getFlexColumnContainer(gap ?? 'md', true);
+    }
+    return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md');
+};
 export const Button = (props) => {
-    const { fontBold, fontAccent, textEffect, textAlign, textColorHarmonious, textColor, hoverTextColor, pressedTextColor, backColor, backImage, hoverBackColor, pressedBackColor, borderRadius, borderStyle, borderWidth, borderColor, hoverBorderColor, pressedBorderColor, size = 'medium', extraClass, overrideButtonStyle, variant = 'filled', isSelectedStatus, isSelected, onSelected, icon, iconColor, iconStyle, iconPlacement = 'left', imageDatabase, hasRippleEffect, hasScaleEffect, hasShadowBorderEffect, hasShadowBoxEffect, ...propsButton } = props;
+    const { variant = 'filled', isSelectedStatus, isSelected, onSelected, hasRippleEffect, 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    hasScaleEffect, 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    hasShadowBorderEffect, 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    hasShadowBoxEffect, icon, iconSize, iconPlacement, iconStyle, iconColor, imageDatabase, disabled, onClick, children, ...propsButton } = props;
+    const isIcon = Assert.existValue(icon);
     const [selectedButton, setSelectedButton] = useState(isSelected);
-    // const cssProperties = CssPropertiesBuilder.buildInteractivityElement(variant, props, { isSelected: selectedButton });
-    // if(overrideButtonStyle)
-    // {
-    //   CssPropertiesHelper.overrideStyle(cssProperties, overrideButtonStyle);
-    // }
-    // const buttonClass = css({ ...cssProperties })
-    const rippleColor = Colors.red_2.toCSSRgbValue();
-    const [ripple, event] = useRippleEffect({ duration: Theme.TransitionSpeed * 2, color: rippleColor, disabled: props.disabled });
-    // const getFlexContainer = (): CSSProperties =>
-    // {
-    //   switch (iconPlacement)
-    //   {
-    //     case 'left': return CssContainerHelper.getFlexRowContainer(size, paddingControl);
-    //     case 'right': return CssContainerHelper.getFlexRowContainer(size, paddingControl, true);
-    //     case 'top': return CssContainerHelper.getFlexColumnContainer(size, paddingControl);
-    //     case 'bottom': return CssContainerHelper.getFlexColumnContainer(size, paddingControl, true);
-    //   }
-    //   return {};
-    // }
+    const context = {
+        isSelected: selectedButton,
+        isDisabled: disabled,
+        hasRippleEffect: hasRippleEffect
+    };
+    let cssProperties = CssPropertiesHelper.buildInteractivityElement(variant, props, context);
+    if (isIcon) {
+        cssProperties = { ...cssProperties, ...getFlexContainer(iconPlacement, 'md') };
+        cssProperties.display = 'flex';
+    }
+    // const rippleColor = Colors.red_2.toCSSRgbValue();
+    // const [ripple, event] = useRippleEffect({ duration: DesignSystemConstants.TransitionSpeed * 2, color: rippleColor, disabled: props.disabled });
     const handleSelect = (event) => {
         setSelectedButton(!selectedButton);
         if (onSelected)
             onSelected(!selectedButton, event.currentTarget.value);
-        if (props.onClick)
-            props.onClick(event);
+        if (onClick)
+            onClick(event);
     };
     useEffect(() => {
         setSelectedButton(isSelected);
     }, [isSelected]);
-    // if (icon)
-    // {
-    //   return (<button {...propsButton} ref={hasRippleEffect ? ripple : props.ref} className={cx(buttonClass, extraClass)}
-    //     onClick={isSelectedStatus ? handleSelect : props.onClick}
-    //     onPointerDown={event}>
-    //     {/* {RenderComponentHelper.renderIconAndValue(size, icon, propsButton.children, iconStyle, iconColor, imageDatabase, true, getFlexContainer())} */}
-    //   </button>);
-    // }
-    // else
-    // {
-    //   return (
-    //     <button {...propsButton} ref={hasRippleEffect ? ripple : props.ref} className={cx(buttonClass, extraClass)}
-    //       onClick={isSelectedStatus ? handleSelect : props.onClick}
-    //       onPointerDown={event}>
-    //       {propsButton.children}
-    //     </button>);
-    // }
-    return _jsx(_Fragment, {});
+    const buttonClass = css({ ...cssProperties, label: 'Button' });
+    // Фильтруем кастомные пропсы перед передачей в div
+    const domProps = CssPropertiesHelper.filterDOMProps(propsButton);
+    if (isIcon) {
+        return (_jsxs("button", { className: buttonClass, ...domProps, onClick: isSelectedStatus ? handleSelect : onClick, children: [RenderIcon.renderIcon(iconSize ?? 'md', icon, undefined, iconStyle, iconColor, imageDatabase), children] }));
+    }
+    else {
+        return (_jsx("button", { className: buttonClass, ...domProps, onClick: isSelectedStatus ? handleSelect : onClick, children: children }));
+    }
 };
 //# sourceMappingURL=Button.js.map

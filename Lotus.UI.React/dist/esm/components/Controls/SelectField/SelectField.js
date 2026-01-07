@@ -1,10 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Group, Select } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 import { OptionHelper } from 'lotus-core/modules/option';
 import { useEffect, useState } from 'react';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { RenderIcon, RenderOption } from '#render';
 import { ContainerField } from '../ContainerField/ContainerField';
 export function SelectField(props) {
@@ -12,7 +11,7 @@ export function SelectField(props) {
     const isNumber = OptionHelper.isNumber(options);
     const [selectedIcon, setSelectedIcon] = useState(undefined);
     const [data, setData] = useState([]);
-    const containerProps = getContainerProperties(otherProps);
+    const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
     useEffect(() => {
         setData(OptionHelper.convertToString(options));
     }, [options, options.length, otherProps.size]);

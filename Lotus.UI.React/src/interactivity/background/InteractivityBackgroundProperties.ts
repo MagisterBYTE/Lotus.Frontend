@@ -1,5 +1,6 @@
+import { TColorToken } from 'lotus-core/modules/color';
 import { IGeneralBackgroundProperties } from '#base';
-import { TThemeColor } from '#theme/types';
+import { TCssBorderColor } from '#types';
 
 /**
  * Интерактивное взаимодействие фона элемента
@@ -9,10 +10,10 @@ export interface IInteractivityBackgroundProperties extends IGeneralBackgroundPr
   /**
    * Цвет фона при наведении
    */
-  hoverBackColor?: TThemeColor;
+  bgHoverColor?: TCssBorderColor|TColorToken;
 
   /**
    * Цвет фона при нажатии
    */
-  pressedBackColor?: TThemeColor;
+  bgPressedColor?: TCssBorderColor|TColorToken;
 }

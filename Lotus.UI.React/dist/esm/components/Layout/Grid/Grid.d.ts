@@ -1,11 +1,11 @@
 import { ComponentPropsWithRef } from 'react';
 import { IGeneralBackgroundProperties, IGeneralContainerProperties } from '#base';
-import { TCssAlignContent, TCssAlignItems, TCssGap, TCssGridTemplateColumns, TCssGridTemplateRows, TCssJustifyContent, TCssJustifyItems, TElementSpacing } from '#types';
+import { TCssAlignContent, TCssAlignItems, TCssGap, TCssGridTemplateColumns, TCssGridTemplateRows, TCssJustifyContent, TCssJustifyItems, TSizeType } from '#types';
 export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
     gridTemplateColumns?: TCssGridTemplateColumns;
     gridTemplateRows?: TCssGridTemplateRows;
-    columnGap?: TCssGap | TElementSpacing;
-    rowGap?: TCssGap | TElementSpacing;
+    columnGap?: TCssGap | TSizeType;
+    rowGap?: TCssGap | TSizeType;
     hAlign?: TCssJustifyContent;
     vAlign?: TCssAlignContent;
     hContentAlign?: TCssJustifyItems;

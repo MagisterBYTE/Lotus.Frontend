@@ -1,1 +1,0 @@
-export { BuilderCssProperties } from './BuilderCssProperties';

@@ -5,7 +5,7 @@ import { IImageDatabase } from 'lotus-core/resources/image';
 import { Assert } from 'lotus-core/utils';
 import { ReactElement } from 'react';
 import { HorizontalStack } from '#components/Layout';
-import { TElementSize } from '#types';
+import { TSizeType } from '#types';
 import { RenderIcon } from './RenderIcon';
 
 /**
@@ -23,7 +23,7 @@ export abstract class RenderOption
    * @returns ReactElement
    */
   // eslint-disable-next-line max-params
-  public static renderOption(size: TElementSize, option: IOption, context?: any, imageDatabase?: IImageDatabase, wrapContainer?: boolean): ReactElement
+  public static renderOption(size: TSizeType, option: IOption, context?: any, imageDatabase?: IImageDatabase, wrapContainer?: boolean): ReactElement
   {
     // 1) Может отрисовать сама
     if (option.render)

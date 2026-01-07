@@ -1,7 +1,7 @@
+import { TColorToken } from 'lotus-core/modules/color';
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { CSSProperties, ReactElement, ReactNode } from 'react';
-import { TThemeColor } from '#theme/types';
-import { TElementSize } from '#types';
+import { TCssColor, TSizeType } from '#types';
 /**
  * Отрисовка иконки
  */
@@ -17,6 +17,6 @@ export declare abstract class RenderIcon {
      * @param wrapDiv Следует ли обвернуть в блок div
      * @returns ReactElement
      */
-    static renderIcon(size: TElementSize, icon: any, other?: ReactNode, iconStyle?: CSSProperties, iconColor?: TThemeColor, imageDatabase?: IImageDatabase, wrapDiv?: boolean, wrapDivStyle?: CSSProperties): ReactElement | undefined;
+    static renderIcon(size: TSizeType, icon: any, other?: ReactNode, iconStyle?: CSSProperties, iconColor?: TCssColor | TColorToken, imageDatabase?: IImageDatabase, wrapDiv?: boolean, wrapDivStyle?: CSSProperties): ReactElement | undefined;
 }
 //# sourceMappingURL=RenderIcon.d.ts.map

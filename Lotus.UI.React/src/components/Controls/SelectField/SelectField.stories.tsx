@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgTypesStory, OptionsStory } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconShieldBolt } from '@tabler/icons-react';
-import React from 'react';
 import { SelectField } from './SelectField';
 
 const meta = {
@@ -47,7 +45,7 @@ export const SelectFieldDefault: Story = {
   args: {
     p: 'xs',
     m: 'sm',
-    data: OptionsStory.TextAndIconImage,
+    options: OptionsStory.TextAndIconImage,
     label: 'Иконка Image',
   }
 };
@@ -57,7 +55,7 @@ export const SelectFieldLabel: Story = {
   args: {
     inlinePlace: true,
     label: 'Иконка React',
-    data: OptionsStory.TextAndIconReact,
+    options: OptionsStory.TextAndIconReact,
     selectProps:
     {
       rightSection: <IconShieldBolt color='red' size={'2.25rem'} />,
@@ -70,7 +68,7 @@ export const SelectFieldStyle: Story = {
   args: {
     inlinePlace: true,
     label: 'Иконка React',
-    data: OptionsStory.TextAndIconReact,
+    options: OptionsStory.TextAndIconReact,
     selectProps:
     {
       rightSection: <IconShieldBolt color='red' size={'2.25rem'} />,

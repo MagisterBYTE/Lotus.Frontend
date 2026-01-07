@@ -1,5 +1,4 @@
-import { TThemeColor } from '#theme/types';
-import { TTextEffect, TCssTextAlign, TCssFontSize, TFontSize, TCssLineHeight, TLineSpacing } from '#types';
+import { TTextEffect, TCssTextAlign, TCssFontSize, TCssLineHeight, TCssProperties, TFontAccent, TSizeType } from '#types';
 /**
  * Общие свойства текста для элемента UI
  */
@@ -7,7 +6,7 @@ export interface IGeneralTextProperties {
     /**
      * Размер шрифта
      */
-    fontSize?: TCssFontSize | TFontSize;
+    fontSize?: TCssFontSize | TSizeType;
     /**
      * Статус жирного шрифта
      */
@@ -15,7 +14,7 @@ export interface IGeneralTextProperties {
     /**
      * Использовать шрифт для акцента внимания
      */
-    fontAccent?: boolean;
+    fontAccent?: TFontAccent;
     /**
      * Тип эффекта для текста
      */
@@ -31,10 +30,21 @@ export interface IGeneralTextProperties {
     /**
      * Цвет текста
      */
-    textColor?: TThemeColor;
+    textColor?: string;
     /**
      * Межстрочный интервал текста
      */
-    textLineSpacing?: TCssLineHeight | TLineSpacing;
+    textLineSpacing?: TCssLineHeight | TSizeType;
+}
+/**
+ * Вспомогательный класс для работы с общими свойства текста для элемента UI
+ */
+export declare abstract class TextPropertiesHelper {
+    /**
+     * Создать свойства CSS по общим свойствам текста в виде TCssProperties
+     * @param props Общие свойства текста для элемента UI
+     * @returns Свойства CSS по общим свойствам текста в виде TCssProperties
+     */
+    static createTextProps(props: IGeneralTextProperties): TCssProperties;
 }
 //# sourceMappingURL=GeneralTextProperties.d.ts.map

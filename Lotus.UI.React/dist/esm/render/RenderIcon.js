@@ -1,8 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+/* eslint-disable jsx-a11y/alt-text */
+import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { IconContext } from 'react-icons';
-import { CssSizerHelper } from '#helpers';
-import { ThemeInstance } from '#theme';
+import { IconSizes } from '#designSystem/sizes';
 /**
  * Отрисовка иконки
  */
@@ -22,10 +23,10 @@ export class RenderIcon {
     static renderIcon(size, icon, other, iconStyle, iconColor, imageDatabase, wrapDiv, wrapDivStyle) {
         if (Assert.emptyValue(icon))
             return undefined;
-        const iconColorText = (iconColor !== undefined) ? ThemeInstance.getElementColor(iconColor)?.toCSSRgbValue() : undefined;
+        const iconColorCss = ColorCssHelper.getColorCss(iconColor);
         // Если строка
         if (typeof icon === 'string') {
-            const sizeIcon = `${CssSizerHelper.convertSizeToIconInPixel(size)}px`;
+            const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
             if (other) {
                 if (wrapDiv) {
                     return (_jsxs("div", { style: wrapDivStyle, children: [_jsx("img", { height: sizeIcon, src: icon, style: iconStyle, width: sizeIcon }), other] }));
@@ -42,7 +43,7 @@ export class RenderIcon {
         if (typeof icon === 'number' && imageDatabase) {
             const iconData = imageDatabase.getImageByIdOrName(icon);
             if (iconData) {
-                const sizeIcon = `${CssSizerHelper.convertSizeToIconInPixel(size)}px`;
+                const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
                 if (other) {
                     if (wrapDiv) {
                         return (_jsxs("div", { style: wrapDivStyle, children: [_jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon }), other] }));
@@ -59,17 +60,17 @@ export class RenderIcon {
         }
         // Это иконка React
         else {
-            const sizeIcon = `${CssSizerHelper.convertSizeToIconInRem(size)}rem`;
+            const sizeIcon = IconSizes.Default.toRem(size);
             if (other) {
                 if (wrapDiv) {
-                    return (_jsxs("div", { style: wrapDivStyle, children: [_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorText, style: iconStyle }, children: icon }), other] }));
+                    return (_jsxs("div", { style: wrapDivStyle, children: [_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorCss, style: iconStyle }, children: icon }), other] }));
                 }
                 else {
-                    return (_jsxs(_Fragment, { children: [_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorText, style: iconStyle }, children: icon }), other] }));
+                    return (_jsxs(_Fragment, { children: [_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorCss, style: iconStyle }, children: icon }), other] }));
                 }
             }
             else {
-                return (_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorText, style: iconStyle }, children: icon }));
+                return (_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorCss, style: iconStyle }, children: icon }));
             }
         }
     }

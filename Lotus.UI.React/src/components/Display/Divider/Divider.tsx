@@ -1,18 +1,20 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { css } from '@emotion/css';
+import { TColorToken } from 'lotus-core/modules/color';
 import { ComponentPropsWithRef, CSSProperties } from 'react';
-import { IGeneralBorderProperties, IGeneralContainerProperties } from '#base';
-import { CssBorderHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
-import { TThemeColor } from '#theme/types';
-import { TCssBorderStyle, TCssBorderWidth } from '#types';
+import { BorderPropertiesHelper, IGeneralBorderProperties, IGeneralContainerProperties, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
+import { MarginSizes } from '#designSystem/sizes';
+import { CssVariables } from '#designSystem/сssVariables';
+import { CssPropertiesHelper } from '#helpers';
+import { TCssBorderColor, TCssBorderStyle, TCssBorderWidth } from '#types';
 
 export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof IGeneralBorderProperties>, ComponentPropsWithRef<'div'>
 {
   isVertical?: boolean;
   lineStyle?: TCssBorderStyle;
   lineThickness?: TCssBorderWidth;
-  lineColor?: TThemeColor;
+  lineColor?: TCssBorderColor|TColorToken;
   nml?: boolean;
   nmr?: boolean;
   nmt?: boolean;
@@ -26,29 +28,29 @@ export function Divider(props: IDividerProps)
   const styleDiv: CSSProperties = {
     borderTopStyle: lineStyle,
     borderTopWidth: lineThickness,
-    borderTopColor: CssBorderHelper.getBorderColorPropsValue(lineColor),
-    ...CssSpacingHelper.getPaddingProps(props),
-    ...CssSpacingHelper.getMarginProps(props)
+    borderTopColor: BorderPropertiesHelper.getBorderColorPropsValue(lineColor) ?? CssVariables.BorderColor,
+    ...MarginPropertiesHelper.createMarginProps(props),
+    ...PaddingPropertiesHelper.createPaddingProps(props)
   };
 
   if (nml)
   {
-    styleDiv.marginLeft = CssSpacingHelper.getMarginPropsValue(props.ml, true);
+    styleDiv.marginLeft = MarginSizes.Default.toCssNegative(props.ml);
   }
 
   if (nmr)
   {
-    styleDiv.marginRight = CssSpacingHelper.getMarginPropsValue(props.mr, true);
+    styleDiv.marginRight = MarginSizes.Default.toCssNegative(props.mr);
   }
 
   if (nmt)
   {
-    styleDiv.marginTop = CssSpacingHelper.getMarginPropsValue(props.mt, true);
+    styleDiv.marginTop = MarginSizes.Default.toCssNegative(props.mt);
   }
 
   if (nmb)
   {
-    styleDiv.marginBottom = CssSpacingHelper.getMarginPropsValue(props.mb, true);
+    styleDiv.marginBottom = MarginSizes.Default.toCssNegative(props.mb);
   }
 
   const dividerClass = css({ ...styleDiv, label: 'Divider' });

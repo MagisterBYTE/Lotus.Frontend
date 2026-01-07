@@ -1,3 +1,3 @@
 export { InteractivityBorderLogic } from './InteractivityBorderLogic';
-export { IInteractivityBorderProperties } from './InteractivityBorderProperties';
-export { TInteractivityBorderType } from './InteractivityBorderType';
+export { type IInteractivityBorderProperties } from './InteractivityBorderProperties';
+export { type TInteractivityBorderType } from './InteractivityBorderType';

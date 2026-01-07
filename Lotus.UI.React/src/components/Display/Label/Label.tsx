@@ -1,51 +1,69 @@
 /* eslint-disable react/destructuring-assignment */
 import { css } from '@emotion/css';
+import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { CSSProperties } from 'react';
-import { IGeneralIconProperties } from '#base';
-import { CssBorderHelper, CssContainerHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
+import {
+  BorderPropertiesHelper,
+  ContainerPropertiesHelper,
+  IGeneralIconProperties,
+  MarginPropertiesHelper,
+  PaddingPropertiesHelper,
+  TextPropertiesHelper
+} from '#base';
+import { CssPropertiesHelper } from '#helpers';
 import { RenderIcon } from '#render';
-import { TCssGap, TElementSpacing, TIconPlacement } from '#types';
+import { TCssGap, TIconPlacement, TSizeType } from '#types';
 import { ITextProps } from '../Text';
 
-export interface ILabelProps extends ITextProps, IGeneralIconProperties
-{
+export interface ILabelProps extends ITextProps, IGeneralIconProperties {}
 
-}
-
-const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TElementSpacing | TCssGap): CSSProperties | undefined =>
+const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TCssGap | TSizeType): CSSProperties | undefined => 
 {
-  switch (iconPlacement)
+  switch (iconPlacement) 
   {
-    case 'left': return CssContainerHelper.getFlexRowContainer(gap ?? 'md');
-    case 'right': return CssContainerHelper.getFlexRowContainer(gap ?? 'md', true);
-    case 'top': return CssContainerHelper.getFlexColumnContainer(gap ?? 'md');
-    case 'bottom': return CssContainerHelper.getFlexColumnContainer(gap ?? 'md', true);
+    case 'left':
+      return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md');
+    case 'right':
+      return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md', true);
+    case 'top':
+      return ContainerPropertiesHelper.getFlexColumnContainer(gap ?? 'md');
+    case 'bottom':
+      return ContainerPropertiesHelper.getFlexColumnContainer(gap ?? 'md', true);
   }
 
-  return undefined;
+  return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md');
 };
 
-export function Label(props: ILabelProps)
+export function Label(props: ILabelProps) 
 {
+  const { isBlock = false, asBadge } = props;
+
   const isIcon = Assert.existValue(props.icon);
+  const isBadge = Assert.existValue(asBadge);
+
   const styleSpan: CSSProperties = {
     lineHeight: 'normal',
-    display: isIcon ? 'flex' : 'inline-block',
-    ...CssSpacingHelper.getPaddingProps(props),
-    ...CssSpacingHelper.getMarginProps(props),
-    ...CssContainerHelper.getContainerProps(props),
-    ...CssBorderHelper.getBorderProps(props),
-    ...CssBorderHelper.getBorderShadowProps(props),
-    ...CssFontHelper.getFontProps(props),
-    ...CssFontHelper.getTextEffectProps(props),
-    ...(isIcon ? getFlexContainer(props.iconPlacement, 'xxs') : undefined)
+    display: isBlock ? (isIcon ? 'flex' : 'block') : isIcon ? 'flex' : 'inline-block',
+    ...MarginPropertiesHelper.createMarginProps(props),
+    ...PaddingPropertiesHelper.createPaddingProps(props),
+    ...ContainerPropertiesHelper.createContainerProps(props),
+    ...BorderPropertiesHelper.createBorderProps(props),
+    ...BorderPropertiesHelper.createBorderShadowProps(props),
+    ...TextPropertiesHelper.createTextProps(props),
+    ...(isIcon ? getFlexContainer(props.iconPlacement, 'md') : undefined),
+    backgroundColor: isBadge ? ColorCssHelper.getColorCssWithAlpha(asBadge, 0.2) : undefined,
+    borderColor: isBadge
+      ? Assert.existValue(props.bdColor)
+        ? BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor)
+        : ColorCssHelper.getColorCssWithAlpha(asBadge, 0.5)
+      : BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor)
   };
 
   // Фильтруем кастомные пропсы перед передачей в div
   const domProps = CssPropertiesHelper.filterDOMProps(props);
 
-  if (isIcon)
+  if (isIcon) 
   {
     const textClass = css({ ...styleSpan, label: 'LabelContainer' });
 
@@ -56,7 +74,7 @@ export function Label(props: ILabelProps)
       </div>
     );
   }
-  else
+  else 
   {
     const textClass = css({ ...styleSpan, label: 'Label' });
     return (

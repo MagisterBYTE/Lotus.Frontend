@@ -4,7 +4,7 @@ showNotification } from '@mantine/notifications';
 import { IconCheck, IconExclamationCircleFilled } from '@tabler/icons-react';
 import { LocalizationCore } from 'lotus-core/localization';
 import { Assert } from 'lotus-core/utils';
-import { ThemeInstance } from '#theme';
+import { ColorCssHelper } from 'node_modules/lotus-core/dist/esm/modules/color/ColorCssHelper';
 export class Notifications {
     // eslint-disable-next-line complexity
     static showResult(result, notification) {
@@ -19,12 +19,12 @@ export class Notifications {
             notificationData.message = messagesNode;
             if (result.succeeded) {
                 notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.succeed;
-                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ThemeInstance.getElementColor('success').toCSSRgbValue();
+                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColorCss('success');
                 notificationData.icon = Assert.existValue(notification?.icon) ? notification?.icon : _jsx(IconCheck, { size: 18 });
             }
             else {
                 notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.failed;
-                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ThemeInstance.getElementColor('error').toCSSRgbValue();
+                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColorCss('error');
                 notificationData.icon = Assert.existValue(notification?.icon) ? notification?.icon : _jsx(IconExclamationCircleFilled, { size: 18 });
             }
         }

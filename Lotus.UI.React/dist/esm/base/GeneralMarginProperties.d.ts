@@ -1,4 +1,4 @@
-import { TCssPadding, TElementSpacing } from '#types';
+import { TCssPadding, TCssProperties, TSizeType } from '#types';
 /**
  * Общие свойства внешних отступов элемента UI
  */
@@ -6,22 +6,33 @@ export interface IGeneralMarginProperties {
     /**
      * Внешний отступ
      */
-    m?: TCssPadding | TElementSpacing;
+    m?: TCssPadding | TSizeType;
     /**
      * Внешний отступ слева
      */
-    ml?: TCssPadding | TElementSpacing;
+    ml?: TCssPadding | TSizeType;
     /**
      * Внешний отступ сверху
      */
-    mt?: TCssPadding | TElementSpacing;
+    mt?: TCssPadding | TSizeType;
     /**
      * Внешний отступ справа
      */
-    mr?: TCssPadding | TElementSpacing;
+    mr?: TCssPadding | TSizeType;
     /**
      * Внешний отступ снизу
      */
-    mb?: TCssPadding | TElementSpacing;
+    mb?: TCssPadding | TSizeType;
+}
+/**
+ * Вспомогательный класс для работы с внешними отступами элемента UI
+ */
+export declare abstract class MarginPropertiesHelper {
+    /**
+     * Создать свойства CSS по внешнему отступу в виде TCssProperties
+     * @param props Общие свойства внутренних отступов элемента UI
+     * @returns Свойства CSS по внешнему отступу в виде TCssProperties
+     */
+    static createMarginProps(props: IGeneralMarginProperties): TCssProperties;
 }
 //# sourceMappingURL=GeneralMarginProperties.d.ts.map

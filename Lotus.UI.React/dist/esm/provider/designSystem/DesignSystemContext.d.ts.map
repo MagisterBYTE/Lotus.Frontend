@@ -1,0 +1,1 @@
+{"version":3,"file":"DesignSystemContext.d.ts","sourceRoot":"","sources":["../../../../src/provider/designSystem/DesignSystemContext.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,aAAa,EAAE,MAAM,eAAe,CAAC;AAE9C,MAAM,WAAW,wBAAwB;IAEvC,YAAY,EAAC,aAAa,CAAC;IAC3B,eAAe,EAAE,CAAC,YAAY,EAAE,aAAa,KAAK,IAAI,CAAC;CACxD;AAED,eAAO,MAAM,mBAAmB,+DAAiE,CAAC"}

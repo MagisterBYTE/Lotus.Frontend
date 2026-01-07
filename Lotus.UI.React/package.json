@@ -1,6 +1,6 @@
 {
   "name": "lotus-ui-react",
-  "version": "3.0.9",
+  "version": "3.1.0",
   "scripts": {
     "test": "jest",
     "build": "tsc && npm run copy-assets",
@@ -24,7 +24,15 @@
     "#components/Display": "./src/components/Display/index.ts",
     "#components/Feedback": "./src/components/Feedback/index.ts",
     "#components/Layout": "./src/components/Layout/index.ts",
-    "#components/Surfaces": "./src/components/Surfaces/index.ts",
+    "#designSystem": "./src/designSystem/index.ts",
+    "#designSystem/background": "./src/designSystem/background/index.ts",
+    "#designSystem/border": "./src/designSystem/border/index.ts",
+    "#designSystem/colors": "./src/designSystem/colors/index.ts",
+    "#designSystem/font": "./src/designSystem/font/index.ts",
+    "#designSystem/sizes": "./src/designSystem/sizes/index.ts",
+    "#designSystem/text": "./src/designSystem/text/index.ts",
+    "#designSystem/types": "./src/designSystem/types/index.ts",
+    "#designSystem/сssVariables": "./src/designSystem/сssVariables/index.ts",
     "#external/mantine-react-table": "./src/external/mantine-react-table/index.ts",
     "#external/react-avatar-editor": "./src/external/react-avatar-editor/index.ts",
     "#helpers": "./src/helpers/index.ts",
@@ -32,9 +40,6 @@
     "#interactivity": "./src/interactivity/index.ts",
     "#modules/feedback": "./src/modules/feedback/index.ts",
     "#render": "./src/render/index.ts",
-    "#theme/constants": "./src/theme/constants/index.ts",
-    "#theme/types": "./src/theme/types/index.ts",
-    "#theme": "./src/theme/index.ts",
     "#types": "./src/types/index.ts"
   },
   "exports": {
@@ -66,9 +71,41 @@
       "import": "./dist/esm/components/Layout/index.js",
       "types": "./dist/esm/components/Layout/index.d.ts"
     },
-    "./components/Surfaces": {
-      "import": "./dist/esm/components/Layout/index.js",
-      "types": "./dist/esm/components/Layout/index.d.ts"
+    "./designSystem": {
+      "import": "./dist/esm/designSystem/index.js",
+      "types": "./dist/esm/designSystem/index.d.ts"
+    },
+    "./designSystem/background": {
+      "import": "./dist/esm/designSystem/background/index.js",
+      "types": "./dist/esm/designSystem/background/index.d.ts"
+    },
+    "./designSystem/border": {
+      "import": "./dist/esm/designSystem/border/index.js",
+      "types": "./dist/esm/designSystem/border/index.d.ts"
+    },
+    "./designSystem/colors": {
+      "import": "./dist/esm/designSystem/colors/index.js",
+      "types": "./dist/esm/designSystem/colors/index.d.ts"
+    },
+    "./designSystem/font": {
+      "import": "./dist/esm/designSystem/font/index.js",
+      "types": "./dist/esm/designSystem/font/index.d.ts"
+    },
+    "./designSystem/sizes": {
+      "import": "./dist/esm/designSystem/sizes/index.js",
+      "types": "./dist/esm/designSystem/sizes/index.d.ts"
+    },
+    "./designSystem/text": {
+      "import": "./dist/esm/designSystem/text/index.js",
+      "types": "./dist/esm/designSystem/text/index.d.ts"
+    },
+    "./designSystem/types": {
+      "import": "./dist/esm/designSystem/types/index.js",
+      "types": "./dist/esm/designSystem/types/index.d.ts"
+    },
+    "./designSystem/сssVariables": {
+      "import": "./dist/esm/designSystem/сssVariables/index.js",
+      "types": "./dist/esm/designSystem/сssVariables/index.d.ts"
     },
     "./helpers": {
       "import": "./dist/esm/helpers/index.js",
@@ -94,70 +131,66 @@
       "import": "./dist/esm/render/index.js",
       "types": "./dist/esm/render/index.d.ts"
     },
-    "./theme": {
-      "import": "./dist/esm/theme/index.js",
-      "types": "./dist/esm/theme/index.d.ts"
-    },
     "./types": {
       "import": "./dist/esm/types/index.js",
       "types": "./dist/esm/types/index.d.ts"
     }
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@storybook/react-vite": "^10.0.8",
+    "@eslint/js": "^9.39.2",
+    "@storybook/react-vite": "^10.1.11",
     "@types/eslint-plugin-jsx-a11y": "^6.10.1",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "copyfiles": "^2.4.1",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "eslint-plugin-storybook": "^10.0.8",
-    "globals": "^16.5.0",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "eslint-plugin-storybook": "^10.1.11",
+    "globals": "^17.0.0",
     "jest": "^30.2.0",
     "jiti": "^2.6.1",
-    "prettier": "3.6.2",
-    "storybook": "^10.0.8",
-    "ts-jest": "^29.4.5",
+    "prettier": "3.7.4",
+    "storybook": "^10.1.11",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0"
+    "typescript-eslint": "^8.52.0"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mantine/core": "^8.3.9",
-    "@mantine/dates": "^8.3.9",
-    "@mantine/hooks": "^8.3.9",
-    "@mantine/modals": "^8.3.9",
-    "@mantine/notifications": "^8.3.9",
-    "@mantine/nprogress": "^8.3.9",
-    "@tabler/icons-react": "^3.35.0",
+    "@mantine/core": "^8.3.11",
+    "@mantine/dates": "^8.3.11",
+    "@mantine/hooks": "^8.3.11",
+    "@mantine/modals": "^8.3.11",
+    "@mantine/notifications": "^8.3.11",
+    "@mantine/nprogress": "^8.3.11",
+    "@tabler/icons-react": "^3.36.1",
     "@tanstack/match-sorter-utils": "^8.19.4",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "^3.13.12",
+    "@tanstack/react-virtual": "^3.13.17",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-draggable": "^4.5.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.10.0",
+    "react-router-dom": "^7.11.0",
     "react-select": "^5.10.2",
     "react-toastify": "^11.0.5"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.10.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.11.0"
   },
   "type": "module",
   "main": "dist/cjs/index.js",

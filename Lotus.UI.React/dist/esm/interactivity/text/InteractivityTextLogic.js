@@ -1,57 +1,85 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectHelper } from 'lotus-core/helpers';
-import { ThemeInstance } from '#theme';
-import { nextThemeColor } from '#theme/types';
+import { ColorCssHelper, ColorTokenHelper } from 'lotus-core/modules/color';
+import { CssVariables } from '#designSystem/сssVariables';
+/**
+ * Класс для применения логики интерактивности к тексту элемента
+ */
 export class InteractivityTextLogic {
-    static getEffectByState(element, state, part, actionType) {
+    /**
+     * Построить свойства Css на основании контекста и указанного состояния элемента
+     * @param element Элемент (его пропсы)
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    static getEffectByState(element, state, context) {
         const textProps = {};
-        const backColor = ObjectHelper.getValue(element, 'backColor');
+        const backColor = ObjectHelper.getValue(element, 'bgColor');
         const textColor = ObjectHelper.getValue(element, 'textColor');
-        const hoverTextColor = ObjectHelper.getValue(element, 'hoverTextColor');
-        const pressedTextColor = ObjectHelper.getValue(element, 'pressedTextColor');
+        const textHoverColor = ObjectHelper.getValue(element, 'textHoverColor');
+        const textPressedColor = ObjectHelper.getValue(element, 'textPressedColor');
         switch (state) {
             case 'normal':
                 {
-                    textProps.color = ThemeInstance.getColorByStructuralPart(part, textColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
+                    const color = textColor ?? CssVariables.TextColor;
+                    textProps.color = ColorCssHelper.getColorCss(color);
                 }
                 break;
             case 'hover':
                 {
-                    textProps.color = ThemeInstance.getColorByStructuralPart(part, hoverTextColor ??
-                        nextThemeColor(textColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+                    const color = textHoverColor ?? ColorTokenHelper.next(textColor ?? backColor, -2) ?? CssVariables.TextColor;
+                    textProps.color = ColorCssHelper.getColorCss(color);
                 }
                 break;
             case 'pressed':
                 {
-                    textProps.color = ThemeInstance.getColorByStructuralPart(part, pressedTextColor ??
-                        nextThemeColor(textColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+                    const color = textPressedColor ?? ColorTokenHelper.next(textColor ?? backColor, 2) ?? CssVariables.TextColor;
+                    textProps.color = ColorCssHelper.getColorCss(color);
                 }
                 break;
         }
         return textProps;
     }
-    // eslint-disable-next-line max-params
-    static getProperties(element, type, state, part, actionType) {
+    /**
+     * Создать свойства Css
+     * @param element Элемент (его пропсы)
+     * @param type Тии интерактивности фона
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
+    static createProperties(element, type, state, context) {
         const textProps = {};
-        return InteractivityTextLogic.fillProperties(textProps, element, type, state, part, actionType);
+        return InteractivityTextLogic.fillProperties(textProps, element, type, state, context);
     }
+    /**
+     * Заполнить указанные свойства Css
+     * @param target Свойства Css
+     * @param element Элемент (его пропсы)
+     * @param type Тип интерактивности текста
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
     // eslint-disable-next-line max-params
-    static fillProperties(target, element, type, state, part, actionType) {
-        const backColor = ObjectHelper.getValue(element, 'backColor');
+    static fillProperties(target, element, type, state, context) {
+        const backColor = ObjectHelper.getValue(element, 'bgColor');
         const textColor = ObjectHelper.getValue(element, 'textColor');
         switch (type) {
             case 'default':
                 {
-                    target.color = InteractivityTextLogic.getEffectByState(element, state, part, actionType).color;
+                    target.color = InteractivityTextLogic.getEffectByState(element, state, context).color;
                 }
                 break;
             case 'background':
                 {
                     if (textColor) {
-                        target.color = InteractivityTextLogic.getEffectByState(element, state, part, actionType).color;
+                        target.color = InteractivityTextLogic.getEffectByState(element, state, context).color;
                     }
                     else {
-                        target.color = ThemeInstance.getPaletteColor(backColor ?? 'primary')?.onText('main').toCSSRgbValue();
+                        target.color = ColorCssHelper.getColorContrastCss(backColor ?? 'primary');
                     }
                 }
                 break;

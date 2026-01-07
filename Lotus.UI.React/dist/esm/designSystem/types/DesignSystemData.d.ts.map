@@ -1,0 +1,1 @@
+{"version":3,"file":"DesignSystemData.d.ts","sourceRoot":"","sources":["../../../../src/designSystem/types/DesignSystemData.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,0BAA0B,CAAC;AACvD,OAAO,EAAE,YAAY,EAAE,MAAM,eAAe,CAAC;AAE7C;;GAEG;AACH,MAAM,WAAW,iBAAiB;IAEhC;;OAEG;IACH,WAAW,EAAE,YAAY,CAAC;IAE1B;;OAEG;IACH,YAAY,EAAC,WAAW,CAAC;CAC1B"}

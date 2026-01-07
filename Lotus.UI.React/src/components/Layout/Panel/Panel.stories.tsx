@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Panel } from './Panel';
 import { ArgTypesStory, IconsStory, TextStory } from '#storydata';
-import { TElementSizes } from '#types';
+import { TSizeTypes } from '#types';
 
 const meta = {
   title: 'Layout/Panel',
@@ -12,7 +12,7 @@ const meta = {
   argTypes: {
     // Params
     centerContent: { control: 'inline-radio', options: ['horizontally', 'vertically', 'center', undefined], table: { category: 'Params' } },
-    size: { control: 'inline-radio', options: [...TElementSizes, undefined], table: { category: 'Params' } },
+    size: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
     header: { control: 'text', table: { category: 'Params' } },
 
     // Size
@@ -47,9 +47,9 @@ export const PanelDefault: Story = {
 
     children: TextStory.SmallText(),
     m: 'sm',
-    borderStyle: 'double',
-    borderWidth: 3,
-    borderShadow: 4,
+    bdStyle: 'double',
+    bdWidth: 3,
+    bdShadow: 4,
 
     headerProps: {
       children: 'Заголовок',
@@ -61,15 +61,15 @@ export const PanelDefault: Story = {
     },
 
     h: '100%',
-    borderColor: 'brown',
-    borderRadius: 'xs',
-    backColor: 'greenPalest',
-    shadow: 10,
+    bdColor: 'brown',
+    bdRadius: 'xs',
+    bgColor: 'greenPalest',
+    bgShadow: 10,
     pl: 'xs',
     pt: 'xxl',
     w: '100%',
-    borderRadiusTopLeft: 'xs',
-    borderRadiusTopRight: 'xs'
+    bdRadiusTopLeft: 'xs',
+    bdRadiusTopRight: 'xs'
   }
 };
 
@@ -81,18 +81,18 @@ export const PanelAndPanelCenter: Story = {
     },
 
     children: (
-      <Panel borderRadius backColor="blueGreyLight" p={'md'}>
+      <Panel bdRadius bgColor="blueGreyLight" p={'md'}>
         {TextStory.MiddleText()}
       </Panel>
     ),
 
     centerContent: 'center',
     p: 'lg',
-    borderStyle: 'solid',
+    bdStyle: 'solid',
     w: '50vw',
     h: '30vw',
-    backColor: 'blueGreyDark',
-    shadow: 10,
+    bgColor: 'blueGreyDark',
+    bgShadow: 10,
     header: 'Большой текст',
     m: 'lg'
   }
@@ -102,17 +102,17 @@ export const PanelBrown: Story = {
   name: 'Panel Brown',
   args: {
     children: (
-      <Panel borderRadius backColor="blueGreyLight" p={'md'} w={'min-content'}>
+      <Panel bdRadius bgColor="blueGreyLight" p={'md'} w={'min-content'}>
         {TextStory.MiddleText()}
       </Panel>
     ),
 
     centerContent: 'vertically',
     p: 'md',
-    borderStyle: 'solid',
+    bdStyle: 'solid',
     w: '30vw',
     h: 'min-content',
-    backColor: 'brownBlack',
-    shadow: 10
+    bgColor: 'brownBlack',
+    bgShadow: 10
   }
 };

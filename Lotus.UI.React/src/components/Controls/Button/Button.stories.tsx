@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Meta, StoryObj } from '@storybook/react';
-import { Colors } from 'lotus-core/modules/color';
+import { TColorToken, TColorTokens } from 'lotus-core/modules/color';
 import { GiAnt } from 'react-icons/gi';
 import { Button } from './Button';
 import { TButtonVariant } from './ButtonVariant';
-import { TThemeColor, TThemeColors } from '#theme/types';
-import React from 'react';
-import { TElementSizes, TIconPlacements, TTextEffects } from '#types';
-import { IconsStory } from '../../../.storydata/IconsStory';
+import { ArgTypesStory, IconsStory } from '#storydata';
+import { TCssBackgroundColor, TSizeTypes } from '#types';
 
-const DivButton = (variant: TButtonVariant, backColor: TThemeColor, propsOther: any) =>
+const DivButton = (variant: TButtonVariant, backColor: TCssBackgroundColor|TColorToken, propsOther: any) =>
 {
   return <Button 
     key={`${variant}_${backColor}`}
@@ -18,7 +15,7 @@ const DivButton = (variant: TButtonVariant, backColor: TThemeColor, propsOther: 
   </Button>
 }
 
-const DivButtonsColumn = (backColor: TThemeColor, propsOther: any) =>
+const DivButtonsColumn = (backColor: TCssBackgroundColor|TColorToken, propsOther: any) =>
 {
   const variants:TButtonVariant[] = ['filled', 'outline', 'text', 'icon']
   return <div key={`${backColor}`} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'stretch'}}>
@@ -50,55 +47,35 @@ const meta = {
   argTypes:
   {
     // IGeneralBaseElementProperties
-    disabled: { control: 'boolean', table: { category: 'Base', order: 1 } },
-    size: { control: 'inline-radio', options: [...TElementSizes, undefined], table: { category: 'Base', order: 2  } },
+    disabled: { control: 'boolean', table: { category: 'Base' } },
+    size: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Base' } },
     extraClass: { table: { disable: true } },
 
     // IButtonBaseProps
-    overrideButtonStyle: { table: { disable: true } },
-    variant: { control: 'inline-radio', table: { category: 'Button', order: 4  } },
-    isSelectedStatus: { control: 'boolean', table: { category: 'Button', order: 5  } },
+    variant: { control: 'inline-radio', table: { category: 'Button'  } },
+    isSelectedStatus: { control: 'boolean', table: { category: 'Button' } },
     isSelected: { table: { disable: true } },
     onSelected: { table: { disable: true } },
-    hasRippleEffect: { control: 'boolean', table: { category: 'Button', order: 6 } },
-    hasScaleEffect: { control: 'boolean', table: { category: 'Button', order: 7 } },
-    hasShadowBorderEffect: { control: 'boolean', table: { category: 'Button', order: 8 } },
-    hasShadowBoxEffect: { control: 'boolean', table: { category: 'Button', order: 9 } },
+    hasRippleEffect: { control: 'boolean', table: { category: 'Button' } },
+    hasScaleEffect: { control: 'boolean', table: { category: 'Button' } },
+    hasShadowBorderEffect: { control: 'boolean', table: { category: 'Button' } },
+    hasShadowBoxEffect: { control: 'boolean', table: { category: 'Button' } },
 
-    // IGeneralBackgroundProperties
-    backColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Background', order: 10 } },
-    hoverBackColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Background', order: 11  }},
-    pressedBackColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Background', order: 12 } },
+      // Padding & Margin
+      ...ArgTypesStory.Padding,
+      ...ArgTypesStory.Margin,
 
-    // IGeneralTextProperties
-    fontBold: { control: 'boolean', table: { category: 'Text', order: 13 } },
-    fontAccent: { control: 'boolean', table: { category: 'Text', order: 14 } },
-    textEffect: { control: 'inline-radio', options: [...TTextEffects, undefined], table: { category: 'Text', order: 15 } },
-    textAlign: { control: 'inline-radio', options: ['left', 'right', 'center', undefined], table: { category: 'Text', order: 16 } },
-    textColorHarmonious: { control: 'boolean', table: { category: 'Text', order: 17 } },
-    textColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Text', order: 18 } },
-    hoverTextColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Text', order: 19 } },
-    pressedTextColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Text', order: 20 } },
+    // Label
+    ...ArgTypesStory.Text,
+    ...ArgTypesStory.Icon,
 
-    // IGeneralBorderProperties
-    borderRadius: { control: 'boolean', table: { category: 'Border', order: 21 } },
-    borderStyle: { control: 'inline-radio', table: { category: 'Border', order: 22 } },
-    borderWidth: { control: 'number', table: { category: 'Border', order: 23 } },
-    borderColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Border', order: 24 } },
-    hoverBorderColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Border', order: 25 } },
-    pressedBorderColor: { control: 'inline-radio', options: [...TThemeColors, undefined], table: { category: 'Border', order: 26 } },
-
-    // IGeneralIconProperties
-    icon: { table: { disable: true } },
-    iconColor: { control: 'inline-radio', options: [...TThemeColors, ...TThemeColors, undefined], table: { category: 'Icon', order: 27 } },
-    iconPlacement: { control: 'inline-radio', options: [...TIconPlacements, undefined], table: { category: 'Icon', order: 28 } },
-    iconStyle: { table: { disable: true } },
-    imageDatabase: { table: { disable: true } },
+    // Border Background
+    ...ArgTypesStory.Border,
+    ...ArgTypesStory.Background,
 
     onClick: { table: { disable: true } },
     children: { table: { disable: true } },
     style: { table: { disable: true } },
-    backImage: { table: { disable: true } }
   }
 } satisfies Meta<typeof Button>;
 
@@ -111,7 +88,7 @@ export const TextVariants: Story = {
   },
   render: (args) =>
   {
-    const colors:TThemeColor[] = [...TThemeColors];
+    const colors:TColorToken[] = [...TColorTokens];
     return <div style={{ display: 'flex', flexDirection: 'row' }}>
       {
         colors.map(x =>
@@ -128,11 +105,11 @@ export const IconReactVariants: Story = {
   name: 'IconReactVariants',
   args: {
     icon: <GiAnt />,
-    borderRadius: '40%'
+    bdRadius: '40%'
   },
   render: (args) =>
   {
-    const colors:TThemeColor[] = [...TThemeColors];
+    const colors:TColorToken[] = [...TColorTokens];
     return <div style={{ display: 'flex', flexDirection: 'row' }}>
       {
         colors.map(x =>
@@ -152,7 +129,7 @@ export const IconImageVariants: Story = {
   },
   render: (args) =>
   {
-    const colors:TThemeColor[] = [...TThemeColors];
+    const colors:TColorToken[] = [...TColorTokens];
     return <div style={{ display: 'flex', flexDirection: 'row' }}>
       {
         colors.map(x =>

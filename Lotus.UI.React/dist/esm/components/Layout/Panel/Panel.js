@@ -4,10 +4,10 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { css } from '@emotion/css';
 import { Assert } from 'lotus-core/utils';
 import { isValidElement } from 'react';
-import { hasBorderProps } from '#base';
-import { BuilderCssProperties } from '#builder';
+import { BackgroundPropertiesHelper, BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
 import { Label } from '#components/Display';
-import { CssBackgroundHelper, CssBorderHelper, CssFontHelper, CssPropertiesHelper, CssSpacingHelper } from '#helpers';
+import { FontSizes, MarginSizes, PaddingSizes } from '#designSystem/sizes';
+import { CssPropertiesHelper } from '#helpers';
 function buildPanelProps(props) {
     if (props.centerContent === 'horizontally') {
         return {
@@ -37,22 +37,27 @@ export function Panel(props) {
     const isHeaderComponent = isValidElement(header);
     const isHeaderText = typeof header === 'string';
     const styleDiv = {
-        ...BuilderCssProperties.buildContainer(props),
-        ...BuilderCssProperties.buildBackground(props),
+        ...MarginPropertiesHelper.createMarginProps(props),
+        ...PaddingPropertiesHelper.createPaddingProps(props),
+        ...ContainerPropertiesHelper.createContainerProps(props),
+        ...BackgroundPropertiesHelper.createBackgroundProps(props),
+        ...BackgroundPropertiesHelper.createBoxShadowProps(props),
+        ...BorderPropertiesHelper.createBorderProps(props),
+        ...BorderPropertiesHelper.createBorderShadowProps(props),
         ...buildPanelProps(props)
     };
     // eslint-disable-next-line complexity
     function getHeaderStyle() {
-        const hFontSize = CssFontHelper.getFontSizeInPixels(size ?? headerProps?.fontSize ?? 'md');
-        let topOffset = hFontSize + (hasBorderProps(props) ? -CssBorderHelper.getBorderWidthPixels(props.borderWidth ?? 2) : 0);
-        topOffset -= CssSpacingHelper.getSpacingInPixels(headerProps?.p ?? headerProps?.pt ?? 'xxs');
-        topOffset -= CssSpacingHelper.getSpacingInPixels(headerProps?.p ?? headerProps?.pb ?? 'xxs');
+        const hFontSize = FontSizes.Default.toPixel(size ?? headerProps?.fontSize ?? 'md');
+        let topOffset = hFontSize + (BorderPropertiesHelper.hasBorderProps(props) ? -MarginSizes.Default.toPixel(props.bdWidth ?? 2) : 0);
+        topOffset -= PaddingSizes.Default.toPixel(headerProps?.p ?? headerProps?.pt ?? 'md');
+        topOffset -= PaddingSizes.Default.toPixel(headerProps?.p ?? headerProps?.pb ?? 'md');
         topOffset -= 2;
         const headerStyle = {
             position: 'absolute',
-            background: headerProps?.style?.backgroundColor ?? CssBackgroundHelper.getBackgroundColorPropsValue(otherProps.backColor) ?? 'var(--mantine-color-default)',
-            top: headerProps?.style?.top ?? `${topOffset + CssSpacingHelper.getSpacingInPixels(props.m ?? props.mt ?? 0)}px`,
-            left: headerProps?.style?.left ?? `${40 + CssSpacingHelper.getSpacingInPixels(props.m ?? props.ml ?? 0)}px`
+            background: headerProps?.style?.backgroundColor ?? BackgroundPropertiesHelper.getBackgroundColorPropsValue(otherProps.bgColor) ?? 'var(--mantine-color-default)',
+            top: headerProps?.style?.top ?? `${topOffset + MarginSizes.Default.toPixel(props.m ?? props.mt ?? 0)}px`,
+            left: headerProps?.style?.left ?? `${40 + MarginSizes.Default.toPixel(props.m ?? props.ml ?? 0)}px`
         };
         return { ...headerStyle, ...headerProps?.style };
     }
@@ -62,7 +67,7 @@ export function Panel(props) {
     if (Assert.existValue(headerProps) || isHeaderText) {
         return (_jsxs("div", { className: panelClass, ...domProps, children: [isHeaderComponent && header, isHeaderComponent === false && (_jsx(Label, { ...headerProps, 
                     // eslint-disable-next-line react/no-children-prop
-                    children: isHeaderText ? header : headerProps?.children, borderColor: headerProps?.borderColor ?? otherProps.borderColor, borderRadius: headerProps?.borderRadius ?? otherProps.borderRadius, borderShadow: headerProps?.borderShadow ?? otherProps.borderShadow, borderStyle: headerProps?.borderStyle ?? otherProps.borderStyle, borderWidth: headerProps?.borderWidth ?? otherProps.borderWidth, p: headerProps?.p ?? 'xxs', style: getHeaderStyle(), withBorder: headerProps?.withBorder ?? otherProps.withBorder })), children] }));
+                    children: isHeaderText ? header : headerProps?.children, bdColor: headerProps?.bdColor ?? otherProps.bdColor, bdRadius: headerProps?.bdRadius ?? otherProps.bdRadius, bdShadow: headerProps?.bdShadow ?? otherProps.bdShadow, bdStyle: headerProps?.bdStyle ?? otherProps.bdStyle, bdWidth: headerProps?.bdWidth ?? otherProps.bdWidth, p: headerProps?.p ?? 'xxs', style: getHeaderStyle(), withBorder: headerProps?.withBorder ?? otherProps.withBorder })), children] }));
     }
     if (isHeaderComponent) {
         return (_jsxs("div", { className: panelClass, ...domProps, children: [header, children] }));

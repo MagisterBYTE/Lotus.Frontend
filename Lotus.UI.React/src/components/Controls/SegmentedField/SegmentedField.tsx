@@ -3,7 +3,7 @@ import { IOption, OptionHelper } from 'lotus-core/modules/option';
 import { PropertyType, TKey } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
 import { JSX, useEffect, useState } from 'react';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
 import { RenderOption } from '#render';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
@@ -26,7 +26,7 @@ export function SegmentedField<TValueOption extends TKey = TKey>(props: ISegment
 
   const [data, setData] = useState<TSegmentedData>([]);
 
-  const containerProps = getContainerProperties(otherProps);
+  const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   const prepareData = () =>
   {

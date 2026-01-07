@@ -1,65 +1,130 @@
-import { TThemeColor } from '#theme/types';
-import { TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TElementRadius, TShadowElevation } from '#types';
+import { TColorToken } from 'lotus-core/modules/color';
+import { TCssBorderColor, TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TCssBoxShadow, TCssProperties, TShadowElevation, TSizeType } from '#types';
+/**
+ * Тип стороны границы
+ */
+export declare const TBorderSideSet: {
+    /**
+     * Левая граница
+     */
+    readonly Left: 1;
+    /**
+     * Правая граница
+     */
+    readonly Right: 2;
+    /**
+     * Верхняя граница
+     */
+    readonly Top: 4;
+    /**
+     * Нижняя граница
+     */
+    readonly Bottom: 8;
+};
 /**
  * Общие свойства для границы элемента UI
  */
 export interface IGeneralBorderProperties {
     /**
-     * статус наличия границы
+     * Статус наличия границы
      */
-    withBorder?: boolean;
+    withBorder?: boolean | number;
     /**
      * Тип стиля границы
      */
-    borderStyle?: TCssBorderStyle;
+    bdStyle?: TCssBorderStyle;
     /**
      * Ширина границы
      */
-    borderWidth?: TCssBorderWidth | number;
+    bdWidth?: TCssBorderWidth | number;
     /**
      * Цвет границы
      */
-    borderColor?: TThemeColor;
+    bdColor?: TCssBorderColor | TColorToken;
     /**
      * Скругление границы
      */
-    borderRadius?: TCssBorderRadius | TElementRadius | true;
+    bdRadius?: TCssBorderRadius | TSizeType | true;
     /**
      * Скругление границы верхнего левого края
      */
-    borderRadiusTopLeft?: TCssBorderRadius | TElementRadius | true;
+    bdRadiusTopLeft?: TCssBorderRadius | TSizeType | true;
     /**
      * Скругление границы нижнего левого края
      */
-    borderRadiusBottomLeft?: TCssBorderRadius | TElementRadius | true;
+    bdRadiusBottomLeft?: TCssBorderRadius | TSizeType | true;
     /**
      * Скругление границы верхнего правого края
      */
-    borderRadiusTopRight?: TCssBorderRadius | TElementRadius | true;
+    bdRadiusTopRight?: TCssBorderRadius | TSizeType | true;
     /**
      * Скругление границы нижнего правого края
      */
-    borderRadiusBottomRight?: TCssBorderRadius | TElementRadius | true;
+    bdRadiusBottomRight?: TCssBorderRadius | TSizeType | true;
     /**
      * Размер тени границы
      */
-    borderShadow?: TShadowElevation;
+    bdShadow?: TShadowElevation;
 }
 /**
- * Проверка на наличие любой свойства из границ элемента UI
- * @param borderStyle Тип стиля границы
- * @param borderWidth Ширина границы
- * @param borderColor Цвет границы
+ * Вспомогательный класс для работы с общими свойствами границы элемента UI
  */
-export declare function hasBorderProperties(borderStyle?: TCssBorderStyle, borderWidth?: TCssBorderWidth, borderColor?: TThemeColor): boolean;
-/**
- * Проверка на наличие любой свойства из границ элемента UI
- * @param borderProps Общие свойства для границы элемента UI
- */
-export declare function hasBorderProps(borderProps: IGeneralBorderProperties): boolean;
-/**
- * Проверка на наличие полных свойства радиуса из границ элемента UI
- * @param borderProps Общие свойства для границы элемента UI
- */
-export declare function hasNonShorthandBorderRadiusProps(borderProps: IGeneralBorderProperties): boolean;
+export declare abstract class BorderPropertiesHelper {
+    /**
+     * Проверка на наличие любой свойства из границ элемента UI
+     * @param borderStyle Тип стиля границы
+     * @param borderWidth Ширина границы
+     * @param borderColor Цвет границы
+     */
+    static hasBorderArgs(borderStyle?: TCssBorderStyle, borderWidth?: TCssBorderWidth, borderColor?: string): boolean;
+    /**
+     * Проверка на наличие любой свойства из границ элемента UI
+     * @param borderProps Общие свойства для границы элемента UI
+     */
+    static hasBorderProps(borderProps: IGeneralBorderProperties): boolean;
+    /**
+     * Проверка на наличие полных свойства радиуса из границ элемента UI
+     * @param borderProps Общие свойства для границы элемента UI
+     */
+    static hasNonShorthandBorderRadiusProps(borderProps: IGeneralBorderProperties): boolean;
+    /**
+     * Создать свойства CSS по границе в виде TCssProperties
+     * @param props Общие свойства для границы элемента UI
+     * @returns Свойства CSS по границе в виде TCssProperties
+     */
+    static createBorderProps(props: IGeneralBorderProperties): TCssProperties;
+    /**
+     * Получить значение свойства CSS по цвету в виде TCssBorderRadius
+     * @param value Значение свойства CSS
+     * @returns Значение свойства CSS по цвету в виде TCssBorderRadius
+     */
+    static getBorderColorPropsValue(value?: string): TCssBorderColor | undefined;
+    /**
+     * Получить значение свойства CSS по радиусу в виде TCssBorderRadius
+     * @param designSystem Дизайн-система
+     * @param value Значение свойства CSS
+     * @returns Значение свойства CSS по радиусу в виде TCssBorderRadius
+     */
+    static getBorderRadiusPropsValue(value?: TCssBorderRadius | TSizeType | true): TCssBorderRadius | undefined;
+    /**
+     * Получить значение свойства CSS по ширине границы в виде TCssBorderWidth
+     * @param value Значение свойства CSS
+     * @returns Значение свойства CSS по ширине границы в виде TCssBorderWidth
+     */
+    static getBorderWidthPropsValue(value?: TCssBorderWidth | number): TCssBorderWidth | undefined;
+    /**
+     * Создать свойства CSS по границе тени в виде TCssProperties
+     * @param props Общие свойства для границы элемента UI
+     * @returns Свойства CSS по границе тени в виде TCssProperties
+     */
+    static createBorderShadowProps(props: IGeneralBorderProperties): TCssProperties;
+    /**
+     * Получить значение свойства CSS по тени границы в виде TCssBoxShadow
+     * @param elevation Относительный размер тени
+     * @param color Вариант цвета темы
+     * @param shadowAlpha Альфа компонент цвета для тени
+     * @returns Свойства CSS по тени границы в виде TCssBoxShadow
+     */
+    static getBorderShadowPropsValue(elevation?: TShadowElevation, color?: string, shadowAlpha?: number): TCssBoxShadow | undefined;
+}
 //# sourceMappingURL=GeneralBorderProperties.d.ts.map

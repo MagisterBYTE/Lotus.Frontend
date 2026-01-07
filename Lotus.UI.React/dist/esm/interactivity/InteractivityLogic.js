@@ -26,23 +26,23 @@ export class InteractivityLogic {
                     switch (state) {
                         case 'normal':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'normal', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'normal', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'maybe', 'normal', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'normal', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'normal', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'maybe', 'normal', context);
                             }
                             break;
                         case 'hover':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'hover', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'maybe', 'hover', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'hover', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'maybe', 'hover', context);
                             }
                             break;
                         case 'pressed':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'pressed', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'maybe', 'pressed', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'pressed', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'maybe', 'pressed', context);
                             }
                             break;
                     }
@@ -53,23 +53,23 @@ export class InteractivityLogic {
                     switch (state) {
                         case 'normal':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'none', 'normal', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'normal', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'none', 'normal', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'normal', context);
                             }
                             break;
                         case 'hover':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'hover', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'hover', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
                             }
                             break;
                         case 'pressed':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'pressed', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'pressed', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
                             }
                             break;
                     }
@@ -80,23 +80,23 @@ export class InteractivityLogic {
                     switch (state) {
                         case 'normal':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'none', 'normal', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'normal', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'none', 'normal', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'normal', context);
                             }
                             break;
                         case 'hover':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'hover', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'hover', context);
                             }
                             break;
                         case 'pressed':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'pressed', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'pressed', context);
                             }
                             break;
                     }
@@ -107,23 +107,23 @@ export class InteractivityLogic {
                     switch (state) {
                         case 'normal':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'none', 'normal', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'invisible', 'normal', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'none', 'normal', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'invisible', 'normal', context);
                             }
                             break;
                         case 'hover':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
                             }
                             break;
                         case 'pressed':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'element');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'pressed', 'element');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'element');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'background', 'pressed', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
                             }
                             break;
                     }
@@ -135,23 +135,23 @@ export class InteractivityLogic {
                     switch (state) {
                         case 'normal':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'normal', 'background');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', 'text');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'normal', 'border');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'normal', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'normal', context);
                             }
                             break;
                         case 'hover':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'hover', 'background');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', 'text');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'border');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'hover', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
                             }
                             break;
                         case 'pressed':
                             {
-                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'pressed', 'background');
-                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', 'text');
-                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'border');
+                                InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'pressed', context);
+                                InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', context);
+                                InteractivityBorderLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
                             }
                             break;
                     }
@@ -163,42 +163,42 @@ export class InteractivityLogic {
                         case 'normal':
                             {
                                 if (isSelected) {
-                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'normal', 'background');
-                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', 'text');
-                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'normal', 'border');
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'normal', context);
+                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', context);
+                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'normal', context);
                                 }
                                 else {
-                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'normal', 'background');
-                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', 'text');
-                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'normal', 'border');
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'normal', context);
+                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'normal', context);
+                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'normal', context);
                                 }
                             }
                             break;
                         case 'hover':
                             {
                                 if (isSelected) {
-                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', 'background');
-                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', 'text');
-                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'hover', 'border');
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'hover', context);
+                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', context);
+                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'hover', context);
                                 }
                                 else {
-                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'hover', 'background');
-                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', 'text');
-                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'hover', 'border');
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'hover', context);
+                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'hover', context);
+                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'hover', context);
                                 }
                             }
                             break;
                         case 'pressed':
                             {
                                 if (isSelected) {
-                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', 'background');
-                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', 'text');
-                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'pressed', 'border');
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'mandatory', 'pressed', context);
+                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', context);
+                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'pressed', context);
                                 }
                                 else {
-                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'pressed', 'background');
-                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', 'text');
-                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'pressed', 'border');
+                                    InteractivityBackgroundLogic.fillProperties(effectProps, element, 'initial', 'pressed', context);
+                                    InteractivityTextLogic.fillProperties(effectProps, element, 'default', 'pressed', context);
+                                    InteractivityBorderLogic.fillProperties(effectProps, element, 'none', 'pressed', context);
                                 }
                             }
                             break;

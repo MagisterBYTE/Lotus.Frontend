@@ -1,30 +1,31 @@
 import { Box, VerticalStack } from '#components/Layout';
 import { Divider } from '#components/Display';
 import { SegmentedField, SelectField, SliderField, SwitchField, TextField } from '#components/Controls';
-import { TThemeColor, TThemeColors } from '#theme';
 import
 {
+  TCssBackgroundColor,
   TCssBorderRadius,
   TCssBorderStyle,
   TCssBorderStyles,
-  TElementRadiuses,
-  TElementSize,
-  TElementSizes,
   TShadowElevation,
-  TShadowElevations
+  TShadowElevations,
+  TSizeType,
+  TSizeTypes
 } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
 import { OptionsStory } from '#storydata';
+import { TColorToken, TColorTokens } from 'lotus-core/modules/color';
+
 interface ISamplePanelProps
 {
   inlinePlace?: boolean;
   labelWidth?: number;
   isDisabled?: boolean;
-  borderStyle?: TCssBorderStyle;
-  borderRadius?: TCssBorderRadius;
+  bdStyle?: TCssBorderStyle;
+  bdRadius?: TCssBorderRadius;
   isHarmonious: boolean;
-  backColor?: TThemeColor;
-  size?: TElementSize;
+  backColor?: TCssBackgroundColor|TColorToken;
+  size?: TSizeType;
   shadowElevation?: TShadowElevation;
 }
 
@@ -44,10 +45,10 @@ const meta = {
     inlinePlace: { control: 'boolean' },
     isDisabled: { control: 'boolean' },
     labelWidth: { control: { type: 'number', min: 10, max: 70 } },
-    size: { control: 'inline-radio', options: [...TElementSizes, undefined] },
-    borderStyle: { control: 'inline-radio', options: [...TCssBorderStyles, undefined] },
-    borderRadius: { control: 'inline-radio', options: [...TElementRadiuses, undefined] },
-    backColor: { control: 'select', options: [undefined, ...TThemeColors] },
+    size: { control: 'inline-radio', options: [...TSizeTypes, undefined] },
+    bdStyle: { control: 'inline-radio', options: [...TCssBorderStyles, undefined] },
+    bdRadius: { control: 'inline-radio', options: [...TSizeTypes, undefined] },
+    backColor: { control: 'select', options: [undefined, ...TColorTokens] },
     shadowElevation: { control: 'select', options: [undefined, ...TShadowElevations] }
   }
 } satisfies Meta<typeof SamplePanel>;
@@ -64,10 +65,10 @@ export const PanelPerson: Story = {
     return (
       <Box centerContent='center' w={'100%'} h={'100%'} p={'lg'} withBorder>
         <VerticalStack
-          borderRadius={args.borderRadius}
-          borderStyle={args.borderStyle}
-          shadow={args.shadowElevation}
-          backColor={args.backColor}
+          bdRadius={args.bdRadius}
+          bdStyle={args.bdStyle}
+          bgShadow={args.shadowElevation}
+          bgColor={args.backColor}
           w={'clamp(300px, 90%, 800px)'}
           p={'md'}
           spacing={'sm'}

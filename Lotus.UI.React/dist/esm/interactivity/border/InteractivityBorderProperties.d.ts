@@ -1,5 +1,6 @@
+import { TColorToken } from 'lotus-core/modules/color';
 import { IGeneralBorderProperties } from '#base';
-import { TThemeColor } from '#theme/types';
+import { TCssBorderColor } from '#types';
 /**
  * Интерактивное взаимодействие границы элемента
  */
@@ -7,10 +8,10 @@ export interface IInteractivityBorderProperties extends IGeneralBorderProperties
     /**
      * Цвет границы при наведении
      */
-    hoverBorderColor?: TThemeColor;
+    bdHoverColor?: TCssBorderColor | TColorToken;
     /**
      * Цвет границы при нажатии
      */
-    pressedBorderColor?: TThemeColor;
+    bdPressedColor?: TCssBorderColor | TColorToken;
 }
 //# sourceMappingURL=InteractivityBorderProperties.d.ts.map

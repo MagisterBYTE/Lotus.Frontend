@@ -1,12 +1,12 @@
+import { TColorToken } from 'lotus-core/modules/color';
 import { ComponentPropsWithRef } from 'react';
 import { IGeneralBorderProperties, IGeneralContainerProperties } from '#base';
-import { TThemeColor } from '#theme/types';
-import { TCssBorderStyle, TCssBorderWidth } from '#types';
+import { TCssBorderColor, TCssBorderStyle, TCssBorderWidth } from '#types';
 export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof IGeneralBorderProperties>, ComponentPropsWithRef<'div'> {
     isVertical?: boolean;
     lineStyle?: TCssBorderStyle;
     lineThickness?: TCssBorderWidth;
-    lineColor?: TThemeColor;
+    lineColor?: TCssBorderColor | TColorToken;
     nml?: boolean;
     nmr?: boolean;
     nmt?: boolean;

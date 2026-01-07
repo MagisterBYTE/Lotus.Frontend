@@ -1,6 +1,6 @@
 import { TextInput, TextInputProps } from '@mantine/core';
 import { FC, JSX } from 'react';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps } from '#components/Layout';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
 
@@ -13,7 +13,7 @@ export const TextField: FC<ITextFieldProps> = (props: ITextFieldProps): JSX.Elem
 {
   const { textInputProps, ...otherProps } = props;
 
-  const containerProps = getContainerProperties(otherProps);
+  const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   const textInput = (<TextInput
     error={otherProps.error}

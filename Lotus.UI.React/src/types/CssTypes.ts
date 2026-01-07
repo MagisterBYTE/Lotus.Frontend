@@ -82,6 +82,11 @@ export type TCssLineHeight = Property.LineHeight;
 export type TCssBoxShadow = Property.BoxShadow;
 
 /**
+ * Тип свойства основного цвета Css
+ */
+export type TCssColor = Property.Color;
+
+/**
  * Тип свойства фонового цвета Css
  */
 export type TCssBackgroundColor = Property.BackgroundColor;

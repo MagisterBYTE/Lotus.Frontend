@@ -1,3 +1,3 @@
 export { InteractivityTextLogic } from './InteractivityTextLogic';
-export { IInteractivityTextProperties } from './InteractivityTextProperties';
-export { TInteractivityTextType } from './InteractivityTextType';
+export { type IInteractivityTextProperties } from './InteractivityTextProperties';
+export { type TInteractivityTextType } from './InteractivityTextType';

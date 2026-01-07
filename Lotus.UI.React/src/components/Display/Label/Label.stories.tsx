@@ -3,6 +3,7 @@ import { ArgTypesStory, IconsStory } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Label } from './Label';
 import { FcAddRow } from 'react-icons/fc';
+import { TColorTokens } from 'lotus-core/modules/color';
 
 const meta = {
   title: 'Display/Label',
@@ -11,7 +12,10 @@ const meta = {
   args: {},
 
   argTypes: {
+    // Label
     children: { control: 'text', table: { category: 'Label' } },
+    asBadge: { control: 'select', options: [undefined, ...TColorTokens], table: { category: 'Label' } },
+    isBlock: { control: 'boolean', table: { category: 'Label' } },
 
     // Label
     ...ArgTypesStory.Text,
@@ -48,7 +52,7 @@ export const LabelShadow: Story = {
     children: 'Надпись',
     fontSize: 'md',
     fontBold: true,
-    fontAccent: true,
+    fontAccent: 'accent',
     textEffect: 'shadow'
   },
 
@@ -62,11 +66,11 @@ export const LabelBorder: Story = {
     children: 'Надпись',
     withBorder: true,
     p: 'xxs',
-    borderStyle: 'solid',
-    borderRadius: 'sm',
-    borderRadiusTopLeft: 'sm',
-    borderRadiusTopRight: 'sm',
-    borderShadow: 8
+    bdStyle: 'solid',
+    bdRadius: 'sm',
+    bdRadiusTopLeft: 'sm',
+    bdRadiusTopRight: 'sm',
+    bdShadow: 8
   }
 };
 
@@ -83,21 +87,38 @@ export const LabelIconImage: Story = {
     p: 'xxs',
     fontSize: 'md',
     fontBold: true,
-    borderStyle: 'double',
-    borderRadius: 'xs',
-    borderWidth: 4,
-    borderShadow: 4
+    bdStyle: 'double',
+    bdRadius: 'xs',
+    bdWidth: 4,
+    bdShadow: 4
   }
 };
 
 export const LabelIconReact: Story = {
   name: 'Label Icon React',
   args: {
-    children: 'sdsdsdssd',
+    children: 'Label Icon React',
     icon: <FcAddRow />,
     fontSize: 'md',
     iconSize: 'xl',
     iconPlacement: 'left',
     w: 'max-content'
+  }
+};
+
+export const LabelBadge: Story = {
+  name: 'Label Badge',
+  args: {
+    children: 'Badge',
+    icon: <FcAddRow />,
+    fontSize: 'md',
+    iconSize: 'xl',
+    iconPlacement: 'left',
+    w: 'max-content',
+    asBadge: 'amber',
+    withBorder: true,
+    bdColor: 'indigo',
+    p: 'xxs',
+    bdRadius: 'md'
   }
 };

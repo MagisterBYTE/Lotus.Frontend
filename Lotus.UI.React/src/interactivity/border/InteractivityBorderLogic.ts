@@ -1,62 +1,90 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectHelper } from 'lotus-core/helpers';
+import { ColorCssHelper, ColorTokenHelper, TColorToken } from 'lotus-core/modules/color';
 import { MaybeUndef } from 'lotus-core/types';
-import { hasBorderProperties } from '#base';
-import { TInteractivityState } from '#interactivity';
-import { ThemeInstance } from '#theme';
-import { nextThemeColor, TThemeColor, TThemePaletteActionType, TThemePaletteComponentStructuralPart } from '#theme/types';
-import { TCssBorderStyle, TCssBorderWidth, TCssProperties } from '#types';
+import { BorderPropertiesHelper } from '#base';
+import { CssVariables } from '#designSystem/сssVariables';
+import { TCssBorderColor, TCssBorderStyle, TCssBorderWidth, TCssProperties } from '#types';
+import { IEffectContextProps, TInteractivityState } from '../types';
 import { TInteractivityBorderType } from './InteractivityBorderType';
 
+type TColor = TCssBorderColor|TColorToken;
+
+/**
+ * Класс для применения логики интерактивности к границе элемента
+ */
 export abstract class InteractivityBorderLogic
 {
-  public static getEffectByState(element: any, state: TInteractivityState, part: TThemePaletteComponentStructuralPart,
-    actionType?: TThemePaletteActionType): TCssProperties
+  /**
+   * Построить свойства Css на основании контекста и указанного состояния элемента
+   * @param element Элемент (его пропсы)
+   * @param state Состояние интерактивности элемента UI
+   * @param context Текущий контекст элемента
+   * @returns 
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public static getEffectByState(element: any, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
   {
     const borderProps: TCssProperties = {};
 
-    const backColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'backColor');
-    const borderColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'borderColor');
-    const hoverBorderColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'hoverBorderColor');
-    const pressedBorderColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'pressedBorderColor');
+    const backColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bgColor');
+    const borderColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bdColor');
+    const borderHoverColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bdHoverColor');
+    const borderPressedColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bdPressedColor');
 
     switch (state)
     {
       case 'normal':
         {
-          borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, borderColor ?? backColor ?? 'primary', actionType).toCSSRgbValue();
+          const color = borderColor ?? backColor ?? CssVariables.BorderColor;
+          borderProps.borderColor = ColorCssHelper.getColorCss(color);
         } break;
       case 'hover':
         {
-          borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, hoverBorderColor ??
-            nextThemeColor(borderColor ?? backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+          const color = borderHoverColor ?? ColorTokenHelper.next(borderColor ?? backColor, -2) ?? CssVariables.PrimaryColor3;
+          borderProps.borderColor = ColorCssHelper.getColorCss(color);
         } break;
       case 'pressed':
         {
-          borderProps.borderColor = ThemeInstance.getColorByStructuralPart(part, pressedBorderColor ??
-            nextThemeColor(borderColor ?? backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+          const color = borderPressedColor ?? ColorTokenHelper.next(borderColor ?? backColor, 2) ?? CssVariables.PrimaryColor7;
+          borderProps.borderColor = ColorCssHelper.getColorCss(color);
         } break;
     }
 
     return borderProps;
   }
 
-  // eslint-disable-next-line max-params
-  public static getProperties(element: any, type: TInteractivityBorderType, state: TInteractivityState,
-    part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
+  /**
+   * Создать свойства Css 
+   * @param element Элемент (его пропсы)
+   * @param type Тии интерактивности фона
+   * @param state Состояние интерактивности элемента UI
+   * @param context Текущий контекст элемента
+   * @returns 
+   */
+  public static createProperties(element: any, type: TInteractivityBorderType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
   {
     const borderProps: TCssProperties = {};
 
-    return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, part, actionType);
+    return InteractivityBorderLogic.fillProperties(borderProps, element, type, state, context);
   }
 
+  /**
+   * Заполнить указанные свойства Css 
+   * @param target Свойства Css
+   * @param element Элемент (его пропсы)
+   * @param type Тип интерактивности границы
+   * @param state Состояние интерактивности элемента UI
+   * @param context Текущий контекст элемента
+   * @returns 
+   */
   // eslint-disable-next-line max-params
-  public static fillProperties(target: TCssProperties, element: any, type: TInteractivityBorderType, state: TInteractivityState,
-    part: TThemePaletteComponentStructuralPart, actionType?: TThemePaletteActionType): TCssProperties
+  public static fillProperties(target: TCssProperties, element: any, type: TInteractivityBorderType, state: TInteractivityState, 
+    context?: IEffectContextProps): TCssProperties
   {
-    const borderStyle: MaybeUndef<TCssBorderStyle> = ObjectHelper.getValue<MaybeUndef<TCssBorderStyle>>(element, 'borderStyle');
-    const borderWidth: MaybeUndef<TCssBorderWidth> = ObjectHelper.getValue<MaybeUndef<TCssBorderWidth>>(element, 'borderWidth');
-    const borderColor: MaybeUndef<TThemeColor> = ObjectHelper.getValue<MaybeUndef<TThemeColor>>(element, 'borderColor');
+    const borderStyle: MaybeUndef<TCssBorderStyle> = ObjectHelper.getValue<MaybeUndef<TCssBorderStyle>>(element, 'bdStyle');
+    const borderWidth: MaybeUndef<TCssBorderWidth> = ObjectHelper.getValue<MaybeUndef<TCssBorderWidth>>(element, 'bdWidth');
+    const borderColor: MaybeUndef<TColor> = ObjectHelper.getValue<MaybeUndef<TColor>>(element, 'bdColor');
 
     switch (type)
     {
@@ -70,11 +98,11 @@ export abstract class InteractivityBorderLogic
       // Граница может быть
       case 'maybe':
         {
-          if (hasBorderProperties(borderStyle, borderWidth, borderColor))
+          if (BorderPropertiesHelper.hasBorderArgs(borderStyle, borderWidth, borderColor))
           {
-            target.borderWidth = borderWidth ?? '1px';
+            target.borderWidth = borderWidth ?? CssVariables.BorderWidth;
             target.borderStyle = borderStyle ?? 'solid';
-            target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, part, actionType).borderColor;
+            target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, context).borderColor;
           }
           else
           {
@@ -87,14 +115,14 @@ export abstract class InteractivityBorderLogic
       case 'invisible':
         {
           target.borderColor = 'transparent';
-          target.borderWidth = borderWidth ?? '1px';
+          target.borderWidth = borderWidth ?? CssVariables.BorderWidth;
         } break;
       // Граница обязательна
       case 'mandatory':
         {
-          target.borderWidth = borderWidth ?? '1px';
+          target.borderWidth = borderWidth ?? CssVariables.BorderWidth;
           target.borderStyle = borderStyle ?? 'solid';
-          target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, part, actionType).borderColor;
+          target.borderColor = InteractivityBorderLogic.getEffectByState(element, state, context).borderColor;
         } break;
     }
 

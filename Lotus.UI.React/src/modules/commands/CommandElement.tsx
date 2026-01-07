@@ -4,7 +4,7 @@ import { Assert } from 'lotus-core/utils';
 import { ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { RenderIcon } from '#render';
-import { TElementSize } from '#types';
+import { TSizeType } from '#types';
 
 /**
  * Базовый интерфейс с общими свойствами
@@ -13,7 +13,7 @@ interface ICommandElementBaseProps {
   /**
    * Размер элемента
    */
-  size?: TElementSize;
+  size?: TSizeType;
 
   /**
    * Команда

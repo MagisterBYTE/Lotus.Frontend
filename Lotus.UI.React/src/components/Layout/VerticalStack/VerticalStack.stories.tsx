@@ -1,7 +1,6 @@
 import { ArgTypesStory } from '#storydata';
-import { TCssContentAligns, TElementSpacings } from '#types';
+import { TCssContentAligns, TSizeTypes } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { Box } from '../Box/Box';
 import { VerticalStack } from './VerticalStack';
 
@@ -13,7 +12,7 @@ const meta = {
 
   argTypes: {
     // Params
-    spacing: { control: 'inline-radio', options: [...TElementSpacings, undefined], table: { category: 'Params' } },
+    spacing: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
     hAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
     vAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
 
@@ -51,24 +50,24 @@ export const Spacing: Story = {
     //style: {backgroundColor: 'rgba(139, 119, 103, 0.8)'},
     children: (
       <>
-        <Box borderRadius shadow={7} p={'md'} w={'min-content'}>
+        <Box bdRadius bgShadow={7} p={'md'} w={'min-content'}>
           1 контент
         </Box>
-        <Box borderRadius borderShadow={4} p={'md'} w={'min-content'}>
+        <Box bdRadius bdShadow={4} p={'md'} w={'min-content'}>
           2 контент
         </Box>
-        <Box borderRadius shadow={15} p={'md'} w={'min-content'}>
+        <Box bdRadius bgShadow={15} p={'md'} w={'min-content'}>
           3 контент
         </Box>
       </>
     ),
 
     p: 'md',
-    borderStyle: 'solid',
+    bdStyle: 'solid',
     w: 'max-content',
     h: '100%',
-    backColor: 'blueGreyDark',
-    shadow: 10,
+    bgColor: 'blueGrayDark',
+    bgShadow: 10,
     spacing: 'sm'
   }
 };

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Meta, StoryObj } from '@storybook/react';
 import { Box } from './Box';
-import React from 'react';
 import { ArgTypesStory, TextStory } from '#storydata';
+import { ColorDesignSystem } from '#designSystem/colors';
 
 const meta = {
   title: 'Layout/Box',
@@ -38,49 +38,55 @@ type Story = StoryObj<typeof meta>;
 export const BoxDefault: Story = {
   name: 'Box Default',
   args: {
-    children: <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент</div>,
-    p: 'xs',
-    m: 'sm',
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderShadow: 4
+    children: <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент</div>
   }
 };
 
-export const BoxAndBoxCenter: Story = {
-  name: 'Box Center',
+export const BoxAndBoxCenterSmall: Story = {
+  name: 'Box Center Small',
   args: {
-    //style: {backgroundColor: 'rgba(139, 119, 103, 0.8)'},
-    children: (
-      <Box borderRadius backColor="blueGreyLight" p={'md'} w={'min-content'}>
-        {TextStory.MiddleText()}
-      </Box>
-    ),
+    children: TextStory.SmallText(),
     centerContent: 'center',
     p: 'md',
-    borderStyle: 'solid',
-    w: '30vw',
-    h: 'min-content',
-    backColor: 'blueGreyDark',
-    shadow: 10
+    bdStyle: 'solid',
+  }
+};
+
+export const BoxAndBoxCenterSmallShadow: Story = {
+  name: 'Box Center Small Shadow',
+  args: {
+    children: TextStory.SmallText(),
+    centerContent: 'center',
+    p: 'md',
+    bdStyle: 'solid',
+    bgShadow: 10
+  }
+};
+
+export const BoxAndBoxCenterMiddle: Story = {
+  name: 'Box Center Middle',
+  args: {
+    //style: {backgroundColor: 'rgba(139, 119, 103, 0.8)'},
+    children: TextStory.MiddleText(),
+    centerContent: 'center',
+    p: 'md',
+    bdStyle: 'solid'
   }
 };
 
 export const BoxBrown: Story = {
   name: 'Box Brown',
   args: {
-    children: (
-      <Box borderRadius backColor="blueGreyLight" p={'md'} w={'min-content'}>
-        {TextStory.MiddleText()}
-      </Box>
-    ),
-
+    children: TextStory.MiddleText(),
     centerContent: 'vertically',
     p: 'md',
-    borderStyle: 'solid',
+    bdStyle: 'solid',
     w: '30vw',
-    h: 'min-content',
-    backColor: 'brownBlack',
-    shadow: 10
+    h: '50vh',
+    bgColor: ColorDesignSystem.Default.brown[4],
+    bgShadow: 10,
+    style: {
+      overflowY: 'auto'
+    }
   }
 };

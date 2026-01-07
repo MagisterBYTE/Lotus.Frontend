@@ -1,5 +1,6 @@
+import { CSSProperties } from 'react';
 import { IGeneralBorderProperties, IGeneralMarginProperties, IGeneralPaddingProperties } from '#base';
-import { TCssFlexGrow, TCssFlexShrink, TCssGridColumn, TCssGridRow, TCssHeight, TCssWidth } from '#types';
+import { TCssAlignItems, TCssFlexGrow, TCssFlexShrink, TCssGap, TCssGridColumn, TCssGridRow, TCssHeight, TCssJustifyContent, TCssProperties, TCssWidth, TSizeType } from '#types';
 /**
  * Общие свойства элемента UI выступающего в качестве базового контейнера
  */
@@ -37,18 +38,53 @@ export interface IGeneralContainerProperties extends IGeneralMarginProperties, I
      */
     gridRowSpan?: TCssGridColumn;
 }
-export declare function getContainerProperties(props: IGeneralContainerProperties): {
-    w: TCssWidth | undefined;
-    h: TCssHeight | undefined;
-    p: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    pl: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    pt: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    pr: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    pb: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    m: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    ml: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    mt: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    mr: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-    mb: import("#types").TCssPadding | import("#types").TElementSpacing | undefined;
-};
+/**
+ * Вспомогательный класс для работы с общими свойства элемента UI выступающего в качестве базового контейнера
+ */
+export declare abstract class ContainerPropertiesHelper {
+    /**
+     * Получить стандартные свойства контейнера
+     * @param props Общие свойства элемента UI выступающего в качестве базового контейнера
+     * @returns Стандартные свойства контейнера
+     */
+    static getContainerProperties(props: IGeneralContainerProperties): {
+        w: TCssWidth | undefined;
+        h: TCssHeight | undefined;
+        p: import("#types").TCssPadding | TSizeType | undefined;
+        pl: import("#types").TCssPadding | TSizeType | undefined;
+        pt: import("#types").TCssPadding | TSizeType | undefined;
+        pr: import("#types").TCssPadding | TSizeType | undefined;
+        pb: import("#types").TCssPadding | TSizeType | undefined;
+        m: import("#types").TCssPadding | TSizeType | undefined;
+        ml: import("#types").TCssPadding | TSizeType | undefined;
+        mt: import("#types").TCssPadding | TSizeType | undefined;
+        mr: import("#types").TCssPadding | TSizeType | undefined;
+        mb: import("#types").TCssPadding | TSizeType | undefined;
+    };
+    /**
+     * Создать свойства CSS по контейнеру в виде TCssProperties
+     * @param props Общие свойства элемента UI выступающего в качестве базового контейнера
+     * @returns Свойства CSS по контейнеру в виде TCssProperties
+     */
+    static createContainerProps(props: IGeneralContainerProperties): TCssProperties;
+    /**
+     * Получить оптимальные настройки Flex контейнера по горизонтали в виде CSSProperties
+     * @param padding Внутренний отступ
+     * @param isReverse Обратный порядок элементов
+     * @param horizontalAlign Распределение элементов по ширине
+     * @param verticalAlign Выравнивание элементов по вертикали
+     * @returns Настройки Flex контейнера в виде CSSProperties
+     */
+    static getFlexRowContainer(padding: TSizeType | TCssGap, isReverse?: boolean, horizontalAlign?: TCssJustifyContent, verticalAlign?: TCssAlignItems): CSSProperties;
+    /**
+     * Получить оптимальные настройки Flex контейнера по вертикали в виде CSSProperties
+     * @param designSystem Дизайн-система
+     * @param padding Внутренний отступ
+     * @param isReverse Обратный порядок элементов
+     * @param verticalAlign Распределение элементов по высоте
+     * @param horizontalAlign Выравнивание элементов по горизонтали
+     * @returns Настройки Flex контейнера в виде CSSProperties
+     */
+    static getFlexColumnContainer(padding: TSizeType | TCssGap, isReverse?: boolean, verticalAlign?: TCssJustifyContent, horizontalAlign?: TCssAlignItems): CSSProperties;
+}
 //# sourceMappingURL=GeneralContainerProperties.d.ts.map

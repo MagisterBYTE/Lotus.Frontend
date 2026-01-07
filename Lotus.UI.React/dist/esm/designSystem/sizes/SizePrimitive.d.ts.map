@@ -1,0 +1,1 @@
+{"version":3,"file":"SizePrimitive.d.ts","sourceRoot":"","sources":["../../../../src/designSystem/sizes/SizePrimitive.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,qBAAa,aAAa;IAGxB;;OAEG;IACI,KAAK,EAAE,MAAM,CAAC;IAIrB;;OAEG;IACH,IAAW,EAAE,WAGZ;IAED;;OAEG;IACH,IAAW,GAAG,WAGb;gBAGW,KAAK,CAAC,EAAE,MAAM;IAKnB,eAAe;IAKf,aAAa;CAIrB"}

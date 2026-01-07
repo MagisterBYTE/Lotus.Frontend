@@ -1,11 +1,11 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { InputLabel, Slider } from '@mantine/core';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { VerticalStack } from '#components/Layout';
 import { ContainerField } from '../ContainerField/ContainerField';
 export function SliderField(props) {
     const { sliderProps, ...otherProps } = props;
-    const containerProps = getContainerProperties(otherProps);
+    const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
     if (otherProps.inlinePlace) {
         return (_jsx(ContainerField, { ...otherProps, componentField: _jsx(Slider, { h: undefined, size: otherProps.size, style: { flex: 1 }, w: undefined, ...sliderProps }), vAlign: "center" }));
     }

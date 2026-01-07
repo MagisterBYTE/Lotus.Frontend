@@ -10,6 +10,7 @@ export {
   type TCssBorderStyle,
   type TCssBorderWidth,
   type TCssBoxShadow,
+  type TCssColor,
   type TCssGap,
   type TCssGridTemplateColumns,
   type TCssGridTemplateRows,
@@ -31,15 +32,12 @@ export {
   type TCssTransform,
   type TCssWidth
 } from './CssTypes';
-export { instanceOfElementRadius, castToElementRadius, TElementRadiuses, type TElementRadius } from './ElementRadius';
-export { instanceOfElementSize, castToElementSize, TElementSizes, type TElementSize } from './ElementSize';
-export { instanceOfElementSpacing, castToElementSpacing, TElementSpacings, type TElementSpacing } from './ElementSpacing';
-export { instanceOfLineSpacing, castToLineSpacing, TLineSpacings, type TLineSpacing } from './LineSpacing';
-export { instanceOfFontSize, castToFontSize, TFontSizes, type TFontSize } from './FontSize';
+export { instanceOfSizeType, castToSizeType, TSizeTypes, type TSizeType } from './SizeType';
 export { TIconPlacements, type TIconPlacement } from './IconPlacement';
 export { TOrientations, type TOrientation } from './Orientation';
 export { TShadowElevations, type TShadowElevation } from './ShadowElevation';
 export { TTextEffects, type TTextEffect } from './TextEffect';
 export { TCenterContents, type TCenterContent } from './CenterContent';
+export { TFontAccents, type TFontAccent } from './FontAccent';
 
 

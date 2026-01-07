@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Meta, StoryObj } from '@storybook/react';
 import { SwitchField } from './SwitchField';
 import { ArgTypesStory } from '#storydata';

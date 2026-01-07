@@ -1,6 +1,6 @@
 import { InputLabel, Slider, SliderProps } from '@mantine/core';
 import { JSX } from 'react';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
 
@@ -13,7 +13,7 @@ export function SliderField(props: ISliderFieldProps): JSX.Element
 {
   const { sliderProps, ...otherProps } = props;
 
-  const containerProps = getContainerProperties(otherProps);
+  const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   if (otherProps.inlinePlace)
   {

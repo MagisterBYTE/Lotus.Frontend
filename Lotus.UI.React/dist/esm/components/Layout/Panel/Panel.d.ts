@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import { ILabelProps } from '#components/Display';
-import { TElementSize } from '#types';
+import { TSizeType } from '#types';
 import { IBoxProps } from '../Box';
 export interface IPanelProps extends IBoxProps {
-    size?: TElementSize;
+    size?: TSizeType;
     header?: ReactNode;
     headerProps?: ILabelProps;
 }

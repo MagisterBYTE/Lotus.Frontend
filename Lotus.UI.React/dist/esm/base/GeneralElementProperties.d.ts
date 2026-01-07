@@ -1,6 +1,6 @@
-import { TElementSize } from '#types';
+import { TSizeType } from '#types';
 import { IGeneralBackgroundProperties } from './GeneralBackgroundProperties';
-import { IGeneralBorderProperties } from './GeneralBorderProperties';
+import { IGeneralContainerProperties } from './GeneralContainerProperties';
 import { IGeneralTextProperties } from './GeneralTextProperties';
 /**
  * Базовые свойства для элемента UI
@@ -9,7 +9,7 @@ export interface IGeneralBaseElementProperties {
     /**
      * Размер элемента
      */
-    size?: TElementSize;
+    size?: TSizeType;
     /**
      * Дополнительный класс для отображения
      */
@@ -18,6 +18,6 @@ export interface IGeneralBaseElementProperties {
 /**
  * Общие свойства для элемента UI
  */
-export interface IGeneralElementProperties extends IGeneralBaseElementProperties, IGeneralBackgroundProperties, IGeneralBorderProperties, IGeneralTextProperties {
+export interface IGeneralElementProperties extends IGeneralBaseElementProperties, IGeneralBackgroundProperties, IGeneralContainerProperties, IGeneralTextProperties {
 }
 //# sourceMappingURL=GeneralElementProperties.d.ts.map

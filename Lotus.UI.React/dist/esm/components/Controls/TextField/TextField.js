@@ -1,10 +1,10 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { TextInput } from '@mantine/core';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { ContainerField } from '../ContainerField/ContainerField';
 export const TextField = (props) => {
     const { textInputProps, ...otherProps } = props;
-    const containerProps = getContainerProperties(otherProps);
+    const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
     const textInput = (_jsx(TextInput, { error: otherProps.error, errorProps: otherProps.errorProps, h: undefined, inputWrapperOrder: ['input', 'error'], size: otherProps.size, style: { flex: 1 }, w: undefined, ...textInputProps }));
     if (otherProps.inlinePlace) {
         return (_jsx(ContainerField, { ...otherProps, componentField: textInput }));

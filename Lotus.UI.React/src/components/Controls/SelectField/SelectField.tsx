@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComboboxItem, ComboboxLikeRenderOptionInput, Group, Select, SelectProps } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 import { IOption, OptionHelper } from 'lotus-core/modules/option';
 import { PropertyType, TKey } from 'lotus-core/types';
 import { JSX, useEffect, useState } from 'react';
-import { getContainerProperties } from '#base';
+import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps } from '#components/Layout';
 import { RenderIcon, RenderOption } from '#render';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
@@ -25,10 +24,10 @@ export function SelectField<TValueOption extends TKey = TKey>(props: ISelectFiel
 
   const isNumber = OptionHelper.isNumber(options);
 
-  const [selectedIcon, setSelectedIcon] = useState<any>(undefined);
+  const [selectedIcon, setSelectedIcon] = useState<unknown>(undefined);
   const [data, setData] = useState<TSelectData>([]);
 
-  const containerProps = getContainerProperties(otherProps);
+  const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   useEffect(() =>
   {

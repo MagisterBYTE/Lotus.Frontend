@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextField } from './TextField';
-import React from 'react';
 import { IconShieldBolt } from '@tabler/icons-react';
 import { ArgTypesStory } from '#storydata';
 
@@ -84,8 +82,8 @@ export const TextFieldBorder: Story = {
     size: 'md',
     withBorder: true,
     p: 'md',
-    borderRadius: 'xs',
-    borderShadow: 7
+    bdRadius: 'xs',
+    bdShadow: 7
   },
 
   name: 'TextField Border'

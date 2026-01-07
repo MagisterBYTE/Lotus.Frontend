@@ -1,12 +1,8 @@
-import React, { ComponentPropsWithRef, CSSProperties } from 'react';
-import { IGeneralIconProperties } from '#base';
+import React, { ComponentPropsWithRef } from 'react';
+import { IGeneralElementProperties, IGeneralIconProperties } from '#base';
 import { IInteractivityBackgroundEffect, IInteractivityElementProperties } from '#interactivity';
 import { TButtonVariant } from './ButtonVariant';
-export interface IButtonProps extends ComponentPropsWithRef<'button'>, IGeneralIconProperties, IInteractivityElementProperties, IInteractivityBackgroundEffect {
-    /**
-     * Стиль для кнопки
-     */
-    overrideButtonStyle?: CSSProperties;
+export interface IButtonProps extends ComponentPropsWithRef<'button'>, IGeneralElementProperties, IGeneralIconProperties, IInteractivityElementProperties, IInteractivityBackgroundEffect {
     /**
      * Вариант отображения
      */

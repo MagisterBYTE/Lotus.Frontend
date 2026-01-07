@@ -1,41 +1,69 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectHelper } from 'lotus-core/helpers';
-import { ThemeInstance } from '#theme';
-import { nextThemeColor } from '#theme/types';
+import { ColorCssHelper, ColorTokenHelper } from 'lotus-core/modules/color';
+import { CssVariables } from '#designSystem/сssVariables';
+/**
+ * Класс для применения логики интерактивности к фону элемента
+ */
 export class InteractivityBackgroundLogic {
-    static getEffectByState(element, state, part, actionType) {
+    /**
+     * Построить свойства Css на основании контекста и указанного состояния элемента
+     * @param element Элемент (его пропсы)
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    static buildEffectByState(element, state, context) {
         const backProps = {};
-        const backColor = ObjectHelper.getValue(element, 'backColor');
-        const hoverBackColor = ObjectHelper.getValue(element, 'hoverBackColor');
-        const pressedBackColor = ObjectHelper.getValue(element, 'pressedBackColor');
+        const backColor = ObjectHelper.getValue(element, 'bgColor');
+        const backHoverColor = ObjectHelper.getValue(element, 'bgHoverColor');
+        const backPressedColor = ObjectHelper.getValue(element, 'bgPressedColor');
         switch (state) {
             case 'normal':
                 {
-                    backProps.backgroundColor = ThemeInstance.getColorByStructuralPart(part, backColor ?? 'primary', actionType).toCSSRgbValue();
+                    const color = backColor ?? CssVariables.PrimaryColor5;
+                    backProps.backgroundColor = ColorCssHelper.getColorCss(color);
                 }
                 break;
             case 'hover':
                 {
-                    backProps.backgroundColor = ThemeInstance.getColorByStructuralPart(part, hoverBackColor ??
-                        nextThemeColor(backColor ?? 'primary', -2), actionType).toCSSRgbValue();
+                    const color = backHoverColor ?? ColorTokenHelper.next(backColor, -2) ?? CssVariables.PrimaryColor3;
+                    backProps.backgroundColor = ColorCssHelper.getColorCss(color);
                 }
                 break;
             case 'pressed':
                 {
-                    backProps.backgroundColor = ThemeInstance.getColorByStructuralPart(part, pressedBackColor ??
-                        nextThemeColor(backColor ?? 'primary', 2), actionType).toCSSRgbValue();
+                    const color = backPressedColor ?? ColorTokenHelper.next(backColor, 2) ?? CssVariables.PrimaryColor7;
+                    backProps.backgroundColor = ColorCssHelper.getColorCss(color);
                 }
                 break;
         }
         return backProps;
     }
-    // eslint-disable-next-line max-params
-    static getProperties(element, type, state, part, actionType) {
+    /**
+     * Создать свойства Css
+     * @param element Элемент (его пропсы)
+     * @param type Тии интерактивности фона
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
+    static createProperties(element, type, state, context) {
         const backProps = {};
-        return InteractivityBackgroundLogic.fillProperties(backProps, element, type, state, part, actionType);
+        return InteractivityBackgroundLogic.fillProperties(backProps, element, type, state, context);
     }
+    /**
+     * Заполнить указанные свойства Css
+     * @param target Свойства Css
+     * @param element Элемент (его пропсы)
+     * @param type Тии интерактивности фона
+     * @param state Состояние интерактивности элемента UI
+     * @param context Текущий контекст элемента
+     * @returns
+     */
     // eslint-disable-next-line max-params
-    static fillProperties(target, element, type, state, part, actionType) {
+    static fillProperties(target, element, type, state, context) {
         switch (type) {
             case 'initial':
                 {
@@ -49,7 +77,7 @@ export class InteractivityBackgroundLogic {
                 break;
             case 'mandatory':
                 {
-                    target.backgroundColor = InteractivityBackgroundLogic.getEffectByState(element, state, part, actionType).backgroundColor;
+                    target.backgroundColor = InteractivityBackgroundLogic.buildEffectByState(element, state, context).backgroundColor;
                 }
                 break;
         }

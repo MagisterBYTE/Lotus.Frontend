@@ -1,6 +1,6 @@
 import { ActionIconProps, ButtonProps, MenuItemProps, NavLinkProps } from '@mantine/core';
 import { BaseActionCommand } from 'lotus-core/modules/actionCommand';
-import { TElementSize } from '#types';
+import { TSizeType } from '#types';
 /**
  * Базовый интерфейс с общими свойствами
  */
@@ -8,7 +8,7 @@ interface ICommandElementBaseProps {
     /**
      * Размер элемента
      */
-    size?: TElementSize;
+    size?: TSizeType;
     /**
      * Команда
      */

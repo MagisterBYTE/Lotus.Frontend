@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { ColorCssHelper, TColorToken } from 'lotus-core/modules/color';
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { Assert } from 'lotus-core/utils';
-import React, { CSSProperties, ReactElement, ReactNode } from 'react';
+import { CSSProperties, ReactElement, ReactNode } from 'react';
 import { IconContext } from 'react-icons';
-import { CssSizerHelper } from '#helpers';
-import { ThemeInstance } from '#theme';
-import { TThemeColor } from '#theme/types';
-import { TElementSize } from '#types';
+import { IconSizes } from '#designSystem/sizes';
+import { TCssColor, TSizeType } from '#types';
 
 
 /**
@@ -26,17 +25,17 @@ export abstract class RenderIcon
    * @returns ReactElement
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, max-params
-  public static renderIcon(size: TElementSize, icon:any, other?:ReactNode, iconStyle?:CSSProperties, 
-    iconColor?: TThemeColor, imageDatabase?:IImageDatabase, wrapDiv?: boolean, wrapDivStyle?:CSSProperties):ReactElement|undefined
+  public static renderIcon(size: TSizeType, icon:any, other?:ReactNode, iconStyle?:CSSProperties, 
+    iconColor?: TCssColor|TColorToken, imageDatabase?:IImageDatabase, wrapDiv?: boolean, wrapDivStyle?:CSSProperties):ReactElement|undefined
   {
     if (Assert.emptyValue(icon)) return undefined;
 
-    const iconColorText = (iconColor !== undefined) ? ThemeInstance.getElementColor(iconColor)?.toCSSRgbValue() : undefined;
+    const iconColorCss = ColorCssHelper.getColorCss(iconColor);
 
     // Если строка
     if (typeof icon === 'string')
     {
-      const sizeIcon = `${CssSizerHelper.convertSizeToIconInPixel(size)}px`;
+      const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
       if (other)
       {
         if (wrapDiv)
@@ -67,7 +66,7 @@ export abstract class RenderIcon
       
       if (iconData)
       {
-        const sizeIcon = `${CssSizerHelper.convertSizeToIconInPixel(size)}px`;
+        const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
 
         if (other)
         {
@@ -98,13 +97,13 @@ export abstract class RenderIcon
     // Это иконка React
     else
     {
-      const sizeIcon = `${CssSizerHelper.convertSizeToIconInRem(size)}rem`;
+      const sizeIcon = IconSizes.Default.toRem(size);
       if (other)
       {
         if (wrapDiv)
         {
           return (<div style={wrapDivStyle}>
-            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorCss, style: iconStyle }}>
               {icon}
             </IconContext.Provider>
             {other}
@@ -113,7 +112,7 @@ export abstract class RenderIcon
         else
         {
           return (<>
-            <IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
+            <IconContext.Provider value={{ size: sizeIcon, color: iconColorCss, style: iconStyle }}>
               {icon}
             </IconContext.Provider>
             {other}
@@ -122,7 +121,7 @@ export abstract class RenderIcon
       }
       else
       {
-        return (<IconContext.Provider value={{ size: sizeIcon, color: iconColorText, style: iconStyle }}>
+        return (<IconContext.Provider value={{ size: sizeIcon, color: iconColorCss, style: iconStyle }}>
           {icon}
         </IconContext.Provider>);
       }
