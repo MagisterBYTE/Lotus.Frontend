@@ -8,7 +8,6 @@ export type TColorSemantic = 'primary' | 'secondary' | 'error' | 'warning' | 'in
  */
 export const TColorSemantics: readonly TColorSemantic[] = ['primary', 'secondary', 'error', 'warning', 'info', 'success'];
 
-
 /**
  * Функция для проверки, является ли значение смысловым типом цвета
  * @param value Проверяемое значение

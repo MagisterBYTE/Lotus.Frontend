@@ -3,6 +3,9 @@ import { ColorNames } from './ColorNames';
 import { TColorVariantIndex, TColorVariantName, TColorVariantNames, TColorVariantIndexMain, 
   TColorVariantIndexBlack, TColorVariantIndexWhite } from './ColorVariantsTypes';
 
+/**
+ * Вспомогательный класс для работы с вариативностью цветов
+ */
 export abstract class ColorVariantsHelper
 {
   /**

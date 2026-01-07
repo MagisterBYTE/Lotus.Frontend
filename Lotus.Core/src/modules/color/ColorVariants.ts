@@ -7,8 +7,11 @@ import { TColorVariantIndex, TColorVariantName, TColorVariantTuple } from './Col
  * Интерфейс вариативности цветов
  * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
  */
-export interface IColorVariants
-{
+/**
+ * Интерфейс вариативности цветов
+ * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
+ */
+export type IColorVariants = Record<TColorVariantName, Color> & { [key in TColorVariantName]: Color; } & {
   readonly white: Color; // 1
 
   readonly palest: Color; // 2
@@ -28,14 +31,17 @@ export interface IColorVariants
   readonly darkest: Color; // 9
 
   readonly black: Color; // 10
-}
+
+  // Индексация по индексу (опционально)
+  [index: number]: Color;
+};
 
 /**
  * Вариативность цветов
  */
 export class ColorVariants implements IColorVariants
 {
-  // #region  Static methods
+  // #region Static methods
   public static createFromColorLightness(red: number, green: number, blue: number): ColorVariants
   {
     const main = new Color(red, green, blue);
@@ -87,6 +93,7 @@ export class ColorVariants implements IColorVariants
   }
   // #endregion
 
+  // #region Fields
   public readonly white: Color; // 1
 
   public readonly palest: Color; // 2
@@ -106,6 +113,26 @@ export class ColorVariants implements IColorVariants
   public readonly darkest: Color; // 9
 
   public readonly black: Color; // 10
+
+  [index: number]: Color;
+  // #endregion
+
+  // #region Index
+  /**
+   * Индексация по имени цвета (строковый ключ)
+   */
+  public get(key: TColorVariantName | TColorVariantIndex): Color 
+  {
+    if (typeof key === 'number') 
+    {
+      return this.getByIndex(key);
+    }
+    else 
+    {
+      return this.getByName(key);
+    }
+  }
+  // #endregion
 
   // eslint-disable-next-line max-params
   constructor(white: Color, palest: Color, pale: Color, lighter: Color, light: Color, main: Color, dark: Color, darker: Color, darkest: Color, black: Color)
@@ -192,7 +219,7 @@ export class ColorVariants implements IColorVariants
    * @param isHex Статус шестнадцатеричного представления
    * @returns Массив
    */
-  public toArrayCss(isHex:boolean): TColorVariantTuple
+  public toArrayCss(isHex: boolean): TColorVariantTuple
   {
     return [
       this.white.toString(isHex),

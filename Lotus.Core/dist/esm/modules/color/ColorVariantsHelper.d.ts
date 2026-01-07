@@ -1,5 +1,8 @@
 import { Color } from './Color';
 import { TColorVariantIndex, TColorVariantName } from './ColorVariantsTypes';
+/**
+ * Вспомогательный класс для работы с вариативностью цветов
+ */
 export declare abstract class ColorVariantsHelper {
     /**
      * Получить цвет по его индексу

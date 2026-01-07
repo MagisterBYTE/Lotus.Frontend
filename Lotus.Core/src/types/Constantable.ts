@@ -17,7 +17,7 @@ export interface IConstantable
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfConstantable(value: any): value is IConstantable
 {
-  if (value && typeof value === 'object')
+  if (value && typeof value === 'object')  
   {
     return ('isConst' in value) && value.isConst === true;
   }

@@ -4,7 +4,13 @@ import { TColorVariantIndex, TColorVariantName, TColorVariantTuple } from './Col
  * Интерфейс вариативности цветов
  * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
  */
-export interface IColorVariants {
+/**
+ * Интерфейс вариативности цветов
+ * Вариативность цветов - совокупность цветов расположенных от самого светлого до самого темного от основного цвета.
+ */
+export type IColorVariants = Record<TColorVariantName, Color> & {
+    [key in TColorVariantName]: Color;
+} & {
     readonly white: Color;
     readonly palest: Color;
     readonly pale: Color;
@@ -15,7 +21,8 @@ export interface IColorVariants {
     readonly darker: Color;
     readonly darkest: Color;
     readonly black: Color;
-}
+    [index: number]: Color;
+};
 /**
  * Вариативность цветов
  */
@@ -33,6 +40,11 @@ export declare class ColorVariants implements IColorVariants {
     readonly darker: Color;
     readonly darkest: Color;
     readonly black: Color;
+    [index: number]: Color;
+    /**
+     * Индексация по имени цвета (строковый ключ)
+     */
+    get(key: TColorVariantName | TColorVariantIndex): Color;
     constructor(white: Color, palest: Color, pale: Color, lighter: Color, light: Color, main: Color, dark: Color, darker: Color, darkest: Color, black: Color);
     /**
      * Получить цвет по его имени

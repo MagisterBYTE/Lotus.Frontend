@@ -1,5 +1,8 @@
 import { ColorNames } from './ColorNames';
 import { TColorVariantNames, TColorVariantIndexMain, TColorVariantIndexBlack, TColorVariantIndexWhite } from './ColorVariantsTypes';
+/**
+ * Вспомогательный класс для работы с вариативностью цветов
+ */
 export class ColorVariantsHelper {
     /**
      * Получить цвет по его индексу

@@ -5,7 +5,7 @@ import { ColorVariantsHelper } from './ColorVariantsHelper';
  * Вариативность цветов
  */
 export class ColorVariants {
-    // #region  Static methods
+    // #region Static methods
     static createFromColorLightness(red, green, blue) {
         const main = new Color(red, green, blue);
         const white = main.increaseLightness(0.95);
@@ -46,6 +46,7 @@ export class ColorVariants {
         return new ColorVariants(white, palest, pale, lighter, light, main, dark, darker, darkest, black);
     }
     // #endregion
+    // #region Fields
     white; // 1
     palest; // 2
     pale; // 3
@@ -56,6 +57,20 @@ export class ColorVariants {
     darker; // 8
     darkest; // 9
     black; // 10
+    // #endregion
+    // #region Index
+    /**
+     * Индексация по имени цвета (строковый ключ)
+     */
+    get(key) {
+        if (typeof key === 'number') {
+            return this.getByIndex(key);
+        }
+        else {
+            return this.getByName(key);
+        }
+    }
+    // #endregion
     // eslint-disable-next-line max-params
     constructor(white, palest, pale, lighter, light, main, dark, darker, darkest, black) {
         this.white = white;

@@ -48,5 +48,10 @@ export type TColorVariantTuple = readonly [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfColorVariantName(value: any): value is TColorVariantName 
 {
-  return TColorVariantNames.includes(value);
+  if (typeof value === 'string')
+  {
+    return TColorVariantNames.includes(value as TColorVariantName);
+  }
+
+  return false;
 }
