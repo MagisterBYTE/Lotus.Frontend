@@ -5,11 +5,19 @@ import { IEnvironmentOptions } from './EnvironmentOptions';
 
 export abstract class Environment 
 {
-  // #region Fields
-  private static options: IEnvironmentOptions;
-  // #endregion
-
   // #region Properties
+  public static get options():IEnvironmentOptions
+  {
+    if (!(globalThis as any).__ENVIRONMENT_OPTIONS__) 
+    {
+      (globalThis as any).__ENVIRONMENT_OPTIONS__ = {};
+    }
+
+    const options = (globalThis as any).__ENVIRONMENT_OPTIONS__;
+
+    return options;
+  }
+
   public static get isDevelopment(): boolean 
   {
     return Environment.options.type === 'development';
@@ -54,7 +62,7 @@ export abstract class Environment
   // #region Main methods
   public static init(options: IEnvironmentOptions): void 
   {
-    Environment.options = options;
+    (globalThis as any).__ENVIRONMENT_OPTIONS__ = options;
   }
 
   public static featureEnabled(feature: TEnvironmentFeature): boolean 
@@ -64,7 +72,9 @@ export abstract class Environment
 
   public static getInfo(): string
   {
-    return `
+    if (Environment.options)
+    {
+      return `
       Environment: ${Environment.options.type}
       Version: ${Environment.version}
       BuildId: ${Environment.buildId}
@@ -73,6 +83,11 @@ export abstract class Environment
       CookieAuth: ${Environment.isCookieAuth}
       TokenAuth: ${Environment.isTokenAuth}
     `;
+    }
+    else
+    {
+      return 'options is null';
+    }
   }
   // #endregion
 

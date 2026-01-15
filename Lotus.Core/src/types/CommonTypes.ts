@@ -16,6 +16,14 @@ export type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : neve
  */
 export type ReplaceValues<T, V> = { [K in keyof T]: V };
 
+/** 
+ * Утилита для извлечения только значений-не-функций 
+ */
+export type OnlyValues<T> = {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  [K in keyof T]: T[K] extends Function ? never : T[K]
+}[keyof T];
+
 /**
  * Обобщенный тип, который позволяет извлечь тип конкретного свойства из объекта.
  * @template TType - это объектный тип, из которого мы хотим получить свойство.

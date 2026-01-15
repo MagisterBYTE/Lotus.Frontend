@@ -2,7 +2,7 @@
 import { ArrayHelper } from '#helpers';
 import { IRoute } from '#modules/route';
 import { Assert } from '#utils';
-import { ActionCommandTypes, TActionCommandType } from './ActionCommandType';
+import { TActionCommandTypes, TActionCommandType } from './ActionCommandType';
 
 /**
  * Делегат для интерфейса команды действия, возвращает TResult
@@ -215,6 +215,6 @@ export class ActionCommand extends BaseActionCommand
 {
   constructor(name: string) 
   {
-    super(ActionCommandTypes.Default, name);
+    super(TActionCommandTypes.Default, name);
   }
 }

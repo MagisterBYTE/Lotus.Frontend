@@ -1,4 +1,4 @@
-export { type Dictionary, type PropertyType } from './CommonTypes';
+export { type Dictionary, type PropertyType, type OnlyValues } from './CommonTypes';
 export { castToConstantable, instanceOfConstantable, type IConstantable } from './Constantable';
 export { castToEditable, instanceOfEditable, type IEditable } from './Editable';
 export { type IEntity } from './Entity';

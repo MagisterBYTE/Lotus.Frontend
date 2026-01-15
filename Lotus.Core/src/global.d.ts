@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare global
 {
   namespace Intl
@@ -178,6 +179,11 @@ declare global
       seconds?: number;
       milliseconds?: number;
     };
+  }
+
+  interface GlobalThis
+  {
+    __ENVIRONMENT_OPTIONS__?: any;
   }
 }
 

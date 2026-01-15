@@ -17,16 +17,7 @@ export class RefreshProxy implements IRefreshProxy
 
   constructor()
   {
-    this.onRefreshProxy = this.defaultRefreshProxy;
+    this.onRefreshProxy = () => {};
     FunctionHelper.bindAllMethods(this);
-  }
-
-  /**
-   * Метод по умолчанию для обновления прокси объекта. 
-   * Служит как заглушка
-   */
-  public defaultRefreshProxy()
-  {
-
   }
 }

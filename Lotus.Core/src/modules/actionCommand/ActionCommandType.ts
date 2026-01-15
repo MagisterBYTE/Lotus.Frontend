@@ -1,14 +1,51 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/**
+ *  Массив значений типов команд действий
+ */
+export const TActionCommandTypeValues = ['default', 'navigation', 'delimiter'] as const;
+
 /**
  * Стандартные типы команды действия
  */
-export type TActionCommandType = 'default' | 'navigation' | 'delimiter';
+export type TActionCommandType = (typeof TActionCommandTypeValues)[number];
 
 /**
- * Класс для представления стандартных типов команды действия
+ * Объект для представления стандартных типов команды действия
  */
-export abstract class ActionCommandTypes
-{
-  public static readonly Default:TActionCommandType = 'default';
-  public static readonly Navigation:TActionCommandType = 'navigation';
-  public static readonly Delimiter:TActionCommandType = 'delimiter';
-}
+export const TActionCommandTypes = {
+  /**
+   * Команда по умолчанию
+   */
+  Default: TActionCommandTypeValues[0],
+
+  /**
+   * Команда навигации
+   */
+  Navigation: TActionCommandTypeValues[1],
+
+  /**
+   * Не команда а разделитель
+   */
+  Delimiter: TActionCommandTypeValues[2],
+
+  getAllValues(): typeof TActionCommandTypeValues
+  {
+    return TActionCommandTypeValues;
+  },
+
+  isActionCommandType(value: any): value is TActionCommandType
+  {
+    return (TActionCommandTypeValues as readonly any[]).includes(value);
+  },
+
+  getByIndex(index: number): TActionCommandType | undefined
+  {
+    return TActionCommandTypeValues[index];
+  },
+
+  getByName(name: string): TActionCommandType | undefined
+  {
+    return TActionCommandTypeValues.find((v) => v === name);
+  }
+} as const;

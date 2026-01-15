@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { IRoute } from '#modules/route';
 import { BaseActionCommand } from './ActionCommand';
-import { ActionCommandTypes } from './ActionCommandType';
+import { TActionCommandTypes } from './ActionCommandType';
 
 /**
  * Класс команды для простой навигации
@@ -11,7 +11,7 @@ export class NavigationCommand extends BaseActionCommand
 {
   constructor(name: string, route: IRoute) 
   {
-    super(ActionCommandTypes.Navigation, name);
+    super(TActionCommandTypes.Navigation, name);
     this.route = route;
   }
 

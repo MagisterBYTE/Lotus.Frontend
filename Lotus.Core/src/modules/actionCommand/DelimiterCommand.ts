@@ -1,5 +1,5 @@
 import { BaseActionCommand } from './ActionCommand';
-import { ActionCommandTypes } from './ActionCommandType';
+import { TActionCommandTypes } from './ActionCommandType';
 
 /**
  * Фейковая команда предназначенная для визуального разделения команд в списках
@@ -11,12 +11,12 @@ export class DelimiterCommand extends BaseActionCommand
 
   public static get Instance(): DelimiterCommand
   {
-    return this._delimiter || (this._delimiter = new this(ActionCommandTypes.Delimiter));
+    return this._delimiter || (this._delimiter = new this(TActionCommandTypes.Delimiter));
   }
   // #endregion
 
   constructor(name: string) 
   {
-    super(ActionCommandTypes.Delimiter, name);
+    super(TActionCommandTypes.Delimiter, name);
   }
 }
