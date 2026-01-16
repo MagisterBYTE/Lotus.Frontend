@@ -6,17 +6,19 @@ import { TActionCommandTypes } from './ActionCommandType';
  */
 export class DelimiterCommand extends BaseActionCommand
 {
-  // #region Static fields
-  private static _delimiter: DelimiterCommand;
+  // #region Instance
+  private static _delimiterCommand: DelimiterCommand;
 
   public static get Instance(): DelimiterCommand
   {
-    return this._delimiter || (this._delimiter = new this(TActionCommandTypes.Delimiter));
+    return this._delimiterCommand || (this._delimiterCommand = new this('Delimiter'));
   }
   // #endregion
 
+  // #region Constructors
   constructor(name: string) 
   {
     super(TActionCommandTypes.Delimiter, name);
   }
+  // #endregion
 }

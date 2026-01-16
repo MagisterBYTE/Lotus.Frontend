@@ -19,7 +19,6 @@ export class BooleanConverter {
      * @param defaultValue Значение по умолчанию если преобразовать не удалось.
      * @returns Логическое значение.
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static toBoolean(item, defaultValue = false) {
         if (item) {
             if (typeof item == 'boolean') {

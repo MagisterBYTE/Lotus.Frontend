@@ -1,22 +1,53 @@
 import { IOption } from '#modules/option';
 
 /**
- * Перечисление базовых языков
+ * Массив значений типов языков
  */
-export type TLanguageType = 'ru-RU'| 'en-US' | 'de-DE' | 'ja-JP' | 'zh-CN';
+export const TLanguageTypeValues = ['ru-RU', 'en-US', 'de-DE', 'ja-JP', 'zh-CN'] as const;
 
 /**
- * Массив базовых языков
+ * Тип языка
  */
-export const TLanguageTypes: readonly TLanguageType[] = ['ru-RU', 'en-US'];
+export type TLanguageType = (typeof TLanguageTypeValues)[number];
 
 /**
- * Набор базовых языков в виде опций
+ * Набор языков
  */
-export const LanguageTypeOptions:IOption<TLanguageType>[] = TLanguageTypes.map((x) => 
-{
-  return {
-    label: x,
-    value: x
-  };
-});
+export const TLanguageTypes = {
+  ru_RU: TLanguageTypeValues[0],
+  en_US: TLanguageTypeValues[1],
+  de_DE: TLanguageTypeValues[2],
+  ja_JP: TLanguageTypeValues[3],
+  zh_CH: TLanguageTypeValues[4],
+
+  getAllValues(): typeof TLanguageTypeValues
+  {
+    return TLanguageTypeValues;
+  },
+
+  isLanguageType(value: unknown): value is TLanguageType
+  {
+    return (TLanguageTypeValues as readonly unknown[]).includes(value);
+  },
+
+  getByIndex(index: number): TLanguageType | undefined
+  {
+    return TLanguageTypeValues[index];
+  },
+
+  getByName(name: string): TLanguageType | undefined
+  {
+    return TLanguageTypeValues.find((v) => v === name);
+  },
+
+  getOptions(): IOption<TLanguageType>[]
+  {
+    return TLanguageTypeValues.map((x) => 
+    {
+      return {
+        label: x,
+        value: x
+      };
+    });
+  } 
+} as const;

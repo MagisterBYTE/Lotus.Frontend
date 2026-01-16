@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { ObjectHelper } from '#helpers';
@@ -11,8 +10,18 @@ import { Assert } from '#utils';
  */
 export abstract class ApiService
 {
-  protected api: AxiosInstance;
+  // #region Fields
+  private _api: AxiosInstance;
+  // #endregion
 
+  // #region Properties
+  protected get api(): AxiosInstance
+  {
+    return this._api;
+  }
+  // #endregion
+
+  // #region Constructors
   constructor(baseURL: string)
   {
     const api = axios.create({
@@ -30,11 +39,12 @@ export abstract class ApiService
       (error) => this.handleResponseError(error)
     );
 
-    this.api = api;
+    this._api = api;
   }
+  // #endregion
 
-
-  protected handleRequest(config: InternalAxiosRequestConfig<any>): InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>>
+  // #region Methods
+  protected handleRequest(config: InternalAxiosRequestConfig<unknown>): InternalAxiosRequestConfig<unknown> | Promise<InternalAxiosRequestConfig<unknown>>
   {
     config.timeout = 10 * 60 * 1000;
     return config;
@@ -51,6 +61,7 @@ export abstract class ApiService
     return response;
   }
 
+  // eslint-disable-next-line complexity
   protected handleResponseError(error: AxiosError)
   {
     // Запрос был сделан, и сервер ответил кодом состояния, который выходит за пределы 2xx
@@ -98,8 +109,12 @@ export abstract class ApiService
         }
 
         // Ошибка аутентификации по стандарту RFC 6749
-        const errorAuthResponse = error.response.data as any;
-        if (errorAuthResponse && typeof errorAuthResponse === 'object' && 'error' in errorAuthResponse && 'error_description' in errorAuthResponse)
+        const errorAuthResponse = error.response.data;
+        if (errorAuthResponse && typeof errorAuthResponse === 'object' 
+          && errorAuthResponse !== null 
+          && errorAuthResponse !== undefined 
+          && 'error' in errorAuthResponse && typeof errorAuthResponse.error ===  'string'
+          && 'error_description' in errorAuthResponse && typeof errorAuthResponse.error_description ===  'string')
         {
           const errorAuth = errorAuthResponse.error;
           const errorDescAuth = errorAuthResponse.error_description;
@@ -160,31 +175,27 @@ export abstract class ApiService
     }
   }
 
-
-  protected get<TResponse = any>(path: string, config?: any)
+  protected get<TResponse = unknown>(path: string, config?: AxiosRequestConfig<unknown>)
   {
-    return this.api.get<TResponse>(path, config);
+    return this._api.get<TResponse>(path, config);
   }
 
-
-  protected post<TResponse = any, TRequest = any>(path: string, payload: TRequest)
+  protected post<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest)
   {
-    return this.api.post<TResponse>(path, payload);
+    return this._api.post<TResponse>(path, payload);
   }
 
-
-  protected put<TResponse = any, TRequest = any>(path: string, payload: TRequest)
+  protected put<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest)
   {
-    return this.api.put<TResponse>(path, payload);
+    return this._api.put<TResponse>(path, payload);
   }
 
-
-  protected delete<TResponse = any>(path: string, config?: any)
+  protected delete<TResponse = unknown>(path: string, config?: AxiosRequestConfig<unknown>)
   {
-    return this.api.delete<TResponse>(path, config);
+    return this._api.delete<TResponse>(path, config);
   }
 
-  protected getConfigAcceptJson()
+  protected getConfigAcceptJson(): AxiosRequestConfig
   {
     const config: AxiosRequestConfig = {
       headers: {
@@ -194,4 +205,5 @@ export abstract class ApiService
 
     return config;
   }
+  // #endregion
 }

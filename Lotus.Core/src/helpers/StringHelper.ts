@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CharConstants } from '#constants';
 
 /**
@@ -23,15 +22,16 @@ export abstract class StringHelper
   }
 
   /**
-   * Проверяет, является ли строка null, undefined или пустой
+   * Проверяет, является ли строка undefined или пустой
    * @param {string | undefined | null} value - Проверяемое значение
-   * @returns {boolean} true, если строка null, undefined или пустая
+   * @returns {boolean} true, если строка undefined или пустая
    * @example
+   * StringHelper.isNullOrEmpty(undefined); // true
    * StringHelper.isNullOrEmpty(null); // true
    * StringHelper.isNullOrEmpty(''); // true
    * StringHelper.isNullOrEmpty('text'); // false
    */
-  public static isNullOrEmpty(value?: string | null): boolean
+  public static isNullOrEmpty(value?: unknown): boolean
   {
     return value === undefined || value === null || (typeof value == 'string' && value.trim() === '');
   }
@@ -192,35 +192,36 @@ export abstract class StringHelper
  * @param args Аргументы для подстановки (могут быть отдельными значениями или объектом)
  * @returns Отформатированная строка
  */
-  public static stringFormat(format: string, ...args: any[]): string 
+  public static stringFormat(format: string, ...args: unknown[]): string 
   {
     // Если первый аргумент после format - это объект и это единственный аргумент,
     // используем его как именованные параметры
-    if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null && !Array.isArray(args[0])) 
+    if (args.length === 1 && typeof args[0] === 'object' && args[0] !== undefined && args[0] !== null && !Array.isArray(args[0])) 
     {
-      const params = args[0];
+      const params = args[0] as Record<string, unknown>;
       return format.replace(/{(\w+)}/g, (match, key) => 
       {
-        return key in params ? params[key] : match;
+        return key in params ? String(params[key]) : match;
       });
     }
     
     // В противном случае работаем с позиционными параметрами,
     // но также поддерживаем именованные в объекте если он есть
     let positionalArgs = args;
-    let namedParams: Record<string, any> = {};
+    let namedParams: Record<string, unknown> = {};
     
     // Проверяем, есть ли среди аргументов объект с именованными параметрами
     const namedParamIndex = args.findIndex(arg => 
       typeof arg === 'object' && 
-        arg !== null && 
+        arg !== undefined && 
+        arg !== null &&
         !Array.isArray(arg) &&
         Object.keys(arg).some(key => typeof key === 'string')
     );
     
     if (namedParamIndex !== -1) 
     {
-      namedParams = args[namedParamIndex];
+      namedParams = args[namedParamIndex] as Record<string, unknown>;
       // Удаляем объект из позиционных аргументов
       positionalArgs = args.filter((_, index) => index !== namedParamIndex);
     }
@@ -232,20 +233,20 @@ export abstract class StringHelper
       // Сначала проверяем именованные параметры
       if (key in namedParams) 
       {
-        return namedParams[key];
+        return String(namedParams[key]);
       }
         
       // Затем проверяем, может ли ключ быть числовым индексом
       const numericIndex = parseInt(key, 10);
       if (!isNaN(numericIndex) && numericIndex >= 0 && numericIndex < positionalArgs.length) 
       {
-        return positionalArgs[numericIndex];
+        return String(positionalArgs[numericIndex]);
       }
 
       // заменяем по индексу
       if (indexArg < args.length)
       {
-        const result = args[indexArg];
+        const result = String(args[indexArg]);
         indexArg++;
         return result;
       }

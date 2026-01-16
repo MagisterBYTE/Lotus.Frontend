@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BooleanConverter } from '#converters';
-import { EnvironmentFeatures, TEnvironmentFeature } from './EnvironmentFeature';
+import { TEnvironmentFeatures, TEnvironmentFeature } from './EnvironmentFeature';
 import { IEnvironmentOptions } from './EnvironmentOptions';
 
 export abstract class Environment 
@@ -40,22 +40,22 @@ export abstract class Environment
 
   public static get isCookieAuth(): boolean 
   {
-    return BooleanConverter.toBoolean(Environment.options.features?.[EnvironmentFeatures.cookieAuth]);
+    return BooleanConverter.toBoolean(Environment.options.features?.[TEnvironmentFeatures.CookieAuth]);
   }
 
   public static get isTokenAuth(): boolean 
   {
-    return BooleanConverter.toBoolean(Environment.options.features?.[EnvironmentFeatures.tokenAuth]);
+    return BooleanConverter.toBoolean(Environment.options.features?.[TEnvironmentFeatures.TokenAuth]);
   }
 
   public static get frontApi(): string 
   {
-    return Environment.options.features?.[EnvironmentFeatures.frontApi] ?? 'not_front_api';
+    return Environment.options.features?.[TEnvironmentFeatures.FrontApi] ?? 'not_front_api';
   }
 
   public static get backendApi(): string 
   {
-    return Environment.options.features?.[EnvironmentFeatures.backendApi] ?? 'not_backend_api';
+    return Environment.options.features?.[TEnvironmentFeatures.BackendApi] ?? 'not_backend_api';
   }
   // #endregion
 

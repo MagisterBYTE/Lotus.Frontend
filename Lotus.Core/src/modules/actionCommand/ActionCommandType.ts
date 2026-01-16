@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  *  Массив значений типов команд действий
  */
@@ -34,9 +32,9 @@ export const TActionCommandTypes = {
     return TActionCommandTypeValues;
   },
 
-  isActionCommandType(value: any): value is TActionCommandType
+  isActionCommandType(value: unknown): value is TActionCommandType
   {
-    return (TActionCommandTypeValues as readonly any[]).includes(value);
+    return (TActionCommandTypeValues as readonly unknown[]).includes(value);
   },
 
   getByIndex(index: number): TActionCommandType | undefined

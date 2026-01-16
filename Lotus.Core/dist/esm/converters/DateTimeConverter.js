@@ -6,7 +6,6 @@ export class DateTimeConverter {
      * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
      * @returns Значение.
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static toDateTime(value, defaultValue = new Date(Date.now())) {
         if (value === null || value === undefined)
             return defaultValue;
@@ -23,16 +22,16 @@ export class DateTimeConverter {
      * Преобразование в текст, который можно сконвертировать в тип дата-время.
      * @param text Текст.
      * @param formatDate Формат даты-времени.
-     * @returns Текст или null, если сконвертировать невозможно.
+     * @returns Текст или undefined, если сконвертировать невозможно.
      */
     static parsableText(text, formatDate) {
         if (!text)
-            return null;
+            return undefined;
         const date = DateTimeConverter.tryParseDate(text);
         if (date)
             return date.toLocaleString();
         if (!formatDate)
-            return null;
+            return undefined;
         switch (formatDate) {
             case '%s':
                 return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), new Date().getMinutes(), DateTimeConverter.parseSecond(text)).toLocaleString();
@@ -43,7 +42,7 @@ export class DateTimeConverter {
             case 'H:m:s':
                 return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), DateTimeConverter.parseHour(text), 0, 0).toLocaleString();
             default:
-                return null;
+                return undefined;
         }
     }
     /**
@@ -127,7 +126,7 @@ export class DateTimeConverter {
         date = new Date(Date.parse(text));
         if (!isNaN(date.getTime()))
             return date;
-        return null;
+        return undefined;
     }
 }
 //# sourceMappingURL=DateTimeConverter.js.map

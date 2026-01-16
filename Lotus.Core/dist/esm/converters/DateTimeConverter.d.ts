@@ -5,14 +5,14 @@ export declare abstract class DateTimeConverter {
      * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
      * @returns Значение.
      */
-    static toDateTime(value: any, defaultValue?: Date): Date;
+    static toDateTime(value: unknown, defaultValue?: Date): Date;
     /**
      * Преобразование в текст, который можно сконвертировать в тип дата-время.
      * @param text Текст.
      * @param formatDate Формат даты-времени.
-     * @returns Текст или null, если сконвертировать невозможно.
+     * @returns Текст или undefined, если сконвертировать невозможно.
      */
-    static parsableText(text: string, formatDate: string): string | null;
+    static parsableText(text: string, formatDate: string): string | undefined;
     /**
      * Преобразование текста в объект дата-время.
      * @param text Текст.

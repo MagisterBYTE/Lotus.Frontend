@@ -1,14 +1,25 @@
 import { IOption } from '#modules/option';
 /**
- * Перечисление базовых языков
+ * Массив значений типов языков
  */
-export type TLanguageType = 'ru-RU' | 'en-US' | 'de-DE' | 'ja-JP' | 'zh-CN';
+export declare const TLanguageTypeValues: readonly ["ru-RU", "en-US", "de-DE", "ja-JP", "zh-CN"];
 /**
- * Массив базовых языков
+ * Тип языка
  */
-export declare const TLanguageTypes: readonly TLanguageType[];
+export type TLanguageType = (typeof TLanguageTypeValues)[number];
 /**
- * Набор базовых языков в виде опций
+ * Набор языков
  */
-export declare const LanguageTypeOptions: IOption<TLanguageType>[];
+export declare const TLanguageTypes: {
+    readonly ru_RU: "ru-RU";
+    readonly en_US: "en-US";
+    readonly de_DE: "de-DE";
+    readonly ja_JP: "ja-JP";
+    readonly zh_CH: "zh-CN";
+    readonly getAllValues: () => typeof TLanguageTypeValues;
+    readonly isLanguageType: (value: unknown) => value is TLanguageType;
+    readonly getByIndex: (index: number) => TLanguageType | undefined;
+    readonly getByName: (name: string) => TLanguageType | undefined;
+    readonly getOptions: () => IOption<TLanguageType>[];
+};
 //# sourceMappingURL=LanguageType.d.ts.map

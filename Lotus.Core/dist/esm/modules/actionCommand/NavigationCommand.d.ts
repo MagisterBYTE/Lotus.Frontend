@@ -8,6 +8,6 @@ export declare class NavigationCommand extends BaseActionCommand {
     /**
      * Статус выбора
      */
-    isSelectedCommand(context?: any): boolean;
+    isSelectedCommand(_context?: unknown): boolean;
 }
 //# sourceMappingURL=NavigationCommand.d.ts.map

@@ -3,7 +3,7 @@ import { TActionCommandType } from './ActionCommandType';
 /**
  * Делегат для интерфейса команды действия, возвращает TResult
  */
-export type FunctionCommandDelegate<TResult> = (command: IActionCommand, context?: any) => TResult;
+export type FunctionCommandDelegate<TResult> = (command: IActionCommand, context?: unknown) => TResult;
 /**
  * Интерфейс команды действия
  * @description Команда действия предоставляет собой концепцию (паттерн) для связывания логики выполнения действия и визуального элемента.
@@ -22,11 +22,11 @@ export interface IActionCommand {
     /**
      * Параметр команды
      */
-    parameter?: any;
+    parameter?: unknown;
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    execute: FunctionCommandDelegate<any>;
+    execute: FunctionCommandDelegate<unknown>;
     /**
      * Статус определяющий возможность выполнения команды
      */
@@ -42,11 +42,11 @@ export interface IActionCommand {
     /**
      * Надпись
      */
-    label: string | FunctionCommandDelegate<any>;
+    label: string | FunctionCommandDelegate<unknown>;
     /**
      * Иконка
      */
-    icon?: any | FunctionCommandDelegate<any>;
+    icon?: unknown | FunctionCommandDelegate<unknown>;
     /**
      * Порядок при сортировке команд
      */
@@ -73,32 +73,56 @@ export interface IActionCommand {
  * Базовый класс команды действия
  */
 export declare class BaseActionCommand implements IActionCommand {
+    private _name;
+    private _parameter?;
+    private _execute;
+    private _canExecute?;
+    private _isSelected?;
+    private _route?;
+    private _label;
+    private _icon?;
+    private _order?;
+    private _group?;
+    private _permissionsVisible?;
+    private _children?;
     readonly commandType: TActionCommandType | string;
-    name: string;
-    parameter?: any;
-    execute: FunctionCommandDelegate<any>;
-    canExecute?: FunctionCommandDelegate<boolean> | boolean;
-    isSelected?: FunctionCommandDelegate<boolean> | boolean;
-    route?: IRoute;
-    label: string | FunctionCommandDelegate<any>;
-    icon?: any | FunctionCommandDelegate<any>;
-    order?: number;
-    group?: string;
-    permissionsVisible?: string[];
-    children?: IActionCommand[];
+    get name(): string;
+    set name(value: string);
+    get parameter(): unknown | undefined;
+    set parameter(value: unknown | undefined);
+    get execute(): FunctionCommandDelegate<unknown>;
+    set execute(value: FunctionCommandDelegate<unknown>);
+    get canExecute(): FunctionCommandDelegate<boolean> | boolean | undefined;
+    set canExecute(value: FunctionCommandDelegate<boolean> | boolean | undefined);
+    get isSelected(): FunctionCommandDelegate<boolean> | boolean | undefined;
+    set isSelected(value: FunctionCommandDelegate<boolean> | boolean | undefined);
+    get route(): IRoute | undefined;
+    set route(value: IRoute | undefined);
+    get label(): string | FunctionCommandDelegate<unknown>;
+    set label(value: string | FunctionCommandDelegate<unknown>);
+    get icon(): unknown | FunctionCommandDelegate<unknown> | undefined;
+    set icon(value: unknown | FunctionCommandDelegate<unknown> | undefined);
+    get order(): number | undefined;
+    set order(value: number | undefined);
+    get group(): string | undefined;
+    set group(value: string | undefined);
+    get permissionsVisible(): string[] | undefined;
+    set permissionsVisible(value: string[] | undefined);
+    get children(): IActionCommand[] | undefined;
+    set children(value: IActionCommand[] | undefined);
     constructor(commandType: TActionCommandType | string, name: string);
     /**
      * Основной метод команды отвечающий за ее выполнение
      */
-    executeCommand(context?: any): void;
+    executeCommand(context?: unknown): void;
     /**
      * Метод определяющий возможность выполнения команды
      */
-    canExecuteCommand(context?: any): boolean;
+    canExecuteCommand(context?: unknown): boolean;
     /**
      * Статус выбора
      */
-    isSelectedCommand(context?: any): boolean;
+    isSelectedCommand(context?: unknown): boolean;
     /**
      * Проверка на видимость команды по набору разрешений
      * @param permissions Проверяемый набор разрешений

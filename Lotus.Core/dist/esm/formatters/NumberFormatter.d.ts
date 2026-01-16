@@ -1,5 +1,5 @@
 import { TLanguageType } from '#localization';
-export declare class NumberFormatter {
+export declare abstract class NumberFormatter {
     /**
      * Форматирует число в соответствии с форматом и текущей локалью.
      * @param number Число для форматирования.

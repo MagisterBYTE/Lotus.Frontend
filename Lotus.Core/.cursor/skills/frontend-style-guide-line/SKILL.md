@@ -24,7 +24,7 @@ const calculateTotalDelegate = (items: IItem[], discount: number): number => {
 # Общие принципы созданию кода
 
 ## Базовые принципы
-- **Null vs Undefined**: Всегда отдавать предпочтение `undefined`. Использование `null` допускается только в исключительных случаях (например, при взаимодействии с внешними API, где это критично).
+- **Null vs Undefined**: Всегда отдавать предпочтение `undefined`. Использование `null` допускается только при сравнении с ним и в исключительных случаях (например, при взаимодействии с внешними API, где это критично).
 - **Const Assertion**: Всегда использовать `as const` для readonly-массивов и глобальных константных объектов.
 - **Взаимосвязанные функции**: По логике C#, группировать такие функции в `abstract class` с префиксом `Helper` и публичными статическими методами.
 
@@ -91,13 +91,16 @@ class AppConfig { // Должен быть abstract и с суффиксом Con
 - **Приватные поля**: Все приватные члены класса (fields/properties) должны начинаться с префикса нижнего подчеркивания `_` (напр. `_items`).
 - **Объявление полей**: Все поля класса должны быть явно объявлены, иметь модификатор доступа (`public`, `private`, `protected`) и быть проинициализированы (в месте объявления или в конструкторе).
 - **Группировка и порядок регионов**: Все члены класса должны быть обернуты в `#region` / `#endregion`. Регионы должны следовать строго в указанном порядке:
-    1. `Static fields`
-    2. `Static properties`
-    3. `Fields`
-    4. `Properties`
-    5. `Constructors`
-    6. `Methods` (для обычных методов класса)
-    7. `[Имя интерфейса]` (для реализации методов конкретного интерфейса)
+    1. `Instance` (только для классов, реализующих паттерн ClassInstance)
+    2. `Static fields`
+    3. `Static properties`
+    4. `Fields`
+    5. `Properties`
+    6. `Constructors`
+    7. `Methods` (для обычных методов класса)
+    8. `[Имя интерфейса]` (для реализации методов конкретного интерфейса)
+
+**Исключение**: Если класс содержит только один тип членов (например, только `static readonly` поля, только статические методы, или только поля), использование регионов не является обязательным. Регионы необходимы для классов с несколькими типами членов для улучшения читаемости и структурирования кода.
 
 <example>
 class DataManager implements IDisposable {
@@ -136,6 +139,31 @@ class DataManager implements IDisposable {
   #endregion
 }
 </example>
+
+- **Паттерн ClassInstance**:
+    - Реализация должна соответствовать примеру ниже.
+    - Приватное статическое поле для хранения экземпляра (`private static _НАЗВАНИЕ_КЛАССА_В_CAMEL_CASE: T;`).
+    - Публичный статический геттер `Instance` для доступа и ленивой инициализации.
+    - Регион `#region Instance` должен быть **первым** в классе.
+<example>
+export class DelimiterCommand
+{
+  // #region Instance
+  private static _delimiterCommand: DelimiterCommand;
+
+  public static get Instance(): DelimiterCommand
+  {
+    return this._delimiterCommand || (this._delimiterCommand = new this(TActionCommandTypes.Delimiter));
+  }
+  // #endregion
+
+  constructor(name: string) 
+  {
+    super(TActionCommandTypes.Delimiter, name);
+  }
+}
+</example>
+
 
 # Требование к наименованию и объявлению глобальных объектов
 

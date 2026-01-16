@@ -1,3 +1,3 @@
 export { Environment } from './Environment';
-export { EnvironmentFeatures } from './EnvironmentFeature';
+export { TEnvironmentFeatures } from './EnvironmentFeature';
 //# sourceMappingURL=index.js.map

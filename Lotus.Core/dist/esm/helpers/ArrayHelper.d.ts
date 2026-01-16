@@ -12,7 +12,7 @@ export declare abstract class ArrayHelper {
      * @param array Проверяемый массив
      * @returns Статус проверки
      */
-    static checkIsNumbers(array: any[]): array is number[];
+    static checkIsNumbers(array: unknown[]): boolean;
     /**
      * Проверка на вхождение любого элемента проверяемого массива в исходном массиве
      * @param array Исходный массив
@@ -26,14 +26,14 @@ export declare abstract class ArrayHelper {
      * @param key Ключ по которому будет произведена группировка
      * @returns Массив групп
      */
-    static groupByKey<TItem extends Record<TKey, any>, TKey extends keyof TItem>(array: TItem[], key: TKey): IGrouping<TItem>[];
+    static groupByKey<TItem extends object, TKey extends keyof TItem>(array: TItem[], key: TKey): IGrouping<TItem>[];
     /**
      * Получает массив уникальный по ключу key
      * @param array Массив
      * @param key Ключ уникальности
      * @returns Массив уникальный по ключу key
      */
-    static getUniqueByKey<TItem extends Record<TKey, any>, TKey extends keyof TItem>(array: TItem[], key: TKey): TItem[];
+    static getUniqueByKey<TItem extends object, TKey extends keyof TItem>(array: TItem[], key: TKey): TItem[];
     /**
      * Проверка массива на наличие дубликатов
      *
@@ -49,7 +49,7 @@ export declare abstract class ArrayHelper {
      * @param value Значение или массив значений для удаления
      * @returns Новый массив без удаленных элементов
      */
-    static removeByKey<TItem extends Record<string, any>>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): TItem[];
+    static removeByKey<TItem extends object>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): TItem[];
     /**
      * Удаляет элементы из массива по ключу и значению (или массиву значений), мутируя исходный массив
      * @param array Исходный массив объектов (будет мутирован)
@@ -57,7 +57,7 @@ export declare abstract class ArrayHelper {
      * @param value Значение или массив значений для удаления
      * @returns Количество удаленных элементов
      */
-    static removeByKeyInPlace<TItem extends Record<string, any>>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): number;
+    static removeByKeyInPlace<TItem extends object>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): number;
     /**
      * Вставка данных в указанный массив
      * @param array Исходный массив (будет мутирован)
@@ -65,6 +65,6 @@ export declare abstract class ArrayHelper {
      * @param direction Направление вставки
      * @param value Значение или массив значений для вставки
      */
-    static insertArrayInPlace<TItem = any>(array: TItem[], index: number, direction: 'Lower' | 'End' | 'Upper', value: TItem | TItem[]): void;
+    static insertArrayInPlace<TItem = unknown>(array: TItem[], index: number, direction: 'Lower' | 'End' | 'Upper', value: TItem | TItem[]): void;
 }
 //# sourceMappingURL=ArrayHelper.d.ts.map

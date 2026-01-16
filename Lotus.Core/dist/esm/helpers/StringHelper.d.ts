@@ -15,15 +15,16 @@ export declare abstract class StringHelper {
      */
     static equalIgnoreCase(first: string, second: string): boolean;
     /**
-     * Проверяет, является ли строка null, undefined или пустой
+     * Проверяет, является ли строка undefined или пустой
      * @param {string | undefined | null} value - Проверяемое значение
-     * @returns {boolean} true, если строка null, undefined или пустая
+     * @returns {boolean} true, если строка undefined или пустая
      * @example
+     * StringHelper.isNullOrEmpty(undefined); // true
      * StringHelper.isNullOrEmpty(null); // true
      * StringHelper.isNullOrEmpty(''); // true
      * StringHelper.isNullOrEmpty('text'); // false
      */
-    static isNullOrEmpty(value?: string | null): boolean;
+    static isNullOrEmpty(value?: unknown): boolean;
     /**
      * Преобразует первый символ строки в верхний регистр
      * @param {string} value - Исходная строка
@@ -112,6 +113,6 @@ export declare abstract class StringHelper {
    * @param args Аргументы для подстановки (могут быть отдельными значениями или объектом)
    * @returns Отформатированная строка
    */
-    static stringFormat(format: string, ...args: any[]): string;
+    static stringFormat(format: string, ...args: unknown[]): string;
 }
 //# sourceMappingURL=StringHelper.d.ts.map

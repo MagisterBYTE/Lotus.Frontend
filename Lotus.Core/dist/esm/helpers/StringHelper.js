@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CharConstants } from '#constants';
 /**
  * Вспомогательный класс для работы со строками
@@ -19,10 +18,11 @@ export class StringHelper {
         return first.toLocaleUpperCase() === second.toLocaleUpperCase();
     }
     /**
-     * Проверяет, является ли строка null, undefined или пустой
+     * Проверяет, является ли строка undefined или пустой
      * @param {string | undefined | null} value - Проверяемое значение
-     * @returns {boolean} true, если строка null, undefined или пустая
+     * @returns {boolean} true, если строка undefined или пустая
      * @example
+     * StringHelper.isNullOrEmpty(undefined); // true
      * StringHelper.isNullOrEmpty(null); // true
      * StringHelper.isNullOrEmpty(''); // true
      * StringHelper.isNullOrEmpty('text'); // false
@@ -165,10 +165,10 @@ export class StringHelper {
     static stringFormat(format, ...args) {
         // Если первый аргумент после format - это объект и это единственный аргумент,
         // используем его как именованные параметры
-        if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null && !Array.isArray(args[0])) {
+        if (args.length === 1 && typeof args[0] === 'object' && args[0] !== undefined && args[0] !== null && !Array.isArray(args[0])) {
             const params = args[0];
             return format.replace(/{(\w+)}/g, (match, key) => {
-                return key in params ? params[key] : match;
+                return key in params ? String(params[key]) : match;
             });
         }
         // В противном случае работаем с позиционными параметрами,
@@ -177,6 +177,7 @@ export class StringHelper {
         let namedParams = {};
         // Проверяем, есть ли среди аргументов объект с именованными параметрами
         const namedParamIndex = args.findIndex(arg => typeof arg === 'object' &&
+            arg !== undefined &&
             arg !== null &&
             !Array.isArray(arg) &&
             Object.keys(arg).some(key => typeof key === 'string'));
@@ -190,16 +191,16 @@ export class StringHelper {
         return format.replace(/{(\w+)}/g, (match, key) => {
             // Сначала проверяем именованные параметры
             if (key in namedParams) {
-                return namedParams[key];
+                return String(namedParams[key]);
             }
             // Затем проверяем, может ли ключ быть числовым индексом
             const numericIndex = parseInt(key, 10);
             if (!isNaN(numericIndex) && numericIndex >= 0 && numericIndex < positionalArgs.length) {
-                return positionalArgs[numericIndex];
+                return String(positionalArgs[numericIndex]);
             }
             // заменяем по индексу
             if (indexArg < args.length) {
-                const result = args[indexArg];
+                const result = String(args[indexArg]);
                 indexArg++;
                 return result;
             }

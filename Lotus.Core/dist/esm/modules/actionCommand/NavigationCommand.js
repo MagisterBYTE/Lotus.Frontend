@@ -1,17 +1,17 @@
 import { BaseActionCommand } from './ActionCommand';
-import { ActionCommandTypes } from './ActionCommandType';
+import { TActionCommandTypes } from './ActionCommandType';
 /**
  * Класс команды для простой навигации
  */
 export class NavigationCommand extends BaseActionCommand {
     constructor(name, route) {
-        super(ActionCommandTypes.Navigation, name);
+        super(TActionCommandTypes.Navigation, name);
         this.route = route;
     }
     /**
      * Статус выбора
      */
-    isSelectedCommand(context) {
+    isSelectedCommand(_context) {
         if (window.location.pathname === this.route?.path) {
             return true;
         }

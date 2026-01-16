@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import axios from 'axios';
 import { ObjectHelper } from '#helpers';
@@ -9,7 +8,15 @@ import { Assert } from '#utils';
  * Базовый класс для сервисов Api
  */
 export class ApiService {
-    api;
+    // #region Fields
+    _api;
+    // #endregion
+    // #region Properties
+    get api() {
+        return this._api;
+    }
+    // #endregion
+    // #region Constructors
     constructor(baseURL) {
         const api = axios.create({
             baseURL: baseURL
@@ -17,8 +24,10 @@ export class ApiService {
         // Используем стрелочные функции для сохранения контекста
         api.interceptors.request.use((config) => this.handleRequest(config), (error) => this.handleRequestError(error));
         api.interceptors.response.use((response) => this.handleResponse(response), (error) => this.handleResponseError(error));
-        this.api = api;
+        this._api = api;
     }
+    // #endregion
+    // #region Methods
     handleRequest(config) {
         config.timeout = 10 * 60 * 1000;
         return config;
@@ -30,6 +39,7 @@ export class ApiService {
     handleResponse(response) {
         return response;
     }
+    // eslint-disable-next-line complexity
     handleResponseError(error) {
         // Запрос был сделан, и сервер ответил кодом состояния, который выходит за пределы 2xx
         if (error.response) {
@@ -69,7 +79,11 @@ export class ApiService {
                 }
                 // Ошибка аутентификации по стандарту RFC 6749
                 const errorAuthResponse = error.response.data;
-                if (errorAuthResponse && typeof errorAuthResponse === 'object' && 'error' in errorAuthResponse && 'error_description' in errorAuthResponse) {
+                if (errorAuthResponse && typeof errorAuthResponse === 'object'
+                    && errorAuthResponse !== null
+                    && errorAuthResponse !== undefined
+                    && 'error' in errorAuthResponse && typeof errorAuthResponse.error === 'string'
+                    && 'error_description' in errorAuthResponse && typeof errorAuthResponse.error_description === 'string') {
                     const errorAuth = errorAuthResponse.error;
                     const errorDescAuth = errorAuthResponse.error_description;
                     if (Assert.existValue(errorDescAuth)) {
@@ -120,16 +134,16 @@ export class ApiService {
         }
     }
     get(path, config) {
-        return this.api.get(path, config);
+        return this._api.get(path, config);
     }
     post(path, payload) {
-        return this.api.post(path, payload);
+        return this._api.post(path, payload);
     }
     put(path, payload) {
-        return this.api.put(path, payload);
+        return this._api.put(path, payload);
     }
     delete(path, config) {
-        return this.api.delete(path, config);
+        return this._api.delete(path, config);
     }
     getConfigAcceptJson() {
         const config = {

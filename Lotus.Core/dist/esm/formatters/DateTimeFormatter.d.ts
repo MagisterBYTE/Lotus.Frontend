@@ -176,7 +176,7 @@ export declare abstract class DateTimeFormatter {
     }): string;
     /**
      * Разбивает отформатированную продолжительность на части
-     * Полезно для кастомного отображения
+     * Полезно для произвольного отображения
      *
      * @param {number} seconds - Продолжительность в секундах
      * @param {string} [locale='navigator.language'] - Локаль для форматирования

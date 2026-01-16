@@ -1,7 +1,7 @@
 import { TEnvironmentFeature } from './EnvironmentFeature';
 import { IEnvironmentOptions } from './EnvironmentOptions';
 export declare abstract class Environment {
-    private static options;
+    static get options(): IEnvironmentOptions;
     static get isDevelopment(): boolean;
     static get isProduction(): boolean;
     static get version(): string;

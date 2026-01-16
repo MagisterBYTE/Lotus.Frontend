@@ -3,16 +3,17 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalA
  * Базовый класс для сервисов Api
  */
 export declare abstract class ApiService {
-    protected api: AxiosInstance;
+    private _api;
+    protected get api(): AxiosInstance;
     constructor(baseURL: string);
-    protected handleRequest(config: InternalAxiosRequestConfig<any>): InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>>;
+    protected handleRequest(config: InternalAxiosRequestConfig<unknown>): InternalAxiosRequestConfig<unknown> | Promise<InternalAxiosRequestConfig<unknown>>;
     protected handleRequestError(error: AxiosError): Promise<AxiosError>;
     protected handleResponse(response: AxiosResponse): AxiosResponse<any, any, {}>;
     protected handleResponseError(error: AxiosError): Promise<never>;
-    protected get<TResponse = any>(path: string, config?: any): Promise<AxiosResponse<TResponse, any, {}>>;
-    protected post<TResponse = any, TRequest = any>(path: string, payload: TRequest): Promise<AxiosResponse<TResponse, any, {}>>;
-    protected put<TResponse = any, TRequest = any>(path: string, payload: TRequest): Promise<AxiosResponse<TResponse, any, {}>>;
-    protected delete<TResponse = any>(path: string, config?: any): Promise<AxiosResponse<TResponse, any, {}>>;
-    protected getConfigAcceptJson(): AxiosRequestConfig<any>;
+    protected get<TResponse = unknown>(path: string, config?: AxiosRequestConfig<unknown>): Promise<AxiosResponse<TResponse, any, {}>>;
+    protected post<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest): Promise<AxiosResponse<TResponse, any, {}>>;
+    protected put<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest): Promise<AxiosResponse<TResponse, any, {}>>;
+    protected delete<TResponse = unknown>(path: string, config?: AxiosRequestConfig<unknown>): Promise<AxiosResponse<TResponse, any, {}>>;
+    protected getConfigAcceptJson(): AxiosRequestConfig;
 }
 //# sourceMappingURL=ApiService.d.ts.map

@@ -27,7 +27,8 @@ export interface ICommandActionService {
  * Сервис для работы с командами
  */
 export declare class CommandActionService implements ICommandActionService {
-    commands: IActionCommand[];
+    private _commands;
+    get commands(): IActionCommand[];
     constructor();
     addCommands(commands: IActionCommand[]): void;
     getCommands(): IActionCommand[];

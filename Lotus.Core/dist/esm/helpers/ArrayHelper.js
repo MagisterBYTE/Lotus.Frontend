@@ -17,7 +17,6 @@ export class ArrayHelper {
      * @param array Проверяемый массив
      * @returns Статус проверки
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static checkIsNumbers(array) {
         return array.every((element) => {
             return typeof element === 'number';
@@ -45,7 +44,6 @@ export class ArrayHelper {
      * @param key Ключ по которому будет произведена группировка
      * @returns Массив групп
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static groupByKey(array, key) {
         const result = [];
         for (const item of array) {
@@ -67,7 +65,6 @@ export class ArrayHelper {
      * @param key Ключ уникальности
      * @returns Массив уникальный по ключу key
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static getUniqueByKey(array, key) {
         const seen = new Set();
         return array.filter((item) => {
@@ -97,7 +94,6 @@ export class ArrayHelper {
      * @param value Значение или массив значений для удаления
      * @returns Новый массив без удаленных элементов
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static removeByKey(array, key, value) {
         const valuesToRemove = Array.isArray(value) ? value : [value];
         return array.filter((item) => {
@@ -112,7 +108,6 @@ export class ArrayHelper {
      * @param value Значение или массив значений для удаления
      * @returns Количество удаленных элементов
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static removeByKeyInPlace(array, key, value) {
         const valuesToRemove = Array.isArray(value) ? value : [value];
         let removedCount = 0;
@@ -132,7 +127,6 @@ export class ArrayHelper {
      * @param direction Направление вставки
      * @param value Значение или массив значений для вставки
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static insertArrayInPlace(array, index, direction, value) {
         const elementsToInsert = Array.isArray(value) ? value : [value];
         if (index < 0) {

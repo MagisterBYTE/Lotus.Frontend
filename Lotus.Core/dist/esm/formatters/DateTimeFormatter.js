@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Assert } from '#utils';
 /**
  * Вспомогательный класс для форматирования дат и времени с использованием Intl API
@@ -385,7 +384,7 @@ export class DateTimeFormatter {
     }
     /**
      * Разбивает отформатированную продолжительность на части
-     * Полезно для кастомного отображения
+     * Полезно для произвольного отображения
      *
      * @param {number} seconds - Продолжительность в секундах
      * @param {string} [locale='navigator.language'] - Локаль для форматирования

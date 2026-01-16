@@ -18,6 +18,12 @@ export type ReplaceValues<T, V> = {
     [K in keyof T]: V;
 };
 /**
+ * Утилита для извлечения только значений-не-функций
+ */
+export type OnlyValues<T> = {
+    [K in keyof T]: T[K] extends Function ? never : T[K];
+}[keyof T];
+/**
  * Обобщенный тип, который позволяет извлечь тип конкретного свойства из объекта.
  * @template TType - это объектный тип, из которого мы хотим получить свойство.
  * @template TPropertyName - это имя свойства, которое мы хотим извлечь. Оно должно принадлежать ключам типа TType (обозначается keyof TType).

@@ -5,14 +5,8 @@ import { FunctionHelper } from '#helpers';
 export class RefreshProxy {
     onRefreshProxy;
     constructor() {
-        this.onRefreshProxy = this.defaultRefreshProxy;
+        this.onRefreshProxy = () => { };
         FunctionHelper.bindAllMethods(this);
-    }
-    /**
-     * Метод по умолчанию для обновления прокси объекта.
-     * Служит как заглушка
-     */
-    defaultRefreshProxy() {
     }
 }
 //# sourceMappingURL=RefreshProxy.js.map

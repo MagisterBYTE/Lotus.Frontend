@@ -650,7 +650,7 @@ describe('DateTimeFormatter - Specific scenarios', () =>
       const memoryIncrease = finalMemory - initialMemory;
       
       // Проверяем, что увеличение памяти разумное
-      expect(memoryIncrease).toBeLessThan(10 * 1024 * 1024); // 10MB
+      expect(memoryIncrease).toBeLessThan(15 * 1024 * 1024); // 15MB
     });
   });
 

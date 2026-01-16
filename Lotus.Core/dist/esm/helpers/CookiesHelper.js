@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Environment } from '#environment';
 export class CookiesHelper {
     /**
@@ -290,7 +289,7 @@ export class CookiesHelper {
      * Получает JSON значение из cookie
      *
      * @param name - Имя cookie с JSON данными
-     * @returns Распарсенный JSON объект или null при ошибке
+     * @returns Распарсенный JSON объект или undefined при ошибке
      *
      * @throws {Error} Если JSON некорректен (в режиме разработки)
      *
@@ -303,7 +302,7 @@ export class CookiesHelper {
     static getJSON(name) {
         const value = this.get(name);
         if (!value)
-            return null;
+            return undefined;
         try {
             return JSON.parse(value);
         }
@@ -311,7 +310,7 @@ export class CookiesHelper {
             if (Environment.isDevelopment) {
                 console.error(`CookiesHelper: Неверный JSON в cookie "${name}":`, error);
             }
-            return null;
+            return undefined;
         }
     }
     /**

@@ -25,8 +25,7 @@ export abstract class ArrayHelper
    * @param array Проверяемый массив
    * @returns Статус проверки
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static checkIsNumbers(array: any[])
+  public static checkIsNumbers(array: unknown[]): boolean
   {
     return array.every((element) =>
     {
@@ -62,8 +61,7 @@ export abstract class ArrayHelper
    * @param key Ключ по которому будет произведена группировка
    * @returns Массив групп
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static groupByKey<TItem extends Record<TKey, any>, TKey extends keyof TItem>(array: TItem[], key: TKey): IGrouping<TItem>[]
+  public static groupByKey<TItem extends object, TKey extends keyof TItem>(array: TItem[], key: TKey): IGrouping<TItem>[]
   {
     const result: IGrouping<TItem>[] = [];
 
@@ -91,10 +89,9 @@ export abstract class ArrayHelper
    * @param key Ключ уникальности
    * @returns Массив уникальный по ключу key
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static getUniqueByKey<TItem extends Record<TKey, any>, TKey extends keyof TItem>(array: TItem[], key: TKey): TItem[]
+  public static getUniqueByKey<TItem extends object, TKey extends keyof TItem>(array: TItem[], key: TKey): TItem[]
   {
-    const seen = new Set();
+    const seen = new Set<unknown>();
     return array.filter((item) =>
     {
       const value = item[key];
@@ -127,8 +124,7 @@ export abstract class ArrayHelper
    * @param value Значение или массив значений для удаления
    * @returns Новый массив без удаленных элементов
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static removeByKey<TItem extends Record<string, any>>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): TItem[]
+  public static removeByKey<TItem extends object>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): TItem[]
   {
     const valuesToRemove = Array.isArray(value) ? value : [value];
     return array.filter((item) =>
@@ -145,8 +141,7 @@ export abstract class ArrayHelper
    * @param value Значение или массив значений для удаления
    * @returns Количество удаленных элементов
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static removeByKeyInPlace<TItem extends Record<string, any>>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): number
+  public static removeByKeyInPlace<TItem extends object>(array: TItem[], key: keyof TItem, value: TItem[keyof TItem] | TItem[keyof TItem][]): number
   {
     const valuesToRemove = Array.isArray(value) ? value : [value];
     let removedCount = 0;
@@ -171,8 +166,7 @@ export abstract class ArrayHelper
    * @param direction Направление вставки
    * @param value Значение или массив значений для вставки
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static insertArrayInPlace<TItem = any>(array: TItem[], index: number, direction: 'Lower'|'End'|'Upper', value: TItem | TItem[])
+  public static insertArrayInPlace<TItem = unknown>(array: TItem[], index: number, direction: 'Lower'|'End'|'Upper', value: TItem | TItem[])
   {
     const elementsToInsert = Array.isArray(value) ? value : [value];
     if (index < 0)

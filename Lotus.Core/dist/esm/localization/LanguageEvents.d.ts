@@ -2,7 +2,7 @@ import { TLanguageType } from './LanguageType';
 /**
  * Тип события для изменения языка
  */
-export declare const LanguageChangeEventType: string;
+export declare const LanguageChangeEventType: "LanguageChangeEventType";
 /**
  * Данные события для изменения языка
  */

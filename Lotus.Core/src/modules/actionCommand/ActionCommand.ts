@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrayHelper } from '#helpers';
 import { IRoute } from '#modules/route';
 import { Assert } from '#utils';
@@ -7,7 +6,7 @@ import { TActionCommandTypes, TActionCommandType } from './ActionCommandType';
 /**
  * Делегат для интерфейса команды действия, возвращает TResult
  */
-export type FunctionCommandDelegate<TResult> = (command: IActionCommand, context?: any) => TResult;
+export type FunctionCommandDelegate<TResult> = (command: IActionCommand, context?: unknown) => TResult;
 
 /**
  * Интерфейс команды действия
@@ -33,12 +32,12 @@ export interface IActionCommand
   /**
    * Параметр команды
    */
-  parameter?: any;
+  parameter?: unknown;
 
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  execute: FunctionCommandDelegate<any>;
+  execute: FunctionCommandDelegate<unknown>;
 
   /**
    * Статус определяющий возможность выполнения команды
@@ -64,12 +63,12 @@ export interface IActionCommand
   /**
    * Надпись
    */
-  label: string | FunctionCommandDelegate<any>;
+  label: string | FunctionCommandDelegate<unknown>;
 
   /**
    * Иконка
    */
-  icon?: any | FunctionCommandDelegate<any>;
+  icon?: unknown | FunctionCommandDelegate<unknown>;
 
   /**
    * Порядок при сортировке команд
@@ -106,66 +105,180 @@ export interface IActionCommand
  */
 export class BaseActionCommand implements IActionCommand
 {
-  //
-  // ОСНОВНЫЕ ДАННЫЕ
-  //
+  // #region Fields
+  private _name: string;
+  private _parameter?: unknown;
+  private _execute: FunctionCommandDelegate<unknown>;
+  private _canExecute?: FunctionCommandDelegate<boolean> | boolean;
+  private _isSelected?: FunctionCommandDelegate<boolean> | boolean;
+  private _route?: IRoute;
+  private _label: string | FunctionCommandDelegate<unknown>;
+  private _icon?: unknown | FunctionCommandDelegate<unknown>;
+  private _order?: number;
+  private _group?: string;
+  private _permissionsVisible?: string[];
+  private _children?: IActionCommand[];
+  // #endregion
+
+  // #region Properties
   public readonly commandType: TActionCommandType|string;
-  public name: string;
-  public parameter?: any;
-  public execute: FunctionCommandDelegate<any>;
-  public canExecute?: FunctionCommandDelegate<boolean> | boolean;
-  public isSelected?: FunctionCommandDelegate<boolean> | boolean;
 
-  //
-  // ПАРАМЕТРЫ МАРШРУТИЗАЦИИ
-  //
-  public route?: IRoute;
+  public get name(): string
+  {
+    return this._name;
+  }
 
-  //
-  // СВЯЗЬ С ВИЗУАЛЬНОЙ ЧАСТЬЮ
-  //
-  public label: string | FunctionCommandDelegate<any>;
-  public icon?: any | FunctionCommandDelegate<any>;
-  public order?: number;
-  public group?: string;
-  public permissionsVisible?: string[];
+  public set name(value: string)
+  {
+    this._name = value;
+  }
 
-  //
-  // ДОЧЕРНИЕ ЭЛЕМЕНТЫ
-  //
-  children?: IActionCommand[];
+  public get parameter(): unknown | undefined
+  {
+    return this._parameter;
+  }
+
+  public set parameter(value: unknown | undefined)
+  {
+    this._parameter = value;
+  }
+
+  public get execute(): FunctionCommandDelegate<unknown>
+  {
+    return this._execute;
+  }
+
+  public set execute(value: FunctionCommandDelegate<unknown>)
+  {
+    this._execute = value;
+  }
+
+  public get canExecute(): FunctionCommandDelegate<boolean> | boolean | undefined
+  {
+    return this._canExecute;
+  }
+
+  public set canExecute(value: FunctionCommandDelegate<boolean> | boolean | undefined)
+  {
+    this._canExecute = value;
+  }
+
+  public get isSelected(): FunctionCommandDelegate<boolean> | boolean | undefined
+  {
+    return this._isSelected;
+  }
+
+  public set isSelected(value: FunctionCommandDelegate<boolean> | boolean | undefined)
+  {
+    this._isSelected = value;
+  }
+
+  public get route(): IRoute | undefined
+  {
+    return this._route;
+  }
+
+  public set route(value: IRoute | undefined)
+  {
+    this._route = value;
+  }
+
+  public get label(): string | FunctionCommandDelegate<unknown>
+  {
+    return this._label;
+  }
+
+  public set label(value: string | FunctionCommandDelegate<unknown>)
+  {
+    this._label = value;
+  }
+
+  public get icon(): unknown | FunctionCommandDelegate<unknown> | undefined
+  {
+    return this._icon;
+  }
+
+  public set icon(value: unknown | FunctionCommandDelegate<unknown> | undefined)
+  {
+    this._icon = value;
+  }
+
+  public get order(): number | undefined
+  {
+    return this._order;
+  }
+
+  public set order(value: number | undefined)
+  {
+    this._order = value;
+  }
+
+  public get group(): string | undefined
+  {
+    return this._group;
+  }
+
+  public set group(value: string | undefined)
+  {
+    this._group = value;
+  }
+
+  public get permissionsVisible(): string[] | undefined
+  {
+    return this._permissionsVisible;
+  }
+
+  public set permissionsVisible(value: string[] | undefined)
+  {
+    this._permissionsVisible = value;
+  }
+
+  public get children(): IActionCommand[] | undefined
+  {
+    return this._children;
+  }
+
+  public set children(value: IActionCommand[] | undefined)
+  {
+    this._children = value;
+  }
+  // #endregion
+
+  // #region Constructors
 
   constructor(commandType: TActionCommandType|string, name: string)
   {
     this.commandType = commandType;
-    this.name = name;
-    this.label = '';
+    this._name = name;
+    this._label = '';
     this.executeCommand = this.executeCommand.bind(this);
     this.canExecuteCommand = this.canExecuteCommand.bind(this);
     this.isSelectedCommand = this.isSelectedCommand.bind(this);
-    this.execute = () => { };
+    this._execute = () => { };
   }
+  // #endregion
 
+  // #region Methods
   /**
    * Основной метод команды отвечающий за ее выполнение
    */
-  public executeCommand(context?: any): void
+  public executeCommand(context?: unknown): void
   {
-    this.execute(this, context);
+    this._execute(this, context);
   }
 
   /**
    * Метод определяющий возможность выполнения команды
    */
-  public canExecuteCommand(context?: any): boolean
+  public canExecuteCommand(context?: unknown): boolean
   {
-    if (Assert.existValue<FunctionCommandDelegate<boolean> | boolean>(this.canExecute))
+    if (Assert.existValue<FunctionCommandDelegate<boolean> | boolean>(this._canExecute))
     {
-      if (Assert.isFunction(this.canExecute))
+      if (Assert.isFunction(this._canExecute))
       {
-        return this.canExecute(this, context);
+        return this._canExecute(this, context);
       }
-      return this.canExecute;
+      return this._canExecute;
     }
 
     return true;
@@ -174,15 +287,15 @@ export class BaseActionCommand implements IActionCommand
   /**
    * Статус выбора
    */
-  public isSelectedCommand(context?: any): boolean
+  public isSelectedCommand(context?: unknown): boolean
   {
-    if (Assert.existValue<FunctionCommandDelegate<boolean> | boolean>(this.isSelected))
+    if (Assert.existValue<FunctionCommandDelegate<boolean> | boolean>(this._isSelected))
     {
-      if (Assert.isFunction(this.isSelected))
+      if (Assert.isFunction(this._isSelected))
       {
-        return this.isSelected(this, context);
+        return this._isSelected(this, context);
       }
-      return this.isSelected;
+      return this._isSelected;
     }
 
     return false;
@@ -194,11 +307,11 @@ export class BaseActionCommand implements IActionCommand
    */
   public checkPermissionsVisible(permissions?: string[]): boolean
   {
-    if (Assert.isArrayWithData(this.permissionsVisible))
+    if (Assert.isArrayWithData(this._permissionsVisible))
     {
       if (Assert.isArrayWithData(permissions))
       {
-        return ArrayHelper.checkInArrayAny(this.permissionsVisible, permissions);
+        return ArrayHelper.checkInArrayAny(this._permissionsVisible, permissions);
       }
 
       return false;
@@ -206,6 +319,7 @@ export class BaseActionCommand implements IActionCommand
 
     return true;
   }
+  // #endregion
 }
 
 /**

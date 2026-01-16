@@ -1,17 +1,18 @@
 import { BaseActionCommand } from './ActionCommand';
-import { ActionCommandTypes } from './ActionCommandType';
+import { TActionCommandTypes } from './ActionCommandType';
 /**
  * Фейковая команда предназначенная для визуального разделения команд в списках
  */
 export class DelimiterCommand extends BaseActionCommand {
-    // #region Static fields
-    static _delimiter;
+    // #region Instance
+    static _delimiterCommand;
     static get Instance() {
-        return this._delimiter || (this._delimiter = new this(ActionCommandTypes.Delimiter));
+        return this._delimiterCommand || (this._delimiterCommand = new this('Delimiter'));
     }
     // #endregion
+    // #region Constructors
     constructor(name) {
-        super(ActionCommandTypes.Delimiter, name);
+        super(TActionCommandTypes.Delimiter, name);
     }
 }
 //# sourceMappingURL=DelimiterCommand.js.map

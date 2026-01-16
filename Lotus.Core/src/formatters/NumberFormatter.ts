@@ -1,6 +1,6 @@
 import { LocalizationCoreDispatcher, TLanguageType } from '#localization';
 
-export class NumberFormatter
+export abstract class NumberFormatter
 {
   /**
    * Форматирует число в соответствии с форматом и текущей локалью.

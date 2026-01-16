@@ -13,11 +13,11 @@ export interface IEditable {
  * @param value Проверяемый объект
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
-export declare function instanceOfEditable(value: any): value is IEditable;
+export declare function instanceOfEditable(value: unknown): value is IEditable;
 /**
  * Преобразование объекта к интерфейсу IEditable
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-export declare function castToEditable(value: any): IEditable | undefined;
+export declare function castToEditable(value: unknown): IEditable | undefined;
 //# sourceMappingURL=Editable.d.ts.map

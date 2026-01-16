@@ -1,5 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Assert } from '#utils';
+
+/**
+ * Расширенный интерфейс для опций DurationFormat с поддержкой экспериментальных свойств
+ */
+interface IDurationFormatOptionsExtended extends Intl.DurationFormatOptions {
+  hoursDisplay?: 'auto' | 'always';
+  minutesDisplay?: 'auto' | 'always';
+  secondsDisplay?: 'auto' | 'always';
+}
 
 /**
  * Вспомогательный класс для форматирования дат и времени с использованием Intl API
@@ -337,7 +345,7 @@ export abstract class DateTimeFormatter
         const formatter = new Intl.DurationFormat(locale, {
           style: 'digital',
           hoursDisplay: forceHours ? 'always' : 'auto'
-        } as any);
+        } as IDurationFormatOptionsExtended);
 
         let result = formatter.format(duration);
 
@@ -440,8 +448,8 @@ export abstract class DateTimeFormatter
       try
       {
         const duration = this.secondsToDurationObject(seconds);
-        const durationOptions: Intl.DurationFormatOptions = {
-          style: effectiveStyle as any,
+        const durationOptions: IDurationFormatOptionsExtended = {
+          style: effectiveStyle,
           hoursDisplay: 'auto',
           minutesDisplay: 'auto',
           secondsDisplay: seconds % 60 > 0 ? 'always' : 'auto'

@@ -8,8 +8,7 @@ export abstract class DateTimeConverter
    * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
    * @returns Значение.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static toDateTime(value: any, defaultValue: Date = new Date(Date.now())): Date
+  public static toDateTime(value: unknown, defaultValue: Date = new Date(Date.now())): Date
   {
     if (value === null || value === undefined) return defaultValue;
     if (value instanceof Date) 
@@ -25,16 +24,16 @@ export abstract class DateTimeConverter
    * Преобразование в текст, который можно сконвертировать в тип дата-время.
    * @param text Текст.
    * @param formatDate Формат даты-времени.
-   * @returns Текст или null, если сконвертировать невозможно.
+   * @returns Текст или undefined, если сконвертировать невозможно.
    */
-  public static parsableText(text: string, formatDate: string): string | null
+  public static parsableText(text: string, formatDate: string): string | undefined
   {
-    if (!text) return null;
+    if (!text) return undefined;
 
     const date = DateTimeConverter.tryParseDate(text);
     if (date) return date.toLocaleString();
 
-    if (!formatDate) return null;
+    if (!formatDate) return undefined;
 
     switch (formatDate)
     {
@@ -61,7 +60,7 @@ export abstract class DateTimeConverter
       case 'H:m:s':
         return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), DateTimeConverter.parseHour(text), 0, 0).toLocaleString();
       default:
-        return null;
+        return undefined;
     }
   }
 
@@ -157,7 +156,7 @@ export abstract class DateTimeConverter
     return Math.floor(value.getTime() / 1000);
   }
 
-  private static tryParseDate(text: string): Date | null
+  private static tryParseDate(text: string): Date | undefined
   {
     let date = new Date(text);
     if (!isNaN(date.getTime())) return date;
@@ -165,6 +164,6 @@ export abstract class DateTimeConverter
     date = new Date(Date.parse(text));
     if (!isNaN(date.getTime())) return date;
 
-    return null;
+    return undefined;
   }
 }

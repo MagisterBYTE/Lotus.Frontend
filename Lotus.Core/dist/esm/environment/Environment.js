@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BooleanConverter } from '#converters';
-import { EnvironmentFeatures } from './EnvironmentFeature';
+import { TEnvironmentFeatures } from './EnvironmentFeature';
 export class Environment {
-    // #region Fields
-    static options;
-    // #endregion
     // #region Properties
+    static get options() {
+        if (!globalThis.__ENVIRONMENT_OPTIONS__) {
+            globalThis.__ENVIRONMENT_OPTIONS__ = {};
+        }
+        const options = globalThis.__ENVIRONMENT_OPTIONS__;
+        return options;
+    }
     static get isDevelopment() {
         return Environment.options.type === 'development';
     }
@@ -19,27 +23,28 @@ export class Environment {
         return Environment.options.buildId ?? 'unknown';
     }
     static get isCookieAuth() {
-        return BooleanConverter.toBoolean(Environment.options.features?.[EnvironmentFeatures.cookieAuth]);
+        return BooleanConverter.toBoolean(Environment.options.features?.[TEnvironmentFeatures.CookieAuth]);
     }
     static get isTokenAuth() {
-        return BooleanConverter.toBoolean(Environment.options.features?.[EnvironmentFeatures.tokenAuth]);
+        return BooleanConverter.toBoolean(Environment.options.features?.[TEnvironmentFeatures.TokenAuth]);
     }
     static get frontApi() {
-        return Environment.options.features?.[EnvironmentFeatures.frontApi] ?? 'not_front_api';
+        return Environment.options.features?.[TEnvironmentFeatures.FrontApi] ?? 'not_front_api';
     }
     static get backendApi() {
-        return Environment.options.features?.[EnvironmentFeatures.backendApi] ?? 'not_backend_api';
+        return Environment.options.features?.[TEnvironmentFeatures.BackendApi] ?? 'not_backend_api';
     }
     // #endregion
     // #region Main methods
     static init(options) {
-        Environment.options = options;
+        globalThis.__ENVIRONMENT_OPTIONS__ = options;
     }
     static featureEnabled(feature) {
         return BooleanConverter.toBoolean(Environment.options.features?.[feature]);
     }
     static getInfo() {
-        return `
+        if (Environment.options) {
+            return `
       Environment: ${Environment.options.type}
       Version: ${Environment.version}
       BuildId: ${Environment.buildId}
@@ -48,6 +53,10 @@ export class Environment {
       CookieAuth: ${Environment.isCookieAuth}
       TokenAuth: ${Environment.isTokenAuth}
     `;
+        }
+        else {
+            return 'options is null';
+        }
     }
     // #endregion
     // #region Log methods

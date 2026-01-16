@@ -211,7 +211,7 @@ export declare abstract class CookiesHelper {
      * Получает JSON значение из cookie
      *
      * @param name - Имя cookie с JSON данными
-     * @returns Распарсенный JSON объект или null при ошибке
+     * @returns Распарсенный JSON объект или undefined при ошибке
      *
      * @throws {Error} Если JSON некорректен (в режиме разработки)
      *
@@ -221,7 +221,7 @@ export declare abstract class CookiesHelper {
      * // { theme: 'dark', language: 'ru' }
      * ```
      */
-    static getJSON<T = any>(name: string): T | null;
+    static getJSON<T = unknown>(name: string): T | undefined;
     /**
      * Устанавливает JSON значение в cookie
      *
@@ -235,6 +235,6 @@ export declare abstract class CookiesHelper {
      * CookiesHelper.setJSON('user_prefs', preferences, { expires: 30 });
      * ```
      */
-    static setJSON(name: string, value: any, options?: ICookieOptions): void;
+    static setJSON(name: string, value: unknown, options?: ICookieOptions): void;
 }
 //# sourceMappingURL=CookiesHelper.d.ts.map

@@ -35,40 +35,50 @@ export interface ICommandActionService
 export class CommandActionService implements ICommandActionService
 {
   // #region Fields
-  public commands: IActionCommand[];
+  private _commands: IActionCommand[];
   // #endregion
 
+  // #region Properties
+  public get commands(): IActionCommand[]
+  {
+    return this._commands;
+  }
+  // #endregion
+
+  // #region Constructors
   constructor() 
   {
-    this.commands = [];
+    this._commands = [];
 
     this.getCommands = this.getCommands.bind(this);
     this.getCommandsByGroup = this.getCommandsByGroup.bind(this);
     this.getCommandsByGroupAsName = this.getCommandsByGroupAsName.bind(this);
     this.getCommandsByName = this.getCommandsByName.bind(this);
   }
+  // #endregion
 
-  public addCommands(commands: IActionCommand[])
+  // #region Methods
+  public addCommands(commands: IActionCommand[]): void
   {
     for (const command of commands)
     {
-      this.commands.push(command);
+      this._commands.push(command);
     }
   }
 
   public getCommands(): IActionCommand[]
   {
-    return this.commands;
+    return this._commands;
   }
 
   public getCommandsByGroup(group: string): IActionCommand[]
   {
-    return this.commands.filter((x) => x.group === group);
+    return this._commands.filter((x) => x.group === group);
   }
 
   public getCommandsByGroupAsName(group: string): string[]
   {
-    return this.commands.filter((x) => x.group === group).map(x => x.name);
+    return this._commands.filter((x) => x.group === group).map(x => x.name);
   }
 
   public getCommandsByName(names?: string[]): IActionCommand[]
@@ -79,7 +89,7 @@ export class CommandActionService implements ICommandActionService
     {
       names.forEach((x) =>
       {
-        const command = this.commands.find(c => c.name === x);
+        const command = this._commands.find(c => c.name === x);
         if (command)
         {
           result.push(command);
@@ -89,4 +99,5 @@ export class CommandActionService implements ICommandActionService
 
     return result;
   }
+  // #endregion
 }

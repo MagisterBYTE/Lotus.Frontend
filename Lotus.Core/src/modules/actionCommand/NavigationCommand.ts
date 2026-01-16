@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IRoute } from '#modules/route';
 import { BaseActionCommand } from './ActionCommand';
 import { TActionCommandTypes } from './ActionCommandType';
@@ -18,7 +16,7 @@ export class NavigationCommand extends BaseActionCommand
   /**
    * Статус выбора
    */
-  public override isSelectedCommand(context?: any): boolean
+  public override isSelectedCommand(_context?: unknown): boolean
   {
     if (window.location.pathname === this.route?.path)
     {

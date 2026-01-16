@@ -3,7 +3,7 @@ export abstract class BooleanConverter
   /**
    * Текстовые значение логического типа которые означает истинное значение
    */
-  public static readonly TrueValues: string[] =
+  public static readonly TrueValues: readonly string[] =
     [
       'True',
       'true',
@@ -14,7 +14,7 @@ export abstract class BooleanConverter
       'Истина',
       'да',
       'Да'
-    ];
+    ] as const;
 
   /**
    * Преобразование объекта в логическое значение.
@@ -22,8 +22,7 @@ export abstract class BooleanConverter
    * @param defaultValue Значение по умолчанию если преобразовать не удалось.
    * @returns Логическое значение.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static toBoolean(item: any, defaultValue: boolean = false): boolean
+  public static toBoolean(item: unknown, defaultValue: boolean = false): boolean
   {
     if (item)
     {
