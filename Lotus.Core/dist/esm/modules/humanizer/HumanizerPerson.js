@@ -54,7 +54,7 @@ export class HumanizerPerson {
         const patronymic = personInfo.patronymic?.trim();
         // Если нет имени
         if (!name) {
-            return fallbackToShortName ? this.getShortName(personInfo, false) : '';
+            return fallbackToShortName ? HumanizerPerson.getShortName(personInfo, false) : '';
         }
         // Формируем базовую строку с именем
         let result = name;
@@ -138,9 +138,9 @@ export class HumanizerPerson {
      * Возвращает фамилию с инициалами имени и отчества.
      * Если фамилия отсутствует, возвращает первый непустой элемент из массива substitutes или пустую строку.
      *
-     * @param lastName Фамилия (может быть null).
-     * @param firstName Имя (может быть null).
-     * @param patronymic Отчество (может быть null).
+     * @param lastName Фамилия (может быть null или undefined).
+     * @param firstName Имя (может быть null или undefined).
+     * @param patronymic Отчество (может быть null или undefined).
      * @param substitutes Массив строк-заменителей, которые будут использованы, если фамилия отсутствует.
      * @returns Строка с фамилией и инициалами (например, "Иванов И.И.") или заменитель, если фамилия отсутствует.
      */
@@ -156,8 +156,8 @@ export class HumanizerPerson {
      * Возвращает имя и отчество.
      * Если имя отсутствует, возвращает первый непустой элемент из массива substitutes или пустую строку.
      *
-     * @param firstName Имя (может быть null).
-     * @param patronymic Отчество (может быть null).
+     * @param firstName Имя (может быть null или undefined).
+     * @param patronymic Отчество (может быть null или undefined).
      * @param substitutes Массив строк-заменителей, которые будут использованы, если имя отсутствует.
      * @returns Строка с именем и отчеством (например, "Иван Иванович") или заменитель, если имя отсутствует.
      */
@@ -173,9 +173,9 @@ export class HumanizerPerson {
      * Возвращает полное имя (фамилия, имя и отчество).
      * Если фамилия отсутствует, возвращает имя и отчество с использованием метода getNameWithPatronymic.
      *
-     * @param lastName Фамилия (может быть null).
-     * @param firstName Имя (может быть null).
-     * @param patronymic Отчество (может быть null).
+     * @param lastName Фамилия (может быть null или undefined).
+     * @param firstName Имя (может быть null или undefined).
+     * @param patronymic Отчество (может быть null или undefined).
      * @param substitutes Массив строк-заменителей, которые будут использованы, если фамилия отсутствует.
      * @returns Строка с полным именем (например, "Иванов Иван Иванович") или имя и отчество, если фамилия отсутствует.
      */

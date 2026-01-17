@@ -68,6 +68,18 @@ export class ValidationResult {
         this.items = {};
     }
     /**
+     * Возвращает текст первой ошибки, если она есть
+     * @returns текст первой ошибки, если она есть, иначе undefined
+     */
+    errorText() {
+        for (const key in this.items) {
+            if (this.items[key].some(x => x.error)) {
+                return this.items[key][0].text;
+            }
+        }
+        return undefined;
+    }
+    /**
      * Проверяет, есть ли ошибки в результатах валидации
      * @returns true если есть хотя бы одна ошибка
      */

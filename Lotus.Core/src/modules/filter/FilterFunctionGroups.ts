@@ -1,4 +1,4 @@
-import { FilterFunctionDescriptors, IFilterFunctionDesc } from './FilterFunction';
+import { FilterFunctionDescriptors, IFilterFunctionDesc } from './FilterFunctionDesc';
 
 /**
  * Группа функций фильтрации для числовых типов

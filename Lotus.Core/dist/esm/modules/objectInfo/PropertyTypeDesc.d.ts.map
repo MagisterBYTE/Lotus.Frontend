@@ -1,0 +1,1 @@
+{"version":3,"file":"PropertyTypeDesc.d.ts","sourceRoot":"","sources":["../../../../src/modules/objectInfo/PropertyTypeDesc.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAkB,MAAM,gBAAgB,CAAC;AAE/D;;GAEG;AACH,MAAM,WAAW,iBAAiB;IAEhC,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,aAAa,CAAC;CACrB;AAED;;GAEG;AACH,eAAO,MAAM,uBAAuB,EAAE,MAAM,CAAC,aAAa,EAAE,iBAAiB,CAkFjE,CAAC"}

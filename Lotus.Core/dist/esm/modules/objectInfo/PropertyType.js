@@ -1,55 +1,50 @@
 /**
- * Дескрипторы (перечисление) для типа свойства
+ * Допустимые значения типа свойства.
  */
-export const PropertyTypeDescriptors = {
+export const TPropertyTypeValues = ['bool', 'int', 'long', 'float', 'double', 'enum', 'string', 'dateTime', 'guid'];
+/**
+ * Объект-обёртка для работы с типами свойств (EnumClass-паттерн).
+ */
+export const TPropertyTypes = {
     /**
-     * Логический тип
+     * Логические и числовые типы
      */
-    Boolean: {
-        id: 0,
-        type: 'Boolean'
+    Bool: TPropertyTypeValues[0],
+    Int: TPropertyTypeValues[1],
+    Long: TPropertyTypeValues[2],
+    Float: TPropertyTypeValues[3],
+    Double: TPropertyTypeValues[4],
+    /**
+     * Специальные и строковые типы
+     */
+    Enum: TPropertyTypeValues[5],
+    String: TPropertyTypeValues[6],
+    DateTime: TPropertyTypeValues[7],
+    Guid: TPropertyTypeValues[8],
+    /**
+     * Возвращает все доступные значения.
+     */
+    getAllValues() {
+        return TPropertyTypeValues;
     },
     /**
-     * Целый тип (byte, short, int, long, enum)
+     * Проверяет, является ли значение допустимым TPropertyType.
      */
-    Integer: {
-        id: 1,
-        type: 'Integer'
+    isPropertyType(value) {
+        return typeof value === 'string' && TPropertyTypeValues.includes(value);
     },
     /**
-     * Вещественный тип (float, double, decimal)
+     * Возвращает тип свойства по индексу, если он существует.
      */
-    Double: {
-        id: 2,
-        type: 'Double'
+    getByIndex(index) {
+        return TPropertyTypeValues[index];
     },
     /**
-     * Тип перечисления (на базовом уровне ведет себя как числовой)
+     * Возвращает тип свойства по имени (сравнение без учёта регистра).
      */
-    Enum: {
-        id: 3,
-        type: 'Enum'
-    },
-    /**
-     * Строковый тип
-     */
-    String: {
-        id: 4,
-        type: 'String'
-    },
-    /**
-     * Тип даты-времени
-     */
-    DateTime: {
-        id: 5,
-        type: 'DateTime'
-    },
-    /**
-     * Глобальный идентификатор в формате UUID
-     */
-    Guid: {
-        id: 6,
-        type: 'Guid'
+    getByName(name) {
+        const lowerName = name.toLowerCase();
+        return TPropertyTypeValues.find((value) => value === lowerName);
     }
 };
 //# sourceMappingURL=PropertyType.js.map

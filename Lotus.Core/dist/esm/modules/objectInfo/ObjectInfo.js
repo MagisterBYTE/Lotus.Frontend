@@ -22,7 +22,7 @@ export class ObjectInfo {
         const filterFunctions = {};
         this.descriptors.forEach((x) => {
             if (x.filtering && x.filtering.enabled) {
-                filterFunctions[`${x.fieldName}`] = x.filtering.functionDefaultDesc;
+                filterFunctions[`${x.fieldNameBackend ?? x.fieldName}`] = x.filtering.functionDefaultDesc;
             }
         });
         return filterFunctions;

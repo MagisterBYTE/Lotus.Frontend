@@ -1,3 +1,4 @@
 export { ObjectInfo } from './ObjectInfo';
-export { PropertyTypeDescriptors } from './PropertyType';
+export { TPropertyTypeValues, TPropertyTypes } from './PropertyType';
+export { PropertyTypeDescriptors } from './PropertyTypeDesc';
 //# sourceMappingURL=index.js.map

@@ -43,6 +43,11 @@ export declare class ValidationResult implements IValidationResult {
      */
     clear(): void;
     /**
+     * Возвращает текст первой ошибки, если она есть
+     * @returns текст первой ошибки, если она есть, иначе undefined
+     */
+    errorText(): string | undefined;
+    /**
      * Проверяет, есть ли ошибки в результатах валидации
      * @returns true если есть хотя бы одна ошибка
      */

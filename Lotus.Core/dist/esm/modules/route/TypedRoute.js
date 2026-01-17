@@ -3,7 +3,7 @@ import { Environment } from '#environment';
  * Класс для определения маршрута в приложении
  */
 export class TypedRoute {
-    // #region Static
+    // #region Static methods
     /**
      * @param path Путь маршрута
      * @param isShouldBeAuthorized Требует ли маршрут аутентификации

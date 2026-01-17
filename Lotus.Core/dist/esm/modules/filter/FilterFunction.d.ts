@@ -1,18 +1,35 @@
 /**
- * Описание функции фильтрации
+ * Массив значений типов функций фильтрации
  */
-export interface IFilterFunctionDesc {
-    id: number;
-    type: TFilterFunction;
-    abbr: string;
-    desc: string;
-}
+export declare const TFilterFunctionValues: readonly ["equals", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan", "greaterThanOrEqual", "between", "contains", "startsWith", "endsWith", "like", "notEmpty", "empty", "includeAny", "includeAll", "includeEquals", "includeNone"];
 /**
  * Тип функции для фильтрации данных
  */
-export type TFilterFunction = 'Equals' | 'NotEqual' | 'LessThan' | 'LessThanOrEqual' | 'GreaterThan' | 'GreaterThanOrEqual' | 'Between' | 'Contains' | 'StartsWith' | 'EndsWith' | 'Like' | 'NotEmpty' | 'Empty' | 'IncludeAny' | 'IncludeAll' | 'IncludeEquals' | 'IncludeNone';
+export type TFilterFunction = (typeof TFilterFunctionValues)[number];
 /**
- * Перечисление для типа функции для фильтрации данных
+ * Объект для представления типов функций фильтрации
  */
-export declare const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionDesc>;
+export declare const TFilterFunctions: {
+    readonly Equals: "equals";
+    readonly NotEqual: "notEqual";
+    readonly LessThan: "lessThan";
+    readonly LessThanOrEqual: "lessThanOrEqual";
+    readonly GreaterThan: "greaterThan";
+    readonly GreaterThanOrEqual: "greaterThanOrEqual";
+    readonly Between: "between";
+    readonly Contains: "contains";
+    readonly StartsWith: "startsWith";
+    readonly EndsWith: "endsWith";
+    readonly Like: "like";
+    readonly NotEmpty: "notEmpty";
+    readonly Empty: "empty";
+    readonly IncludeAny: "includeAny";
+    readonly IncludeAll: "includeAll";
+    readonly IncludeEquals: "includeEquals";
+    readonly IncludeNone: "includeNone";
+    readonly getAllValues: () => typeof TFilterFunctionValues;
+    readonly isFilterFunction: (value: unknown) => value is TFilterFunction;
+    readonly getByIndex: (index: number) => TFilterFunction | undefined;
+    readonly getByName: (name: string) => TFilterFunction | undefined;
+};
 //# sourceMappingURL=FilterFunction.d.ts.map

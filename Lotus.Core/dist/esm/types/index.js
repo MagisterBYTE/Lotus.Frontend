@@ -1,5 +1,6 @@
 export { castToConstantable, instanceOfConstantable } from './Constantable';
 export { castToEditable, instanceOfEditable } from './Editable';
+export { castToEntity, instanceOfEntity } from './Entity';
 export { castToGrouping, instanceOfGrouping } from './Grouping';
 export { castToIdentifierId, instanceOfIdentifierId } from './IdentifierId';
 export { castToNameable, instanceOfNameable } from './Nameable';

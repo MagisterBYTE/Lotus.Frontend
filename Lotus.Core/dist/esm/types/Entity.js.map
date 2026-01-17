@@ -1,1 +1,1 @@
-{"version":3,"file":"Entity.js","sourceRoot":"","sources":["../../../src/types/Entity.ts"],"names":[],"mappings":""}
+{"version":3,"file":"Entity.js","sourceRoot":"","sources":["../../../src/types/Entity.ts"],"names":[],"mappings":"AAaA;;;;GAIG;AACH,MAAM,UAAU,gBAAgB,CAAC,KAAc;IAE7C,IAAI,KAAK,IAAI,OAAO,KAAK,KAAK,QAAQ,EACtC,CAAC;QACC,OAAO,CAAC,IAAI,IAAI,KAAK,CAAC,CAAC;IACzB,CAAC;IAED,OAAO,KAAK,CAAC;AACf,CAAC;AAED;;;;GAIG;AACH,MAAM,UAAU,YAAY,CAAC,KAAc;IAEzC,IAAI,gBAAgB,CAAC,KAAK,CAAC,EAC3B,CAAC;QACC,OAAO,KAAK,CAAC;IACf,CAAC;SAED,CAAC;QACC,OAAO,SAAS,CAAC;IACnB,CAAC;AACH,CAAC"}

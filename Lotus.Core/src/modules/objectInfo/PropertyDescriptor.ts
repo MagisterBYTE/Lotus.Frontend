@@ -3,7 +3,7 @@ import { IPropertyEditable } from './PropertyEditable';
 import { IPropertyFiltering } from './PropertyFiltering';
 import { IPropertyGrouping } from './PropertyGrouping';
 import { IPropertySorting } from './PropertySorting';
-import { IPropertyTypeDesc } from './PropertyType';
+import { IPropertyTypeDesc } from './PropertyTypeDesc';
 
 /**
  * Интерфейс для описания свойства объекта

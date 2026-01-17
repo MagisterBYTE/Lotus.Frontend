@@ -13,7 +13,7 @@ export class SortPropertyHelper {
         const result = [...massive];
         const key = StringHelper.lowercaseFirstLetter(sortProperty.propertyPath);
         switch (propertyType) {
-            case 'Boolean':
+            case 'bool':
                 {
                     return result.sort((a, b) => {
                         const l = BooleanConverter.toBoolean(a[key]);
@@ -22,8 +22,10 @@ export class SortPropertyHelper {
                     });
                 }
                 break;
-            case 'Integer':
-            case 'Double':
+            case 'int':
+            case 'long':
+            case 'float':
+            case 'double':
                 {
                     return result.sort((a, b) => {
                         const l = Number(a[key]);
@@ -32,8 +34,8 @@ export class SortPropertyHelper {
                     });
                 }
                 break;
-            case 'String':
-            case 'Guid':
+            case 'string':
+            case 'guid':
                 {
                     return result.sort((a, b) => {
                         const l = String(a[key]);
@@ -49,7 +51,7 @@ export class SortPropertyHelper {
                     });
                 }
                 break;
-            case 'DateTime':
+            case 'dateTime':
                 {
                     return result.sort((a, b) => {
                         const l = DateTimeConverter.toDateTime(a[key]);

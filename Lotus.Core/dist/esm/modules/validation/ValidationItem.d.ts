@@ -1,6 +1,6 @@
 import { TValidationLevel } from './ValidationLevel';
 /**
- * Интерфейс для определения валидации отдельного элемента
+ * Интерфейс для определения валидации отдельного элемента/поля/свойства
  */
 export interface IValidationItem {
     /**
