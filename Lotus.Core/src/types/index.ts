@@ -1,7 +1,7 @@
 export { type Dictionary, type PropertyType, type OnlyValues } from './CommonTypes';
 export { castToConstantable, instanceOfConstantable, type IConstantable } from './Constantable';
 export { castToEditable, instanceOfEditable, type IEditable } from './Editable';
-export { type IEntity } from './Entity';
+export { castToEntity, instanceOfEntity, type IEntity } from './Entity';
 export { castToGrouping, instanceOfGrouping, type IGrouping } from './Grouping';
 export { type TGuid } from './Guid';
 export { type IHasRequiredOwner } from './HasOwner';

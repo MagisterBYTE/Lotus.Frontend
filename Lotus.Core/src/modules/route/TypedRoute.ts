@@ -6,7 +6,7 @@ import { ExtractRouteParams, IRoute, ParamValues, RouteParamConstraints } from '
  */
 export class TypedRoute<TPath extends string = string, TConstraints extends RouteParamConstraints<TPath> = RouteParamConstraints<TPath>> implements IRoute
 {
-  // #region Static
+  // #region Static methods
   /**
    * @param path Путь маршрута
    * @param isShouldBeAuthorized Требует ли маршрут аутентификации

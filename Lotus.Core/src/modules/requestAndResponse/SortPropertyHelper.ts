@@ -20,7 +20,7 @@ export abstract class SortPropertyHelper
 
     switch (propertyType)
     {
-      case 'Boolean':
+      case 'bool':
         {
           return result.sort((a, b) =>
           {
@@ -29,8 +29,10 @@ export abstract class SortPropertyHelper
             return BooleanHelper.compare(l, r, sortProperty.isDesc);
           });
         } break;
-      case 'Integer':
-      case 'Double':
+      case 'int':
+      case 'long':
+      case 'float':
+      case 'double':
         {
           return result.sort((a, b) =>
           {
@@ -39,8 +41,8 @@ export abstract class SortPropertyHelper
             return NumberHelper.compare(l, r, sortProperty.isDesc);
           });
         } break;
-      case 'String':
-      case 'Guid':
+      case 'string':
+      case 'guid':
         {
           return result.sort((a, b) =>
           {
@@ -55,7 +57,7 @@ export abstract class SortPropertyHelper
             return status;
           });
         } break;
-      case 'DateTime':
+      case 'dateTime':
         {
           return result.sort((a, b) =>
           {

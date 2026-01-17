@@ -70,7 +70,7 @@ export abstract class FilterPropertyHelper
 
       switch (propertyType) 
       {
-        case 'Boolean':
+        case 'bool':
           {
             switch (filterFunction) 
             {
@@ -81,8 +81,10 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
-        case 'Integer':
-        case 'Double':
+        case 'int':
+        case 'long':
+        case 'float':
+        case 'double':
           {
             switch (filterFunction) 
             {
@@ -109,8 +111,8 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
-        case 'String':
-        case 'Guid':
+        case 'string':
+        case 'guid':
           {
             switch (filterFunction) 
             {
@@ -137,7 +139,7 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
-        case 'DateTime':
+        case 'dateTime':
           {
             switch (filterFunction) 
             {

@@ -66,7 +66,7 @@ export class ObjectInfo implements IObjectInfo
     {
       if (x.filtering && x.filtering.enabled)
       {
-        filterFunctions[`${x.fieldName}`] = x.filtering.functionDefaultDesc;
+        filterFunctions[`${x.fieldNameBackend ?? x.fieldName}`] = x.filtering.functionDefaultDesc;
       }
     });
 
