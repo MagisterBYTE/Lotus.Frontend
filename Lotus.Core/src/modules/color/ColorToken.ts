@@ -225,17 +225,6 @@ export const TColorTokens: TColorToken[] = [
   'grayDarkest',
   'grayBlack',
 
-  'grayWhite',
-  'grayPalest',
-  'grayPale',
-  'grayLighter',
-  'grayLight',
-  'grayMain',
-  'grayDark',
-  'grayDarker',
-  'grayDarkest',
-  'grayBlack',
-
   'darkWhite',
   'darkPalest',
   'darkPale',

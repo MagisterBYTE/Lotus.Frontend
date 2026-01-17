@@ -66,7 +66,7 @@ export abstract class HumanizerPerson
     // Если нет имени
     if (!name) 
     {
-      return fallbackToShortName ? this.getShortName(personInfo, false) : '';
+      return fallbackToShortName ? HumanizerPerson.getShortName(personInfo, false) : '';
     }
 
     // Формируем базовую строку с именем
@@ -171,23 +171,23 @@ export abstract class HumanizerPerson
    * Возвращает фамилию с инициалами имени и отчества.
    * Если фамилия отсутствует, возвращает первый непустой элемент из массива substitutes или пустую строку.
    *
-   * @param lastName Фамилия (может быть null).
-   * @param firstName Имя (может быть null).
-   * @param patronymic Отчество (может быть null).
+   * @param lastName Фамилия (может быть null или undefined).
+   * @param firstName Имя (может быть null или undefined).
+   * @param patronymic Отчество (может быть null или undefined).
    * @param substitutes Массив строк-заменителей, которые будут использованы, если фамилия отсутствует.
    * @returns Строка с фамилией и инициалами (например, "Иванов И.И.") или заменитель, если фамилия отсутствует.
    */
   public static getLastNameWithInitials(
-    lastName: string | null,
-    firstName: string | null,
-    patronymic: string | null,
-    substitutes?: Array<string | null>
+    lastName: string | null | undefined,
+    firstName: string | null | undefined,
+    patronymic: string | null | undefined,
+    substitutes?: Array<string | null | undefined>
   ): string 
   {
     // Если фамилия отсутствует, возвращаем первый непустой заменитель или пустую строку
     if (!lastName) 
     {
-      return (substitutes && substitutes.find((sub: string | null) => !!sub)) || '';
+      return (substitutes && substitutes.find((sub: string | null | undefined) => !!sub)) || '';
     }
 
     // Формируем строку с фамилией и инициалами
@@ -198,17 +198,21 @@ export abstract class HumanizerPerson
    * Возвращает имя и отчество.
    * Если имя отсутствует, возвращает первый непустой элемент из массива substitutes или пустую строку.
    *
-   * @param firstName Имя (может быть null).
-   * @param patronymic Отчество (может быть null).
+   * @param firstName Имя (может быть null или undefined).
+   * @param patronymic Отчество (может быть null или undefined).
    * @param substitutes Массив строк-заменителей, которые будут использованы, если имя отсутствует.
    * @returns Строка с именем и отчеством (например, "Иван Иванович") или заменитель, если имя отсутствует.
    */
-  public static getNameWithPatronymic(firstName: string | null, patronymic: string | null, substitutes?: Array<string | null>): string 
+  public static getNameWithPatronymic(
+    firstName: string | null | undefined,
+    patronymic: string | null | undefined,
+    substitutes?: Array<string | null | undefined>
+  ): string 
   {
     // Если имя отсутствует, возвращаем первый непустой заменитель или пустую строку
     if (!firstName) 
     {
-      return (substitutes && substitutes.find((sub: string | null) => !!sub)) || '';
+      return (substitutes && substitutes.find((sub: string | null | undefined) => !!sub)) || '';
     }
 
     // Формируем строку с именем и отчеством
@@ -219,17 +223,17 @@ export abstract class HumanizerPerson
    * Возвращает полное имя (фамилия, имя и отчество).
    * Если фамилия отсутствует, возвращает имя и отчество с использованием метода getNameWithPatronymic.
    *
-   * @param lastName Фамилия (может быть null).
-   * @param firstName Имя (может быть null).
-   * @param patronymic Отчество (может быть null).
+   * @param lastName Фамилия (может быть null или undefined).
+   * @param firstName Имя (может быть null или undefined).
+   * @param patronymic Отчество (может быть null или undefined).
    * @param substitutes Массив строк-заменителей, которые будут использованы, если фамилия отсутствует.
    * @returns Строка с полным именем (например, "Иванов Иван Иванович") или имя и отчество, если фамилия отсутствует.
    */
   public static getNameWithLastNameWithPatronymic(
-    lastName: string | null,
-    firstName: string | null,
-    patronymic: string | null,
-    substitutes?: Array<string | null>
+    lastName: string | null | undefined,
+    firstName: string | null | undefined,
+    patronymic: string | null | undefined,
+    substitutes?: Array<string | null | undefined>
   ): string 
   {
     // Если фамилия отсутствует, возвращаем имя и отчество

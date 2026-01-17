@@ -5,13 +5,13 @@ import { FilterFunctionDescriptors, IFilterFunctionDesc } from './FilterFunction
  */
 export const GroupFilterFunctionsNumber: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionDescriptors.Equals,
-    FilterFunctionDescriptors.NotEqual,
-    FilterFunctionDescriptors.LessThan,
-    FilterFunctionDescriptors.LessThanOrEqual,
-    FilterFunctionDescriptors.GreaterThan,
-    FilterFunctionDescriptors.GreaterThanOrEqual,
-    FilterFunctionDescriptors.Between
+    FilterFunctionDescriptors.equals,
+    FilterFunctionDescriptors.notEqual,
+    FilterFunctionDescriptors.lessThan,
+    FilterFunctionDescriptors.lessThanOrEqual,
+    FilterFunctionDescriptors.greaterThan,
+    FilterFunctionDescriptors.greaterThanOrEqual,
+    FilterFunctionDescriptors.between
   ];
 
 /**
@@ -19,12 +19,12 @@ export const GroupFilterFunctionsNumber: readonly IFilterFunctionDesc[] =
  */
 export const GroupFilterFunctionsString: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionDescriptors.Equals,
-    FilterFunctionDescriptors.Contains,
-    FilterFunctionDescriptors.StartsWith,
-    FilterFunctionDescriptors.EndsWith,
-    FilterFunctionDescriptors.NotEqual,
-    FilterFunctionDescriptors.NotEmpty
+    FilterFunctionDescriptors.equals,
+    FilterFunctionDescriptors.contains,
+    FilterFunctionDescriptors.startsWith,
+    FilterFunctionDescriptors.endsWith,
+    FilterFunctionDescriptors.notEqual,
+    FilterFunctionDescriptors.notEmpty
   ];
 
 /**
@@ -32,8 +32,8 @@ export const GroupFilterFunctionsString: readonly IFilterFunctionDesc[] =
  */
 export const GroupFilterFunctionsEnum: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionDescriptors.Equals,
-    FilterFunctionDescriptors.NotEqual
+    FilterFunctionDescriptors.equals,
+    FilterFunctionDescriptors.notEqual
   ];
 
 /**
@@ -41,8 +41,8 @@ export const GroupFilterFunctionsEnum: readonly IFilterFunctionDesc[] =
  */
 export const GroupFilterFunctionsArray: readonly IFilterFunctionDesc[] =
   [
-    FilterFunctionDescriptors.IncludeAll,
-    FilterFunctionDescriptors.IncludeAny,
-    FilterFunctionDescriptors.IncludeEquals,
-    FilterFunctionDescriptors.IncludeNone
+    FilterFunctionDescriptors.includeAll,
+    FilterFunctionDescriptors.includeAny,
+    FilterFunctionDescriptors.includeEquals,
+    FilterFunctionDescriptors.includeNone
   ];
