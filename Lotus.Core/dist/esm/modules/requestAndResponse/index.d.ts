@@ -3,7 +3,8 @@ export { FilterPropertyHelper } from './FilterPropertyHelper';
 export { type IPageInfoRequest, type IPageInfoResponse } from './PageInfo';
 export { type IRequest } from './Request';
 export { RequestHelper } from './RequestHelper';
-export { type IResponse, type IResponsePage } from './Response';
-export { type ISortProperty, type ISortPropertyCollection as ISortObject } from './SortProperty';
+export { castToResponse, instanceOfResponse, type IResponse } from './Response';
+export { castToResponsePage, instanceOfResponsePage, type IResponsePage } from './ResponsePage';
+export { type ISortPropertyCollection as ISortObject, type ISortProperty } from './SortProperty';
 export { SortPropertyHelper } from './SortPropertyHelper';
 //# sourceMappingURL=index.d.ts.map

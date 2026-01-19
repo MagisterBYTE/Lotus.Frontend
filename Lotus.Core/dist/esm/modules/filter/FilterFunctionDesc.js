@@ -1,4 +1,5 @@
 import { LocalizationCore } from '#localization';
+import { TFilterFunctions } from './FilterFunction';
 /**
  * Перечисление для типа функции для фильтрации данных
  */
@@ -6,99 +7,99 @@ export const FilterFunctionDescriptors = {
     /**
      * Равно аргументу
      */
-    equals: {
+    Equals: {
         id: 0,
-        type: 'equals',
+        type: TFilterFunctions.Equals,
         abbr: LocalizationCore.data.filters.equalsAbbr,
         desc: LocalizationCore.data.filters.equals
     },
     /**
      * Не равно аргументу
      */
-    notEqual: {
+    NotEqual: {
         id: 1,
-        type: 'notEqual',
+        type: TFilterFunctions.NotEqual,
         abbr: LocalizationCore.data.filters.notEqualAbbr,
         desc: LocalizationCore.data.filters.notEqual
     },
     /**
      * Меньше аргумента
      */
-    lessThan: {
+    LessThan: {
         id: 2,
-        type: 'lessThan',
+        type: TFilterFunctions.LessThan,
         abbr: LocalizationCore.data.filters.lessThanAbbr,
         desc: LocalizationCore.data.filters.lessThan
     },
     /**
      * Меньше или равно аргумента
      */
-    lessThanOrEqual: {
+    LessThanOrEqual: {
         id: 3,
-        type: 'lessThanOrEqual',
+        type: TFilterFunctions.LessThanOrEqual,
         abbr: LocalizationCore.data.filters.lessThanOrEqualAbbr,
         desc: LocalizationCore.data.filters.lessThanOrEqual
     },
     /**
      * Больше аргумента
      */
-    greaterThan: {
+    GreaterThan: {
         id: 4,
-        type: 'greaterThan',
+        type: TFilterFunctions.GreaterThan,
         abbr: LocalizationCore.data.filters.greaterThanAbbr,
         desc: LocalizationCore.data.filters.greaterThan
     },
     /**
      * Больше или равно аргумента
      */
-    greaterThanOrEqual: {
+    GreaterThanOrEqual: {
         id: 5,
-        type: 'greaterThanOrEqual',
+        type: TFilterFunctions.GreaterThanOrEqual,
         abbr: LocalizationCore.data.filters.greaterThanOrEqualAbbr,
         desc: LocalizationCore.data.filters.greaterThanOrEqual
     },
     /**
      * Между первым аргументом (меньшим) и вторым аргументом (большим)
      */
-    between: {
+    Between: {
         id: 6,
-        type: 'between',
+        type: TFilterFunctions.Between,
         abbr: LocalizationCore.data.filters.betweenAbbr,
         desc: LocalizationCore.data.filters.between
     },
     /**
     * Аргумент (строка) может находиться в любом месте c учетом регистра
     */
-    contains: {
+    Contains: {
         id: 7,
-        type: 'contains',
+        type: TFilterFunctions.Contains,
         abbr: LocalizationCore.data.filters.contains,
         desc: LocalizationCore.data.filters.contains
     },
     /**
     * Аргумент(строка) может находиться в любом месте c учетом регистра
     */
-    startsWith: {
+    StartsWith: {
         id: 8,
-        type: 'startsWith',
+        type: TFilterFunctions.StartsWith,
         abbr: LocalizationCore.data.filters.startsWith,
         desc: LocalizationCore.data.filters.startsWith
     },
     /**
      * Аргумент(строка) должна находится в конце c учетом регистра
      */
-    endsWith: {
+    EndsWith: {
         id: 9,
-        type: 'endsWith',
+        type: TFilterFunctions.EndsWith,
         abbr: LocalizationCore.data.filters.endsWith,
         desc: LocalizationCore.data.filters.endsWith
     },
     /**
      * Аргумент(строка) должна сравнивается с учетом оператора Like
      */
-    like: {
+    Like: {
         id: 10,
-        type: 'like',
+        type: TFilterFunctions.Like,
         abbr: LocalizationCore.data.filters.like,
         desc: LocalizationCore.data.filters.like
     },
@@ -106,9 +107,9 @@ export const FilterFunctionDescriptors = {
      * Не равно пустой или NULL строке. Аргумент НЕ требуется.
      * Не равно значению NULL для иных объектов.
      */
-    notEmpty: {
+    NotEmpty: {
         id: 11,
-        type: 'notEmpty',
+        type: TFilterFunctions.NotEmpty,
         abbr: LocalizationCore.data.filters.notEmpty,
         desc: LocalizationCore.data.filters.notEmpty
     },
@@ -116,45 +117,45 @@ export const FilterFunctionDescriptors = {
      * Равно пустой или NULL строке. Аргумент НЕ требуется.
      * Равно значению NULL для иных объектов.
      */
-    empty: {
+    Empty: {
         id: 12,
-        type: 'empty',
+        type: TFilterFunctions.Empty,
         abbr: LocalizationCore.data.filters.empty,
         desc: LocalizationCore.data.filters.empty
     },
     /**
      * Любой из проверяемых элементов списка должен находиться в массиве аргумента
      */
-    includeAny: {
+    IncludeAny: {
         id: 13,
-        type: 'includeAny',
+        type: TFilterFunctions.IncludeAny,
         abbr: LocalizationCore.data.filters.includeAny,
         desc: LocalizationCore.data.filters.includeAny
     },
     /**
      * Все из проверяемых элементов списка должен находиться в массиве аргумента
      */
-    includeAll: {
+    IncludeAll: {
         id: 14,
-        type: 'includeAll',
+        type: TFilterFunctions.IncludeAll,
         abbr: LocalizationCore.data.filters.includeAll,
         desc: LocalizationCore.data.filters.includeAll
     },
     /**
      * Проверяемые элементы списка должен быть равны массиву аргумента
      */
-    includeEquals: {
+    IncludeEquals: {
         id: 15,
-        type: 'includeEquals',
+        type: TFilterFunctions.IncludeEquals,
         abbr: LocalizationCore.data.filters.includeEquals,
         desc: LocalizationCore.data.filters.includeEquals
     },
     /**
      * Ни один из проверяемых элементов списка не должен находится в массиве аргумента
      */
-    includeNone: {
+    IncludeNone: {
         id: 16,
-        type: 'includeNone',
+        type: TFilterFunctions.IncludeNone,
         abbr: LocalizationCore.data.filters.includeNone,
         desc: LocalizationCore.data.filters.includeNone
     }

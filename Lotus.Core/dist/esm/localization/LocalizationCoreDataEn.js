@@ -2,6 +2,7 @@ export const LocalizationCoreDataEn = {
     api: {
         errorNotOnline: 'Failed to send the request. Please check your internet connection',
         errorNotFound: 'Could not find the specified address {0}. Please check server availability and the correctness of the address',
+        errorTimeoutError: 'Failed to send a request. The request was interrupted due to a timeout',
         errorAuth: 'The user is not logged in',
         auth: {
             invalid_request: 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed',

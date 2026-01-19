@@ -11,5 +11,5 @@ export interface IFilterFunctionDesc {
 /**
  * Перечисление для типа функции для фильтрации данных
  */
-export declare const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionDesc>;
+export declare const FilterFunctionDescriptors: Record<Capitalize<TFilterFunction>, IFilterFunctionDesc>;
 //# sourceMappingURL=FilterFunctionDesc.d.ts.map

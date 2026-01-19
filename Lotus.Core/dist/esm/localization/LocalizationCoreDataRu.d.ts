@@ -2,6 +2,7 @@ export declare const LocalizationCoreDataRu: {
     api: {
         errorNotOnline: string;
         errorNotFound: string;
+        errorTimeoutError: string;
         errorAuth: string;
         auth: {
             invalid_request: string;

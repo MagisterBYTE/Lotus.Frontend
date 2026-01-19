@@ -1,21 +1,19 @@
 /**
- * Проверка объекта на поддержку интерфейса IResult
+ * Проверка объекта на поддержку интерфейса {@link IResult}
  * @param value Проверяемый объект
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function instanceOfResult(value) {
     if (value && typeof value === 'object') {
-        return ('succeeded' in value);
+        return ('succeeded' in value && typeof value['succeeded'] === 'boolean');
     }
     return false;
 }
 /**
- * Преобразование объекта к интерфейсу IResult
+ * Преобразование объекта к интерфейсу {@link IResult}
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function castToResult(value) {
     if (instanceOfResult(value)) {
         return value;

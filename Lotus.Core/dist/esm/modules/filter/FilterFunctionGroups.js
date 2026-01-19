@@ -3,39 +3,39 @@ import { FilterFunctionDescriptors } from './FilterFunctionDesc';
  * Группа функций фильтрации для числовых типов
  */
 export const GroupFilterFunctionsNumber = [
-    FilterFunctionDescriptors.equals,
-    FilterFunctionDescriptors.notEqual,
-    FilterFunctionDescriptors.lessThan,
-    FilterFunctionDescriptors.lessThanOrEqual,
-    FilterFunctionDescriptors.greaterThan,
-    FilterFunctionDescriptors.greaterThanOrEqual,
-    FilterFunctionDescriptors.between
+    FilterFunctionDescriptors.Equals,
+    FilterFunctionDescriptors.NotEqual,
+    FilterFunctionDescriptors.LessThan,
+    FilterFunctionDescriptors.LessThanOrEqual,
+    FilterFunctionDescriptors.GreaterThan,
+    FilterFunctionDescriptors.GreaterThanOrEqual,
+    FilterFunctionDescriptors.Between
 ];
 /**
  * Группа функций фильтрации для строк
  */
 export const GroupFilterFunctionsString = [
-    FilterFunctionDescriptors.equals,
-    FilterFunctionDescriptors.contains,
-    FilterFunctionDescriptors.startsWith,
-    FilterFunctionDescriptors.endsWith,
-    FilterFunctionDescriptors.notEqual,
-    FilterFunctionDescriptors.notEmpty
+    FilterFunctionDescriptors.Equals,
+    FilterFunctionDescriptors.Contains,
+    FilterFunctionDescriptors.StartsWith,
+    FilterFunctionDescriptors.EndsWith,
+    FilterFunctionDescriptors.NotEqual,
+    FilterFunctionDescriptors.NotEmpty
 ];
 /**
  * Группа функций фильтрации для перечисления
  */
 export const GroupFilterFunctionsEnum = [
-    FilterFunctionDescriptors.equals,
-    FilterFunctionDescriptors.notEqual
+    FilterFunctionDescriptors.Equals,
+    FilterFunctionDescriptors.NotEqual
 ];
 /**
  * Группа функций фильтрации для массива
  */
 export const GroupFilterFunctionsArray = [
-    FilterFunctionDescriptors.includeAll,
-    FilterFunctionDescriptors.includeAny,
-    FilterFunctionDescriptors.includeEquals,
-    FilterFunctionDescriptors.includeNone
+    FilterFunctionDescriptors.IncludeAll,
+    FilterFunctionDescriptors.IncludeAny,
+    FilterFunctionDescriptors.IncludeEquals,
+    FilterFunctionDescriptors.IncludeNone
 ];
 //# sourceMappingURL=FilterFunctionGroups.js.map

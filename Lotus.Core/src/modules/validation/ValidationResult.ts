@@ -98,7 +98,7 @@ export class ValidationResult implements IValidationResult
    * Возвращает текст первой ошибки, если она есть
    * @returns текст первой ошибки, если она есть, иначе undefined
    */
-  public errorText(): string|undefined
+  public errorText(): string | undefined
   {
     for (const key in this.items)
     {
@@ -329,9 +329,9 @@ export class ValidationResult implements IValidationResult
    * @param maxLength Максимальная длина
    * @param errorText Текст ошибки (опционально)
    */
-  public addErrorMaxString(key: string, value: string, maxLength: number, errorText?: string): void
+  public addErrorMaxString(key: string, value: string | undefined, maxLength: number, errorText?: string): void
   {
-    if (Assert.existValue(value) && value.length > maxLength)
+    if (Assert.existValue(value) && value!.length > maxLength)
     {
       this.addValidationItem(key, {
         text: errorText ?? LocalizationCore.data.validation.maxString(maxLength),
@@ -348,9 +348,9 @@ export class ValidationResult implements IValidationResult
    * @param minLength Минимальная длина
    * @param errorText Текст ошибки (опционально)
    */
-  public addErrorMinString(key: string, value: string, minLength: number, errorText?: string): void
+  public addErrorMinString(key: string, value: string | undefined, minLength: number, errorText?: string): void
   {
-    if (Assert.existValue(value) && value.length < minLength)
+    if (Assert.existValue(value) && value!.length < minLength)
     {
       this.addValidationItem(key, {
         text: errorText ?? LocalizationCore.data.validation.minString(minLength),
@@ -369,9 +369,9 @@ export class ValidationResult implements IValidationResult
    * @param errorText Текст ошибки (опционально)
    */
   // eslint-disable-next-line max-params
-  public addErrorRangeString(key: string, value: string, minLength: number, maxLength: number, errorText?: string): void
+  public addErrorRangeString(key: string, value: string | undefined, minLength: number, maxLength: number, errorText?: string): void
   {
-    if (Assert.existValue(value))
+    if (Assert.existValue<string>(value))
     {
       if (value.length < minLength || value.length > maxLength)
       {

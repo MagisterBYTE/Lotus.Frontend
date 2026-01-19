@@ -7,6 +7,7 @@ export declare const LocalizationCore: {
         api: {
             errorNotOnline: string;
             errorNotFound: string;
+            errorTimeoutError: string;
             errorAuth: string;
             auth: {
                 invalid_request: string;

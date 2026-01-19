@@ -1,46 +1,93 @@
-/* eslint-disable no-console */
-import axios from 'axios';
-import { ObjectHelper } from '#helpers';
+import { BrowserHelper, FunctionHelper, ObjectHelper } from '#helpers';
 import { LocalizationCore } from '#localization';
 import { castToResult } from '#types';
 import { Assert } from '#utils';
+import { ApiRequestConfig } from './ApiRequestConfig';
+import { ContentTypeConstants } from './ContentTypeConstants';
+import { HeaderNamesConstants } from './HeaderNamesConstants';
+import { NetworkErrorUtils } from './NetworkErrorUtils';
 /**
- * Базовый класс для сервисов Api
+ * Класс для работы с API
  */
 export class ApiService {
     // #region Fields
-    _api;
-    // #endregion
+    _baseUrl;
+    // endregion
     // #region Properties
-    get api() {
-        return this._api;
+    get baseUrl() {
+        return this._baseUrl;
     }
     // #endregion
-    // #region Constructors
-    constructor(baseURL) {
-        const api = axios.create({
-            baseURL: baseURL
-        });
-        // Используем стрелочные функции для сохранения контекста
-        api.interceptors.request.use((config) => this.handleRequest(config), (error) => this.handleRequestError(error));
-        api.interceptors.response.use((response) => this.handleResponse(response), (error) => this.handleResponseError(error));
-        this._api = api;
+    /**
+     * Конструктор
+     * @param baseUrl - Базовый URL API (опционально)
+     */
+    constructor(baseUrl = '') {
+        this._baseUrl = baseUrl;
+        FunctionHelper.bindAllMethods(this);
     }
-    // #endregion
-    // #region Methods
-    handleRequest(config) {
-        config.timeout = 10 * 60 * 1000;
-        return config;
+    // #region Private methods
+    /**
+     * Создает полный URL для запроса
+     */
+    createFullUrl(path) {
+        if (BrowserHelper.isAbsoluteUrl(path))
+            return path;
+        if (!path.startsWith('/') && this._baseUrl && !this._baseUrl.endsWith('/')) {
+            return `${this._baseUrl}/${path}`;
+        }
+        return `${this._baseUrl}${path}`;
     }
-    handleRequestError(error) {
-        console.error(`[request error] [${JSON.stringify(error)}]`);
-        return Promise.reject(error);
+    /**
+     * Выполняет HTTP-запрос с обработкой ошибок
+     */
+    async request(url, config) {
+        try {
+            const actualConfig = await this.handleRequest(url, config);
+            // Если timeout передан, создаем сигнал, который прервется через X мс
+            const signal = config?.timeout ? AbortSignal.timeout(config.timeout) : undefined;
+            const response = await fetch(url, {
+                ...actualConfig,
+                signal: signal
+            });
+            if (!response.ok) {
+                const error = new Error(`HTTP error ${response.status}`);
+                error.response = {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: await response.json(),
+                    url: response.url
+                };
+                throw error;
+            }
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const dataJson = await response.json();
+                return dataJson;
+            }
+            else {
+                const dataText = await response.text();
+                return dataText;
+            }
+        }
+        catch (error) {
+            const errorResult = await this.handleResponseError(url, error);
+            throw errorResult;
+        }
     }
-    handleResponse(response) {
-        return response;
+    /**
+     * Обработка конфигурации запроса
+     * @param config
+     * @returns
+     */
+    handleRequest(fullUri, config) {
+        return Promise.resolve(config);
     }
+    /**
+     * Обработка ошибок ответа
+     */
     // eslint-disable-next-line complexity
-    handleResponseError(error) {
+    handleResponseError(uri, error) {
         // Запрос был сделан, и сервер ответил кодом состояния, который выходит за пределы 2xx
         if (error.response) {
             // Все ошибки приводим к типу IResult для унификации обработки и реагирования
@@ -51,7 +98,6 @@ export class ApiService {
                 if (value !== undefined) {
                     result.data = value;
                 }
-                console.log(error.response.data);
                 return Promise.reject(result);
             }
             else {
@@ -79,11 +125,14 @@ export class ApiService {
                 }
                 // Ошибка аутентификации по стандарту RFC 6749
                 const errorAuthResponse = error.response.data;
-                if (errorAuthResponse && typeof errorAuthResponse === 'object'
-                    && errorAuthResponse !== null
-                    && errorAuthResponse !== undefined
-                    && 'error' in errorAuthResponse && typeof errorAuthResponse.error === 'string'
-                    && 'error_description' in errorAuthResponse && typeof errorAuthResponse.error_description === 'string') {
+                if (errorAuthResponse &&
+                    typeof errorAuthResponse === 'object' &&
+                    errorAuthResponse !== null &&
+                    errorAuthResponse !== undefined &&
+                    'error' in errorAuthResponse &&
+                    typeof errorAuthResponse.error === 'string' &&
+                    'error_description' in errorAuthResponse &&
+                    typeof errorAuthResponse.error_description === 'string') {
                     const errorAuth = errorAuthResponse.error;
                     const errorDescAuth = errorAuthResponse.error_description;
                     if (Assert.existValue(errorDescAuth)) {
@@ -121,37 +170,78 @@ export class ApiService {
                     const result = { succeeded: false, code: 500, message: LocalizationCore.data.api.errorNotOnline };
                     return Promise.reject(result);
                 }
-                console.log(error);
-                console.log('Error is not result!!!');
                 return Promise.reject(error);
             }
             else {
+                if (NetworkErrorUtils.isTimeoutError(error)) {
+                    const result = { succeeded: false, code: 500, message: LocalizationCore.data.api.errorTimeoutError };
+                    return Promise.reject(result);
+                }
+                if (NetworkErrorUtils.isNetworkError(error)) {
+                    if (!navigator.onLine) {
+                        const result = { succeeded: false, code: 500, message: LocalizationCore.data.api.errorNotOnline };
+                        return Promise.reject(result);
+                    }
+                    {
+                        const message = LocalizationCore.data.api.errorNotFound.replace('{0}', uri);
+                        const resultNotFound = {
+                            succeeded: false,
+                            code: 500,
+                            message: message
+                        };
+                        return Promise.reject(resultNotFound);
+                    }
+                }
                 // Произошло что-то при настройке запроса, вызвавшее ошибку
-                console.log(error);
-                console.log('Error is not result!!!');
-                return Promise.reject(String(error));
+                return Promise.reject({
+                    succeeded: false,
+                    code: 500,
+                    message: 'Unknown error occurred'
+                });
             }
         }
     }
+    // #endregion
+    // #region Public methods
+    /**
+     * GET запрос
+     */
     get(path, config) {
-        return this._api.get(path, config);
+        const url = this.createFullUrl(path);
+        const actualConfig = new ApiRequestConfig(config);
+        if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false) {
+            actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
+        }
+        return this.request(url, actualConfig.asGet());
     }
-    post(path, payload) {
-        return this._api.post(path, payload);
+    /**
+     * POST запрос
+     */
+    post(path, payload, config) {
+        const url = this.createFullUrl(path);
+        const actualConfig = new ApiRequestConfig(config);
+        actualConfig.setJsonBody(payload);
+        return this.request(url, actualConfig.asPost());
     }
-    put(path, payload) {
-        return this._api.put(path, payload);
+    /**
+     * PUT запрос
+     */
+    put(path, payload, config) {
+        const url = this.createFullUrl(path);
+        const actualConfig = new ApiRequestConfig(config);
+        actualConfig.setJsonBody(payload);
+        return this.request(url, actualConfig.asPut());
     }
+    /**
+     * DELETE запрос
+     */
     delete(path, config) {
-        return this._api.delete(path, config);
-    }
-    getConfigAcceptJson() {
-        const config = {
-            headers: {
-                Accept: 'application/json'
-            }
-        };
-        return config;
+        const url = this.createFullUrl(path);
+        const actualConfig = new ApiRequestConfig(config);
+        if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false) {
+            actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
+        }
+        return this.request(url, actualConfig.asDelete());
     }
 }
 //# sourceMappingURL=ApiService.js.map

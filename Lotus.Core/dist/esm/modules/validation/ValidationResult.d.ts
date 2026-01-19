@@ -143,7 +143,7 @@ export declare class ValidationResult implements IValidationResult {
      * @param maxLength Максимальная длина
      * @param errorText Текст ошибки (опционально)
      */
-    addErrorMaxString(key: string, value: string, maxLength: number, errorText?: string): void;
+    addErrorMaxString(key: string, value: string | undefined, maxLength: number, errorText?: string): void;
     /**
      * Проверяет минимальную длину строки
      * @param key Ключ поля
@@ -151,7 +151,7 @@ export declare class ValidationResult implements IValidationResult {
      * @param minLength Минимальная длина
      * @param errorText Текст ошибки (опционально)
      */
-    addErrorMinString(key: string, value: string, minLength: number, errorText?: string): void;
+    addErrorMinString(key: string, value: string | undefined, minLength: number, errorText?: string): void;
     /**
      * Проверяет значение на вхождение в диапазон
      * @param key Ключ поля
@@ -160,7 +160,7 @@ export declare class ValidationResult implements IValidationResult {
      * @param maxLength Максимальная длина строки
      * @param errorText Текст ошибки (опционально)
      */
-    addErrorRangeString(key: string, value: string, minLength: number, maxLength: number, errorText?: string): void;
+    addErrorRangeString(key: string, value: string | undefined, minLength: number, maxLength: number, errorText?: string): void;
     /**
      * Проверяет максимальное значение числа
      * @param key Ключ поля

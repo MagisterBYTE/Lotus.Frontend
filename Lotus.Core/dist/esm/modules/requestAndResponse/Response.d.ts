@@ -1,9 +1,8 @@
 import { IResult } from '#types';
-import { IPageInfoResponse } from './PageInfo';
 /**
  * Интерфейса для получения данных
  */
-export interface IResponse<TPayload = any> {
+export interface IResponse<TPayload = unknown> {
     /**
      * Результат
      */
@@ -14,16 +13,15 @@ export interface IResponse<TPayload = any> {
     payload?: TPayload;
 }
 /**
- * Интерфейс для постраничного получения данных
+ * Проверка объекта на поддержку интерфейса {@link IResponse}
+ * @param value Проверяемый объект
+ * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
-export interface IResponsePage<TPayload = any> extends Omit<IResponse<TPayload>, 'payload'> {
-    /**
-    * Данные
-    */
-    payload?: TPayload[];
-    /**
-     * Информация о странице
-     */
-    pageInfo?: IPageInfoResponse;
-}
+export declare function instanceOfResponse(value: unknown): value is IResponse;
+/**
+ * Преобразование объекта к интерфейсу {@link IResponse}
+ * @param value Объект для преобразования
+ * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
+ */
+export declare function castToResponse(value: unknown): IResponse | undefined;
 //# sourceMappingURL=Response.d.ts.map

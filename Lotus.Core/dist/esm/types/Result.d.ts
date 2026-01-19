@@ -34,15 +34,15 @@ export interface IResultMessage {
     text: string;
 }
 /**
- * Проверка объекта на поддержку интерфейса IResult
+ * Проверка объекта на поддержку интерфейса {@link IResult}
  * @param value Проверяемый объект
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
-export declare function instanceOfResult(value: any): value is IResult;
+export declare function instanceOfResult(value: unknown): value is IResult;
 /**
- * Преобразование объекта к интерфейсу IResult
+ * Преобразование объекта к интерфейсу {@link IResult}
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-export declare function castToResult(value: any): IResult | undefined;
+export declare function castToResult(value: unknown): IResult | undefined;
 //# sourceMappingURL=Result.d.ts.map

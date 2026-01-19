@@ -12,12 +12,12 @@ export interface IPropertyTypeDesc
 /**
  * Дескрипторы (перечисление) для типа свойства
  */
-export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
+export const PropertyTypeDescriptors: Record<Capitalize<TPropertyType>, IPropertyTypeDesc> =
   {
     /**
      * Логический тип
      */
-    bool:
+    Bool:
     {
       id: 0,
       type: TPropertyTypes.Bool
@@ -26,7 +26,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Целый тип (byte, short, int)
      */
-    int:
+    Int:
     {
       id: 1,
       type: TPropertyTypes.Int
@@ -35,7 +35,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Целый тип (long)
      */
-    long:
+    Long:
     {
       id: 2,
       type: TPropertyTypes.Long
@@ -44,7 +44,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Вещественный тип (float)
      */
-    float:
+    Float:
     {
       id: 3,
       type: TPropertyTypes.Float
@@ -53,7 +53,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Вещественный тип (float)
      */
-    double:
+    Double:
     {
       id: 4,
       type: TPropertyTypes.Double
@@ -62,7 +62,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Тип перечисления (на базовом уровне ведет себя как числовой)
      */
-    enum:
+    Enum:
     {
       id: 5,
       type: TPropertyTypes.Enum
@@ -71,7 +71,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Строковый тип
      */
-    string:
+    String:
     {
       id: 6,
       type: TPropertyTypes.String
@@ -80,7 +80,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Тип даты-времени
      */
-    dateTime:
+    DateTime:
     {
       id: 7,
       type: TPropertyTypes.DateTime
@@ -89,7 +89,7 @@ export const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc> =
     /**
      * Глобальный идентификатор в формате UUID
      */
-    guid:
+    Guid:
     {
       id: 8,
       type: TPropertyTypes.Guid

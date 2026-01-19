@@ -9,5 +9,5 @@ export interface IPropertyTypeDesc {
 /**
  * Дескрипторы (перечисление) для типа свойства
  */
-export declare const PropertyTypeDescriptors: Record<TPropertyType, IPropertyTypeDesc>;
+export declare const PropertyTypeDescriptors: Record<Capitalize<TPropertyType>, IPropertyTypeDesc>;
 //# sourceMappingURL=PropertyTypeDesc.d.ts.map

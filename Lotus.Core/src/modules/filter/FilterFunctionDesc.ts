@@ -1,5 +1,5 @@
 import { LocalizationCore } from '#localization';
-import { TFilterFunction } from './FilterFunction';
+import { TFilterFunction, TFilterFunctions } from './FilterFunction';
 
 /**
  * Описание функции фильтрации
@@ -15,15 +15,15 @@ export interface IFilterFunctionDesc
 /**
  * Перечисление для типа функции для фильтрации данных
  */
-export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionDesc> =
+export const FilterFunctionDescriptors: Record<Capitalize<TFilterFunction>, IFilterFunctionDesc> =
   {
     /**
      * Равно аргументу
      */
-    equals:
+    Equals:
     {
       id: 0,
-      type: 'equals',
+      type: TFilterFunctions.Equals,
       abbr: LocalizationCore.data.filters.equalsAbbr,
       desc: LocalizationCore.data.filters.equals
     },
@@ -31,10 +31,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Не равно аргументу
      */
-    notEqual:
+    NotEqual:
     {
       id: 1,
-      type: 'notEqual',
+      type: TFilterFunctions.NotEqual,
       abbr: LocalizationCore.data.filters.notEqualAbbr,
       desc: LocalizationCore.data.filters.notEqual
     },
@@ -42,10 +42,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Меньше аргумента
      */
-    lessThan:
+    LessThan:
     {
       id: 2,
-      type: 'lessThan',
+      type: TFilterFunctions.LessThan,
       abbr: LocalizationCore.data.filters.lessThanAbbr,
       desc: LocalizationCore.data.filters.lessThan
     },
@@ -53,10 +53,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Меньше или равно аргумента
      */
-    lessThanOrEqual:
+    LessThanOrEqual:
     {
       id: 3,
-      type: 'lessThanOrEqual',
+      type: TFilterFunctions.LessThanOrEqual,
       abbr: LocalizationCore.data.filters.lessThanOrEqualAbbr,
       desc: LocalizationCore.data.filters.lessThanOrEqual
     },
@@ -64,10 +64,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Больше аргумента
      */
-    greaterThan:
+    GreaterThan:
     {
       id: 4,
-      type: 'greaterThan',
+      type: TFilterFunctions.GreaterThan,
       abbr: LocalizationCore.data.filters.greaterThanAbbr,
       desc: LocalizationCore.data.filters.greaterThan
     },
@@ -75,10 +75,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Больше или равно аргумента
      */
-    greaterThanOrEqual:
+    GreaterThanOrEqual:
     {
       id: 5,
-      type: 'greaterThanOrEqual',
+      type: TFilterFunctions.GreaterThanOrEqual,
       abbr: LocalizationCore.data.filters.greaterThanOrEqualAbbr,
       desc: LocalizationCore.data.filters.greaterThanOrEqual
     },
@@ -86,10 +86,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Между первым аргументом (меньшим) и вторым аргументом (большим)
      */
-    between:
+    Between:
     {
       id: 6,
-      type: 'between',
+      type: TFilterFunctions.Between,
       abbr: LocalizationCore.data.filters.betweenAbbr,
       desc: LocalizationCore.data.filters.between
     },
@@ -97,10 +97,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
     * Аргумент (строка) может находиться в любом месте c учетом регистра
     */
-    contains:
+    Contains:
     {
       id: 7,
-      type: 'contains',
+      type: TFilterFunctions.Contains,
       abbr: LocalizationCore.data.filters.contains,
       desc: LocalizationCore.data.filters.contains
     },
@@ -108,10 +108,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
     * Аргумент(строка) может находиться в любом месте c учетом регистра
     */
-    startsWith:
+    StartsWith:
     {
       id: 8,
-      type: 'startsWith',
+      type: TFilterFunctions.StartsWith,
       abbr: LocalizationCore.data.filters.startsWith,
       desc: LocalizationCore.data.filters.startsWith
     },
@@ -119,10 +119,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Аргумент(строка) должна находится в конце c учетом регистра
      */
-    endsWith:
+    EndsWith:
     {
       id: 9,
-      type: 'endsWith',
+      type: TFilterFunctions.EndsWith,
       abbr: LocalizationCore.data.filters.endsWith,
       desc: LocalizationCore.data.filters.endsWith
     },
@@ -130,10 +130,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Аргумент(строка) должна сравнивается с учетом оператора Like
      */
-    like:
+    Like:
     {
       id: 10,
-      type: 'like',
+      type: TFilterFunctions.Like,
       abbr: LocalizationCore.data.filters.like,
       desc: LocalizationCore.data.filters.like
     },
@@ -142,10 +142,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
      * Не равно пустой или NULL строке. Аргумент НЕ требуется.
      * Не равно значению NULL для иных объектов.
      */
-    notEmpty:
+    NotEmpty:
     {
       id: 11,
-      type: 'notEmpty',
+      type: TFilterFunctions.NotEmpty,
       abbr: LocalizationCore.data.filters.notEmpty,
       desc: LocalizationCore.data.filters.notEmpty
     },
@@ -154,10 +154,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
      * Равно пустой или NULL строке. Аргумент НЕ требуется.
      * Равно значению NULL для иных объектов.
      */
-    empty:
+    Empty:
     {
       id: 12,
-      type: 'empty',
+      type: TFilterFunctions.Empty,
       abbr: LocalizationCore.data.filters.empty,
       desc: LocalizationCore.data.filters.empty
     },
@@ -165,10 +165,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Любой из проверяемых элементов списка должен находиться в массиве аргумента
      */
-    includeAny:
+    IncludeAny:
     {
       id: 13,
-      type: 'includeAny',
+      type: TFilterFunctions.IncludeAny,
       abbr: LocalizationCore.data.filters.includeAny,
       desc: LocalizationCore.data.filters.includeAny
     },
@@ -176,10 +176,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Все из проверяемых элементов списка должен находиться в массиве аргумента
      */
-    includeAll:
+    IncludeAll:
     {
       id: 14,
-      type: 'includeAll',
+      type: TFilterFunctions.IncludeAll,
       abbr: LocalizationCore.data.filters.includeAll,
       desc: LocalizationCore.data.filters.includeAll
     },
@@ -187,10 +187,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Проверяемые элементы списка должен быть равны массиву аргумента
      */
-    includeEquals:
+    IncludeEquals:
     {
       id: 15,
-      type: 'includeEquals',
+      type: TFilterFunctions.IncludeEquals,
       abbr: LocalizationCore.data.filters.includeEquals,
       desc: LocalizationCore.data.filters.includeEquals
     },
@@ -198,10 +198,10 @@ export const FilterFunctionDescriptors: Record<TFilterFunction, IFilterFunctionD
     /**
      * Ни один из проверяемых элементов списка не должен находится в массиве аргумента
      */
-    includeNone:
+    IncludeNone:
     {
       id: 16,
-      type: 'includeNone',
+      type: TFilterFunctions.IncludeNone,
       abbr: LocalizationCore.data.filters.includeNone,
       desc: LocalizationCore.data.filters.includeNone
     }
