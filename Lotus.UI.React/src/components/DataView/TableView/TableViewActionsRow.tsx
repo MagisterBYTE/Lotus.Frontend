@@ -1,12 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
-import { LocalizationCore } from 'lotus-core';
+import { LocalizationCore } from 'lotus-core/localization';
+import { IRecordObject } from 'lotus-core/types';
 import React from 'react';
 import { MRT_Cell, MRT_Row, MRT_TableInstance } from '#external/mantine-react-table';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IActionRowProps<TItem extends Record<string, any>>
+export interface IActionRowProps<TItem extends IRecordObject>
 {
   // eslint-disable-next-line react/no-unused-prop-types
   cell: MRT_Cell<TItem>;
@@ -14,14 +14,12 @@ export interface IActionRowProps<TItem extends Record<string, any>>
   row: MRT_Row<TItem>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IEditActionRowProps<TItem extends Record<string, any>> extends IActionRowProps<TItem>
+export interface IEditActionRowProps<TItem extends IRecordObject> extends IActionRowProps<TItem>
 {
   onEditRow: (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const EditActionRow = <TItem extends Record<string, any>>(props: IEditActionRowProps<TItem>): React.ReactNode =>
+export const EditActionRow = <TItem extends IRecordObject>(props: IEditActionRowProps<TItem>): React.ReactNode =>
 {
   const { table, row } = props;
 

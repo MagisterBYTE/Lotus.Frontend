@@ -21,7 +21,7 @@ export const MRT_Localization_RU: MRT_Localization = {
   expand: 'Раскрыть',
   expandAll: 'Раскрыть все',
   filterArrIncludes: 'Включить',
-  filterArrIncludesAll: 'Влючить все',
+  filterArrIncludesAll: 'Включить все',
   filterArrIncludesSome: 'Включить',
   filterBetween: 'Между',
   filterBetweenInclusive: 'Между включительно',

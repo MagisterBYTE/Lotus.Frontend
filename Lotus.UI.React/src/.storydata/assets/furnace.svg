@@ -1,0 +1,21 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org">
+  <!-- Фоновый круг -->
+  <circle cx="100" cy="100" r="95" fill="#f4e4bc" stroke="#4a3728" stroke-width="5" />
+  <circle cx="100" cy="100" r="85" fill="none" stroke="#4a3728" stroke-width="2" stroke-dasharray="4 2" />
+
+  <!-- Каменная печь -->
+  <g stroke="#1a1a1a" stroke-width="2">
+    <!-- Основание (Камень/Кирпич) -->
+    <rect x="60" y="110" width="80" height="50" fill="#6d4c41" rx="5" />
+    <rect x="55" y="105" width="90" height="10" fill="#7d5a3c" rx="2" />
+    <!-- Очаг/отверстие -->
+    <path d="M70 110 L130 110 L130 155 L70 155 Z" fill="#3e2723" />
+    <!-- Языки пламени внутри -->
+    <path d="M80 150 Q90 130 100 140 Q110 130 120 150 Z" fill="#ff6f00" />
+    <path d="M95 150 Q100 135 105 150 Z" fill="#ffb300" />
+  </g>
+
+  <!-- Декоративные элементы -->
+  <path d="M40 100 Q10 100 10 70" fill="none" stroke="#4a3728" stroke-width="2" opacity="0.5" />
+  <path d="M160 100 Q190 100 190 130" fill="none" stroke="#4a3728" stroke-width="2" opacity="0.5" />
+</svg>

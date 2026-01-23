@@ -1,5 +1,4 @@
 import { IDesignSystemItem } from '../types/DesignSystemItem';
-import { FontSizes } from './FontSizes';
 import { SizePrimitive } from './SizePrimitive';
 
 /**
@@ -35,14 +34,14 @@ export abstract class SizeDimensions implements IDesignSystemItem
   public abstract applyToCssVariable():void;
 
   /**
-   * Конвертирует значение размера в rem в виде строки
+   * Конвертирует значение размера в rem в виде числа
    * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
-   * @returns Значение размера в rem в виде строки
+   * @returns Значение размера в rem в виде числа
    */
-  public toRem(value?: string|number):string|undefined
+  public toRem(value?: string|number):number|undefined
   {
     if (value === undefined) return undefined;
-    if (typeof value === 'number') return `${value/16}rem`;
+    if (typeof value === 'number') return value/16;
 
     switch (value)
     {
@@ -62,7 +61,8 @@ export abstract class SizeDimensions implements IDesignSystemItem
         return this.xxl.rem;
     }
 
-    return value;
+    const pixel = SizePrimitive.fromCss(value)!;
+    return pixel/16;
   }
 
   /**
@@ -70,63 +70,14 @@ export abstract class SizeDimensions implements IDesignSystemItem
    * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
    * @returns Значение размера в rem в виде строки
    */
-  public toCssNegative<TCssType = string>(value?: string|number):TCssType|undefined
+  public toRemCss(value?: string|number):string|undefined
   {
-    if (value === undefined) return undefined; 
-
-    if (typeof value === 'number') return `-${value}px` as TCssType;
-
-    switch (value)
+    const rem = this.toRem(value);
+    if (rem)
     {
-      case 'xxs':
-        return this.xxs.toNegativeRem() as TCssType;
-      case 'xs':
-        return this.xs.toNegativeRem()  as TCssType;
-      case 'sm':
-        return this.sm.toNegativeRem()  as TCssType;
-      case 'md':
-        return this.md.toNegativeRem()  as TCssType;
-      case 'lg':
-        return this.lg.toNegativeRem()  as TCssType;
-      case 'xl':
-        return this.xl.toNegativeRem()  as TCssType;
-      case 'xxl':
-        return this.xxl.toNegativeRem()  as TCssType;
+      return `${rem}rem`;
     }
-
-    return value as TCssType;
-  }
-
-  /**
-   * Конвертирует значение размера в rem в виде строки
-   * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
-   * @returns Значение размера в rem в виде строки
-   */
-  public toCss<TCssType = string>(value?: string|number):TCssType|undefined
-  {
-    if (value === undefined) return undefined; 
-
-    if (typeof value === 'number') return `${value}px` as TCssType;
-
-    switch (value)
-    {
-      case 'xxs':
-        return this.xxs.rem as TCssType;
-      case 'xs':
-        return this.xs.rem as TCssType;
-      case 'sm':
-        return this.sm.rem as TCssType;
-      case 'md':
-        return this.md.rem as TCssType;
-      case 'lg':
-        return this.lg.rem as TCssType;
-      case 'xl':
-        return this.xl.rem as TCssType;
-      case 'xxl':
-        return this.xxl.rem as TCssType;
-    }
-
-    return value as TCssType;
+    return undefined;
   }
 
   /**
@@ -156,32 +107,120 @@ export abstract class SizeDimensions implements IDesignSystemItem
       case 'xxl':
         return this.xxl.value;
     }
-    const v = parseFloat(value);
-    const unit = value.replace(value.toString(), '').toLowerCase();
 
-    switch (unit)
+    const pixel = SizePrimitive.fromCss(value)!;
+    return pixel;
+  }
+
+  /**
+   * Конвертирует значение размера в пиксели в виде строки
+   * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+   * @returns Значение размера в пикселях в виде строки
+   */
+  public toPixelCss(value?: string|number):string|undefined
+  {
+    const pixel = this.toPixel(value);
+    if (pixel)
     {
-      case 'px':
-        return v;
-      case 'rem':
-        return v * FontSizes.getRootFontSize();
-      case 'em':
-        // Для em нужно знать контекст, возвращаем приблизительное значение
-        return v * 16; // предполагаем базовый размер 16px
-      case 'pt':
-        return v * 1.333; // 1pt = 1.333px
-      case 'mm':
-        return v * 3.7795; // 1mm = 3.7795px
-      case 'cm':
-        return v * 37.795; // 1cm = 37.795px
-      case 'in':
-        return v * 96; // 1inch = 96px
-      case '%':
-        return v * 16 / 100; // предполагаем базовый размер 16px
-      default:
-        // Если единица не распознана, возвращаем как есть (предполагаем px)
-        return v;
+      return `${pixel}px`;
     }
+    return undefined;
+  }
+
+  /**
+   * Конвертирует значение размера в rem в виде строки
+   * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+   * @returns Значение размера в rem в виде строки
+   */
+  public toCssNegative<TCssType = string>(value?: string|number):TCssType|undefined
+  {
+    if (value === undefined) return undefined; 
+
+    if (typeof value === 'number') return `-${value/16}px` as TCssType;
+
+    switch (value)
+    {
+      case 'xxs':
+        return this.xxs.toRemNegative() as TCssType;
+      case 'xs':
+        return this.xs.toRemNegative()  as TCssType;
+      case 'sm':
+        return this.sm.toRemNegative()  as TCssType;
+      case 'md':
+        return this.md.toRemNegative()  as TCssType;
+      case 'lg':
+        return this.lg.toRemNegative()  as TCssType;
+      case 'xl':
+        return this.xl.toRemNegative()  as TCssType;
+      case 'xxl':
+        return this.xxl.toRemNegative()  as TCssType;
+    }
+
+    return value as TCssType;
+  }
+
+  /**
+   * Конвертирует значение размера в rem в виде строки
+   * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+   * @returns Значение размера в rem в виде строки
+   */
+  public toCss<TCssType = string>(value?: string|number):TCssType|undefined
+  {
+    if (value === undefined) return undefined; 
+
+    if (typeof value === 'number') return `${value / 16}px` as TCssType;
+
+    switch (value)
+    {
+      case 'xxs':
+        return this.xxs.toRem() as TCssType;
+      case 'xs':
+        return this.xs.toRem() as TCssType;
+      case 'sm':
+        return this.sm.toRem() as TCssType;
+      case 'md':
+        return this.md.toRem() as TCssType;
+      case 'lg':
+        return this.lg.toRem() as TCssType;
+      case 'xl':
+        return this.xl.toRem() as TCssType;
+      case 'xxl':
+        return this.xxl.toRem() as TCssType;
+    }
+
+    return value as TCssType;
+  }
+
+  /**
+   * Конвертирует значение размера примитив размера
+   * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+   * @returns Значение размера
+   */
+  public toSizePrimitive(value?: string|number):SizePrimitive|undefined
+  {
+    if (value === undefined) return undefined;
+    if (typeof value === 'number') return new SizePrimitive(value);
+
+    switch (value)
+    {
+      case 'xxs':
+        return new SizePrimitive(this.xxs.value);
+      case 'xs':
+        return new SizePrimitive(this.xs.px);
+      case 'sm':
+        return new SizePrimitive(this.sm.px);
+      case 'md':
+        return new SizePrimitive(this.md.px);
+      case 'lg':
+        return new SizePrimitive(this.lg.px);
+      case 'xl':
+        return new SizePrimitive(this.xl.px);
+      case 'xxl':
+        return new SizePrimitive(this.xxl.px);
+    }
+
+    const pixel = SizePrimitive.fromCss(value)!;
+    return new SizePrimitive(pixel);
   }
 }
 

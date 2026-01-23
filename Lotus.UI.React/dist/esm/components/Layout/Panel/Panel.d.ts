@@ -5,6 +5,7 @@ import { IBoxProps } from '../Box';
 export interface IPanelProps extends IBoxProps {
     size?: TSizeType;
     header?: ReactNode;
+    headerOffsetPercent?: number;
     headerProps?: ILabelProps;
 }
 export declare function Panel(props: IPanelProps): import("react/jsx-runtime").JSX.Element;

@@ -1,5 +1,5 @@
 import { ActionIcon, ActionIconProps, Button, ButtonProps, Menu, MenuItemProps, NavLink, NavLinkProps } from '@mantine/core';
-import { ActionCommandTypes, BaseActionCommand } from 'lotus-core/modules/actionCommand';
+import { TActionCommandTypes, BaseActionCommand } from 'lotus-core/modules/actionCommand';
 import { Assert } from 'lotus-core/utils';
 import { ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -44,13 +44,13 @@ export function CommandElement(props: ICommandElementProps)
 
   const isSelected = command.isSelectedCommand();
   const disabled = !command.canExecuteCommand();
-  const isDelimiter = command.commandType === ActionCommandTypes.Delimiter;
+  const isDelimiter = command.commandType === TActionCommandTypes.Delimiter;
 
   const handleClick = () => 
   {
     if (command) 
     {
-      if (command.commandType === ActionCommandTypes.Navigation) 
+      if (command.commandType === TActionCommandTypes.Navigation) 
       {
         if (command.route!.path !== '' && location.pathname !== command.route!.path) 
         {
@@ -72,7 +72,7 @@ export function CommandElement(props: ICommandElementProps)
     } 
     if (command.label && Assert.isFunction(command.label)) 
     {
-      return command.label(command);
+      return command.label(command) as ReactNode;
     }
 
     return undefined;

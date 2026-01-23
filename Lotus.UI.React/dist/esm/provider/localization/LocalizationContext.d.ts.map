@@ -1,0 +1,1 @@
+{"version":3,"file":"LocalizationContext.d.ts","sourceRoot":"","sources":["../../../../src/provider/localization/LocalizationContext.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,aAAa,EAAE,MAAM,yBAAyB,CAAC;AAG7D,MAAM,WAAW,wBAAwB;IAEvC,YAAY,EAAC,aAAa,CAAC;IAC3B,eAAe,EAAE,CAAC,YAAY,EAAE,aAAa,KAAK,IAAI,CAAC;CACxD;AAED,eAAO,MAAM,mBAAmB,+DAAiE,CAAC"}

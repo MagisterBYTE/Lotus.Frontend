@@ -31,7 +31,14 @@ const meta = {
     // Hide
     ...ArgTypesStory.BaseField,
     segmentedProps: { table: { disable: true } },
-    children: { table: { disable: true } }
+    children: { table: { disable: true } },
+    items: { table: { disable: true } },
+    selectedItem: { table: { disable: true } },
+    onChangedItem: { table: { disable: true } },
+    getDisabledItem: { table: { disable: true } },
+    getLabelItem: { table: { disable: true } },
+    getValueItem: { table: { disable: true } },
+    renderItem: { table: { disable: true } },
   }
 } satisfies Meta<typeof SegmentedField>;
 
@@ -43,8 +50,8 @@ export const SegmentedFieldDefault: Story = {
   args: {
     p: 'xs',
     m: 'sm',
-    options: OptionsStory.TextAndIconImage,
-    label: 'Иконка Image',
+    items: OptionsStory.TextAndIconImage,
+    label: 'Иконка Image'
   }
 };
 
@@ -53,7 +60,11 @@ export const SegmentedFieldLabel: Story = {
   args: {
     inlinePlace: true,
     label: 'Иконка React',
-    options: OptionsStory.TextAndIconReact,
+    items: OptionsStory.TextAndIconReact,
+    withBorder: 15,
+    p: 'xxs',
+    bdRadius: 'md',
+    w: 'max-content'
   }
 };
 
@@ -62,10 +73,6 @@ export const SegmentedFieldStyle: Story = {
   args: {
     inlinePlace: true,
     label: 'Иконка React',
-    options: OptionsStory.TextAndIconReact,
-    segmentedProps:
-    {
-      style: {backgroundColor: 'red'}
-    }
+    items: OptionsStory.TextAndIconReact,
   }
 };

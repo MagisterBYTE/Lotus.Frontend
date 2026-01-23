@@ -4,11 +4,6 @@
 export abstract class DesignSystemConstants
 {
   /**
-   * Ключ под которым сохраняется тема сайта
-   */
-  public static readonly SaveKey: string = 'lotus-design-system';
-
-  /**
    * Названия атрибута в документа под которым сохраняется цветовая схема сайта
    */
   public static readonly DataAttributeColorScheme: string = 'data-lotus-color-scheme';

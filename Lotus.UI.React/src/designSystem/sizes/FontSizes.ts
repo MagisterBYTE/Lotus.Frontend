@@ -11,7 +11,7 @@ export class FontSizes extends SizeDimensions
   /**
    * Стандартные размеры шрифтов
    */
-  public static readonly Default = new FontSizes(0.5 * 16, 0.75 * 16, 0.875 * 16, 1 * 16, 1.25 * 16, 1.125 * 16, 1.25 * 16);
+  public static readonly Default = new FontSizes(0.5 * 16, 0.75 * 16, 0.875 * 16, 1 * 16, 1.125 * 16, 1.25 * 16, 1.5 * 16);
   // #endregion
 
   // #region Static methods
@@ -82,13 +82,13 @@ export class FontSizes extends SizeDimensions
    */
   public override applyToCssVariable():void
   {
-    document.documentElement.style.setProperty(CssVariables.FontSizeXXS.match(CssVariables.RegExtractName)![0], this.xxs.rem);
-    document.documentElement.style.setProperty(CssVariables.FontSizeXS.match(CssVariables.RegExtractName)![0], this.xs.rem);
-    document.documentElement.style.setProperty(CssVariables.FontSizeSM.match(CssVariables.RegExtractName)![0], this.sm.rem);
-    document.documentElement.style.setProperty(CssVariables.FontSizeMD.match(CssVariables.RegExtractName)![0], this.md.rem);
-    document.documentElement.style.setProperty(CssVariables.FontSizeLG.match(CssVariables.RegExtractName)![0], this.lg.rem);
-    document.documentElement.style.setProperty(CssVariables.FontSizeXL.match(CssVariables.RegExtractName)![0], this.xl.rem);
-    document.documentElement.style.setProperty(CssVariables.FontSizeXXL.match(CssVariables.RegExtractName)![0], this.xxl.rem);
+    document.documentElement.style.setProperty(CssVariables.FontSizeXXS.match(CssVariables.RegExtractName)![0], this.xxs.toRem());
+    document.documentElement.style.setProperty(CssVariables.FontSizeXS.match(CssVariables.RegExtractName)![0], this.xs.toRem());
+    document.documentElement.style.setProperty(CssVariables.FontSizeSM.match(CssVariables.RegExtractName)![0], this.sm.toRem());
+    document.documentElement.style.setProperty(CssVariables.FontSizeMD.match(CssVariables.RegExtractName)![0], this.md.toRem());
+    document.documentElement.style.setProperty(CssVariables.FontSizeLG.match(CssVariables.RegExtractName)![0], this.lg.toRem());
+    document.documentElement.style.setProperty(CssVariables.FontSizeXL.match(CssVariables.RegExtractName)![0], this.xl.toRem());
+    document.documentElement.style.setProperty(CssVariables.FontSizeXXL.match(CssVariables.RegExtractName)![0], this.xxl.toRem());
   }
 
   /**

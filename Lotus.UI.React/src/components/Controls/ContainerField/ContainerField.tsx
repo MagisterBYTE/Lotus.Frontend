@@ -72,7 +72,7 @@ export function ContainerField(props: IContainerFieldProps)
     <HorizontalStack {...otherProps} spacing={spacing} vAlign={vAlign}>
       <Stack gap={0} justify="flex-start" w={labelProps?.w}>
         {label && (
-          <InputLabel {...labelProps} required={required} size={labelProps?.size ?? size} w={undefined}>
+          <InputLabel {...labelProps} required={required} size={labelProps?.size ?? size} style={{ ...labelProps?.style, whiteSpace: 'nowrap' }} w={undefined}>
             {label}
           </InputLabel>
         )}

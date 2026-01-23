@@ -1,10 +1,10 @@
 import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
-import { // notifications.hide
-showNotification } from '@mantine/notifications';
+import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconExclamationCircleFilled } from '@tabler/icons-react';
 import { LocalizationCore } from 'lotus-core/localization';
+import { ColorCssHelper } from 'lotus-core/modules/color';
+import { createResultFromError, instanceOfResult } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
-import { ColorCssHelper } from 'node_modules/lotus-core/dist/esm/modules/color/ColorCssHelper';
 export class Notifications {
     // eslint-disable-next-line complexity
     static showResult(result, notification) {
@@ -15,7 +15,7 @@ export class Notifications {
         if (Assert.isArrayWithData(result.data)) {
             // Это список замечаний
             const messages = result.data;
-            const messagesNode = _jsx("li", { children: messages.map((x) => _jsx(_Fragment, { children: x.text })) });
+            const messagesNode = (_jsx("li", { children: messages.map((x) => (_jsx(_Fragment, { children: x.text }))) }));
             notificationData.message = messagesNode;
             if (result.succeeded) {
                 notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.succeed;
@@ -44,6 +44,22 @@ export class Notifications {
         }
         const notificationId = showNotification(notificationData);
         return notificationId;
+    }
+    static showSuccess(message, notification) {
+        const resultSuccess = {
+            succeeded: true,
+            message: message
+        };
+        Notifications.showResult(resultSuccess, notification);
+    }
+    static showError(error, notification) {
+        if (instanceOfResult(error)) {
+            Notifications.showResult(error, notification);
+        }
+        if (error instanceof Error) {
+            const result = createResultFromError(error);
+            Notifications.showResult(result, notification);
+        }
     }
 }
 //# sourceMappingURL=Notifications.js.map

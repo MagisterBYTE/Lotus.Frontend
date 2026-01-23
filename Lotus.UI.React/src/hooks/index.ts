@@ -1,4 +1,6 @@
 export { useForm } from './useForm';
+export { useInstanceProxy } from './useInstanceProxy';
+export { useInstanceProxyAsync } from './useInstanceProxyAsync';
 export { useInterval } from './useInterval';
 export { useMediaQuery } from './useMediaQuery';
 export { useMutationObserver } from './useMutationObserver';

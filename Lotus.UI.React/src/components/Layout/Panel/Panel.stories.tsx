@@ -14,6 +14,7 @@ const meta = {
     centerContent: { control: 'inline-radio', options: ['horizontally', 'vertically', 'center', undefined], table: { category: 'Params' } },
     size: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
     header: { control: 'text', table: { category: 'Params' } },
+    headerOffsetPercent: { control: { type: 'number', min: 0, max: 100 }, table: { category: 'Params' } },
 
     // Size
     ...ArgTypesStory.Size,
@@ -41,78 +42,70 @@ type Story = StoryObj<typeof meta>;
 export const PanelDefault: Story = {
   name: 'Panel Default',
   args: {
-    style: {
-      overflowX: 'clip'
-    },
-
     children: TextStory.SmallText(),
-    m: 'sm',
-    bdStyle: 'double',
-    bdWidth: 3,
-    bdShadow: 4,
+    headerProps: {
+      children: 'Заголовок'
+    }
+  }
+};
+
+export const PanelBorder: Story = {
+  name: 'Panel Border',
+  args: {
+    children: TextStory.SmallText(),
 
     headerProps: {
+      children: 'Заголовок'
+    },
+
+    withBorder: 15,
+    p: 'md',
+    bdRadius: 'md'
+  }
+};
+
+export const PanelGreen: Story = {
+  name: 'Panel Green',
+  args: {
+    children: TextStory.SmallText(),
+    headerProps: {
       children: 'Заголовок',
-      p: 'xxs',
       fontSize: 'lg',
       fontBold: true,
       icon: IconsStory.HydraulicAnalysis64,
-      iconPlacement: 'left'
+      iconPlacement: 'left',
+      ml: 'md'
     },
 
-    h: '100%',
     bdColor: 'brown',
     bdRadius: 'xs',
+    bdStyle: 'double',
+    bdWidth: 3,
+    bdShadow: 4,
     bgColor: 'greenPalest',
-    bgShadow: 10,
-    pl: 'xs',
-    pt: 'xxl',
-    w: '100%',
-    bdRadiusTopLeft: 'xs',
-    bdRadiusTopRight: 'xs'
+    bgShadow: 10
   }
 };
 
 export const PanelAndPanelCenter: Story = {
   name: 'Panel Center',
   args: {
-    style: {
-      overflow: 'scroll'
-    },
-
     children: (
-      <Panel bdRadius bgColor="blueGreyLight" p={'md'}>
+      <Panel bdRadius bgColor="blueGrayLight" p={'md'}>
         {TextStory.MiddleText()}
       </Panel>
     ),
-
-    centerContent: 'center',
+    style:
+    {
+      overflow: 'scroll'
+    },
     p: 'lg',
     bdStyle: 'solid',
     w: '50vw',
     h: '30vw',
-    bgColor: 'blueGreyDark',
+    bgColor: 'blueGrayDark',
     bgShadow: 10,
     header: 'Большой текст',
     m: 'lg'
-  }
-};
-
-export const PanelBrown: Story = {
-  name: 'Panel Brown',
-  args: {
-    children: (
-      <Panel bdRadius bgColor="blueGreyLight" p={'md'} w={'min-content'}>
-        {TextStory.MiddleText()}
-      </Panel>
-    ),
-
-    centerContent: 'vertically',
-    p: 'md',
-    bdStyle: 'solid',
-    w: '30vw',
-    h: 'min-content',
-    bgColor: 'brownBlack',
-    bgShadow: 10
   }
 };

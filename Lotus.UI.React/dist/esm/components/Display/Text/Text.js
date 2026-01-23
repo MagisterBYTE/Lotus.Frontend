@@ -6,7 +6,7 @@ import { Assert } from 'lotus-core/utils';
 import { BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper, TextPropertiesHelper } from '#base';
 import { CssPropertiesHelper } from '#helpers';
 export function Text(props) {
-    const { isBlock = false, asBadge } = props;
+    const { isBlock = false, asBadge, ...otherProps } = props;
     const isBadge = Assert.existValue(asBadge);
     const styleSpan = {
         lineHeight: 'normal',
@@ -21,7 +21,7 @@ export function Text(props) {
     };
     const textClass = css({ ...styleSpan, label: 'Text' });
     // Фильтруем кастомные пропсы перед передачей в div
-    const domProps = CssPropertiesHelper.filterDOMProps(props);
+    const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
     return (_jsx("div", { className: textClass, ...domProps, children: props.children }));
 }
 //# sourceMappingURL=Text.js.map

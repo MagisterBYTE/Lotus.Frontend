@@ -3,10 +3,6 @@
  */
 export declare abstract class DesignSystemConstants {
     /**
-     * Ключ под которым сохраняется тема сайта
-     */
-    static readonly SaveKey: string;
-    /**
      * Названия атрибута в документа под которым сохраняется цветовая схема сайта
      */
     static readonly DataAttributeColorScheme: string;

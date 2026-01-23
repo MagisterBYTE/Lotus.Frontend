@@ -7,6 +7,6 @@ export function ContainerField(props) {
     const { componentField, inlinePlace = false, size, required, label, labelProps, description, descriptionProps, error, errorProps, ...otherProps } = props;
     const vAlign = Assert.existValue(otherProps.vAlign) ? otherProps.vAlign : Assert.existValue(description) ? 'center' : 'baseline';
     const spacing = Assert.existValue(otherProps.spacing) ? otherProps.spacing : Assert.existValue(labelProps?.w) ? 'undefined' : (size ?? 'md');
-    return (_jsxs(HorizontalStack, { ...otherProps, spacing: spacing, vAlign: vAlign, children: [_jsxs(Stack, { gap: 0, justify: "flex-start", w: labelProps?.w, children: [label && (_jsx(InputLabel, { ...labelProps, required: required, size: labelProps?.size ?? size, w: undefined, children: label })), description && (_jsx(InputDescription, { ...descriptionProps, size: descriptionProps?.size ?? size, children: description }))] }), componentField] }));
+    return (_jsxs(HorizontalStack, { ...otherProps, spacing: spacing, vAlign: vAlign, children: [_jsxs(Stack, { gap: 0, justify: "flex-start", w: labelProps?.w, children: [label && (_jsx(InputLabel, { ...labelProps, required: required, size: labelProps?.size ?? size, style: { ...labelProps?.style, whiteSpace: 'nowrap' }, w: undefined, children: label })), description && (_jsx(InputDescription, { ...descriptionProps, size: descriptionProps?.size ?? size, children: description }))] }), componentField] }));
 }
 //# sourceMappingURL=ContainerField.js.map

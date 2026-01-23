@@ -1,27 +1,31 @@
-import {
-  NotificationData, // notifications.hide
-  showNotification } from '@mantine/notifications';
-import { IconCheck,  IconExclamationCircleFilled } from '@tabler/icons-react';
+import { NotificationData, showNotification } from '@mantine/notifications';
+import { IconCheck, IconExclamationCircleFilled } from '@tabler/icons-react';
 import { LocalizationCore } from 'lotus-core/localization';
-import { IResult, IResultMessage } from 'lotus-core/types';
+import { ColorCssHelper } from 'lotus-core/modules/color';
+import { createResultFromError, instanceOfResult, IResult, IResultMessage, MakeOptional } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
-import { ColorCssHelper } from 'node_modules/lotus-core/dist/esm/modules/color/ColorCssHelper';
 
-export class Notifications 
+export abstract class Notifications
 {
   // eslint-disable-next-line complexity
-  public static showResult(result: IResult, notification?:NotificationData):string
+  public static showResult(result: IResult, notification?: MakeOptional<NotificationData, 'message'>): string
   {
     if (Assert.emptyValue(result)) return '';
 
-    const notificationData:NotificationData = { ...notification, message: '' };
+    const notificationData: NotificationData = { ...notification, message: '' };
 
     // Смотрим сначала на список данных
     if (Assert.isArrayWithData(result.data))
     {
       // Это список замечаний
       const messages = result.data as IResultMessage[];
-      const messagesNode = <li>{messages.map((x) => <>{x.text}</>)}</li>;
+      const messagesNode = (
+        <li>
+          {messages.map((x) => (
+            <>{x.text}</>
+          ))}
+        </li>
+      );
       notificationData.message = messagesNode;
 
       if (result.succeeded)
@@ -57,5 +61,28 @@ export class Notifications
 
     const notificationId = showNotification(notificationData);
     return notificationId;
+  }
+
+  public static showSuccess(message: string, notification?: Omit<NotificationData, 'message'>)
+  {
+    const resultSuccess: IResult = {
+      succeeded: true,
+      message: message
+    };
+
+    Notifications.showResult(resultSuccess, notification);
+  }
+
+  public static showError(error: unknown, notification?: MakeOptional<NotificationData, 'message'>)
+  {
+    if (instanceOfResult(error))
+    {
+      Notifications.showResult(error, notification);
+    }
+    if (error instanceof Error)
+    {
+      const result = createResultFromError(error);
+      Notifications.showResult(result, notification);
+    }
   }
 }

@@ -60,7 +60,7 @@ export class RenderIcon {
         }
         // Это иконка React
         else {
-            const sizeIcon = IconSizes.Default.toRem(size);
+            const sizeIcon = IconSizes.Default.toRemCss(size);
             if (other) {
                 if (wrapDiv) {
                     return (_jsxs("div", { style: wrapDivStyle, children: [_jsx(IconContext.Provider, { value: { size: sizeIcon, color: iconColorCss, style: iconStyle }, children: icon }), other] }));

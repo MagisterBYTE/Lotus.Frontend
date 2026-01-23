@@ -31,9 +31,15 @@ const meta = {
 
     // Hide
     ...ArgTypesStory.BaseField,
-    options: { table: { disable: true } },
     selectProps: { table: { disable: true } },
-    children: { table: { disable: true } }
+    children: { table: { disable: true } },
+    items: { table: { disable: true } },
+    selectedItem: { table: { disable: true } },
+    onChangedItem: { table: { disable: true } },
+    getDisabledItem: { table: { disable: true } },
+    getLabelItem: { table: { disable: true } },
+    getValueItem: { table: { disable: true } },
+    renderItem: { table: { disable: true } }
   }
 } satisfies Meta<typeof SelectField>;
 
@@ -45,8 +51,8 @@ export const SelectFieldDefault: Story = {
   args: {
     p: 'xs',
     m: 'sm',
-    options: OptionsStory.TextAndIconImage,
-    label: 'Иконка Image',
+    items: OptionsStory.TextAndIconImage,
+    label: 'Иконка Image'
   }
 };
 
@@ -55,10 +61,9 @@ export const SelectFieldLabel: Story = {
   args: {
     inlinePlace: true,
     label: 'Иконка React',
-    options: OptionsStory.TextAndIconReact,
-    selectProps:
-    {
-      rightSection: <IconShieldBolt color='red' size={'2.25rem'} />,
+    items: OptionsStory.TextAndIconReact,
+    selectProps: {
+      rightSection: <IconShieldBolt color="red" size={'2.25rem'} />
     }
   }
 };
@@ -68,11 +73,31 @@ export const SelectFieldStyle: Story = {
   args: {
     inlinePlace: true,
     label: 'Иконка React',
-    options: OptionsStory.TextAndIconReact,
-    selectProps:
-    {
-      rightSection: <IconShieldBolt color='red' size={'2.25rem'} />,
-      style: {backgroundColor: 'red'}
+    items: OptionsStory.TextAndIconReact,
+    selectProps: {
+      rightSection: <IconShieldBolt color="red" size={'2.25rem'} />,
+      style: { backgroundColor: 'red' }
     }
   }
+};
+
+export const SelectFieldGreen: Story = {
+  name: 'SelectField Green',
+  args: {
+    p: 'xs',
+    m: 'sm',
+
+    items: OptionsStory.TextAndIconReact,
+
+    label: 'Иконка Image',
+    inlinePlace: true,
+    size: 'md',
+    required: false,
+    w: 'max-content',
+    withBorder: 3,
+    bdColor: 'green',
+    bdWidth: 6,
+    bdRadius: 'xl',
+    bgColor: 'greenPale'
+  },
 };

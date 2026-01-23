@@ -1,4 +1,5 @@
-import { TTextEffect, TCssTextAlign, TCssFontSize, TCssLineHeight, TCssProperties, TFontAccent, TSizeType } from '#types';
+import { TColorToken } from 'lotus-core/modules/color';
+import { TTextEffect, TCssTextAlign, TCssFontSize, TCssLineHeight, TCssProperties, TFontAccent, TSizeType, TCssColor } from '#types';
 /**
  * Общие свойства текста для элемента UI
  */
@@ -30,7 +31,7 @@ export interface IGeneralTextProperties {
     /**
      * Цвет текста
      */
-    textColor?: string;
+    textColor?: TCssColor | TColorToken;
     /**
      * Межстрочный интервал текста
      */

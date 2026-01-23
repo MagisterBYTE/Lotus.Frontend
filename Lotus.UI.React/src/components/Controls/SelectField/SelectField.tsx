@@ -1,76 +1,101 @@
 import { ComboboxItem, ComboboxLikeRenderOptionInput, Group, Select, SelectProps } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
-import { IOption, OptionHelper } from 'lotus-core/modules/option';
-import { PropertyType, TKey } from 'lotus-core/types';
+import { ItemsHelper } from 'lotus-core/helpers';
+import { IOption } from 'lotus-core/modules/option';
+import { PropertyType } from 'lotus-core/types';
 import { JSX, useEffect, useState } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps } from '#components/Layout';
 import { RenderIcon, RenderOption } from '#render';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
+import { IItemsBaseProps } from '../types';
 
 type TSelectData = PropertyType<SelectProps, 'data'>;
 
-export interface ISelectFieldProps<TValueOption extends TKey = TKey> extends IBaseFieldProps, IHorizontalStackProps
-{
-  options: IOption<TValueOption>[];
-  onChanged?: (value: TValueOption | undefined) => void;
-  value?: TValueOption;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ComboboxItemObject = ComboboxItem & {original: any};
+
+export interface ISelectFieldProps<TItem> extends IBaseFieldProps, IItemsBaseProps<TItem>, IHorizontalStackProps {
   selectProps?: Omit<SelectProps, keyof IBaseFieldProps | 'data' | 'value'>;
 }
 
-export function SelectField<TValueOption extends TKey = TKey>(props: ISelectFieldProps<TValueOption>): JSX.Element
+export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): JSX.Element 
 {
-  const { options, onChanged, value, selectProps, ...otherProps } = props;
-
-  const isNumber = OptionHelper.isNumber(options);
+  const {
+    items,
+    onChangedItem,
+    selectedItem,
+    getValueItem = ItemsHelper.getValueOfItem,
+    getLabelItem = ItemsHelper.getLabelOfItem,
+    getDisabledItem = ItemsHelper.getDisabledOfItem,
+    selectProps,
+    ...otherProps
+  } = props;
 
   const [selectedIcon, setSelectedIcon] = useState<unknown>(undefined);
   const [data, setData] = useState<TSelectData>([]);
 
   const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
-  useEffect(() =>
-  {
-    setData(OptionHelper.convertToString(options));
-  }, [options, options.length, otherProps.size]);
+  const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;
 
-  const handleChange = (value: string | null, option: ComboboxItem) =>
+  const prepareData = () =>
   {
-    setSelectedIcon((option as IOption)?.icon);
-
-    if (onChanged)
+    const newData: ComboboxItemObject[] = [];
+    for (const item of items)
     {
-      if (value === null)
+      newData.push({
+        label: getLabelItem(item),
+        value: getValueItem(item).toString(),
+        disabled: getDisabledItem(item),
+        original: item
+      });
+    }
+
+    setData(newData);
+  };
+
+  useEffect(() => 
+  {
+    prepareData();
+  }, [items, items.length, otherProps.size]);
+
+  const handleChange = (value: string | null, option: ComboboxItem) => 
+  {
+    const optionObject = option as ComboboxItemObject;
+
+    setSelectedIcon((optionObject.original as IOption)?.icon);
+
+    if (onChangedItem) 
+    {
+      if (value === null) 
       {
-        onChanged(undefined);
-      }
-      if (isNumber)
-      {
-        onChanged(Number(value) as TValueOption);
+        onChangedItem(undefined);
       }
       else
       {
-        onChanged(value as TValueOption);
+        onChangedItem(optionObject.original as TItem);
       }
     }
 
-    if (selectProps?.onChange)
+    if (selectProps?.onChange) 
     {
       selectProps?.onChange(value, option);
     }
   };
 
-  const renderOption = (item: ComboboxLikeRenderOptionInput<ComboboxItem>) =>
+  const renderOption = (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => 
   {
+    const optionObject = item.option as ComboboxItemObject;
     return (
       <Group flex="1" gap="xs">
-        {RenderOption.renderOption(otherProps.size ?? 'md', (item.option as IOption))}
+        {RenderOption.renderOption(otherProps.size ?? 'md', optionObject.original as IOption)}
         {item.checked && <IconCheck style={{ marginInlineStart: 'auto' }} />}
       </Group>
     );
   };
 
-  if (otherProps.inlinePlace)
+  if (otherProps.inlinePlace) 
   {
     return (
       <ContainerField
@@ -86,7 +111,7 @@ export function SelectField<TValueOption extends TKey = TKey>(props: ISelectFiel
             renderOption={renderOption}
             size={otherProps.size}
             style={{ flex: 1 }}
-            value={value?.toString()}
+            value={selectedValue}
             w={undefined}
             onChange={handleChange}
             {...selectProps}
@@ -95,7 +120,7 @@ export function SelectField<TValueOption extends TKey = TKey>(props: ISelectFiel
       />
     );
   }
-  else
+  else 
   {
     return (
       <Select
@@ -111,7 +136,7 @@ export function SelectField<TValueOption extends TKey = TKey>(props: ISelectFiel
         renderOption={renderOption}
         required={otherProps.required}
         size={otherProps.size}
-        value={value?.toString()}
+        value={selectedValue}
         onChange={handleChange}
         {...selectProps}
       />

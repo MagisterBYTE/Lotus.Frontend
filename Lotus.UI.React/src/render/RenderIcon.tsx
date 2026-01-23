@@ -97,7 +97,7 @@ export abstract class RenderIcon
     // Это иконка React
     else
     {
-      const sizeIcon = IconSizes.Default.toRem(size);
+      const sizeIcon = IconSizes.Default.toRemCss(size);
       if (other)
       {
         if (wrapDiv)

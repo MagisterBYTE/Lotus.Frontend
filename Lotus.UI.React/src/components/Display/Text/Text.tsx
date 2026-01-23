@@ -29,7 +29,7 @@ export interface ITextProps extends IGeneralContainerProperties, IGeneralTextPro
 
 export function Text(props: ITextProps) 
 {
-  const { isBlock = false, asBadge } = props;
+  const { isBlock = false, asBadge, ...otherProps } = props;
 
   const isBadge = Assert.existValue(asBadge);
 
@@ -48,7 +48,7 @@ export function Text(props: ITextProps)
   const textClass = css({ ...styleSpan, label: 'Text' });
 
   // Фильтруем кастомные пропсы перед передачей в div
-  const domProps = CssPropertiesHelper.filterDOMProps(props);
+  const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
 
   return (
     <div className={textClass} {...domProps}>

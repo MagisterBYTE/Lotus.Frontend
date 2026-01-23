@@ -35,7 +35,7 @@ export class RenderOption {
         else {
             if (Assert.existValue(option.icon)) {
                 if (wrapContainer) {
-                    return (_jsxs(HorizontalStack, { hAlign: 'center', spacing: 'xs', vAlign: 'center', children: [RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase), _jsx(_Fragment, { children: option.label })] }));
+                    return (_jsxs(HorizontalStack, { hAlign: 'center', spacing: size, vAlign: 'center', children: [RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase), _jsx(_Fragment, { children: option.label })] }));
                 }
                 else {
                     return (_jsxs(_Fragment, { children: [RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase), _jsx(_Fragment, { children: option.label })] }));

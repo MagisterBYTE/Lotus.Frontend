@@ -1,13 +1,34 @@
-import { TColorSemantic, TColorVariantTuple } from 'lotus-core/modules/color';
-import { TColorPalette } from './ColorPalette';
-/**
- * Тип для обозначения всех доступных цветов с учетом вариативности без привязки к цветовой схеме
- */
-export type TColorDesignSystemTuples = Record<TColorPalette | TColorSemantic, TColorVariantTuple>;
+import { TColorCssPaletteVariant, TColorToken } from 'lotus-core/modules/color';
+import { IDesignSystemItem } from '#designSystem/types';
+import { TCssColor } from '#types';
 /**
  * Набор стандартных цветов для дизайн системы
  */
-export declare abstract class ColorDesignSystem {
-    static readonly Default: TColorDesignSystemTuples;
+export declare class ColorDesignSystem implements IDesignSystemItem {
+    /**
+     * Стандартные цвета дизайн-системы для светлой темы
+     */
+    static readonly LightDefault: ColorDesignSystem;
+    /**
+     * Стандартные цвета дизайн-системы для темной темы
+     */
+    static readonly DarkDefault: ColorDesignSystem;
+    /**
+     * Основной цвет
+     */
+    primaryColor: TCssColor | TColorToken;
+    /**
+     * Основной оттенок цвета
+     */
+    primaryShade: number;
+    /**
+     * Набор цветов
+     */
+    colors: TColorCssPaletteVariant;
+    constructor(primaryColor: TCssColor | TColorToken, primaryShade: number, colors: TColorCssPaletteVariant);
+    /**
+     * Применить текущие значения к соответствующим переменным Css. Смотреть класс {@link CssVariables}
+     */
+    applyToCssVariable(): void;
 }
 //# sourceMappingURL=ColorDesignSystem.d.ts.map

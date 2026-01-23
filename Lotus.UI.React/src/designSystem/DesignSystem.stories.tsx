@@ -1,7 +1,6 @@
-import { TColorPalettes } from '#designSystem/colors';
 import { TCssBorderRadius, TShadowElevation, TSizeType, TSizeTypes } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ColorCssHelper, ColorTokenHelper, TColorPalette, TColorSemantic, TColorSemantics, TColorToken, TColorVariantName } from 'lotus-core/modules/color';
+import { ColorCssHelper, ColorTokenHelper, TColorPalette, TColorPalettes, TColorSemantic, TColorSemantics, TColorToken, TColorVariantName } from 'lotus-core/modules/color';
 import { CSSProperties } from 'react';
 
 function createStyle(colorTheme: TColorPalette | TColorSemantic, colorVariant: TColorVariantName): CSSProperties

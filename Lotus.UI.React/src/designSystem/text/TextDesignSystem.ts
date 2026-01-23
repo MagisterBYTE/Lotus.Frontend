@@ -12,12 +12,12 @@ export class TextDesignSystem implements IDesignSystemItem
   /**
    * Стандартные параметры дизайн-системы для текста для светлой темы
    */
-  public static readonly LightDefault = new TextDesignSystem(ColorDesignSystem.Default.dark[9]);
+  public static readonly LightDefault = new TextDesignSystem(ColorDesignSystem.LightDefault.colors.dark[9]);
 
   /**
    * Стандартные параметры дизайн-системы для текста для темной темы
    */
-  public static readonly DarkDefault = new TextDesignSystem(ColorDesignSystem.Default.dark[0]);
+  public static readonly DarkDefault = new TextDesignSystem(ColorDesignSystem.LightDefault.colors.dark[0]);
   // #endregion
 
   // #region Fields

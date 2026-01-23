@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import { ComponentPropsWithRef, CSSProperties } from 'react';
-import {
+import
+{
   BackgroundPropertiesHelper,
   BorderPropertiesHelper,
   ContainerPropertiesHelper,
@@ -11,7 +12,8 @@ import {
 } from '#base';
 import { GapSizes } from '#designSystem/sizes';
 import { CssPropertiesHelper } from '#helpers';
-import {
+import
+{
   TCssAlignContent,
   TCssAlignItems,
   TCssGap,
@@ -22,7 +24,8 @@ import {
   TSizeType
 } from '#types';
 
-export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'> {
+export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgroundProperties, ComponentPropsWithRef<'div'>
+{
   gridTemplateColumns?: TCssGridTemplateColumns;
   gridTemplateRows?: TCssGridTemplateRows;
   columnGap?: TCssGap | TSizeType;

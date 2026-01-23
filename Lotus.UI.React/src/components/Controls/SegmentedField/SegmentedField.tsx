@@ -1,42 +1,50 @@
 import { InputLabel, SegmentedControl, SegmentedControlProps } from '@mantine/core';
-import { IOption, OptionHelper } from 'lotus-core/modules/option';
-import { PropertyType, TKey } from 'lotus-core/types';
+import { ItemsHelper } from 'lotus-core/helpers';
+import { PropertyType } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
 import { JSX, useEffect, useState } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
-import { RenderOption } from '#render';
+import { RenderItem } from '#render';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
+import { IItemsBaseProps } from '../types';
 
 type TSegmentedData = PropertyType<SegmentedControlProps, 'data'>;
 
-export interface ISegmentedFieldProps<TValueOption extends TKey = TKey> extends IBaseFieldProps, IHorizontalStackProps
+export interface ISegmentedFieldProps<TItem> extends IBaseFieldProps, IItemsBaseProps<TItem>, IHorizontalStackProps
 {
-  options: IOption<TValueOption>[];
-  onChanged?: (value: TValueOption | undefined) => void;
-  value?: TValueOption;
   segmentedProps?: Omit<SegmentedControlProps, keyof IBaseFieldProps | 'data' | 'value'>;
 }
 
-export function SegmentedField<TValueOption extends TKey = TKey>(props: ISegmentedFieldProps<TValueOption>): JSX.Element
+export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TItem>): JSX.Element
 {
-  const { options, onChanged, value, segmentedProps, ...otherProps } = props;
-
-  const isNumber = OptionHelper.isNumber(options);
+  const {
+    items,
+    onChangedItem,
+    selectedItem,
+    getValueItem = ItemsHelper.getValueOfItem,
+    getLabelItem,
+    getDisabledItem = ItemsHelper.getDisabledOfItem,
+    renderItem,
+    segmentedProps,
+    ...otherProps
+  } = props;
 
   const [data, setData] = useState<TSegmentedData>([]);
 
   const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
+  const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;
+
   const prepareData = () =>
   {
     const newData: TSegmentedData = [];
-    for (const option of options)
+    for (const item of items)
     {
       newData.push({
-        label: RenderOption.renderOption(otherProps.size ?? 'md', option, props, undefined, true),
-        value: option.value.toString(),
-        disabled: option.disabled
+        label: renderItem ? renderItem(item) : (getLabelItem ? getLabelItem(item) : RenderItem.renderItem(otherProps.size ?? 'md', item, props, undefined, true)),
+        value: getValueItem(item).toString(),
+        disabled: getDisabledItem(item)
       });
     }
 
@@ -46,23 +54,26 @@ export function SegmentedField<TValueOption extends TKey = TKey>(props: ISegment
   useEffect(() =>
   {
     prepareData();
-  }, [options, options.length, otherProps.size]);
+  }, [items, items.length, otherProps.size]);
 
   const handleChange = (value: string) =>
   {
-    if (onChanged)
+    if (onChangedItem)
     {
       if (Assert.emptyValue(value))
       {
-        onChanged(undefined);
-      }
-      if (isNumber)
-      {
-        onChanged(Number(value) as TValueOption);
+        onChangedItem(undefined);
       }
       else
       {
-        onChanged(value as TValueOption);
+        for (const item of items)
+        {
+          if (getValueItem(item).toString() === value)
+          {
+            onChangedItem(item);
+            break;
+          }
+        }
       }
     }
 
@@ -83,7 +94,7 @@ export function SegmentedField<TValueOption extends TKey = TKey>(props: ISegment
             h={undefined}
             size={otherProps.size}
             style={{ flex: 1 }}
-            value={value?.toString()}
+            value={selectedValue}
             w={undefined}
             onChange={handleChange}
             {...segmentedProps}
@@ -102,13 +113,13 @@ export function SegmentedField<TValueOption extends TKey = TKey>(props: ISegment
           <InputLabel {...otherProps.labelProps} required={otherProps.required} size={otherProps.labelProps?.size ?? otherProps.size}>
             {otherProps.label}
           </InputLabel>
-          <SegmentedControl {...containerProps} data={data} size={otherProps.size} value={value?.toString()} onChange={handleChange} {...segmentedProps} />
+          <SegmentedControl {...containerProps} data={data} size={otherProps.size} value={selectedValue} onChange={handleChange} {...segmentedProps} />
         </VerticalStack>
       );
     }
     else
     {
-      return <SegmentedControl {...containerProps} data={data} size={otherProps.size} value={value?.toString()} onChange={handleChange} {...segmentedProps} />;
+      return <SegmentedControl {...containerProps} data={data} size={otherProps.size} value={selectedValue} onChange={handleChange} {...segmentedProps} />;
     }
   }
 }

@@ -44,10 +44,6 @@ export const SliderFieldDefault: Story = {
     p: 'xs',
     m: 'sm',
     label: 'Иконка Image',
-    sliderProps:
-    {
-      value: 60
-    }
   }
 };
 
@@ -66,7 +62,9 @@ export const SliderFieldStyle: Story = {
     label: 'Иконка React',
     sliderProps:
     {
-      style: {backgroundColor: 'red'}
+      min: 0,
+      max: 100,
+      defaultValue: 17,
     }
   }
 };

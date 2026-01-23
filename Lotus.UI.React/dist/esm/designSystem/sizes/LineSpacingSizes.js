@@ -50,13 +50,13 @@ export class LineSpacingSizes extends SizeDimensions {
      * Применить текущие значения размера к соответствующим переменным Css.
      */
     applyToCssVariable() {
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXXS.match(CssVariables.RegExtractName)[0], this.xxs.rem);
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXS.match(CssVariables.RegExtractName)[0], this.xs.rem);
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeSM.match(CssVariables.RegExtractName)[0], this.sm.rem);
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeMD.match(CssVariables.RegExtractName)[0], this.md.rem);
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeLG.match(CssVariables.RegExtractName)[0], this.lg.rem);
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXL.match(CssVariables.RegExtractName)[0], this.xl.rem);
-        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXXL.match(CssVariables.RegExtractName)[0], this.xxl.rem);
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXXS.match(CssVariables.RegExtractName)[0], this.xxs.toRem());
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXS.match(CssVariables.RegExtractName)[0], this.xs.toRem());
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeSM.match(CssVariables.RegExtractName)[0], this.sm.toRem());
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeMD.match(CssVariables.RegExtractName)[0], this.md.toRem());
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeLG.match(CssVariables.RegExtractName)[0], this.lg.toRem());
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXL.match(CssVariables.RegExtractName)[0], this.xl.toRem());
+        document.documentElement.style.setProperty(CssVariables.LineSpacingSizeXXL.match(CssVariables.RegExtractName)[0], this.xxl.toRem());
     }
 }
 //# sourceMappingURL=LineSpacingSizes.js.map

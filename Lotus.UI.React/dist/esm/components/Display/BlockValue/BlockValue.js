@@ -7,7 +7,7 @@ import { BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelp
 import { CssPropertiesHelper } from '#helpers';
 import { Label } from '../Label';
 export function BlockValue(props) {
-    const { size = 'md', label, labelProps, value, valueProps, accentColor = 'blueGrey', accentBackground = false, asBadge = false, monospaceValue = false, ...otherProps } = props;
+    const { size = 'md', label, labelProps, value, valueProps, accentColor = 'blueGray', accentBackground = false, asBadge = false, monospaceValue = false, ...otherProps } = props;
     // Радиус отключен
     if (Assert.emptyValue(otherProps.withBorder)) {
         // if (Assert.emptyValue(otherProps.bdRadius)) otherProps.bdRadius = size;
@@ -18,7 +18,6 @@ export function BlockValue(props) {
     modifyProps.withBorder = TBorderSideSet.Right | TBorderSideSet.Top | TBorderSideSet.Bottom;
     const styleBaseContainer = {
         background: accentBackground ? ColorCssHelper.getColorCssWithAlpha(accentColor, 0.1) : '(var --mantine-color-body)',
-        // borderRadius: BorderPropertiesHelper.getBorderRadiusPropsValue(size),
         borderLeft: `4px solid ${ColorCssHelper.getColorCss(accentColor)}`,
         transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         width: 'max-content',

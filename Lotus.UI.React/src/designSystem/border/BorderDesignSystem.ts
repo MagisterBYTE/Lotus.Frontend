@@ -12,12 +12,14 @@ export class BorderDesignSystem implements IDesignSystemItem
   /**
    * Стандартные параметры дизайн-системы для границы для светлой темы
    */
-  public static readonly LightDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.Default.gray[4], ColorDesignSystem.Default.gray[4]);
+  public static readonly LightDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.LightDefault.colors.gray[4], 
+    ColorDesignSystem.LightDefault.colors.gray[4]);
 
   /**
    * Стандартные параметры дизайн-системы для границы для темной темы
    */
-  public static readonly DarkDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.Default.dark[4], ColorDesignSystem.Default.dark[4]);
+  public static readonly DarkDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.LightDefault.colors.dark[4], 
+    ColorDesignSystem.LightDefault.colors.dark[4]);
   // #endregion
 
   // #region Fields

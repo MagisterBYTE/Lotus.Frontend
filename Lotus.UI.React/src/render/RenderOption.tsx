@@ -49,7 +49,7 @@ export abstract class RenderOption
       {
         if (wrapContainer)
         {
-          return (<HorizontalStack hAlign='center' spacing={'xs'} vAlign='center'>
+          return (<HorizontalStack hAlign='center' spacing={size} vAlign='center'>
             {RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase)}
             <>{option.label}</>
           </HorizontalStack>);

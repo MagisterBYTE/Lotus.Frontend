@@ -1,82 +1,67 @@
-import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from '@mantine/core';
-import { StringHelper } from 'lotus-core/helpers';
-import { LocalizationCore } from 'lotus-core/localization';
+import { ActionIcon, Tooltip, useMantineTheme } from '@mantine/core';
+import { IconCircleX, IconDeviceFloppy, IconEdit } from '@tabler/icons-react';
+import { LocalizationCore, LocalizationHelper, TLanguageTypes } from 'lotus-core/localization';
 import { OptionHelper } from 'lotus-core/modules/option';
 import { useEffect, useState } from 'react';
-import { MantineReactTable } from '#external/mantine-react-table';
-import { toastError, toastPromise, ToastWrapper } from '../../Feedback/Toast';
+import { MantineReactTable, MRT_Localization_RU, MRT_Localization_EN } from '#external/mantine-react-table';
 import { MantineReactTableHelper } from './MantineReactTableHelper';
 import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
+const pageInfoResponseDefault = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 };
 export const TableView = (props) => {
-    const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem, formCreated, formDeleted } = props;
+    const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem } = props;
     const properties = objectInfo.getProperties();
+    const theme = useMantineTheme();
+    const actualIcons = {
+        IconDeviceFloppy: (props) => _jsx(IconDeviceFloppy, { ...props, color: theme.colors.info[5] }),
+        IconCircleX: (props) => (_jsx(IconCircleX, { ...props, color: theme.colors.red[5] }))
+    };
     // Получение данных
     const [isLoading, setIsLoading] = useState(false);
     const [isRefetching, setIsRefetching] = useState(false);
     const [items, setItems] = useState([]);
-    const [pageInfo, setPageInfo] = useState({ pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 });
+    const [pageInfo, setPageInfo] = useState(pageInfoResponseDefault);
     const [paginationModel, setPaginationModel] = useState({ pageSize: 10, pageIndex: 0 });
     // Сортировка и фильтрация
-    const [sortingColumn, setSortingColumn] = useState([]);
-    const [columnFilters, setColumnFilters] = useState([]);
+    const [sortingState, setSortingState] = useState([]);
+    const [columnFiltersState, setColumnFiltersState] = useState([]);
     const [columnFiltersFns, setColumnFiltersFns] = useState();
     const [globalFilter, setGlobalFilter] = useState('');
     // Редактирование текущей записи
     const [currentEditRow, setCurrentEditRow] = useState(null);
     const [currentItem, setCurrentItem] = useState(null);
     const [currentItemInvalid, setCurrentItemInvalid] = useState(false);
-    // Удаление
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const [deleteItem, setDeleteItem] = useState(null);
-    // Создание новой записи через окно
-    const [openCreatedDialog, setOpenCreatedDialog] = useState(false);
-    const [createdItem, setCreatedItem] = useState(null);
-    const [autoCloseToastify, setAutoCloseToastify] = useState(2000);
-    // Служебные методы для получения данных текущего редактируемого объекта
-    const setSelectedValues = (accessorKey, newSelectedValues) => {
-        const newItem = { ...currentItem };
-        // @ts-ignore
-        newItem[accessorKey] = newSelectedValues;
-        setCurrentItem(newItem);
+    const isDelete = Boolean(onDeleteItem);
+    // Локализация
+    const localizationFullRU = {
+        filterIncludeAny: LocalizationCore.data.filters.includeAny,
+        filterIncludeAll: LocalizationCore.data.filters.includeAll,
+        filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
+        filterIncludeNone: LocalizationCore.data.filters.includeNone,
+        ...MRT_Localization_RU
     };
-    const setSelectedValue = (accessorKey, newSelectedValue) => {
-        const newItem = { ...currentItem };
-        // @ts-ignore
-        newItem[accessorKey] = newSelectedValue;
-        setCurrentItem(newItem);
+    const localizationFullEN = {
+        filterIncludeAny: LocalizationCore.data.filters.includeAny,
+        filterIncludeAll: LocalizationCore.data.filters.includeAll,
+        filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
+        filterIncludeNone: LocalizationCore.data.filters.includeNone,
+        ...MRT_Localization_EN
     };
+    const [localizationFull, setLocalizationFull] = useState(localizationFullRU);
     // Модифицированные столбцы
     const editColumns = properties.map((property) => {
         const column = MantineReactTableHelper.convertPropertyDescriptorToColumn(property);
         if (property.editing?.editorType === 'text') {
             column.mantineEditTextInputProps = {
-                // error: property.editing?.onValidation(currentItem).h,
                 required: property.editing?.required,
-                variant: 'outlined',
-                size: 'small',
                 type: 'text',
                 onChange: (event) => {
                     const newItem = { ...currentItem };
                     newItem[column.accessorKey] = event.target.value;
                     setCurrentItem(newItem);
-                    // let isErrorValidation = false;
-                    properties.forEach((c) => {
-                        // const errorValidation = c.editing?.onValidation(newItem).error;
-                        // if (errorValidation) 
-                        // {
-                        //   isErrorValidation = true;
-                        //   setCurrentItemInvalid(true);
-                        // }
-                    });
-                    // if (isErrorValidation === false) 
-                    // {
-                    //   setCurrentItemInvalid(false);
-                    // }
                 }
             };
             column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
@@ -159,16 +144,9 @@ export const TableView = (props) => {
     //
     const getFilterQueryItems = () => {
         const pageInfo = { pageNumber: paginationModel.pageIndex, pageSize: paginationModel.pageSize };
-        const sorting = sortingColumn.map((column) => {
-            const sort = {
-                propertyPath: StringHelper.capitalizeFirstLetter(column.id),
-                propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
-                isDesc: column.desc
-            };
-            return sort;
-        });
-        const filtering = MantineReactTableHelper.convertColumnsFilterToFilterObjects(objectInfo, columnFilters, columnFiltersFns);
-        const request = { pageInfo: pageInfo, sorting: sorting, filtering: filtering };
+        const sortings = MantineReactTableHelper.convertColumnsSortStateToSortObjects(objectInfo, sortingState);
+        const filtering = MantineReactTableHelper.convertColumnsFilterStateToFilterObjects(objectInfo, columnFiltersState, columnFiltersFns);
+        const request = { pageInfo: pageInfo, sorting: sortings, filtering: filtering };
         if (onTransformFilterRequest) {
             const transformRequest = onTransformFilterRequest(request);
             return transformRequest;
@@ -186,15 +164,26 @@ export const TableView = (props) => {
                 setIsRefetching(true);
             }
             const response = await onGetItems(filter);
-            setItems(response.payload);
-            setPageInfo(response.pageInfo);
+            if (response.payload && response.pageInfo) {
+                setItems(response.payload);
+                setPageInfo(response.pageInfo);
+            }
+            else {
+                if (response.payload) {
+                    setItems(response.payload);
+                }
+                else {
+                    setItems([]);
+                }
+                setPageInfo(pageInfoResponseDefault);
+            }
             setIsLoading(false);
             setIsRefetching(false);
         }
         catch (exc) {
             setIsLoading(false);
             setIsRefetching(false);
-            toastError(exc, LocalizationCore.data.actions.gettingFailed);
+            throw exc;
         }
     };
     // #endregion
@@ -203,83 +192,59 @@ export const TableView = (props) => {
     //
     const handleAddRow = () => {
         if (onAddItem) {
-            const result = toastPromise(onAddItem(), LocalizationCore.data.actions.adding, LocalizationCore.data.actions.addingSucceed, LocalizationCore.data.actions.addingFailed);
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            result.then(async () => {
+            const result = onAddItem();
+            void result.then(async () => {
                 await refreshItems(getFilterQueryItems());
             });
         }
-        else {
-            setCreatedItem(null);
-            setOpenCreatedDialog(true);
-        }
-    };
-    const handleCloseCreatedDialog = () => {
-        setOpenCreatedDialog(false);
-    };
-    const handleOkCreatedDialog = async () => {
-        setOpenCreatedDialog(false);
-        await refreshItems(getFilterQueryItems());
     };
     // #endregion
     //
     // #region Редактирование данных
     //
-    const handleEditRow = (table, row) => (event) => {
+    const handleEditRowBegin = (props) => (event) => {
+        const { row, table } = props;
         table.setEditingRow(row);
         setCurrentEditRow(row);
         setCurrentItem(row.original);
     };
-    const handleCancelRow = (table, row) => {
+    const handleEditRowCancel = (props) => {
+        const { row, table } = props;
+        table.setEditingRow(null);
+        setCurrentEditRow(null);
+        setCurrentItem(null);
+    };
+    const handleEditRowSave = (props) => {
+        const { row, table } = props;
+        const updateItem = { ...currentItem };
+        if (onUpdateItem) {
+            const responsePromise = onUpdateItem(updateItem);
+            void responsePromise.then((response) => {
+                if (response.result) {
+                    if (response.result.succeeded) {
+                        const newItems = [...items];
+                        newItems[currentEditRow.index] = response.payload;
+                        setItems(newItems);
+                    }
+                    else {
+                        const newItems = [...items];
+                        newItems[currentEditRow.index] = currentEditRow.original;
+                        setItems(newItems);
+                    }
+                }
+            });
+        }
         table.setEditingRow(null);
         setCurrentEditRow(null);
         setCurrentItem(null);
     };
     // #endregion
     //
-    // #region Дублирование данных
-    //
-    const handleDuplicateRow = (table, row) => { };
-    // #endregion
-    //
-    // #region Обновление данных
-    //
-    const handleSaveRow = (table, row) => {
-        const updateItem = { ...currentItem };
-        if (onUpdateItem) {
-            const result = toastPromise(onUpdateItem(updateItem), LocalizationCore.data.actions.saving, LocalizationCore.data.actions.savingSucceed, LocalizationCore.data.actions.savingFailed);
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            result.then((value) => {
-                const newItems = [...items];
-                newItems[currentEditRow.index] = value.payload;
-                setItems(newItems);
-            });
-        }
-        table.setEditingRow(null);
-        setCurrentEditRow(null);
-    };
-    // #endregion
-    //
     // #region Удаление данных
     //
-    const handleDeleteRow = (row) => {
-        setDeleteItem(row.original);
-        setOpenDeleteDialog(true);
-    };
-    const handleCloseDeleteDialog = () => {
-        setOpenDeleteDialog(false);
-    };
-    const handleOkDeleteDialog = () => {
-        setOpenDeleteDialog(false);
-        if (onDeleteItem) {
-            const result = toastPromise(onDeleteItem(deleteItem.id), LocalizationCore.data.actions.deleting, LocalizationCore.data.actions.deletingSucceed, LocalizationCore.data.actions.deletingFailed);
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            result.then(() => {
-                const newItems = items.filter((x) => x.id !== deleteItem.id);
-                setItems(newItems);
-            });
-        }
-        setDeleteItem(null);
+    const handleDeleteRow = (row) => (event) => {
+        // setDeleteItem(row.original);
+        // setOpenDeleteDialog(true);
     };
     // #endregion
     //
@@ -289,60 +254,59 @@ export const TableView = (props) => {
         const data = updaterOrValue;
         setColumnFiltersFns(data);
     };
-    //
-    // Методы оформления
-    const renderTopToolbarCustomActions = (props) => {
-        if (onAddItem || formCreated) {
-            return (_jsx(Button, { color: "secondary", variant: "contained", onClick: () => handleAddRow(), children: LocalizationCore.data.actions.add }));
+    const handleTranslate = (lang) => {
+        if (lang === TLanguageTypes.ru_RU) {
+            setLocalizationFull(localizationFullRU);
         }
-        return _jsx(_Fragment, { children: " " });
+        else {
+            setLocalizationFull(localizationFullEN);
+        }
     };
     //
-    // Методы жизненного цикла
+    // #region Методы жизненного цикла
     //
     useEffect(() => {
         const filter = getFilterQueryItems();
         void refreshItems(filter);
-    }, [paginationModel.pageIndex, paginationModel.pageSize, sortingColumn, columnFilters, columnFiltersFns, globalFilter]);
+    }, [paginationModel.pageIndex, paginationModel.pageSize, sortingState, columnFiltersState, columnFiltersFns, globalFilter]);
     useEffect(() => {
         const initialColumnFiltersFns = MantineReactTableHelper.getFilterOptions(objectInfo);
         setColumnFiltersFns(initialColumnFiltersFns);
     }, []);
-    const localizationFull = {
-        filterIncludeAny: LocalizationCore.data.filters.includeAny,
-        filterIncludeAll: LocalizationCore.data.filters.includeAll,
-        filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
-        filterIncludeNone: LocalizationCore.data.filters.includeNone
+    useEffect(() => {
+        const currentLang = LocalizationHelper.getDocumentLang();
+        handleTranslate(currentLang);
+    }, []);
+    // #endregion
+    // 
+    // #region Render
+    //
+    const renderRowActionsEditRow = (props) => {
+        return (_jsxs(Tooltip, { label: LocalizationCore.data.actions.edit, children: [_jsx(ActionIcon, { size: 'lg', variant: "default", onClick: handleEditRowBegin(props), children: _jsx(IconEdit, { color: theme.colors.info[5] }) }), isDelete && _jsx(ActionIcon, { size: 'lg', variant: "default", onClick: handleDeleteRow(props.row), children: _jsx(IconCircleX, { color: theme.colors.red[5] }) })] }));
     };
-    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { ...props, columns: editColumns, data: items, editDisplayMode: "row", enablePagination: true, filterFns: {
-                    includeAny: (row, id, filterValue) => {
-                        return true;
-                    },
-                    includeAll: (row, id, filterValue) => {
-                        return true;
-                    },
-                    includeEquals: (row, id, filterValue) => {
-                        return true;
-                    },
-                    includeNone: (row, id, filterValue) => {
-                        return true;
-                    }
-                }, manualFiltering: true, manualPagination: true, manualSorting: true, renderTopToolbarCustomActions: props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions, rowCount: pageInfo.totalCount, state: {
-                    isLoading: isLoading,
-                    showProgressBars: isRefetching,
-                    showSkeletons: false,
-                    pagination: paginationModel,
-                    columnFilters: columnFilters,
-                    columnFilterFns: columnFiltersFns,
-                    globalFilter: globalFilter,
-                    sorting: sortingColumn
-                }, table: undefined, onColumnFilterFnsChange: handleColumnFilterFnsChange, onColumnFiltersChange: setColumnFilters, onGlobalFilterChange: setGlobalFilter, onPaginationChange: setPaginationModel, onSortingChange: setSortingColumn }), _jsx(ToastWrapper, { autoClose: autoCloseToastify }), formCreated &&
-                formCreated({
-                    open: openCreatedDialog,
-                    onClose: handleCloseCreatedDialog,
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                    onCreate: handleOkCreatedDialog,
-                    onCreatedItem: setCreatedItem
-                })] }));
+    // #endregion
+    return (_jsx(_Fragment, { children: _jsx(MantineReactTable, { ...props, columns: editColumns, data: items, editDisplayMode: "row", enablePagination: true, filterFns: {
+                includeAny: (row, id, filterValue) => {
+                    return true;
+                },
+                includeAll: (row, id, filterValue) => {
+                    return true;
+                },
+                includeEquals: (row, id, filterValue) => {
+                    return true;
+                },
+                includeNone: (row, id, filterValue) => {
+                    return true;
+                }
+            }, icons: actualIcons, localization: localizationFull, manualFiltering: true, manualPagination: true, manualSorting: true, renderRowActions: renderRowActionsEditRow, renderTopToolbarCustomActions: props.renderTopToolbarCustomActions, rowCount: pageInfo.totalCount, state: {
+                isLoading: isLoading,
+                showProgressBars: isRefetching,
+                showSkeletons: false,
+                pagination: paginationModel,
+                columnFilters: columnFiltersState,
+                columnFilterFns: columnFiltersFns,
+                globalFilter: globalFilter,
+                sorting: sortingState
+            }, table: undefined, onColumnFilterFnsChange: handleColumnFilterFnsChange, onColumnFiltersChange: setColumnFiltersState, onEditingRowCancel: handleEditRowCancel, onEditingRowSave: handleEditRowSave, onGlobalFilterChange: setGlobalFilter, onPaginationChange: setPaginationModel, onSortingChange: setSortingState }) }));
 };
 //# sourceMappingURL=TableView.js.map

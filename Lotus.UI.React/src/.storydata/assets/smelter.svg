@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org">
+  <!-- Фоновый круг -->
+  <circle cx="100" cy="100" r="95" fill="#f4e4bc" stroke="#4a3728" stroke-width="5" />
+  <circle cx="100" cy="100" r="85" fill="none" stroke="#4a3728" stroke-width="2" stroke-dasharray="4 2" />
+
+  <!-- Огонь (нижняя часть) -->
+  <path d="M70 160 Q85 140 100 155 Q115 140 130 160 Z" fill="#ff6f00" opacity="0.7" />
+
+  <!-- Тигель (металлическая чаша) -->
+  <g transform="translate(0, -10)" stroke="#1a1a1a" stroke-width="2">
+    <!-- Внешняя форма -->
+    <path d="M70 100 L130 100 L140 150 L60 150 Z" fill="#424242" />
+    <!-- Расплавленный металл внутри (ярко-желтый) -->
+    <path d="M72 105 L128 105 L135 148 L65 148 Z" fill="#ffb300" stroke-width="0" />
+    <!-- Ручка/носик для выливания -->
+    <path d="M140 105 Q150 110 140 115" fill="none" stroke="#424242" stroke-width="3" />
+  </g>
+
+  <!-- Декоративные элементы -->
+  <path d="M40 100 Q10 100 10 70" fill="none" stroke="#4a3728" stroke-width="2" opacity="0.5" />
+  <path d="M160 100 Q190 100 190 130" fill="none" stroke="#4a3728" stroke-width="2" opacity="0.5" />
+</svg>

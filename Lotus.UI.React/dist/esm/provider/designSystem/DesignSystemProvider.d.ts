@@ -2,6 +2,10 @@ import { IDesignSystem } from '#designSystem';
 import { TColorScheme } from '#designSystem/types';
 export interface IDesignSystemProviderProps {
     /**
+     * Ключ для сохранения/загрузки состояния дизайн-системы
+     */
+    keySave?: string;
+    /**
      * Цветовая схема
      */
     colorScheme?: TColorScheme;

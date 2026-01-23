@@ -2,4 +2,5 @@ export * from './Divider';
 export * from './Label';
 export * from './Text';
 export * from './BlockValue';
+export * from './BlockValues';
 //# sourceMappingURL=index.js.map

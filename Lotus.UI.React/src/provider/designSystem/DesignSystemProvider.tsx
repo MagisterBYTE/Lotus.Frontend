@@ -1,11 +1,16 @@
 import { ColorCssHelper } from 'lotus-core/modules/color';
-import { useEffect, useState } from 'react';
-import { DesignSystemBuilder, DesignSystemConstants, IDesignSystem } from '#designSystem';
-import { TColorScheme } from '#designSystem/types';
+import { useState } from 'react';
+import { DesignSystem, DesignSystemHelper, IDesignSystem } from '#designSystem';
+import { IDesignSystemData, TColorScheme } from '#designSystem/types';
 import { DesignSystemContext } from './DesignSystemContext';
 
 export interface IDesignSystemProviderProps
 {
+  /**
+   * Ключ для сохранения/загрузки состояния дизайн-системы
+   */
+  keySave?: string;
+
   /**
    * Цветовая схема
    */
@@ -22,52 +27,62 @@ export interface IDesignSystemProviderProps
   children: React.ReactNode;
 }
 
+function createAndApplyDesignSystem(params: Partial<IDesignSystem>|undefined, actualColorScheme: TColorScheme, keySave?: string)
+{
+  // Создаем новую дизайн-систему
+  const newDesignSystem = new DesignSystem(params, actualColorScheme);
+  
+  // Присваиваем значение глобальных переменных
+  newDesignSystem.applyToCssVariable();
+
+  // Присваиваем цветовую схему вспомогательному классу
+  if (actualColorScheme === 'light')
+  {
+    ColorCssHelper.isLight = true;
+  }
+  if (actualColorScheme === 'dark')
+  {
+    ColorCssHelper.isLight = false;
+  }
+
+  // Данные дизайн-системы
+  const designSystemData:IDesignSystemData = { colorScheme: actualColorScheme, primaryColor: 'blue' };
+
+  // Сохраняем в документе
+  DesignSystemHelper.setDocumentDesignSystem(designSystemData);
+
+  // Сохраняем в локальное хранилище
+  DesignSystemHelper.saveToStorage(keySave, designSystemData);
+
+  return newDesignSystem;
+}
+
 export const DesignSystemProvider = (props: IDesignSystemProviderProps) => 
 {
-  const { colorScheme, params, children } = props;
-  const [designSystem, setDesignSystem] = useState<IDesignSystem>(DesignSystemBuilder.create(params, colorScheme));
+  // eslint-disable-next-line react/destructuring-assignment
+  const loadData = DesignSystemHelper.loadFromStorage(props.keySave);
+
+  const { colorScheme, params, children, keySave } = props;
+  const actualColorScheme = loadData?.colorScheme ?? colorScheme ?? 'light';
+  const [designSystem, setDesignSystem] = useState<DesignSystem>(createAndApplyDesignSystem(params, actualColorScheme, keySave));
   const [providerKey, setProviderKey] = useState(0); // Ключ для принудительного обновления
 
-  useEffect(() => 
+  const handleColorSchemeChange = (scheme: TColorScheme) =>
   {
-    const newDesignSystem = DesignSystemBuilder.create(params, colorScheme);
+    // Создаем новую дизайн-систему
+    const newDesignSystem = createAndApplyDesignSystem(params, scheme, keySave);
     setDesignSystem(newDesignSystem);
-
-    if (colorScheme === 'light')
-    {
-      ColorCssHelper.isLight = true;
-    }
-    if (colorScheme === 'dark')
-    {
-      ColorCssHelper.isLight = false;
-    }
-
-    if (colorScheme)
-    {
-      document.documentElement.setAttribute(DesignSystemConstants.DataAttributeColorScheme, colorScheme);
-    }
-    
-    // В память
-    newDesignSystem.fontSizes.applyToCssVariable();
-    newDesignSystem.lineSpacingSizes.applyToCssVariable();
-    newDesignSystem.marginSizes.applyToCssVariable();
-    newDesignSystem.paddingSizes.applyToCssVariable();
-    newDesignSystem.gapSizes.applyToCssVariable();
-    newDesignSystem.radiusSizes.applyToCssVariable();
-    newDesignSystem.font.applyToCssVariable();
-    newDesignSystem.border.applyToCssVariable();
-    newDesignSystem.text.applyToCssVariable();
-    newDesignSystem.background.applyToCssVariable();
 
     // Увеличиваем ключ для принудительного ререндера всех детей
     setProviderKey(prev => prev + 1);
-  }, [params, colorScheme]);
+  };
 
   return (
     <DesignSystemContext.Provider
-      key={providerKey} 
+      key={providerKey}
       value={{
         setDesignSystem: setDesignSystem,
+        setColorScheme: handleColorSchemeChange,
         designSystem: designSystem
       }}
     >

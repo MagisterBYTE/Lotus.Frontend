@@ -1,8 +1,10 @@
 export * from './Button';
 export * from './ContainerField';
+export * from './PasswordField';
 export * from './SegmentedField';
 export * from './SelectField';
 export * from './SliderField';
 export * from './SwitchField';
+export * from './TextAreaField';
 export * from './TextField';
 //# sourceMappingURL=index.js.map

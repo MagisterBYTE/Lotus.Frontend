@@ -71,4 +71,6 @@ export * from './utils/row.utils';
 export * from './utils/style.utils';
 export * from './utils/tanstack.helpers';
 export * from './utils/utils';
+export * from './locales/ru';
+export * from './locales/en';
 //# sourceMappingURL=index.d.ts.map

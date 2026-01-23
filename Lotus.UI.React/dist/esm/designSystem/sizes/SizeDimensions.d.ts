@@ -17,11 +17,29 @@ export declare abstract class SizeDimensions implements IDesignSystemItem {
      */
     abstract applyToCssVariable(): void;
     /**
+     * Конвертирует значение размера в rem в виде числа
+     * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+     * @returns Значение размера в rem в виде числа
+     */
+    toRem(value?: string | number): number | undefined;
+    /**
      * Конвертирует значение размера в rem в виде строки
      * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
      * @returns Значение размера в rem в виде строки
      */
-    toRem(value?: string | number): string | undefined;
+    toRemCss(value?: string | number): string | undefined;
+    /**
+     * Конвертирует значение размера в пиксели в виде числа
+     * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+     * @returns число - размер в пикселях
+     */
+    toPixel(value?: string | number): number | undefined;
+    /**
+     * Конвертирует значение размера в пиксели в виде строки
+     * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
+     * @returns Значение размера в пикселях в виде строки
+     */
+    toPixelCss(value?: string | number): string | undefined;
     /**
      * Конвертирует значение размера в rem в виде строки
      * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
@@ -35,10 +53,10 @@ export declare abstract class SizeDimensions implements IDesignSystemItem {
      */
     toCss<TCssType = string>(value?: string | number): TCssType | undefined;
     /**
-     * Конвертирует значение размера в пиксели в виде числа
+     * Конвертирует значение размера примитив размера
      * @param value Размер в различных единицах измерения (px, rem, em, pt, %, mm, cm, in) или число
-     * @returns число - размер в пикселях
+     * @returns Значение размера
      */
-    toPixel(value?: string | number): number | undefined;
+    toSizePrimitive(value?: string | number): SizePrimitive | undefined;
 }
 //# sourceMappingURL=SizeDimensions.d.ts.map

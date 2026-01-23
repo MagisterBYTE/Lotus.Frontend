@@ -8,11 +8,11 @@ export class TextDesignSystem {
     /**
      * Стандартные параметры дизайн-системы для текста для светлой темы
      */
-    static LightDefault = new TextDesignSystem(ColorDesignSystem.Default.dark[9]);
+    static LightDefault = new TextDesignSystem(ColorDesignSystem.LightDefault.colors.dark[9]);
     /**
      * Стандартные параметры дизайн-системы для текста для темной темы
      */
-    static DarkDefault = new TextDesignSystem(ColorDesignSystem.Default.dark[0]);
+    static DarkDefault = new TextDesignSystem(ColorDesignSystem.LightDefault.colors.dark[0]);
     // #endregion
     // #region Fields
     /**

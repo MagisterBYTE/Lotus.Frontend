@@ -1,10 +1,12 @@
 import { createContext } from 'react';
-import { IDesignSystem } from '#designSystem';
+import { DesignSystem } from '#designSystem';
+import { TColorScheme } from '#designSystem/types';
 
 export interface IDesignSystemContextType
 {
-  designSystem:IDesignSystem,
-  setDesignSystem: (designSystem: IDesignSystem) => void;
+  designSystem:DesignSystem,
+  setDesignSystem: (designSystem: DesignSystem) => void;
+  setColorScheme: (colorScheme: TColorScheme) => void;
 }
 
 export const DesignSystemContext = createContext<IDesignSystemContextType | undefined>(undefined);

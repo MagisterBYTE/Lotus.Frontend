@@ -4,6 +4,7 @@ import { css } from '@emotion/css';
 import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper, TextPropertiesHelper } from '#base';
+import { CssVariables } from '#designSystem/сssVariables';
 import { CssPropertiesHelper } from '#helpers';
 import { RenderIcon } from '#render';
 const getFlexContainer = (iconPlacement, gap) => {
@@ -20,7 +21,7 @@ const getFlexContainer = (iconPlacement, gap) => {
     return ContainerPropertiesHelper.getFlexRowContainer(gap ?? 'md');
 };
 export function Label(props) {
-    const { isBlock = false, asBadge } = props;
+    const { isBlock = false, asBadge, ...otherProps } = props;
     const isIcon = Assert.existValue(props.icon);
     const isBadge = Assert.existValue(asBadge);
     const styleSpan = {
@@ -38,10 +39,12 @@ export function Label(props) {
             ? Assert.existValue(props.bdColor)
                 ? BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor)
                 : ColorCssHelper.getColorCssWithAlpha(asBadge, 0.5)
-            : BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor)
+            : BorderPropertiesHelper.hasBorderProps(props)
+                ? BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor) ?? CssVariables.BorderColor
+                : undefined
     };
     // Фильтруем кастомные пропсы перед передачей в div
-    const domProps = CssPropertiesHelper.filterDOMProps(props);
+    const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
     if (isIcon) {
         const textClass = css({ ...styleSpan, label: 'LabelContainer' });
         return (_jsxs("div", { className: textClass, ...domProps, children: [RenderIcon.renderIcon(props.iconSize ?? 'md', props.icon, undefined, props.iconStyle, props.iconColor, props.imageDatabase), props.children] }));

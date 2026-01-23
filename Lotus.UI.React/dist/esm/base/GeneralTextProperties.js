@@ -1,3 +1,4 @@
+import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { FontDesignSystem } from '#designSystem/font';
 import { FontSizes, LineSpacingSizes } from '#designSystem/sizes';
@@ -42,7 +43,7 @@ export class TextPropertiesHelper {
             textProps.textAlign = props.textAlign;
         }
         if (props.textColor) {
-            textProps.color = props.textColor;
+            textProps.color = ColorCssHelper.getColorCss(props.textColor);
         }
         if (props.textLineSpacing) {
             textProps.lineHeight = LineSpacingSizes.getFromCssVariable(props.textLineSpacing);

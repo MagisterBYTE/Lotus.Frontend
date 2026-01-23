@@ -1,14 +1,10 @@
 import { SegmentedControlProps } from '@mantine/core';
-import { IOption } from 'lotus-core/modules/option';
-import { TKey } from 'lotus-core/types';
 import { JSX } from 'react';
 import { IHorizontalStackProps } from '#components/Layout';
 import { IBaseFieldProps } from '../ContainerField/ContainerField';
-export interface ISegmentedFieldProps<TValueOption extends TKey = TKey> extends IBaseFieldProps, IHorizontalStackProps {
-    options: IOption<TValueOption>[];
-    onChanged?: (value: TValueOption | undefined) => void;
-    value?: TValueOption;
+import { IItemsBaseProps } from '../types';
+export interface ISegmentedFieldProps<TItem> extends IBaseFieldProps, IItemsBaseProps<TItem>, IHorizontalStackProps {
     segmentedProps?: Omit<SegmentedControlProps, keyof IBaseFieldProps | 'data' | 'value'>;
 }
-export declare function SegmentedField<TValueOption extends TKey = TKey>(props: ISegmentedFieldProps<TValueOption>): JSX.Element;
+export declare function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TItem>): JSX.Element;
 //# sourceMappingURL=SegmentedField.d.ts.map

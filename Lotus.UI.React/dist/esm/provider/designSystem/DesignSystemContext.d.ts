@@ -1,7 +1,9 @@
-import { IDesignSystem } from '#designSystem';
+import { DesignSystem } from '#designSystem';
+import { TColorScheme } from '#designSystem/types';
 export interface IDesignSystemContextType {
-    designSystem: IDesignSystem;
-    setDesignSystem: (designSystem: IDesignSystem) => void;
+    designSystem: DesignSystem;
+    setDesignSystem: (designSystem: DesignSystem) => void;
+    setColorScheme: (colorScheme: TColorScheme) => void;
 }
 export declare const DesignSystemContext: import("react").Context<IDesignSystemContextType | undefined>;
 //# sourceMappingURL=DesignSystemContext.d.ts.map

@@ -1,4 +1,3 @@
-export { type IDesignSystem } from './DesignSystem';
-export { DesignSystemBuilder } from './DesignSystemBuilder';
+export { type IDesignSystem, DesignSystem } from './DesignSystem';
 export { DesignSystemConstants } from './DesignSystemConstants';
 export { DesignSystemHelper } from './DesignSystemHelper';

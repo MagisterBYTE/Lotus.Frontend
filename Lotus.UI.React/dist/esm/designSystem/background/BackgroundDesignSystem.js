@@ -12,7 +12,7 @@ export class BackgroundDesignSystem {
     /**
      * Стандартные параметры дизайн-системы для фона для темной темы
      */
-    static DarkDefault = new BackgroundDesignSystem(ColorDesignSystem.Default.dark[8]);
+    static DarkDefault = new BackgroundDesignSystem(ColorDesignSystem.LightDefault.colors.dark[8]);
     // #endregion
     // #region Fields
     /**

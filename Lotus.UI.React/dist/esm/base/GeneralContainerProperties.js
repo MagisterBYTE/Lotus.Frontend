@@ -34,6 +34,22 @@ export class ContainerPropertiesHelper {
         if (props.shrink) {
             containerProps.flexShrink = props.shrink;
         }
+        if (props.gridColumn) {
+            containerProps.gridColumnStart = props.gridColumn;
+            containerProps.gridColumnEnd = props.gridColumn + 1;
+        }
+        if (props.gridColumnSpan) {
+            containerProps.gridColumnStart = props.gridColumn;
+            containerProps.gridColumnEnd = Number(props.gridColumn) + props.gridColumnSpan;
+        }
+        if (props.gridRow) {
+            containerProps.gridRowStart = props.gridRow;
+            containerProps.gridRowEnd = props.gridRow + 1;
+        }
+        if (props.gridRowSpan) {
+            containerProps.gridRowStart = props.gridRow;
+            containerProps.gridRowEnd = Number(props.gridRow) + props.gridRowSpan;
+        }
         return containerProps;
     }
     // #endregion

@@ -8,11 +8,11 @@ export class BorderDesignSystem {
     /**
      * Стандартные параметры дизайн-системы для границы для светлой темы
      */
-    static LightDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.Default.gray[4], ColorDesignSystem.Default.gray[4]);
+    static LightDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.LightDefault.colors.gray[4], ColorDesignSystem.LightDefault.colors.gray[4]);
     /**
      * Стандартные параметры дизайн-системы для границы для темной темы
      */
-    static DarkDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.Default.dark[4], ColorDesignSystem.Default.dark[4]);
+    static DarkDefault = new BorderDesignSystem('0.25rem', 'thin', ColorDesignSystem.LightDefault.colors.dark[4], ColorDesignSystem.LightDefault.colors.dark[4]);
     // #endregion
     // #region Fields
     /**

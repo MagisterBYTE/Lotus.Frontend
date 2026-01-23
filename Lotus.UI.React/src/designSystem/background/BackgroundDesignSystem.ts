@@ -17,7 +17,7 @@ export class BackgroundDesignSystem implements IDesignSystemItem
   /**
    * Стандартные параметры дизайн-системы для фона для темной темы
    */
-  public static readonly DarkDefault = new BackgroundDesignSystem(ColorDesignSystem.Default.dark[8]);
+  public static readonly DarkDefault = new BackgroundDesignSystem(ColorDesignSystem.LightDefault.colors.dark[8]);
   // #endregion
 
   // #region Fields

@@ -60,12 +60,12 @@ export class GapSizes extends SizeDimensions
    */
   public override applyToCssVariable(): void
   {
-    document.documentElement.style.setProperty(CssVariables.GapSizeXXS.match(CssVariables.RegExtractName)![0], this.xxs.rem);
-    document.documentElement.style.setProperty(CssVariables.GapSizeXS.match(CssVariables.RegExtractName)![0], this.xs.rem);
-    document.documentElement.style.setProperty(CssVariables.GapSizeSM.match(CssVariables.RegExtractName)![0], this.sm.rem);
-    document.documentElement.style.setProperty(CssVariables.GapSizeMD.match(CssVariables.RegExtractName)![0], this.md.rem);
-    document.documentElement.style.setProperty(CssVariables.GapSizeLG.match(CssVariables.RegExtractName)![0], this.lg.rem);
-    document.documentElement.style.setProperty(CssVariables.GapSizeXL.match(CssVariables.RegExtractName)![0], this.xl.rem);
-    document.documentElement.style.setProperty(CssVariables.GapSizeXXL.match(CssVariables.RegExtractName)![0], this.xxl.rem);
+    document.documentElement.style.setProperty(CssVariables.GapSizeXXS.match(CssVariables.RegExtractName)![0], this.xxs.toRem());
+    document.documentElement.style.setProperty(CssVariables.GapSizeXS.match(CssVariables.RegExtractName)![0], this.xs.toRem());
+    document.documentElement.style.setProperty(CssVariables.GapSizeSM.match(CssVariables.RegExtractName)![0], this.sm.toRem());
+    document.documentElement.style.setProperty(CssVariables.GapSizeMD.match(CssVariables.RegExtractName)![0], this.md.toRem());
+    document.documentElement.style.setProperty(CssVariables.GapSizeLG.match(CssVariables.RegExtractName)![0], this.lg.toRem());
+    document.documentElement.style.setProperty(CssVariables.GapSizeXL.match(CssVariables.RegExtractName)![0], this.xl.toRem());
+    document.documentElement.style.setProperty(CssVariables.GapSizeXXL.match(CssVariables.RegExtractName)![0], this.xxl.toRem());
   }
 }

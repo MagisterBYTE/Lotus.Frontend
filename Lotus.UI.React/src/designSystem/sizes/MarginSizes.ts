@@ -61,12 +61,12 @@ export class MarginSizes extends SizeDimensions
    */
   public override applyToCssVariable(): void
   {
-    document.documentElement.style.setProperty(CssVariables.MarginSizeXXS.match(CssVariables.RegExtractName)![0], this.xxs.rem);
-    document.documentElement.style.setProperty(CssVariables.MarginSizeXS.match(CssVariables.RegExtractName)![0], this.xs.rem);
-    document.documentElement.style.setProperty(CssVariables.MarginSizeSM.match(CssVariables.RegExtractName)![0], this.sm.rem);
-    document.documentElement.style.setProperty(CssVariables.MarginSizeMD.match(CssVariables.RegExtractName)![0], this.md.rem);
-    document.documentElement.style.setProperty(CssVariables.MarginSizeLG.match(CssVariables.RegExtractName)![0], this.lg.rem);
-    document.documentElement.style.setProperty(CssVariables.MarginSizeXL.match(CssVariables.RegExtractName)![0], this.xl.rem);
-    document.documentElement.style.setProperty(CssVariables.MarginSizeXXL.match(CssVariables.RegExtractName)![0], this.xxl.rem);
+    document.documentElement.style.setProperty(CssVariables.MarginSizeXXS.match(CssVariables.RegExtractName)![0], this.xxs.toRem());
+    document.documentElement.style.setProperty(CssVariables.MarginSizeXS.match(CssVariables.RegExtractName)![0], this.xs.toRem());
+    document.documentElement.style.setProperty(CssVariables.MarginSizeSM.match(CssVariables.RegExtractName)![0], this.sm.toRem());
+    document.documentElement.style.setProperty(CssVariables.MarginSizeMD.match(CssVariables.RegExtractName)![0], this.md.toRem());
+    document.documentElement.style.setProperty(CssVariables.MarginSizeLG.match(CssVariables.RegExtractName)![0], this.lg.toRem());
+    document.documentElement.style.setProperty(CssVariables.MarginSizeXL.match(CssVariables.RegExtractName)![0], this.xl.toRem());
+    document.documentElement.style.setProperty(CssVariables.MarginSizeXXL.match(CssVariables.RegExtractName)![0], this.xxl.toRem());
   }
 }

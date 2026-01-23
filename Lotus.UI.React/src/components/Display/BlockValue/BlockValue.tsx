@@ -58,7 +58,7 @@ export interface IBlockValueProps extends IGeneralContainerProperties, Component
 
 export function BlockValue(props: IBlockValueProps) 
 {
-  const { size = 'md', label, labelProps, value, valueProps, accentColor = 'blueGrey', accentBackground = false, 
+  const { size = 'md', label, labelProps, value, valueProps, accentColor = 'blueGray', accentBackground = false, 
     asBadge = false, monospaceValue = false, ...otherProps } = props;
 
   // Радиус отключен
@@ -73,7 +73,6 @@ export function BlockValue(props: IBlockValueProps)
 
   const styleBaseContainer: CSSProperties = {
     background: accentBackground ? ColorCssHelper.getColorCssWithAlpha(accentColor, 0.1) : '(var --mantine-color-body)',
-    // borderRadius: BorderPropertiesHelper.getBorderRadiusPropsValue(size),
     borderLeft: `4px solid ${ColorCssHelper.getColorCss(accentColor)}`,
     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
     width: 'max-content',

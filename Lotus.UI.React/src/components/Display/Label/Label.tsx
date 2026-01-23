@@ -11,6 +11,7 @@ import {
   PaddingPropertiesHelper,
   TextPropertiesHelper
 } from '#base';
+import { CssVariables } from '#designSystem/сssVariables';
 import { CssPropertiesHelper } from '#helpers';
 import { RenderIcon } from '#render';
 import { TCssGap, TIconPlacement, TSizeType } from '#types';
@@ -37,7 +38,7 @@ const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TCssGap | TSizeT
 
 export function Label(props: ILabelProps) 
 {
-  const { isBlock = false, asBadge } = props;
+  const { isBlock = false, asBadge, ...otherProps } = props;
 
   const isIcon = Assert.existValue(props.icon);
   const isBadge = Assert.existValue(asBadge);
@@ -57,11 +58,13 @@ export function Label(props: ILabelProps)
       ? Assert.existValue(props.bdColor)
         ? BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor)
         : ColorCssHelper.getColorCssWithAlpha(asBadge, 0.5)
-      : BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor)
+      : BorderPropertiesHelper.hasBorderProps(props)
+        ? BorderPropertiesHelper.getBorderColorPropsValue(props.bdColor) ?? CssVariables.BorderColor
+        : undefined
   };
 
   // Фильтруем кастомные пропсы перед передачей в div
-  const domProps = CssPropertiesHelper.filterDOMProps(props);
+  const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
 
   if (isIcon) 
   {

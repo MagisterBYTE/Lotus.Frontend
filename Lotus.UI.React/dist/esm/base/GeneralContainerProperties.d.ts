@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { IGeneralBorderProperties, IGeneralMarginProperties, IGeneralPaddingProperties } from '#base';
-import { TCssAlignItems, TCssFlexGrow, TCssFlexShrink, TCssGap, TCssGridColumn, TCssGridRow, TCssHeight, TCssJustifyContent, TCssProperties, TCssWidth, TSizeType } from '#types';
+import { TCssAlignItems, TCssFlexGrow, TCssFlexShrink, TCssGap, TCssHeight, TCssJustifyContent, TCssProperties, TCssWidth, TSizeType } from '#types';
 /**
  * Общие свойства элемента UI выступающего в качестве базового контейнера
  */
@@ -24,19 +24,19 @@ export interface IGeneralContainerProperties extends IGeneralMarginProperties, I
     /**
      * Индекс колонки при grid
      */
-    gridColumn?: TCssGridColumn;
+    gridColumn?: number;
     /**
      * Количество колонок при grid
      */
-    gridColumnSpan?: TCssGridColumn;
+    gridColumnSpan?: number;
     /**
      * Индекс строки при grid
      */
-    gridRow?: TCssGridRow;
+    gridRow?: number;
     /**
      * Количество строк при grid
      */
-    gridRowSpan?: TCssGridColumn;
+    gridRowSpan?: number;
 }
 /**
  * Вспомогательный класс для работы с общими свойства элемента UI выступающего в качестве базового контейнера

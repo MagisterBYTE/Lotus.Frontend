@@ -3,10 +3,6 @@
  */
 export class DesignSystemConstants {
     /**
-     * Ключ под которым сохраняется тема сайта
-     */
-    static SaveKey = 'lotus-design-system';
-    /**
      * Названия атрибута в документа под которым сохраняется цветовая схема сайта
      */
     static DataAttributeColorScheme = 'data-lotus-color-scheme';

@@ -1,7 +1,8 @@
+import { ColorCssHelper, TColorToken } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { FontDesignSystem } from '#designSystem/font';
 import { FontSizes, LineSpacingSizes } from '#designSystem/sizes';
-import { TTextEffect, TCssTextAlign, TCssFontSize, TCssLineHeight, TCssProperties, TFontAccent, TSizeType } from '#types';
+import { TTextEffect, TCssTextAlign, TCssFontSize, TCssLineHeight, TCssProperties, TFontAccent, TSizeType, TCssColor } from '#types';
 
 /**
  * Общие свойства текста для элемента UI
@@ -41,7 +42,7 @@ export interface IGeneralTextProperties
   /**
    * Цвет текста
    */
-  textColor?: string;
+  textColor?: TCssColor|TColorToken;
 
   /**
    * Межстрочный интервал текста
@@ -105,7 +106,7 @@ export abstract class TextPropertiesHelper
 
     if (props.textColor)
     {
-      textProps.color = props.textColor;
+      textProps.color = ColorCssHelper.getColorCss(props.textColor);
     }
 
     if (props.textLineSpacing)

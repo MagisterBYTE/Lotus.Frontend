@@ -1,17 +1,19 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Button, MantineProvider } from '@mantine/core';
-import { StringHelper } from 'lotus-core/helpers';
-import { LocalizationCore } from 'lotus-core/localization';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ActionIcon, Tooltip, useMantineTheme } from '@mantine/core';
+import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconX } from '@tabler/icons-react';
+import { LanguageChangeEvent, LanguageChangeEventType, LocalizationCore, LocalizationHelper, TLanguageType, TLanguageTypes } from 'lotus-core/localization';
 import { IObjectInfo } from 'lotus-core/modules/objectInfo';
 import { OptionHelper } from 'lotus-core/modules/option';
-import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage, ISortObject, ISortProperty } from 'lotus-core/modules/requestAndResponse';
-import { IEditable, TKey } from 'lotus-core/types';
-import { ReactElement, useEffect, useState } from 'react';
-import {
+import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage } from 'lotus-core/modules/requestAndResponse';
+import { IEditable, IRecordObject, TKey } from 'lotus-core/types';
+import { RefAttributes, useEffect, useState } from 'react';
+import { JSX } from 'react/jsx-runtime';
+import { HorizontalStack } from '#components/Layout';
+import
+{
   MantineReactTable,
   MRT_ColumnDef,
   MRT_ColumnFiltersState,
@@ -19,27 +21,16 @@ import {
   MRT_Row,
   MRT_SortingState,
   MRT_TableInstance,
-  MRT_TableOptions
+  MRT_TableOptions,
+  MRT_Localization_RU,
+  MRT_Localization_EN,
+  MRT_Icons
 } from '#external/mantine-react-table';
-import { toastError, toastPromise, ToastWrapper } from '../../Feedback/Toast';
 import { MantineReactTableHelper } from './MantineReactTableHelper';
 import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
 
-export interface IFormCreatedItem<TItem extends Record<string, any> | null> {
-  open: boolean;
-  onClose: () => void;
-  onCreate: () => void;
-  onCreatedItem: (createdItem: TItem | null) => void;
-}
-
-export interface IFormDeletedItem<TItem extends Record<string, any> | null> {
-  open: boolean;
-  onClose: () => void;
-  onDelete: () => void;
-  onDeleteItem: (createdItem: TItem | null) => void;
-}
-
-export interface ITableViewProps<TItem extends Record<string, any>> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'> {
+export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'>
+{
   objectInfo: IObjectInfo;
   onGetItems: <TFilterRequest extends IRequest>(filter: TFilterRequest) => Promise<IResponsePage<TItem>>;
   onTransformFilterRequest?: <TFilterRequest extends IRequest>(filter: TFilterRequest) => TFilterRequest;
@@ -47,28 +38,35 @@ export interface ITableViewProps<TItem extends Record<string, any>> extends Omit
   onUpdateItem?: (item: TItem) => Promise<IResponse<TItem>>;
   onDuplicateItem?: (id: TKey) => Promise<IResponse<TItem>>;
   onDeleteItem?: (id: TKey) => Promise<IResponse>;
-  formCreated?: (args: IFormCreatedItem<TItem | null>) => ReactElement;
-  formDeleted?: (args: IFormDeletedItem<TItem | null>) => ReactElement;
 }
 
 type Updater<T> = T | ((old: T) => T);
 
+const pageInfoResponseDefault:IPageInfoResponse = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 } as const;
+
 export const TableView = <TItem extends Record<string, any> & IEditable>(props: ITableViewProps<TItem>) => 
 {
-  const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem, formCreated, formDeleted } = props;
+  const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem } = props;
 
   const properties = objectInfo.getProperties();
+  
+  const theme = useMantineTheme();
+
+  const actualIcons: Partial<MRT_Icons> = {
+    IconDeviceFloppy: (props: JSX.IntrinsicAttributes & IconProps & RefAttributes<SVGSVGElement>) => <IconDeviceFloppy {...props} color={theme.colors.info[5]} />,
+    IconCircleX: (props: JSX.IntrinsicAttributes & IconProps & RefAttributes<SVGSVGElement>) => (<IconCircleX {...props} color={theme.colors.red[5]} />)
+  };
 
   // Получение данных
   const [isLoading, setIsLoading] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [items, setItems] = useState<TItem[]>([]);
-  const [pageInfo, setPageInfo] = useState<IPageInfoResponse>({ pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 });
+  const [pageInfo, setPageInfo] = useState<IPageInfoResponse>(pageInfoResponseDefault);
   const [paginationModel, setPaginationModel] = useState({ pageSize: 10, pageIndex: 0 });
 
   // Сортировка и фильтрация
-  const [sortingColumn, setSortingColumn] = useState<MRT_SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([]);
+  const [sortingState, setSortingState] = useState<MRT_SortingState>([]);
+  const [columnFiltersState, setColumnFiltersState] = useState<MRT_ColumnFiltersState>([]);
   const [columnFiltersFns, setColumnFiltersFns] = useState<Record<string, MRT_FilterOption>>();
   const [globalFilter, setGlobalFilter] = useState('');
 
@@ -77,34 +75,24 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   const [currentItem, setCurrentItem] = useState<TItem | null>(null);
   const [currentItemInvalid, setCurrentItemInvalid] = useState<boolean>(false);
 
-  // Удаление
-  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
-  const [deleteItem, setDeleteItem] = useState<TItem | null>(null);
+  const isDelete = Boolean(onDeleteItem);
 
-  // Создание новой записи через окно
-  const [openCreatedDialog, setOpenCreatedDialog] = useState<boolean>(false);
-  const [createdItem, setCreatedItem] = useState<TItem | null>(null);
-
-  const [autoCloseToastify, setAutoCloseToastify] = useState<number | false>(2000);
-
-  // Служебные методы для получения данных текущего редактируемого объекта
-  const setSelectedValues = (accessorKey: string, newSelectedValues: any[]) => 
-  {
-    const newItem: TItem = { ...currentItem! };
-
-    // @ts-ignore
-    newItem[accessorKey] = newSelectedValues as any;
-    setCurrentItem(newItem);
+  // Локализация
+  const localizationFullRU = {
+    filterIncludeAny: LocalizationCore.data.filters.includeAny,
+    filterIncludeAll: LocalizationCore.data.filters.includeAll,
+    filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
+    filterIncludeNone: LocalizationCore.data.filters.includeNone,
+    ...MRT_Localization_RU
   };
-
-  const setSelectedValue = (accessorKey: string, newSelectedValue: TKey) => 
-  {
-    const newItem: TItem = { ...currentItem! };
-
-    // @ts-ignore
-    newItem[accessorKey] = newSelectedValue;
-    setCurrentItem(newItem);
+  const localizationFullEN = {
+    filterIncludeAny: LocalizationCore.data.filters.includeAny,
+    filterIncludeAll: LocalizationCore.data.filters.includeAll,
+    filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
+    filterIncludeNone: LocalizationCore.data.filters.includeNone,
+    ...MRT_Localization_EN
   };
+  const [localizationFull, setLocalizationFull] = useState<object>(localizationFullRU);
 
   // Модифицированные столбцы
   const editColumns = properties.map((property) => 
@@ -114,31 +102,13 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     if (property.editing?.editorType === 'text') 
     {
       column.mantineEditTextInputProps = {
-        // error: property.editing?.onValidation(currentItem).h,
         required: property.editing?.required,
-        variant: 'outlined',
-        size: 'small',
         type: 'text',
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => 
         {
           const newItem: TItem = { ...currentItem! };
           newItem[column.accessorKey!] = event.target.value as any;
           setCurrentItem(newItem);
-
-          // let isErrorValidation = false;
-          properties.forEach((c) => 
-          {
-            // const errorValidation = c.editing?.onValidation(newItem).error;
-            // if (errorValidation) 
-            // {
-            //   isErrorValidation = true;
-            //   setCurrentItemInvalid(true);
-            // }
-          });
-          // if (isErrorValidation === false) 
-          // {
-          //   setCurrentItemInvalid(false);
-          // }
         }
       };
 
@@ -241,20 +211,11 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   {
     const pageInfo: IPageInfoRequest = { pageNumber: paginationModel.pageIndex, pageSize: paginationModel.pageSize };
 
-    const sorting: ISortObject = sortingColumn.map((column) => 
-    {
-      const sort: ISortProperty = {
-        propertyPath: StringHelper.capitalizeFirstLetter(column.id),
-        propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
-        isDesc: column.desc
-      };
+    const sortings = MantineReactTableHelper.convertColumnsSortStateToSortObjects(objectInfo, sortingState);
 
-      return sort;
-    });
+    const filtering = MantineReactTableHelper.convertColumnsFilterStateToFilterObjects(objectInfo, columnFiltersState, columnFiltersFns);
 
-    const filtering = MantineReactTableHelper.convertColumnsFilterToFilterObjects(objectInfo, columnFilters, columnFiltersFns);
-
-    const request = { pageInfo: pageInfo, sorting: sorting, filtering: filtering };
+    const request = { pageInfo: pageInfo, sorting: sortings, filtering: filtering };
 
     if (onTransformFilterRequest) 
     {
@@ -282,8 +243,23 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
 
       const response = await onGetItems(filter);
 
-      setItems(response.payload!);
-      setPageInfo(response.pageInfo!);
+      if (response.payload && response.pageInfo)
+      {
+        setItems(response.payload);
+        setPageInfo(response.pageInfo);
+      }
+      else
+      {
+        if (response.payload)
+        {
+          setItems(response.payload);
+        }
+        else
+        {
+          setItems([]);
+        }
+        setPageInfo(pageInfoResponseDefault);
+      }
 
       setIsLoading(false);
       setIsRefetching(false);
@@ -292,7 +268,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     {
       setIsLoading(false);
       setIsRefetching(false);
-      toastError(exc, LocalizationCore.data.actions.gettingFailed);
+      throw exc;
     }
   };
   // #endregion
@@ -304,50 +280,62 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   {
     if (onAddItem) 
     {
-      const result = toastPromise(
-        onAddItem(),
-        LocalizationCore.data.actions.adding,
-        LocalizationCore.data.actions.addingSucceed,
-        LocalizationCore.data.actions.addingFailed
-      );
-
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      result.then(async () => 
+      const result = onAddItem();
+      void result.then(async () => 
       {
         await refreshItems(getFilterQueryItems());
       });
     }
-    else 
-    {
-      setCreatedItem(null);
-      setOpenCreatedDialog(true);
-    }
-  };
-
-  const handleCloseCreatedDialog = () => 
-  {
-    setOpenCreatedDialog(false);
-  };
-
-  const handleOkCreatedDialog = async () => 
-  {
-    setOpenCreatedDialog(false);
-    await refreshItems(getFilterQueryItems());
   };
   // #endregion
 
   //
   // #region Редактирование данных
   //
-  const handleEditRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => (event: any) => 
+  const handleEditRowBegin = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) => (event: any) => 
   {
+    const { row, table } = props;
     table.setEditingRow(row);
     setCurrentEditRow(row);
     setCurrentItem(row.original);
   };
 
-  const handleCancelRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => 
+  const handleEditRowCancel = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) => 
   {
+    const { row, table } = props;
+    table.setEditingRow(null);
+    setCurrentEditRow(null);
+    setCurrentItem(null);
+  };
+
+  const handleEditRowSave = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) =>
+  {
+    const { row, table } = props;
+    const updateItem: TItem = { ...currentItem } as TItem;
+
+    if (onUpdateItem) 
+    {
+      const responsePromise = onUpdateItem(updateItem);
+      void responsePromise.then((response) => 
+      {
+        if (response.result)
+        {
+          if (response.result.succeeded)
+          {
+            const newItems = [...items];
+            newItems[currentEditRow!.index] = response.payload!;
+            setItems(newItems);
+          }
+          else
+          {
+            const newItems = [...items];
+            newItems[currentEditRow!.index] = currentEditRow!.original;
+            setItems(newItems);
+          }
+        }
+      });
+    }
+
     table.setEditingRow(null);
     setCurrentEditRow(null);
     setCurrentItem(null);
@@ -355,77 +343,12 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   // #endregion
 
   //
-  // #region Дублирование данных
-  //
-  const handleDuplicateRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => {};
-  // #endregion
-
-  //
-  // #region Обновление данных
-  //
-  const handleSaveRow = (table: MRT_TableInstance<TItem>, row: MRT_Row<TItem>) => 
-  {
-    const updateItem: TItem = { ...currentItem } as TItem;
-
-    if (onUpdateItem) 
-    {
-      const result = toastPromise(
-        onUpdateItem(updateItem),
-        LocalizationCore.data.actions.saving,
-        LocalizationCore.data.actions.savingSucceed,
-        LocalizationCore.data.actions.savingFailed
-      );
-
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      result.then((value) => 
-      {
-        const newItems = [...items];
-        newItems[currentEditRow!.index] = value.payload!;
-        setItems(newItems);
-      });
-    }
-
-    table.setEditingRow(null);
-    setCurrentEditRow(null);
-  };
-  // #endregion
-
-  //
   // #region Удаление данных
   //
-  const handleDeleteRow = (row: MRT_Row<TItem>) => 
+  const handleDeleteRow = (row: MRT_Row<TItem>) => (event: any) =>
   {
-    setDeleteItem(row.original);
-    setOpenDeleteDialog(true);
-  };
-
-  const handleCloseDeleteDialog = () => 
-  {
-    setOpenDeleteDialog(false);
-  };
-
-  const handleOkDeleteDialog = () => 
-  {
-    setOpenDeleteDialog(false);
-
-    if (onDeleteItem) 
-    {
-      const result = toastPromise(
-        onDeleteItem(deleteItem!.id),
-        LocalizationCore.data.actions.deleting,
-        LocalizationCore.data.actions.deletingSucceed,
-        LocalizationCore.data.actions.deletingFailed
-      );
-
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      result.then(() => 
-      {
-        const newItems = items.filter((x) => x.id !== deleteItem!.id);
-        setItems(newItems);
-      });
-    }
-
-    setDeleteItem(null);
+    // setDeleteItem(row.original);
+    // setOpenDeleteDialog(true);
   };
   // #endregion
 
@@ -438,31 +361,26 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     setColumnFiltersFns(data);
   };
 
-  //
-  // Методы оформления
-  const renderTopToolbarCustomActions = (props: { table: MRT_TableInstance<TItem> }) => 
+  const handleTranslate = (lang: TLanguageType) =>
   {
-    if (onAddItem || formCreated) 
+    if (lang === TLanguageTypes.ru_RU)
     {
-      return (
-        <Button color="secondary" variant="contained" onClick={() => handleAddRow()}>
-          {LocalizationCore.data.actions.add}
-        </Button>
-      );
+      setLocalizationFull(localizationFullRU);
     }
-
-    return <> </>;
+    else
+    {
+      setLocalizationFull(localizationFullEN);
+    }
   };
 
   //
-  // Методы жизненного цикла
+  // #region Методы жизненного цикла
   //
-
   useEffect(() => 
   {
     const filter = getFilterQueryItems();
     void refreshItems(filter);
-  }, [paginationModel.pageIndex, paginationModel.pageSize, sortingColumn, columnFilters, columnFiltersFns, globalFilter]);
+  }, [paginationModel.pageIndex, paginationModel.pageSize, sortingState, columnFiltersState, columnFiltersFns, globalFilter]);
 
   useEffect(() => 
   {
@@ -470,12 +388,28 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
     setColumnFiltersFns(initialColumnFiltersFns);
   }, []);
 
-  const localizationFull = {
-    filterIncludeAny: LocalizationCore.data.filters.includeAny,
-    filterIncludeAll: LocalizationCore.data.filters.includeAll,
-    filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
-    filterIncludeNone: LocalizationCore.data.filters.includeNone
+  useEffect(() => 
+  {
+    const currentLang = LocalizationHelper.getDocumentLang();
+    handleTranslate(currentLang);
+  }, []);
+  // #endregion
+
+  // 
+  // #region Render
+  //
+  const renderRowActionsEditRow = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) => 
+  {
+    return (<Tooltip label={LocalizationCore.data.actions.edit}>
+      <ActionIcon size='lg' variant="default" onClick={handleEditRowBegin(props)}>
+        <IconEdit color={theme.colors.info[5]} />
+      </ActionIcon>
+      {isDelete && <ActionIcon size='lg' variant="default" onClick={handleDeleteRow(props.row)}>
+        <IconCircleX color={theme.colors.red[5]} />
+      </ActionIcon>}
+    </Tooltip>);
   };
+  // #endregion
 
   return (
     <>
@@ -503,37 +437,33 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
             return true;
           }
         }}
+        icons={actualIcons}
+        localization={localizationFull}
         manualFiltering={true}
         manualPagination={true}
         manualSorting={true}
-        renderTopToolbarCustomActions={props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions}
+        renderRowActions={renderRowActionsEditRow}
+        renderTopToolbarCustomActions={props.renderTopToolbarCustomActions}
         rowCount={pageInfo.totalCount}
         state={{
           isLoading: isLoading,
           showProgressBars: isRefetching,
           showSkeletons: false,
           pagination: paginationModel,
-          columnFilters: columnFilters,
+          columnFilters: columnFiltersState,
           columnFilterFns: columnFiltersFns,
           globalFilter: globalFilter,
-          sorting: sortingColumn
+          sorting: sortingState
         }}
         table={undefined}
         onColumnFilterFnsChange={handleColumnFilterFnsChange}
-        onColumnFiltersChange={setColumnFilters}
+        onColumnFiltersChange={setColumnFiltersState}
+        onEditingRowCancel={handleEditRowCancel}
+        onEditingRowSave={handleEditRowSave}
         onGlobalFilterChange={setGlobalFilter}
         onPaginationChange={setPaginationModel}
-        onSortingChange={setSortingColumn}
+        onSortingChange={setSortingState}
       />
-      <ToastWrapper autoClose={autoCloseToastify} />
-      {formCreated &&
-        formCreated({
-          open: openCreatedDialog,
-          onClose: handleCloseCreatedDialog,
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onCreate: handleOkCreatedDialog,
-          onCreatedItem: setCreatedItem
-        })}
     </>
   );
 };

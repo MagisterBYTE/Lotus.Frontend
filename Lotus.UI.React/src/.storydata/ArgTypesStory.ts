@@ -32,7 +32,7 @@ export abstract class ArgTypesStory
   };
 
   public static readonly Border: Partial<ArgTypes<IGeneralBorderProperties>> = {
-    withBorder: { control: 'inline-radio', options: [undefined, 0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], table: { category: 'Border' } },
+    withBorder: { control: 'inline-radio', options: [undefined, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], table: { category: 'Border' } },
     bdColor: { control: 'select', options: [undefined, ...TColorTokens], table: { category: 'Border' } },
     bdStyle: { control: 'inline-radio', options: [...TCssBorderStyles, undefined], table: { category: 'Border' } },
     bdWidth: { control: 'number', table: { category: 'Border' } },

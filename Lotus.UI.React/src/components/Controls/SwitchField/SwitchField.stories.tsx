@@ -50,9 +50,19 @@ export const SwitchFieldLabel: Story = {
   name: 'SwitchField Label',
   args: {
     inlinePlace: true,
-    labelProps: {
-      w: '20%',
-    },
     label: 'Ускорение'
   }
+};
+
+export const SwitchFieldBorder: Story = {
+  args: {
+    inlinePlace: true,
+    label: 'Ускорение',
+    w: 'max-content',
+    p: 'xs',
+    bgShadow: 5,
+    bdRadius: 'xs',
+  },
+
+  name: 'SwitchField Border'
 };

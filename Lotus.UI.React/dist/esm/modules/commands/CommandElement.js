@@ -1,6 +1,6 @@
 import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 import { ActionIcon, Button, Menu, NavLink } from '@mantine/core';
-import { ActionCommandTypes } from 'lotus-core/modules/actionCommand';
+import { TActionCommandTypes } from 'lotus-core/modules/actionCommand';
 import { Assert } from 'lotus-core/utils';
 import { useLocation, useNavigate } from 'react-router';
 import { RenderIcon } from '#render';
@@ -10,10 +10,10 @@ export function CommandElement(props) {
     const navigate = useNavigate();
     const isSelected = command.isSelectedCommand();
     const disabled = !command.canExecuteCommand();
-    const isDelimiter = command.commandType === ActionCommandTypes.Delimiter;
+    const isDelimiter = command.commandType === TActionCommandTypes.Delimiter;
     const handleClick = () => {
         if (command) {
-            if (command.commandType === ActionCommandTypes.Navigation) {
+            if (command.commandType === TActionCommandTypes.Navigation) {
                 if (command.route.path !== '' && location.pathname !== command.route.path) {
                     void navigate(command.route.path);
                 }

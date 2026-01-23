@@ -7,8 +7,6 @@ import
   TCssFlexGrow,
   TCssFlexShrink,
   TCssGap,
-  TCssGridColumn,
-  TCssGridRow,
   TCssHeight,
   TCssJustifyContent,
   TCssProperties,
@@ -44,22 +42,22 @@ export interface IGeneralContainerProperties extends IGeneralMarginProperties, I
   /**
    * Индекс колонки при grid
    */
-  gridColumn?: TCssGridColumn;
+  gridColumn?: number;
 
   /**
    * Количество колонок при grid
    */
-  gridColumnSpan?: TCssGridColumn;
+  gridColumnSpan?: number;
 
   /**
    * Индекс строки при grid
    */
-  gridRow?: TCssGridRow;
+  gridRow?: number;
 
   /**
    * Количество строк при grid
    */
-  gridRowSpan?: TCssGridColumn;
+  gridRowSpan?: number;
 }
 
 /**
@@ -103,9 +101,34 @@ export abstract class ContainerPropertiesHelper
     {
       containerProps.flexGrow = props.grow;
     }
+
     if (props.shrink)
     {
       containerProps.flexShrink = props.shrink;
+    }
+
+    if (props.gridColumn)
+    {
+      containerProps.gridColumnStart = props.gridColumn;
+      containerProps.gridColumnEnd = props.gridColumn + 1;
+    }
+
+    if (props.gridColumnSpan)
+    {
+      containerProps.gridColumnStart = props.gridColumn;
+      containerProps.gridColumnEnd = Number(props.gridColumn) + props.gridColumnSpan;
+    }
+
+    if (props.gridRow)
+    {
+      containerProps.gridRowStart = props.gridRow;
+      containerProps.gridRowEnd = props.gridRow + 1;
+    }
+
+    if (props.gridRowSpan)
+    {
+      containerProps.gridRowStart = props.gridRow;
+      containerProps.gridRowEnd = Number(props.gridRow) + props.gridRowSpan;
     }
 
     return containerProps;

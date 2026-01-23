@@ -1,40 +1,45 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { ColorCssHelper } from 'lotus-core/modules/color';
-import { useEffect, useState } from 'react';
-import { DesignSystemBuilder, DesignSystemConstants } from '#designSystem';
+import { useState } from 'react';
+import { DesignSystem, DesignSystemHelper } from '#designSystem';
 import { DesignSystemContext } from './DesignSystemContext';
+function createAndApplyDesignSystem(params, actualColorScheme, keySave) {
+    // Создаем новую дизайн-систему
+    const newDesignSystem = new DesignSystem(params, actualColorScheme);
+    // Присваиваем значение глобальных переменных
+    newDesignSystem.applyToCssVariable();
+    // Присваиваем цветовую схему вспомогательному классу
+    if (actualColorScheme === 'light') {
+        ColorCssHelper.isLight = true;
+    }
+    if (actualColorScheme === 'dark') {
+        ColorCssHelper.isLight = false;
+    }
+    // Данные дизайн-системы
+    const designSystemData = { colorScheme: actualColorScheme, primaryColor: 'blue' };
+    // Сохраняем в документе
+    DesignSystemHelper.setDocumentDesignSystem(designSystemData);
+    // Сохраняем в локальное хранилище
+    DesignSystemHelper.saveToStorage(keySave, designSystemData);
+    return newDesignSystem;
+}
 export const DesignSystemProvider = (props) => {
-    const { colorScheme, params, children } = props;
-    const [designSystem, setDesignSystem] = useState(DesignSystemBuilder.create(params, colorScheme));
+    // eslint-disable-next-line react/destructuring-assignment
+    const loadData = DesignSystemHelper.loadFromStorage(props.keySave);
+    const { colorScheme, params, children, keySave } = props;
+    const actualColorScheme = loadData?.colorScheme ?? colorScheme ?? 'light';
+    const [designSystem, setDesignSystem] = useState(createAndApplyDesignSystem(params, actualColorScheme, keySave));
     const [providerKey, setProviderKey] = useState(0); // Ключ для принудительного обновления
-    useEffect(() => {
-        const newDesignSystem = DesignSystemBuilder.create(params, colorScheme);
+    const handleColorSchemeChange = (scheme) => {
+        // Создаем новую дизайн-систему
+        const newDesignSystem = createAndApplyDesignSystem(params, scheme, keySave);
         setDesignSystem(newDesignSystem);
-        if (colorScheme === 'light') {
-            ColorCssHelper.isLight = true;
-        }
-        if (colorScheme === 'dark') {
-            ColorCssHelper.isLight = false;
-        }
-        if (colorScheme) {
-            document.documentElement.setAttribute(DesignSystemConstants.DataAttributeColorScheme, colorScheme);
-        }
-        // В память
-        newDesignSystem.fontSizes.applyToCssVariable();
-        newDesignSystem.lineSpacingSizes.applyToCssVariable();
-        newDesignSystem.marginSizes.applyToCssVariable();
-        newDesignSystem.paddingSizes.applyToCssVariable();
-        newDesignSystem.gapSizes.applyToCssVariable();
-        newDesignSystem.radiusSizes.applyToCssVariable();
-        newDesignSystem.font.applyToCssVariable();
-        newDesignSystem.border.applyToCssVariable();
-        newDesignSystem.text.applyToCssVariable();
-        newDesignSystem.background.applyToCssVariable();
         // Увеличиваем ключ для принудительного ререндера всех детей
         setProviderKey(prev => prev + 1);
-    }, [params, colorScheme]);
+    };
     return (_jsx(DesignSystemContext.Provider, { value: {
             setDesignSystem: setDesignSystem,
+            setColorScheme: handleColorSchemeChange,
             designSystem: designSystem
         }, children: children }, providerKey));
 };
