@@ -1,0 +1,40 @@
+
+/**
+ * Интерфейс для объектов, которые могут уведомлять о смене состояния.
+ */
+export interface IChangeStateNotifier
+{
+  onStateChanged: (context?: unknown) => void;
+}
+
+/**
+ * Проверка объекта на поддержку интерфейса {@link IChangeStateNotifier}
+ * @param value Проверяемый объект
+ * @returns true, если объекта поддерживает интерфейс, false в противном случае
+ */
+export function instanceOfChangeStateNotifier(value: unknown): value is IChangeStateNotifier
+{
+  if (value && typeof value === 'object')
+  {
+    return 'onStateChanged' in value && typeof value.onStateChanged === 'function';
+  }
+
+  return false;
+}
+
+/**
+ * Преобразование объекта к интерфейсу {@link IChangeStateNotifier}
+ * @param value Объект для преобразования
+ * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
+ */
+export function castToChangeStateNotifier(value: unknown): IChangeStateNotifier | undefined
+{
+  if (instanceOfChangeStateNotifier(value))
+  {
+    return value;
+  }
+  else
+  {
+    return undefined;
+  }
+}

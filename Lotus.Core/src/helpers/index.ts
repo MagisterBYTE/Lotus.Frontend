@@ -6,6 +6,7 @@ export { DateTimeHelper } from './DateTimeHelper';
 export { EnumHelper } from './EnumHelper';
 export { FunctionHelper } from './FunctionHelper';
 export { GuidHelper } from './GuidHelper';
+export { ItemsHelper } from './ItemsHelper';
 export { NumberHelper } from './NumberHelper';
 export { ObjectHelper } from './ObjectHelper';
 export { PathHelper } from './PathHelper';

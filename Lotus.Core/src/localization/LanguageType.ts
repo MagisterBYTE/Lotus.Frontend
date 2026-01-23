@@ -3,7 +3,7 @@ import { IOption } from '#modules/option';
 /**
  * Массив значений типов языков
  */
-export const TLanguageTypeValues = ['ru-RU', 'en-US', 'de-DE', 'ja-JP', 'zh-CN'] as const;
+export const TLanguageTypeValues = ['ru-RU', 'en-US', 'de-DE', 'zh-CN'] as const;
 
 /**
  * Тип языка
@@ -17,8 +17,7 @@ export const TLanguageTypes = {
   ru_RU: TLanguageTypeValues[0],
   en_US: TLanguageTypeValues[1],
   de_DE: TLanguageTypeValues[2],
-  ja_JP: TLanguageTypeValues[3],
-  zh_CH: TLanguageTypeValues[4],
+  zh_CH: TLanguageTypeValues[3],
 
   getAllValues(): typeof TLanguageTypeValues
   {
@@ -37,17 +36,17 @@ export const TLanguageTypes = {
 
   getByName(name: string): TLanguageType | undefined
   {
-    return TLanguageTypeValues.find((v) => v === name);
+    return TLanguageTypeValues.find((v) => v.toLowerCase() === name.toLowerCase() || v.toLowerCase().includes(name.toLowerCase()));
   },
 
   getOptions(): IOption<TLanguageType>[]
   {
-    return TLanguageTypeValues.map((x) => 
+    return TLanguageTypeValues.map((x) =>
     {
       return {
         label: x,
         value: x
       };
     });
-  } 
+  }
 } as const;

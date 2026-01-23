@@ -21,6 +21,7 @@ export interface IResult<TData = any>
 
   /**
    * Дополнительные данные
+   * @description Один из вариантов это массив IResultMessage
    */
   data?: TData;
 }
@@ -73,4 +74,24 @@ export function castToResult(value: unknown): IResult | undefined
   {
     return undefined;
   }
+}
+
+/**
+ * Создает объекта {@link IResult} из объекта ошибки Error
+ * @param error Ошибка
+ * @param code Код
+ * @returns Объект {@link IResult} 
+ */
+export function createResultFromError(error: Error, code: number | string = 'INTERNAL_ERROR'): IResult 
+{
+  return {
+    succeeded: false,
+    code: code,
+    message: error.message,
+    // Запихиваем стек в data, предварительно превратив его в массив строк для красоты
+    data: {
+      stack: error.stack ? error.stack.split('\n').map(line => line.trim()) : undefined,
+      name: error.name
+    }
+  };
 }

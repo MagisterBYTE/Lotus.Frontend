@@ -20,6 +20,6 @@ export interface IPropertyEditable {
      * @param value Значения свойства
      * @returns Статус валидации
      */
-    onValidation: (value: any, context?: any) => IValidationResult;
+    onValidation?: (value: any, context?: any) => IValidationResult;
 }
 //# sourceMappingURL=PropertyEditable.d.ts.map

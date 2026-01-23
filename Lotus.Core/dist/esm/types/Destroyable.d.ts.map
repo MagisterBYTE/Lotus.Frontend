@@ -1,0 +1,1 @@
+{"version":3,"file":"Destroyable.d.ts","sourceRoot":"","sources":["../../../src/types/Destroyable.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,MAAM,WAAW,YAAY;IAE3B;;OAEG;IACH,OAAO,EAAE,MAAM,IAAI,CAAC;CACrB;AAED;;;;GAIG;AACH,wBAAgB,qBAAqB,CAAC,KAAK,EAAE,OAAO,GAAG,KAAK,IAAI,YAAY,CAQ3E;AAED;;;;GAIG;AACH,wBAAgB,iBAAiB,CAAC,KAAK,EAAE,OAAO,GAAG,YAAY,GAAG,SAAS,CAU1E"}

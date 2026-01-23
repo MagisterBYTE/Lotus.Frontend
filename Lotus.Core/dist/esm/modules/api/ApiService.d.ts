@@ -4,6 +4,13 @@ import { ApiRequestError } from './ApiRequestError';
  * Класс для работы с API
  */
 export declare class ApiService {
+    /**
+     * Генерирует полный URL с учетом параметров запроса
+     * @param baseUrl - Базовый адрес (напр. 'https://api.com')
+     * @param params - Объект URLSearchParams с параметрами
+     * @returns Строка полного URL
+     */
+    static buildFullUrl(baseUrl: string, params: URLSearchParams): string;
     private _baseUrl;
     get baseUrl(): string;
     /**
@@ -32,7 +39,7 @@ export declare class ApiService {
     /**
      * GET запрос
      */
-    get<TResponse>(path: string, config?: IApiRequestConfig): Promise<TResponse>;
+    get<TResponse>(path: string, searchParams?: URLSearchParams, config?: IApiRequestConfig): Promise<TResponse>;
     /**
      * POST запрос
      */

@@ -8,18 +8,37 @@ import { ContentTypeConstants } from './ContentTypeConstants';
 import { HeaderNamesConstants } from './HeaderNamesConstants';
 import { NetworkErrorUtils } from './NetworkErrorUtils';
 
-
 /**
  * Класс для работы с API
  */
-export class ApiService 
+export class ApiService
 {
+  // #region Static methods
+  /**
+   * Генерирует полный URL с учетом параметров запроса
+   * @param baseUrl - Базовый адрес (напр. 'https://api.com')
+   * @param params - Объект URLSearchParams с параметрами
+   * @returns Строка полного URL
+   */
+  public static buildFullUrl(baseUrl: string, params: URLSearchParams): string
+  {
+    const url = new URL(baseUrl);
+
+    params.forEach((value: string, key: string) =>
+    {
+      url.searchParams.append(key, value);
+    });
+
+    return url.href; // .href возвращает полную строку URL
+  }
+  // #endregion
+
   // #region Fields
   private _baseUrl: string;
   // endregion
 
   // #region Properties
-  public get baseUrl(): string 
+  public get baseUrl(): string
   {
     return this._baseUrl;
   }
@@ -29,7 +48,7 @@ export class ApiService
    * Конструктор
    * @param baseUrl - Базовый URL API (опционально)
    */
-  constructor(baseUrl: string = '') 
+  constructor(baseUrl: string = '')
   {
     this._baseUrl = baseUrl;
     FunctionHelper.bindAllMethods(this);
@@ -39,10 +58,10 @@ export class ApiService
   /**
    * Создает полный URL для запроса
    */
-  protected createFullUrl(path: string): string 
+  protected createFullUrl(path: string): string
   {
     if (BrowserHelper.isAbsoluteUrl(path)) return path;
-    if (!path.startsWith('/') && this._baseUrl && !this._baseUrl.endsWith('/')) 
+    if (!path.startsWith('/') && this._baseUrl && !this._baseUrl.endsWith('/'))
     {
       return `${this._baseUrl}/${path}`;
     }
@@ -52,45 +71,42 @@ export class ApiService
   /**
    * Выполняет HTTP-запрос с обработкой ошибок
    */
-  protected async request<TResponse = unknown>(url: string, config: ApiRequestConfig): Promise<TResponse> 
+  protected async request<TResponse = unknown>(url: string, config: ApiRequestConfig): Promise<TResponse>
   {
-    try 
+    try
     {
       const actualConfig = await this.handleRequest(url, config);
 
-      // Если timeout передан, создаем сигнал, который прервется через X мс
-      const signal = config?.timeout ? AbortSignal.timeout(config.timeout) : undefined;
-
       const response = await fetch(url, {
         ...actualConfig,
-        signal: signal
+        signal: actualConfig.abortSignal
       });
 
-      if (!response.ok) 
+      if (!response.ok)
       {
-        const error: ApiRequestError = new Error(`HTTP error ${response.status}`);
-        error.response = {
+        const error: ApiRequestError = new ApiRequestError(`HTTP error ${response.status}`, {
           status: response.status,
           statusText: response.statusText,
-          data: await response.json(),
+          data: await response.text(),
           url: response.url
-        };
+        });
+
         throw error;
       }
 
       const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) 
+      if (contentType && contentType.includes('application/json'))
       {
         const dataJson = await response.json();
         return dataJson as TResponse;
       }
-      else 
+      else
       {
         const dataText = await response.text();
         return dataText as TResponse;
       }
     }
-    catch (error) 
+    catch (error)
     {
       const errorResult = await this.handleResponseError(url, error as ApiRequestError);
       throw errorResult;
@@ -102,7 +118,7 @@ export class ApiService
    * @param config
    * @returns
    */
-  protected handleRequest(fullUri: string, config: ApiRequestConfig): Promise<ApiRequestConfig> 
+  protected handleRequest(fullUri: string, config: ApiRequestConfig): Promise<ApiRequestConfig>
   {
     return Promise.resolve(config);
   }
@@ -111,28 +127,28 @@ export class ApiService
    * Обработка ошибок ответа
    */
   // eslint-disable-next-line complexity
-  protected handleResponseError(uri:string, error: ApiRequestError): Promise<never> 
+  protected handleResponseError(uri: string, error: ApiRequestError): Promise<never>
   {
     // Запрос был сделан, и сервер ответил кодом состояния, который выходит за пределы 2xx
-    if (error.response) 
+    if (error.response)
     {
       // Все ошибки приводим к типу IResult для унификации обработки и реагирования
       const result: IResult | undefined = castToResult(error.response.data as object);
-      if (result) 
+      if (result)
       {
         // Дополнительная проверка на value
         const value = ObjectHelper.getValue(error.response.data, 'value', undefined);
-        if (value !== undefined) 
+        if (value !== undefined)
         {
           result.data = value;
         }
         return Promise.reject(result);
       }
-      else 
+      else
       {
         // Проверяем типовые ошибки
         // 404
-        if (error.response.status === 404) 
+        if (error.response.status === 404)
         {
           const uri = (error.request as XMLHttpRequest).responseURL ?? '';
           const message = LocalizationCore.data.api.errorNotFound.replace('{0}', uri);
@@ -145,7 +161,7 @@ export class ApiService
         }
 
         // 401
-        if (error.response.status === 401) 
+        if (error.response.status === 401)
         {
           const message = LocalizationCore.data.api.errorAuth;
           const resultNotAuth: IResult = {
@@ -167,11 +183,11 @@ export class ApiService
           typeof errorAuthResponse.error === 'string' &&
           'error_description' in errorAuthResponse &&
           typeof errorAuthResponse.error_description === 'string'
-        ) 
+        )
         {
           const errorAuth = errorAuthResponse.error;
           const errorDescAuth = errorAuthResponse.error_description;
-          if (Assert.existValue<string>(errorDescAuth)) 
+          if (Assert.existValue<string>(errorDescAuth))
           {
             const resultAuth: IResult = {
               succeeded: false,
@@ -182,7 +198,7 @@ export class ApiService
           }
 
           const message = ObjectHelper.getValue(LocalizationCore.data.api.auth, errorAuth, undefined);
-          if (Assert.existValue<string>(message)) 
+          if (Assert.existValue<string>(message))
           {
             const resultAuth: IResult = {
               succeeded: false,
@@ -202,27 +218,27 @@ export class ApiService
         return Promise.reject(resultError);
       }
     }
-    else 
+    else
     {
       // Запрос был сделан, но ответ не получен - `error.request`- это экземпляр XMLHttpRequest в браузере
-      if (error.request) 
+      if (error.request)
       {
         // Проверка на отдельные коды ошибок
-        if (error.code === 'ERR_NETWORK') 
+        if (error.code === 'ERR_NETWORK')
         {
           const result: IResult = { succeeded: false, code: 500, message: LocalizationCore.data.api.errorNotOnline };
           return Promise.reject(result);
         }
         return Promise.reject(error);
       }
-      else 
+      else
       {
         if (NetworkErrorUtils.isTimeoutError(error))
         {
           const result: IResult = { succeeded: false, code: 500, message: LocalizationCore.data.api.errorTimeoutError };
           return Promise.reject(result);
         }
-        
+
         if (NetworkErrorUtils.isNetworkError(error))
         {
           if (!navigator.onLine)
@@ -245,7 +261,7 @@ export class ApiService
         return Promise.reject({
           succeeded: false,
           code: 500,
-          message: 'Unknown error occurred'
+          message: error.message ?? 'Unknown error occurred'
         });
       }
     }
@@ -256,10 +272,15 @@ export class ApiService
   /**
    * GET запрос
    */
-  public get<TResponse>(path: string, config?: IApiRequestConfig): Promise<TResponse> 
+  public get<TResponse>(path: string, searchParams?: URLSearchParams, config?: IApiRequestConfig): Promise<TResponse>
   {
-    const url = this.createFullUrl(path);
+    let url = this.createFullUrl(path);
     const actualConfig = new ApiRequestConfig(config);
+
+    if (searchParams)
+    {
+      url = ApiService.buildFullUrl(url, searchParams);
+    }
 
     if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false)
     {
@@ -272,7 +293,7 @@ export class ApiService
   /**
    * POST запрос
    */
-  public post<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest, config?: ApiRequestConfig): Promise<TResponse> 
+  public post<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest, config?: ApiRequestConfig): Promise<TResponse>
   {
     const url = this.createFullUrl(path);
     const actualConfig = new ApiRequestConfig(config);
@@ -284,7 +305,7 @@ export class ApiService
   /**
    * PUT запрос
    */
-  public put<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest, config?: ApiRequestConfig): Promise<TResponse> 
+  public put<TResponse = unknown, TRequest = unknown>(path: string, payload: TRequest, config?: ApiRequestConfig): Promise<TResponse>
   {
     const url = this.createFullUrl(path);
 
@@ -297,7 +318,7 @@ export class ApiService
   /**
    * DELETE запрос
    */
-  public delete<TResponse = unknown>(path: string, config?: ApiRequestConfig): Promise<TResponse> 
+  public delete<TResponse = unknown>(path: string, config?: ApiRequestConfig): Promise<TResponse>
   {
     const url = this.createFullUrl(path);
 

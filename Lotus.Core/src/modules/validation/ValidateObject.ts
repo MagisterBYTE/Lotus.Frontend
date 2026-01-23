@@ -1,0 +1,17 @@
+import { ValidationResult } from './ValidationResult';
+
+/**
+ * Интерфейс для определения валидации целого объекта
+ */
+export interface IValidateObject
+{
+  /**
+   * Поле содержащие результат все валидации
+   */
+  validationStatus: ValidationResult;
+
+  /**
+   * Метод для валидации всего объекта. Возвращает true если объект валиден
+   */
+   validate(): boolean;
+}

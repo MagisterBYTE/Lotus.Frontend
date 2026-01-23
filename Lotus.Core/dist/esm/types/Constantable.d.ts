@@ -8,15 +8,15 @@ export interface IConstantable {
     isConst?: boolean;
 }
 /**
- * Проверка объекта на поддержку интерфейса IConstantable
+ * Проверка объекта на поддержку интерфейса {@link IConstantable}
  * @param value Проверяемый объект
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
-export declare function instanceOfConstantable(value: any): value is IConstantable;
+export declare function instanceOfConstantable(value: unknown): value is IConstantable;
 /**
- * Преобразование объекта к интерфейсу IConstantable
+ * Преобразование объекта к интерфейсу {@link IConstantable}
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-export declare function castToConstantable(value: any): IConstantable | undefined;
+export declare function castToConstantable(value: unknown): IConstantable | undefined;
 //# sourceMappingURL=Constantable.d.ts.map

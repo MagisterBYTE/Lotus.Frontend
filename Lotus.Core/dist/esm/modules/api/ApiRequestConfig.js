@@ -26,6 +26,24 @@ export class ApiRequestConfig {
      * Режим обработки куки и авторизации (omit, same-origin, include)
      */
     credentials;
+    /**
+     * Сигнал отмены запроса
+     */
+    signal;
+    // #endregion
+    // #region Properties
+    get abortSignal() {
+        if (this.signal) {
+            return this.signal;
+        }
+        else {
+            // Если timeout передан, создаем сигнал, который прервется через X мс
+            if (this.timeout) {
+                return AbortSignal.timeout(this.timeout);
+            }
+        }
+        return null;
+    }
     // #endregion
     /**
      * Создает экземпляр ApiRequest.
@@ -37,6 +55,7 @@ export class ApiRequestConfig {
         this.method = initialConfig.method || 'GET';
         this.body = initialConfig.body;
         this.credentials = initialConfig.credentials;
+        this.signal = initialConfig.signal ?? null;
     }
     /**
      * Добавляет значение к существующему заголовку или создает новый.
@@ -189,7 +208,8 @@ export class ApiRequestConfig {
             headers: this.headers,
             body: this.body,
             timeout: this.timeout,
-            credentials: this.credentials
+            credentials: this.credentials,
+            signal: this.signal
         };
     }
 }

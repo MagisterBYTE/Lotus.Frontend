@@ -3,16 +3,9 @@ import { ApiRequestConfig } from './ApiRequestConfig';
 /**
  * Ошибка запроса
  */
-export interface ApiRequestError extends Error
+export class ApiRequestError extends Error 
 {
-  /**
-   * Ответ
-   */
   response?: {
-
-    /**
-     * Статус ответа
-     */
     status: number;
     statusText: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,4 +15,14 @@ export interface ApiRequestError extends Error
   request?: XMLHttpRequest;
   code?: string;
   config?: ApiRequestConfig;
+
+  constructor(message: string, responseData?: ApiRequestError['response']) 
+  {
+    super(message);
+    this.name = 'ApiRequestError';
+    this.response = responseData;
+    
+    // Исправление прототипа для корректной работы instanceof в старых окружениях
+    Object.setPrototypeOf(this, ApiRequestError.prototype);
+  }
 }

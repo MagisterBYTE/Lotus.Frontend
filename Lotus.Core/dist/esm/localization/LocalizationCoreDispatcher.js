@@ -1,4 +1,5 @@
 import { FunctionHelper } from '#helpers';
+import { LanguageChangeEventType } from './LanguageEvents';
 import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 import { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
@@ -36,6 +37,9 @@ export class LocalizationCoreDispatcherClass {
     // #region Constructor
     constructor() {
         FunctionHelper.bindAllMethods(this);
+        if (typeof window !== 'undefined') {
+            window.addEventListener(LanguageChangeEventType, (e) => this.onLanguageChangeEvent(e));
+        }
     }
     // #endregion
     // #region Main methods
@@ -51,6 +55,10 @@ export class LocalizationCoreDispatcherClass {
             if (language == 'ru-RU')
                 LocalizationCore.data = LocalizationCoreDataRu;
         }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onLanguageChangeEvent(event) {
+        this.setLanguage(event.detail.lang);
     }
 }
 /**

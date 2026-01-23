@@ -10,12 +10,11 @@ export interface IConstantable
 }
 
 /**
- * Проверка объекта на поддержку интерфейса IConstantable
+ * Проверка объекта на поддержку интерфейса {@link IConstantable}
  * @param value Проверяемый объект
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function instanceOfConstantable(value: any): value is IConstantable
+export function instanceOfConstantable(value: unknown): value is IConstantable
 {
   if (value && typeof value === 'object')  
   {
@@ -26,12 +25,11 @@ export function instanceOfConstantable(value: any): value is IConstantable
 }
 
 /**
- * Преобразование объекта к интерфейсу IConstantable
+ * Преобразование объекта к интерфейсу {@link IConstantable}
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function castToConstantable(value: any): IConstantable | undefined
+export function castToConstantable(value: unknown): IConstantable | undefined
 {
   if (instanceOfConstantable(value))
   {

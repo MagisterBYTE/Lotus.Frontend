@@ -5,3 +5,4 @@ export { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
 export { LocalizationCoreDataRu } from './LocalizationCoreDataRu';
 export { LocalizationCoreDispatcher } from './LocalizationCoreDispatcher';
 export { type ILocalizationDispatcher } from './LocalizationDispatcher';
+export { LocalizationHelper } from './LocalizationHelper';

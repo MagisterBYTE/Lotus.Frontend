@@ -16,6 +16,7 @@ export interface IResult<TData = any> {
     message?: string;
     /**
      * Дополнительные данные
+     * @description Один из вариантов это массив IResultMessage
      */
     data?: TData;
 }
@@ -45,4 +46,11 @@ export declare function instanceOfResult(value: unknown): value is IResult;
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */
 export declare function castToResult(value: unknown): IResult | undefined;
+/**
+ * Создает объекта {@link IResult} из объекта ошибки Error
+ * @param error Ошибка
+ * @param code Код
+ * @returns Объект {@link IResult}
+ */
+export declare function createResultFromError(error: Error, code?: number | string): IResult;
 //# sourceMappingURL=Result.d.ts.map

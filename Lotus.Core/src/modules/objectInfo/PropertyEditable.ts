@@ -26,5 +26,5 @@ export interface IPropertyEditable
    * @returns Статус валидации
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onValidation: (value: any, context?: any) => IValidationResult;
+  onValidation?: (value: any, context?: any) => IValidationResult;
 }

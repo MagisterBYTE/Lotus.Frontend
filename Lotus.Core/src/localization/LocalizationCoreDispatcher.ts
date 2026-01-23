@@ -1,4 +1,5 @@
 import { FunctionHelper } from '#helpers';
+import { LanguageChangeEvent, LanguageChangeEventType } from './LanguageEvents';
 import { TLanguageType } from './LanguageType';
 import { LocalizationCore } from './LocalizationCore';
 import { LocalizationCoreDataEn } from './LocalizationCoreDataEn';
@@ -46,6 +47,10 @@ export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
   constructor()
   {
     FunctionHelper.bindAllMethods(this);
+    if (typeof window !== 'undefined')
+    {
+      window.addEventListener(LanguageChangeEventType, (e) => this.onLanguageChangeEvent(e));
+    }
   }
   // #endregion
 
@@ -62,6 +67,12 @@ export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
       if (language == 'en-US') LocalizationCore.data = LocalizationCoreDataEn;
       if (language == 'ru-RU') LocalizationCore.data = LocalizationCoreDataRu;
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public onLanguageChangeEvent(event: LanguageChangeEvent|any)
+  {
+    this.setLanguage(event.detail.lang);
   }
   // #endregion
 }

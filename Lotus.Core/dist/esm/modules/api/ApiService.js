@@ -3,6 +3,7 @@ import { LocalizationCore } from '#localization';
 import { castToResult } from '#types';
 import { Assert } from '#utils';
 import { ApiRequestConfig } from './ApiRequestConfig';
+import { ApiRequestError } from './ApiRequestError';
 import { ContentTypeConstants } from './ContentTypeConstants';
 import { HeaderNamesConstants } from './HeaderNamesConstants';
 import { NetworkErrorUtils } from './NetworkErrorUtils';
@@ -10,6 +11,21 @@ import { NetworkErrorUtils } from './NetworkErrorUtils';
  * Класс для работы с API
  */
 export class ApiService {
+    // #region Static methods
+    /**
+     * Генерирует полный URL с учетом параметров запроса
+     * @param baseUrl - Базовый адрес (напр. 'https://api.com')
+     * @param params - Объект URLSearchParams с параметрами
+     * @returns Строка полного URL
+     */
+    static buildFullUrl(baseUrl, params) {
+        const url = new URL(baseUrl);
+        params.forEach((value, key) => {
+            url.searchParams.append(key, value);
+        });
+        return url.href; // .href возвращает полную строку URL
+    }
+    // #endregion
     // #region Fields
     _baseUrl;
     // endregion
@@ -44,20 +60,17 @@ export class ApiService {
     async request(url, config) {
         try {
             const actualConfig = await this.handleRequest(url, config);
-            // Если timeout передан, создаем сигнал, который прервется через X мс
-            const signal = config?.timeout ? AbortSignal.timeout(config.timeout) : undefined;
             const response = await fetch(url, {
                 ...actualConfig,
-                signal: signal
+                signal: actualConfig.abortSignal
             });
             if (!response.ok) {
-                const error = new Error(`HTTP error ${response.status}`);
-                error.response = {
+                const error = new ApiRequestError(`HTTP error ${response.status}`, {
                     status: response.status,
                     statusText: response.statusText,
-                    data: await response.json(),
+                    data: await response.text(),
                     url: response.url
-                };
+                });
                 throw error;
             }
             const contentType = response.headers.get('content-type');
@@ -196,7 +209,7 @@ export class ApiService {
                 return Promise.reject({
                     succeeded: false,
                     code: 500,
-                    message: 'Unknown error occurred'
+                    message: error.message ?? 'Unknown error occurred'
                 });
             }
         }
@@ -206,9 +219,12 @@ export class ApiService {
     /**
      * GET запрос
      */
-    get(path, config) {
-        const url = this.createFullUrl(path);
+    get(path, searchParams, config) {
+        let url = this.createFullUrl(path);
         const actualConfig = new ApiRequestConfig(config);
+        if (searchParams) {
+            url = ApiService.buildFullUrl(url, searchParams);
+        }
         if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false) {
             actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
         }

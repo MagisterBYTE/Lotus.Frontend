@@ -33,6 +33,11 @@ export declare class ApiRequestConfig implements IApiRequestConfig {
      */
     credentials?: RequestCredentials;
     /**
+     * Сигнал отмены запроса
+     */
+    signal?: AbortSignal | null;
+    get abortSignal(): AbortSignal | null;
+    /**
      * Создает экземпляр ApiRequest.
      * @param initialConfig - Начальная конфигурация запроса.
      */

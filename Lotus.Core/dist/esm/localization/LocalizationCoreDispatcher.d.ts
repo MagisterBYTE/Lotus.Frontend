@@ -1,3 +1,4 @@
+import { LanguageChangeEvent } from './LanguageEvents';
 import { TLanguageType } from './LanguageType';
 import { ILocalizationDispatcher } from './LocalizationDispatcher';
 /**
@@ -21,6 +22,7 @@ export declare class LocalizationCoreDispatcherClass implements ILocalizationDis
      * @param language Язык
      */
     setLanguage(language: TLanguageType | undefined): void;
+    onLanguageChangeEvent(event: LanguageChangeEvent | any): void;
 }
 /**
  * Глобальный доступ к диспетчеру локализации модуля Core

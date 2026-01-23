@@ -2,14 +2,8 @@ import { ApiRequestConfig } from './ApiRequestConfig';
 /**
  * Ошибка запроса
  */
-export interface ApiRequestError extends Error {
-    /**
-     * Ответ
-     */
+export declare class ApiRequestError extends Error {
     response?: {
-        /**
-         * Статус ответа
-         */
         status: number;
         statusText: string;
         data: any;
@@ -18,5 +12,6 @@ export interface ApiRequestError extends Error {
     request?: XMLHttpRequest;
     code?: string;
     config?: ApiRequestConfig;
+    constructor(message: string, responseData?: ApiRequestError['response']);
 }
 //# sourceMappingURL=ApiRequestError.d.ts.map

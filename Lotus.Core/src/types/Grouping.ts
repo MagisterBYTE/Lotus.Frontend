@@ -18,7 +18,7 @@ export interface IGrouping<TItem extends object = object>
 }
 
 /**
- * Проверка объекта на поддержку интерфейса IGrouping
+ * Проверка объекта на поддержку интерфейса {@link IGrouping}
  * @param value Проверяемый объект
  * @returns true, если объекта поддерживает интерфейс, false в противном случае
  */
@@ -33,7 +33,7 @@ export function instanceOfGrouping(value: unknown): value is IGrouping
 }
 
 /**
- * Преобразование объекта к интерфейсу IGrouping
+ * Преобразование объекта к интерфейсу {@link IGrouping}
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */

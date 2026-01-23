@@ -2,45 +2,52 @@ export class RequestHelper {
     static createURLSearchParams(request) {
         if (request) {
             const search = new URLSearchParams();
-            if (request.pageInfo) {
-                search.append('pageInfo.pageNumber', request.pageInfo.pageNumber.toString());
-                search.append('pageInfo.pageSize', request.pageInfo.pageSize.toString());
+            if ('ids' in request && Array.isArray(request.ids) && request.ids.length > 0) {
+                for (let i = 0; i < request.ids.length; i++) {
+                    search.append('id', request.ids[i].toString());
+                }
             }
-            if (request.sorting) {
-                let index = 0;
-                request.sorting.forEach((value) => {
-                    search.append(`sorting[${index}].propertyPath`, value.propertyPath);
-                    if (value.isDesc && value.isDesc === true) {
-                        search.append(`sorting[${index}].isDesc`, 'true');
-                    }
-                    index++;
-                });
-            }
-            if (request.filtering) {
-                let index = 0;
-                request.filtering.forEach((filter) => {
-                    if (filter.value) {
-                        const value = filter.value;
-                        search.append(`filtering[${index}].propertyPath`, filter.propertyPath);
-                        search.append(`filtering[${index}].function`, filter.function.id.toString());
-                        search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
-                        search.append(`filtering[${index}].value`, value);
-                        if (filter.isSensitiveCase) {
-                            search.append(`filtering[${index}].isSensitiveCase`, 'true');
+            else {
+                if (request.pageInfo) {
+                    search.append('pageInfo.pageNumber', request.pageInfo.pageNumber.toString());
+                    search.append('pageInfo.pageSize', request.pageInfo.pageSize.toString());
+                }
+                if (request.sorting) {
+                    let index = 0;
+                    request.sorting.forEach((value) => {
+                        search.append(`sorting[${index}].propertyPath`, value.propertyPath);
+                        if (value.isDesc && value.isDesc === true) {
+                            search.append(`sorting[${index}].isDesc`, 'true');
                         }
                         index++;
-                    }
-                    else if (filter.values) {
-                        const values = filter.values;
-                        search.append(`filtering[${index}].propertyPath`, filter.propertyPath);
-                        search.append(`filtering[${index}].function`, filter.function.id.toString());
-                        search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
-                        for (let iv = 0; iv < values.length; iv++) {
-                            const val = values[iv];
-                            search.append(`filtering[${index}].values[${iv}]`, val);
+                    });
+                }
+                if (request.filtering) {
+                    let index = 0;
+                    request.filtering.forEach((filter) => {
+                        if (filter.value) {
+                            const value = filter.value;
+                            search.append(`filtering[${index}].propertyPath`, filter.propertyPath);
+                            search.append(`filtering[${index}].function`, filter.function.id.toString());
+                            search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
+                            search.append(`filtering[${index}].value`, value);
+                            if (filter.isSensitiveCase) {
+                                search.append(`filtering[${index}].isSensitiveCase`, 'true');
+                            }
+                            index++;
                         }
-                    }
-                });
+                        else if (filter.values) {
+                            const values = filter.values;
+                            search.append(`filtering[${index}].propertyPath`, filter.propertyPath);
+                            search.append(`filtering[${index}].function`, filter.function.id.toString());
+                            search.append(`filtering[${index}].propertyType`, filter.propertyTypeDesc.id.toString());
+                            for (let iv = 0; iv < values.length; iv++) {
+                                const val = values[iv];
+                                search.append(`filtering[${index}].values[${iv}]`, val);
+                            }
+                        }
+                    });
+                }
             }
             return search;
         }

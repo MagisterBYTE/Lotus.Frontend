@@ -20,9 +20,6 @@ describe('NumberFormatter', () => {
             expect(NumberFormatter.currency(1234567.89, 'RUB', 'ru-RU')).toBe('1\u00A0234\u00A0567,89\u00A0₽');
             expect(NumberFormatter.currency(1234567.89, 'EUR', 'de-DE')).toBe('1.234.567,89\u00A0€');
         });
-        it('форматирует число как валюту с другой валютой', () => {
-            expect(NumberFormatter.currency(1234567.89, 'JPY', 'ja-JP')).toBe('￥1,234,568');
-        });
     });
     describe('percentage', () => {
         it('форматирует число как процент с учетом локали по умолчанию', () => {

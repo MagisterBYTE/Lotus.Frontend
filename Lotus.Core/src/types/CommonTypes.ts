@@ -25,6 +25,11 @@ export type OnlyValues<T> = {
 }[keyof T];
 
 /**
+ * Делает указанные поля в исходном типе необязательными
+ */
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+/**
  * Обобщенный тип, который позволяет извлечь тип конкретного свойства из объекта.
  * @template TType - это объектный тип, из которого мы хотим получить свойство.
  * @template TPropertyName - это имя свойства, которое мы хотим извлечь. Оно должно принадлежать ключам типа TType (обозначается keyof TType).
@@ -37,6 +42,4 @@ export type PropertyType<TType, TPropertyName extends keyof TType> = TType[TProp
  * @template TKey - Тип ключей словаря (строка, символ, число или TGuid).
  * @template TValue - Тип значений, связанных с ключами.
  */
-export type Dictionary<TKey extends string | symbol | number | TGuid, TValue> = {
-    [key in TKey]: TValue
-}
+export type Dictionary<TKey extends string | symbol | number | TGuid, TValue> = { [key in TKey]: TValue }

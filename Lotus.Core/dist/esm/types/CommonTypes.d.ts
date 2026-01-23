@@ -24,6 +24,10 @@ export type OnlyValues<T> = {
     [K in keyof T]: T[K] extends Function ? never : T[K];
 }[keyof T];
 /**
+ * Делает указанные поля в исходном типе необязательными
+ */
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+/**
  * Обобщенный тип, который позволяет извлечь тип конкретного свойства из объекта.
  * @template TType - это объектный тип, из которого мы хотим получить свойство.
  * @template TPropertyName - это имя свойства, которое мы хотим извлечь. Оно должно принадлежать ключам типа TType (обозначается keyof TType).

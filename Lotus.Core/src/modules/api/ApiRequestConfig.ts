@@ -43,6 +43,31 @@ export class ApiRequestConfig implements IApiRequestConfig
    * Режим обработки куки и авторизации (omit, same-origin, include)
    */
   credentials?: RequestCredentials;
+
+  /** 
+   * Сигнал отмены запроса
+   */
+  signal?: AbortSignal | null;
+  // #endregion
+
+  // #region Properties
+  public get abortSignal(): AbortSignal | null
+  {
+    if (this.signal)
+    {
+      return this.signal;
+    }
+    else
+    {
+      // Если timeout передан, создаем сигнал, который прервется через X мс
+      if (this.timeout)
+      {
+        return AbortSignal.timeout(this.timeout);
+      }
+    }
+
+    return null;
+  }
   // #endregion
 
   /**
@@ -56,6 +81,7 @@ export class ApiRequestConfig implements IApiRequestConfig
     this.method = initialConfig.method || 'GET';
     this.body = initialConfig.body;
     this.credentials = initialConfig.credentials;
+    this.signal = initialConfig.signal ?? null;
   }
 
   /**
@@ -243,7 +269,8 @@ export class ApiRequestConfig implements IApiRequestConfig
       headers: this.headers,
       body: this.body,
       timeout: this.timeout,
-      credentials: this.credentials
+      credentials: this.credentials,
+      signal: this.signal
     };
   }
 }

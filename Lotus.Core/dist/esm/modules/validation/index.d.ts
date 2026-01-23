@@ -1,4 +1,5 @@
-export { type IValidation } from './Validation';
+export { type IValidateItem } from './ValidateItem';
+export { type IValidateObject } from './ValidateObject';
 export { ValidationHelper } from './ValidationHelper';
 export { type IValidationItem } from './ValidationItem';
 export { type TValidationLevel } from './ValidationLevel';
