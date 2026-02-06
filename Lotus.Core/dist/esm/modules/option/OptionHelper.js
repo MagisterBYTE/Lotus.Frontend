@@ -152,11 +152,12 @@ export class OptionHelper {
     static getLabelOrFirst(options, initialSelectedValue) {
         if (Assert.existValue(initialSelectedValue)) {
             let text = '';
-            options.forEach((element) => {
-                if (element.value === initialSelectedValue) {
-                    text = element.label;
+            for (const option of options) {
+                if (option.value == initialSelectedValue) {
+                    text = option.label;
+                    break;
                 }
-            });
+            }
             return text;
         }
         return options[0].label;
@@ -172,11 +173,12 @@ export class OptionHelper {
         if (Assert.existValue(initialSelectedValue)) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let icon = undefined;
-            options.forEach((element) => {
-                if (element.value === initialSelectedValue) {
-                    icon = element.icon;
+            for (const option of options) {
+                if (option.value == initialSelectedValue) {
+                    icon = option.icon;
+                    break;
                 }
-            });
+            }
             return icon;
         }
         return options[0].icon;
@@ -190,11 +192,11 @@ export class OptionHelper {
     static getLabelsOrEmpty(options, initialSelectedValues) {
         if (initialSelectedValues && initialSelectedValues.length > 0) {
             const texts = [];
-            options.forEach((element) => {
-                if (initialSelectedValues.find((x) => x === element.value)) {
-                    texts.push(element.label);
+            for (const option of options) {
+                if (initialSelectedValues.find((x) => x == option.value)) {
+                    texts.push(option.label);
                 }
-            });
+            }
             return texts;
         }
         else {
@@ -210,7 +212,7 @@ export class OptionHelper {
     static getOptionByValueOrFirst(options, selectedValue) {
         if (Assert.existValue(selectedValue)) {
             for (const option of options) {
-                if (option.value === selectedValue) {
+                if (option.value == selectedValue) {
                     return option;
                 }
             }
@@ -226,7 +228,7 @@ export class OptionHelper {
     static getOptionByValueOrUndefined(options, selectedValue) {
         if (Assert.existValue(selectedValue)) {
             for (const element of options) {
-                if (element.value === selectedValue) {
+                if (element.value == selectedValue) {
                     return element;
                 }
             }
@@ -242,11 +244,12 @@ export class OptionHelper {
     static getLabelByValue(options, selectedValue) {
         let text = '';
         if (Assert.existValue(selectedValue)) {
-            options.forEach((element) => {
-                if (element.value === selectedValue) {
-                    text = element.label;
+            for (const option of options) {
+                if (option.value == selectedValue) {
+                    text = option.label;
+                    break;
                 }
-            });
+            }
         }
         return text;
     }
@@ -261,11 +264,12 @@ export class OptionHelper {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let icon = undefined;
         if (Assert.existValue(selectedValue)) {
-            options.forEach((element) => {
-                if (element.value === selectedValue) {
-                    icon = element.icon;
+            for (const option of options) {
+                if (option.value == selectedValue) {
+                    icon = option.icon;
+                    break;
                 }
-            });
+            }
         }
         return icon;
     }
@@ -280,17 +284,18 @@ export class OptionHelper {
             if (Array.isArray(selectedValues)) {
                 if (selectedValues.length > 0) {
                     const optionsSelected = [];
-                    options.forEach((element) => {
-                        if (selectedValues.find((x) => x === element.value)) {
-                            optionsSelected.push(element);
+                    for (const option of options) {
+                        // eslint-disable-next-line max-depth
+                        if (selectedValues.find((x) => x == option.value)) {
+                            optionsSelected.push(option);
                         }
-                    });
+                    }
                     return optionsSelected;
                 }
             }
             else {
                 for (const element of options) {
-                    if (element.value === selectedValues) {
+                    if (element.value == selectedValues) {
                         return [element];
                     }
                 }
@@ -307,11 +312,11 @@ export class OptionHelper {
     static getLabelsByValues(options, selectedValues) {
         if (selectedValues && selectedValues.length > 0) {
             const texts = [];
-            options.forEach((element) => {
-                if (selectedValues.find((x) => x === element.value)) {
-                    texts.push(element.label);
+            for (const option of options) {
+                if (selectedValues.find((x) => x == option.value)) {
+                    texts.push(option.label);
                 }
-            });
+            }
             return texts;
         }
         else {
@@ -370,7 +375,7 @@ export class OptionHelper {
     static hasIcons(options, context) {
         for (const option of options) {
             if (option.icon) {
-                if (typeof option.icon == 'function') {
+                if (typeof option.icon === 'function') {
                     if (option.icon(option, context))
                         return true;
                 }

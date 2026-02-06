@@ -1,0 +1,1 @@
+export { Vector2D, type IVector2D } from './Vector2';

@@ -83,6 +83,185 @@ export class FilterPropertyHelper {
                                     const right = Number(filterProperty.values[1]);
                                     return check > left && check < right;
                                 });
+                            case 'includeAny':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    // Если нет значений для фильтрации - пропускаем элемент
+                                    if (!filterProperty.values || filterProperty.values.length === 0) {
+                                        return true;
+                                    }
+                                    // Если значение пустое - элемент не проходит фильтр для IncludeAny
+                                    if (value === null || value === undefined) {
+                                        return false;
+                                    }
+                                    // Для целого числа: проверяем содержит ли строка хотя бы одно из значений
+                                    if (typeof value === 'number') {
+                                        return filterProperty.values.some((filterValue) => value == Number(filterValue));
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        return filterProperty.values.some((filterValue) => String(value.id).includes(filterValue));
+                                    }
+                                    // Для массива строк: проверяем пересечение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        // Проверяем, есть ли хотя бы одно общее значение
+                                        return filterProperty.values.some((filterValue) => value.some((item) => typeof item === 'string' && item.includes(filterValue)));
+                                    }
+                                    // Для массива чисел: проверяем пересечение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'number') {
+                                        // Проверяем, есть ли хотя бы одно общее значение
+                                        return filterProperty.values.some((filterValue) => value.some((item) => item === Number(filterValue)));
+                                    }
+                                    // Для массивов объектов с id
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        const ids = value.map((item) => String(item.id));
+                                        return filterProperty.values.some((filterValue) => ids.some((id) => id.includes(filterValue)));
+                                    }
+                                    return false;
+                                });
+                            case 'includeAll':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    if (!filterProperty.values || filterProperty.values.length === 0) {
+                                        return true;
+                                    }
+                                    if (value === null || value === undefined) {
+                                        return false;
+                                    }
+                                    // Для строки: проверяем содержит ли строка ВСЕ значения
+                                    // Для целого числа: проверяем содержит ли строка хотя бы одно из значений
+                                    if (typeof value === 'number') {
+                                        return filterProperty.values.every((filterValue) => value == Number(filterValue));
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        return filterProperty.values.every((filterValue) => String(value.id).includes(filterValue));
+                                    }
+                                    // Для массива строк: проверяем что все значения фильтра присутствуют в массиве
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        return filterProperty.values.every((filterValue) => value.some((item) => typeof item === 'string' && item.includes(filterValue)));
+                                    }
+                                    // Для массива чисел: проверяем что все значения фильтра присутствуют в массиве
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'number') {
+                                        // Проверяем, есть ли хотя бы одно общее значение
+                                        return filterProperty.values.every((filterValue) => value.some((item) => item === Number(filterValue)));
+                                    }
+                                    // Для массивов объектов с id
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        const ids = value.map((item) => String(item.id));
+                                        return filterProperty.values.every((filterValue) => ids.some((id) => id.includes(filterValue)));
+                                    }
+                                    return false;
+                                });
+                            case 'includeEquals':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    if (!filterProperty.values) {
+                                        return true;
+                                    }
+                                    if (value === null || value === undefined) {
+                                        // Для IncludeEquals пустое значение равно только пустому массиву фильтров
+                                        return filterProperty.values.length === 0;
+                                    }
+                                    // Для строки: сравниваем строки
+                                    if (typeof value === 'number') {
+                                        // Если одно значение - простое сравнение
+                                        if (filterProperty.values.length === 1) {
+                                            return value === Number(filterProperty.values[0]);
+                                        }
+                                        // Если несколько значений - массив должен содержать только эти значения
+                                        return false; // Строка не может быть равна массиву значений
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        // Если одно значение - простое сравнение
+                                        if (filterProperty.values.length === 1) {
+                                            return value.id === filterProperty.values[0];
+                                        }
+                                        // Если несколько значений - массив должен содержать только эти значения
+                                        return false; // Объект не может быть равна массиву значений
+                                    }
+                                    // Для массива: проверяем точное совпадение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        if (value.length !== filterProperty.values.length) {
+                                            return false;
+                                        }
+                                        // Сортируем и сравниваем
+                                        const sortedValue = [...value].sort();
+                                        const sortedFilter = [...filterProperty.values].sort();
+                                        return sortedValue.every((item, index) => String(item) === sortedFilter[index]);
+                                    }
+                                    // Для массива чисел: проверяем точное совпадение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'number') {
+                                        if (value.length !== filterProperty.values.length) {
+                                            return false;
+                                        }
+                                        // Сортируем и сравниваем
+                                        const sortedValue = [...value].sort();
+                                        const sortedFilter = [...filterProperty.values].sort();
+                                        return sortedValue.every((item, index) => Number(item) === Number(sortedFilter[index]));
+                                    }
+                                    // Для массива: проверяем точное совпадение массивов
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        if (value.length !== filterProperty.values.length) {
+                                            return false;
+                                        }
+                                        // Сортируем и сравниваем
+                                        const sortedValue = value.map((x) => x.id).sort();
+                                        const sortedFilter = [...filterProperty.values].sort();
+                                        return sortedValue.every((item, index) => String(item) === sortedFilter[index]);
+                                    }
+                                    return false;
+                                });
+                            case 'includeNone':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    // Если нет значений для фильтрации - все элементы проходят
+                                    if (!filterProperty.values || filterProperty.values.length === 0) {
+                                        return true;
+                                    }
+                                    if (value === null || value === undefined) {
+                                        return true; // Пустое значение не содержит никаких значений
+                                    }
+                                    // Для строки: проверяем что строка НЕ содержит ни одного значения
+                                    if (typeof value === 'number') {
+                                        return filterProperty.values.every((filterValue) => !(value == Number(filterValue)));
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        return filterProperty.values.every((filterValue) => !String(value.id).includes(filterValue));
+                                    }
+                                    // Для массива строк: проверяем что ни одно значение фильтра не присутствует в массиве
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        return filterProperty.values.every((filterValue) => !value.some((item) => typeof item === 'string' && item.includes(filterValue)));
+                                    }
+                                    // Для массива чисел: проверяем что ни одно значение фильтра не присутствует в массиве
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'number') {
+                                        return filterProperty.values.every((filterValue) => !value.some((item) => item === Number(filterValue)));
+                                    }
+                                    // Для массивов объектов с id
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        const ids = value.map((item) => String(item.id));
+                                        return filterProperty.values.every((filterValue) => !ids.some((id) => id.includes(filterValue)));
+                                    }
+                                    return true;
+                                });
                         }
                     }
                     break;
@@ -110,6 +289,165 @@ export class FilterPropertyHelper {
                                 return massive.filter((x) => String(ObjectHelper.getValue(x, key)).localeCompare(filterProperty.value) > 0);
                             case 'greaterThanOrEqual':
                                 return massive.filter((x) => String(ObjectHelper.getValue(x, key)).localeCompare(filterProperty.value) >= 0);
+                            case 'includeAny':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    // Если нет значений для фильтрации - пропускаем элемент
+                                    if (!filterProperty.values || filterProperty.values.length === 0) {
+                                        return true;
+                                    }
+                                    // Если значение пустое - элемент не проходит фильтр для IncludeAny
+                                    if (value === null || value === undefined) {
+                                        return false;
+                                    }
+                                    // Для строки: проверяем содержит ли строка хотя бы одно из значений
+                                    if (typeof value === 'string') {
+                                        return filterProperty.values.some((filterValue) => value.includes(filterValue));
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        return filterProperty.values.some((filterValue) => String(value.id).includes(filterValue));
+                                    }
+                                    // Для массива строк: проверяем пересечение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        // Проверяем, есть ли хотя бы одно общее значение
+                                        return filterProperty.values.some((filterValue) => value.some((item) => typeof item === 'string' && item.includes(filterValue)));
+                                    }
+                                    // Для массива чисел: проверяем пересечение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'number') {
+                                        // Проверяем, есть ли хотя бы одно общее значение
+                                        return filterProperty.values.some((filterValue) => value.some((item) => item === Number(filterValue)));
+                                    }
+                                    // Для массивов объектов с id
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        const ids = value.map((item) => String(item.id));
+                                        return filterProperty.values.some((filterValue) => ids.some((id) => id.includes(filterValue)));
+                                    }
+                                    return false;
+                                });
+                            case 'includeAll':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    if (!filterProperty.values || filterProperty.values.length === 0) {
+                                        return true;
+                                    }
+                                    if (value === null || value === undefined) {
+                                        return false;
+                                    }
+                                    // Для строки: проверяем содержит ли строка ВСЕ значения
+                                    if (typeof value === 'string') {
+                                        return filterProperty.values.every((filterValue) => value.includes(filterValue));
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        return filterProperty.values.every((filterValue) => String(value.id).includes(filterValue));
+                                    }
+                                    // Для массива строк: проверяем что все значения фильтра присутствуют в массиве
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        return filterProperty.values.every((filterValue) => value.some((item) => typeof item === 'string' && item.includes(filterValue)));
+                                    }
+                                    // Для массивов объектов с id
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        const ids = value.map((item) => String(item.id));
+                                        return filterProperty.values.every((filterValue) => ids.some((id) => id.includes(filterValue)));
+                                    }
+                                    return false;
+                                });
+                            case 'includeEquals':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    if (!filterProperty.values) {
+                                        return true;
+                                    }
+                                    if (value === null || value === undefined) {
+                                        // Для IncludeEquals пустое значение равно только пустому массиву фильтров
+                                        return filterProperty.values.length === 0;
+                                    }
+                                    // Для строки: сравниваем строки
+                                    if (typeof value === 'string') {
+                                        // Если одно значение - простое сравнение
+                                        if (filterProperty.values.length === 1) {
+                                            return value === filterProperty.values[0];
+                                        }
+                                        // Если несколько значений - массив должен содержать только эти значения
+                                        return false; // Строка не может быть равна массиву значений
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        // Если одно значение - простое сравнение
+                                        if (filterProperty.values.length === 1) {
+                                            return value.id === filterProperty.values[0];
+                                        }
+                                        // Если несколько значений - массив должен содержать только эти значения
+                                        return false; // Объект не может быть равна массиву значений
+                                    }
+                                    // Для массива: проверяем точное совпадение массивов
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        if (value.length !== filterProperty.values.length) {
+                                            return false;
+                                        }
+                                        // Сортируем и сравниваем
+                                        const sortedValue = [...value].sort();
+                                        const sortedFilter = [...filterProperty.values].sort();
+                                        return sortedValue.every((item, index) => String(item) === sortedFilter[index]);
+                                    }
+                                    // Для массива: проверяем точное совпадение массивов
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        if (value.length !== filterProperty.values.length) {
+                                            return false;
+                                        }
+                                        // Сортируем и сравниваем
+                                        const sortedValue = value.map((x) => x.id).sort();
+                                        const sortedFilter = [...filterProperty.values].sort();
+                                        return sortedValue.every((item, index) => String(item) === sortedFilter[index]);
+                                    }
+                                    return false;
+                                });
+                            case 'includeNone':
+                                return massive.filter((x) => {
+                                    const value = ObjectHelper.getValue(x, key);
+                                    // Если нет значений для фильтрации - все элементы проходят
+                                    if (!filterProperty.values || filterProperty.values.length === 0) {
+                                        return true;
+                                    }
+                                    if (value === null || value === undefined) {
+                                        return true; // Пустое значение не содержит никаких значений
+                                    }
+                                    // Для строки: проверяем что строка НЕ содержит ни одного значения
+                                    if (typeof value === 'string') {
+                                        return filterProperty.values.every((filterValue) => !value.includes(filterValue));
+                                    }
+                                    // Для объектов с id
+                                    if (typeof value === 'object' && value !== null && 'id' in value) {
+                                        return filterProperty.values.every((filterValue) => !String(value.id).includes(filterValue));
+                                    }
+                                    // Для массива строк: проверяем что ни одно значение фильтра не присутствует в массиве
+                                    if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                                        return filterProperty.values.every((filterValue) => !value.some((item) => typeof item === 'string' && item.includes(filterValue)));
+                                    }
+                                    // Для массивов объектов с id
+                                    if (Array.isArray(value) &&
+                                        value.length > 0 &&
+                                        typeof value[0] === 'object' &&
+                                        value[0] !== null &&
+                                        'id' in value[0]) {
+                                        const ids = value.map((item) => String(item.id));
+                                        return filterProperty.values.every((filterValue) => !ids.some((id) => id.includes(filterValue)));
+                                    }
+                                    return true;
+                                });
                         }
                     }
                     break;

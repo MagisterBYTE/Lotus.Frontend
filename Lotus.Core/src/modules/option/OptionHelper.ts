@@ -202,13 +202,14 @@ export abstract class OptionHelper
     if (Assert.existValue(initialSelectedValue))
     {
       let text = '';
-      options.forEach((element) =>
+      for (const option of options)
       {
-        if (element.value === initialSelectedValue)
+        if (option.value == initialSelectedValue)
         {
-          text = element.label;
+          text = option.label;
+          break;
         }
-      });
+      }
 
       return text;
     }
@@ -229,13 +230,14 @@ export abstract class OptionHelper
     {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let icon: any = undefined;
-      options.forEach((element) =>
+      for (const option of options)
       {
-        if (element.value === initialSelectedValue)
+        if (option.value == initialSelectedValue)
         {
-          icon = element.icon;
+          icon = option.icon;
+          break;
         }
-      });
+      }
 
       return icon;
     }
@@ -255,13 +257,13 @@ export abstract class OptionHelper
     {
       const texts: string[] = [];
 
-      options.forEach((element) =>
+      for (const option of options)
       {
-        if (initialSelectedValues.find((x) => x === element.value))
+        if (initialSelectedValues.find((x) => x == option.value))
         {
-          texts.push(element.label);
+          texts.push(option.label);
         }
-      });
+      }
 
       return texts;
     }
@@ -283,7 +285,7 @@ export abstract class OptionHelper
     {
       for (const option of options)
       {
-        if (option.value === selectedValue)
+        if (option.value == selectedValue)
         {
           return option;
         }
@@ -305,7 +307,7 @@ export abstract class OptionHelper
     {
       for (const element of options)
       {
-        if (element.value === selectedValue)
+        if (element.value == selectedValue)
         {
           return element;
         }
@@ -326,13 +328,14 @@ export abstract class OptionHelper
     let text = '';
     if (Assert.existValue(selectedValue))
     {
-      options.forEach((element) =>
+      for (const option of options)
       {
-        if (element.value === selectedValue)
+        if (option.value == selectedValue)
         {
-          text = element.label;
+          text = option.label;
+          break;
         }
-      });
+      }
     }
 
     return text;
@@ -351,13 +354,14 @@ export abstract class OptionHelper
     let icon: any = undefined;
     if (Assert.existValue(selectedValue))
     {
-      options.forEach((element) =>
+      for (const option of options)
       {
-        if (element.value === selectedValue)
+        if (option.value == selectedValue)
         {
-          icon = element.icon;
+          icon = option.icon;
+          break;
         }
-      });
+      }
     }
 
     return icon;
@@ -379,13 +383,14 @@ export abstract class OptionHelper
         {
           const optionsSelected: IOption[] = [];
 
-          options.forEach((element) =>
+          for (const option of options)
           {
-            if (selectedValues.find((x) => x === element.value))
+            // eslint-disable-next-line max-depth
+            if (selectedValues.find((x) => x == option.value))
             {
-              optionsSelected.push(element);
+              optionsSelected.push(option);
             }
-          });
+          }
 
           return optionsSelected;
         }
@@ -394,7 +399,7 @@ export abstract class OptionHelper
       {
         for (const element of options)
         {
-          if (element.value === selectedValues)
+          if (element.value == selectedValues)
           {
             return [element];
           }
@@ -417,13 +422,13 @@ export abstract class OptionHelper
     {
       const texts: string[] = [];
 
-      options.forEach((element) =>
+      for (const option of options)
       {
-        if (selectedValues.find((x) => x === element.value))
+        if (selectedValues.find((x) => x == option.value))
         {
-          texts.push(element.label);
+          texts.push(option.label);
         }
-      });
+      }
 
       return texts;
     }
@@ -503,7 +508,7 @@ export abstract class OptionHelper
     {
       if (option.icon)
       {
-        if (typeof option.icon == 'function')
+        if (typeof option.icon === 'function')
         {
           if (option.icon(option, context)) return true;
         }

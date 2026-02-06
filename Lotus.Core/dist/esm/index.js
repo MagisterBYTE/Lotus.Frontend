@@ -2,6 +2,7 @@ export * from './constants';
 export * from './converters';
 export * from './environment';
 export * from './formatters';
+export * from './graphics';
 export * from './helpers';
 export * from './localization';
 export * from './math';

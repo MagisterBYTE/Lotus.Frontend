@@ -3,6 +3,7 @@ export { type Dictionary, type MakeOptional, type OnlyValues, type PropertyType,
 export { castToConstantable, instanceOfConstantable, type IConstantable } from './Constantable';
 export { castToDatasavable, instanceOfDatasavable, type IDatasavable } from './Datasavable';
 export { castToDestroyable, instanceOfDestroyable, type IDestroyable } from './Destroyable';
+export { castToDisplayNameable, instanceOfDisplayNameable, type IDisplayNameable } from './DisplayNameable';
 export { castToEditable, instanceOfEditable, type IEditable } from './Editable';
 export { castToEntity, instanceOfEntity, type IEntity } from './Entity';
 export { castToEquatable, instanceOfEquatable, type IEquatable } from './Equatable';
@@ -18,7 +19,7 @@ export { type IProxiedObject } from './ProxiedObject';
 export { type IRecordObject } from './RecordObject';
 export { type IRect } from './Rect';
 export { type IRectOffset, type IRectSizeOffset } from './RectOffset';
-export { castToResult, instanceOfResult, createResultFromError, type IResult, type IResultMessage } from './Result';
+export { castToResult, createResultFromError, instanceOfResult, type IResult, type IResultMessage } from './Result';
 export { type ISize } from './Size';
 export { type IStorage } from './Storage';
 //# sourceMappingURL=index.d.ts.map

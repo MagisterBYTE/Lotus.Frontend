@@ -51,6 +51,6 @@ export declare class ApiService {
     /**
      * DELETE запрос
      */
-    delete<TResponse = unknown>(path: string, config?: ApiRequestConfig): Promise<TResponse>;
+    delete<TResponse = unknown>(path: string, searchParams?: URLSearchParams, config?: ApiRequestConfig): Promise<TResponse>;
 }
 //# sourceMappingURL=ApiService.d.ts.map

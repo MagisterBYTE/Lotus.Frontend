@@ -11,6 +11,14 @@ export declare abstract class BooleanConverter {
      */
     static toBoolean(item: unknown, defaultValue?: boolean): boolean;
     /**
+     * Преобразование объекта в логическое значение.
+     * @param item Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию если преобразовать не удалось.
+     * @returns Логическое значение.
+     */
+    static toBooleanNullable(item: unknown, isNullable: boolean, defaultValue?: boolean): boolean | undefined;
+    /**
      * Преобразование текста в логическое значение.
      * @param value Текст.
      * @returns Логическое значение.

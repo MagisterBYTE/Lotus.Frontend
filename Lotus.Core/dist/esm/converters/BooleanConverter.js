@@ -20,7 +20,7 @@ export class BooleanConverter {
      * @returns Логическое значение.
      */
     static toBoolean(item, defaultValue = false) {
-        if (item) {
+        if (item !== null && item !== undefined) {
             if (typeof item == 'boolean') {
                 return item;
             }
@@ -32,6 +32,27 @@ export class BooleanConverter {
             }
         }
         return defaultValue;
+    }
+    /**
+     * Преобразование объекта в логическое значение.
+     * @param item Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию если преобразовать не удалось.
+     * @returns Логическое значение.
+     */
+    static toBooleanNullable(item, isNullable, defaultValue = false) {
+        if (item !== null && item !== undefined) {
+            if (typeof item == 'boolean') {
+                return item;
+            }
+            if (typeof item == 'string') {
+                return BooleanConverter.TrueValues.indexOf(item) > -1;
+            }
+            if (typeof item == 'number') {
+                return Boolean(item);
+            }
+        }
+        return isNullable ? undefined : defaultValue;
     }
     /**
      * Преобразование текста в логическое значение.

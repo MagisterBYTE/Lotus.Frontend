@@ -34,7 +34,11 @@ export const TActionCommandTypes = {
 
   isActionCommandType(value: unknown): value is TActionCommandType
   {
-    return (TActionCommandTypeValues as readonly unknown[]).includes(value);
+    if (typeof value === 'string')
+    {
+      return TActionCommandTypeValues.includes(value as TActionCommandType);
+    } 
+    return false;
   },
 
   getByIndex(index: number): TActionCommandType | undefined

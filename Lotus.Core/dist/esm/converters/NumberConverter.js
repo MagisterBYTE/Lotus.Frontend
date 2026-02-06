@@ -39,6 +39,41 @@ export class NumberConverter {
         }
         return resultValue;
     }
+    /**
+     * Преобразование объекта в целое число.
+     * @param value Объект.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toInteger(value, defaultValue = -1) {
+        if (value === null || value === undefined)
+            return defaultValue;
+        if (typeof value === 'number')
+            return value;
+        if (typeof value === 'string') {
+            const num = Number.parseInt(value);
+            return Number.isNaN(num) ? defaultValue : num;
+        }
+        return defaultValue;
+    }
+    /**
+     * Преобразование объекта в вещественное число.
+     * @param value Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toIntegerNullable(value, isNullable, defaultValue = -1) {
+        if (value === null || value === undefined)
+            return isNullable ? undefined : defaultValue;
+        if (typeof value === 'number')
+            return value;
+        if (typeof value === 'string') {
+            const num = Number.parseInt(value);
+            return Number.isNaN(num) ? (isNullable ? undefined : defaultValue) : num;
+        }
+        return isNullable ? undefined : defaultValue;
+    }
     // #endregion
     // #region Float
     /**
@@ -81,6 +116,41 @@ export class NumberConverter {
             return defaultValue;
         }
         return resultValue;
+    }
+    /**
+     * Преобразование объекта в вещественное число.
+     * @param value Объект.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toFloat(value, defaultValue = -1) {
+        if (value === null || value === undefined)
+            return defaultValue;
+        if (typeof value === 'number')
+            return value;
+        if (typeof value === 'string') {
+            const num = Number.parseFloat(value);
+            return Number.isNaN(num) ? defaultValue : num;
+        }
+        return defaultValue;
+    }
+    /**
+     * Преобразование объекта в вещественное число.
+     * @param value Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toFloatNullable(value, isNullable, defaultValue = -1) {
+        if (value === null || value === undefined)
+            return isNullable ? undefined : defaultValue;
+        if (typeof value === 'number')
+            return value;
+        if (typeof value === 'string') {
+            const num = Number.parseFloat(value);
+            return Number.isNaN(num) ? (isNullable ? undefined : defaultValue) : num;
+        }
+        return isNullable ? undefined : defaultValue;
     }
 }
 //# sourceMappingURL=NumberConverter.js.map

@@ -311,7 +311,7 @@ export class BaseActionCommand implements IActionCommand
     {
       if (Assert.isArrayWithData(permissions))
       {
-        return ArrayHelper.checkInArrayAny(this._permissionsVisible, permissions);
+        return ArrayHelper.checkIn(this._permissionsVisible, permissions);
       }
 
       return false;

@@ -21,6 +21,25 @@ export abstract class DateTimeConverter
   }
 
   /**
+   * Преобразование объекта в значение даты-времени.
+   * @param value Объект.
+   * @param isNullable Статус поддержки Nullable.
+   * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
+   * @returns Значение.
+   */
+  public static toDateTimeNullable(value: unknown, isNullable:boolean, defaultValue: Date = new Date(Date.now())): Date|undefined
+  {
+    if (value === null || value === undefined) return isNullable ? undefined : defaultValue;
+    if (value instanceof Date) 
+    {
+      return new Date(value.getTime()); // Создаем копию
+    }
+    if (typeof value === 'number') return DateTimeConverter.fromTimestamp(value);
+    if (typeof value === 'string') return DateTimeConverter.parse(value, defaultValue);
+    return isNullable ? undefined : defaultValue;
+  }
+
+  /**
    * Преобразование в текст, который можно сконвертировать в тип дата-время.
    * @param text Текст.
    * @param formatDate Формат даты-времени.

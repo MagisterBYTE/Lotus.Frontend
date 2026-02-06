@@ -1,9 +1,16 @@
+import { IPageInfoRequest, IPageInfoResponse } from './PageInfo';
 import { IResponse } from './Response';
 import { IResponsePage } from './ResponsePage';
 /**
  * Вспомогательный класс для работы с интерфейсом для получения данных
  */
 export declare abstract class ResponseHelper {
+    /**
+     * Проверка на успешный ответ
+     * Успешный ответ считается если result undefined или result успешный
+     * @param response
+     */
+    static succeed(response: IResponse): boolean;
     /**
      * Преобразует полезную нагрузку (payload) ответа с использованием синхронной функции преобразования
      * @template TSource - Исходный тип полезной нагрузки
@@ -66,5 +73,34 @@ export declare abstract class ResponseHelper {
      * Создает структурированный постраничный ответ при обработке ошибок
      */
     static responsePageFromErrorResult<TPayload>(error: unknown, payload?: TPayload[]): IResponsePage<TPayload>;
+    /**
+     * Преобразует результат постраничной выборки в структуру с информацией о пагинации.
+     *
+     * @template TItem - Тип элементов массива
+     * @param {TItem[]} pageData - Массив данных текущей страницы (результат slicePage)
+     * @param {IPageInfoRequest} pageInfo - Параметры пагинации запроса
+     * @param {number} totalCount - Общее количество элементов в исходном наборе данных
+     * @returns {IPageInfoResponse} Структура с полной информацией о пагинации
+     *
+     * @example
+     * const persons = Persons; // Ваш массив из 46 элементов
+     * const pageInfoRequest = { pageNumber: 2, pageSize: 10 };
+     * const pageData = ArrayHelper.slicePage(persons, pageInfoRequest.pageNumber, pageInfoRequest.pageSize);
+     *
+     * const pageInfoResponse = buildPageInfoResponse(
+     *   pageData,
+     *   pageInfoRequest,
+     *   persons.length
+     * );
+     *
+     * // Результат:
+     * // {
+     * //   pageNumber: 2,
+     * //   pageSize: 10,
+     * //   currentPageSize: 10,
+     * //   totalCount: 46
+     * // }
+     */
+    static buildPageInfo<TItem>(pageData: TItem[], pageInfo: IPageInfoRequest, totalCount: number): IPageInfoResponse;
 }
 //# sourceMappingURL=ResponseHelper.d.ts.map

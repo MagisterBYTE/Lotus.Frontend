@@ -1,9 +1,10 @@
-import { IOption } from '#modules/option';
 import { IPropertyEditable } from './PropertyEditable';
 import { IPropertyFiltering } from './PropertyFiltering';
 import { IPropertyGrouping } from './PropertyGrouping';
+import { IPropertyRendering } from './PropertyRendering';
 import { IPropertySorting } from './PropertySorting';
 import { IPropertyTypeDesc } from './PropertyTypeDesc';
+import { IPropertyVisualSettings } from './PropertyVisualSettings';
 /**
  * Интерфейс для описания свойства объекта
  */
@@ -41,9 +42,9 @@ export interface IPropertyDescriptor {
      */
     isDateAsDay?: boolean;
     /**
-     * Опции возможных значений свойства
+     * Набор возможных значений свойства
      */
-    options?: IOption[];
+    possibleValues?: any[];
     /**
      * Статус поддержки сортировки по свойству
      */
@@ -60,6 +61,14 @@ export interface IPropertyDescriptor {
      * Статус поддержки редактирования свойства
      */
     editing?: IPropertyEditable;
+    /**
+     * Статус индивидуальной отрисовки свойства
+     */
+    rendering?: IPropertyRendering;
+    /**
+     * Статус наличия визуальных настроек свойства
+     */
+    visualSettings?: IPropertyVisualSettings;
     /**
      * Отображение указанного свойства как изображения
      */

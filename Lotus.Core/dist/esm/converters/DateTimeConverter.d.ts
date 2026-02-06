@@ -7,6 +7,14 @@ export declare abstract class DateTimeConverter {
      */
     static toDateTime(value: unknown, defaultValue?: Date): Date;
     /**
+     * Преобразование объекта в значение даты-времени.
+     * @param value Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось.
+     * @returns Значение.
+     */
+    static toDateTimeNullable(value: unknown, isNullable: boolean, defaultValue?: Date): Date | undefined;
+    /**
      * Преобразование в текст, который можно сконвертировать в тип дата-время.
      * @param text Текст.
      * @param formatDate Формат даты-времени.

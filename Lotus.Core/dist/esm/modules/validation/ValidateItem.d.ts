@@ -9,6 +9,6 @@ export interface IValidateItem<TValue = unknown> {
      * @param context Контекст вызова
      * @returns Объект валидации отдельного элемента/значения
      */
-    validateItem: (value: TValue, context?: any) => IValidationItem;
+    validateItem(value: TValue, context?: any): IValidationItem;
 }
 //# sourceMappingURL=ValidateItem.d.ts.map

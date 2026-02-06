@@ -18,6 +18,7 @@
     "#converters": "./src/converters/index.ts",
     "#environment": "./src/environment/index.ts",
     "#formatters": "./src/formatters/index.ts",
+    "#graphics": "./src/graphics/index.ts",
     "#helpers": "./src/helpers/index.ts",
     "#localization": "./src/localization/index.ts",
     "#math": "./src/math/index.ts",
@@ -52,6 +53,10 @@
       "import": "./dist/esm/formatters/index.js",
       "types": "./dist/esm/formatters/index.d.ts"
     },
+    "./graphics": {
+      "import": "./dist/esm/graphics/index.js",
+      "types": "./dist/esm/graphics/index.d.ts"
+    },
     "./helpers": {
       "import": "./dist/esm/helpers/index.js",
       "types": "./dist/esm/helpers/index.d.ts"
@@ -61,8 +66,8 @@
       "types": "./dist/esm/localization/index.d.ts"
     },
     "./math": {
-      "import": "./dist/esm/localization/index.js",
-      "types": "./dist/esm/localization/index.d.ts"
+      "import": "./dist/esm/math/index.js",
+      "types": "./dist/esm/math/index.d.ts"
     },
     "./modules/*": {
       "import": "./dist/esm/modules/*/index.js",

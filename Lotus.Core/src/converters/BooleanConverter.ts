@@ -24,7 +24,7 @@ export abstract class BooleanConverter
    */
   public static toBoolean(item: unknown, defaultValue: boolean = false): boolean
   {
-    if (item)
+    if (item !== null && item !== undefined)
     {
       if (typeof item == 'boolean')
       {
@@ -40,6 +40,33 @@ export abstract class BooleanConverter
       }
     }
     return defaultValue;
+  }
+
+  /**
+   * Преобразование объекта в логическое значение.
+   * @param item Объект.
+   * @param isNullable Статус поддержки Nullable.
+   * @param defaultValue Значение по умолчанию если преобразовать не удалось.
+   * @returns Логическое значение.
+   */
+  public static toBooleanNullable(item: unknown, isNullable:boolean, defaultValue: boolean = false): boolean|undefined
+  {
+    if (item !== null && item !== undefined)
+    {
+      if (typeof item == 'boolean')
+      {
+        return item;
+      }
+      if (typeof item == 'string')
+      {
+        return BooleanConverter.TrueValues.indexOf(item) > -1;
+      }
+      if (typeof item == 'number')
+      {
+        return Boolean(item);
+      }
+    }
+    return isNullable ? undefined : defaultValue;
   }
 
   /**

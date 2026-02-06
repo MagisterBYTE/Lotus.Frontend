@@ -1,7 +1,16 @@
+import { Assert } from '#utils';
 /**
  * Вспомогательный класс для работы с интерфейсом для получения данных
  */
 export class ResponseHelper {
+    /**
+     * Проверка на успешный ответ
+     * Успешный ответ считается если result undefined или result успешный
+     * @param response
+     */
+    static succeed(response) {
+        return Boolean(Assert.emptyValue(response.result) || (response.result && response.result.succeeded));
+    }
     /**
      * Преобразует полезную нагрузку (payload) ответа с использованием синхронной функции преобразования
      * @template TSource - Исходный тип полезной нагрузки
@@ -94,6 +103,52 @@ export class ResponseHelper {
             payload: payload
         };
         return response;
+    }
+    /**
+     * Преобразует результат постраничной выборки в структуру с информацией о пагинации.
+     *
+     * @template TItem - Тип элементов массива
+     * @param {TItem[]} pageData - Массив данных текущей страницы (результат slicePage)
+     * @param {IPageInfoRequest} pageInfo - Параметры пагинации запроса
+     * @param {number} totalCount - Общее количество элементов в исходном наборе данных
+     * @returns {IPageInfoResponse} Структура с полной информацией о пагинации
+     *
+     * @example
+     * const persons = Persons; // Ваш массив из 46 элементов
+     * const pageInfoRequest = { pageNumber: 2, pageSize: 10 };
+     * const pageData = ArrayHelper.slicePage(persons, pageInfoRequest.pageNumber, pageInfoRequest.pageSize);
+     *
+     * const pageInfoResponse = buildPageInfoResponse(
+     *   pageData,
+     *   pageInfoRequest,
+     *   persons.length
+     * );
+     *
+     * // Результат:
+     * // {
+     * //   pageNumber: 2,
+     * //   pageSize: 10,
+     * //   currentPageSize: 10,
+     * //   totalCount: 46
+     * // }
+     */
+    static buildPageInfo(pageData, pageInfo, totalCount) {
+        // Валидация входных данных
+        if (pageInfo.pageNumber < 0) {
+            throw new Error('Page number cannot be negative');
+        }
+        if (pageInfo.pageSize <= 0) {
+            throw new Error('Page size must be greater than 0');
+        }
+        if (totalCount < 0) {
+            throw new Error('Total count cannot be negative');
+        }
+        return {
+            pageNumber: pageInfo.pageNumber,
+            pageSize: pageInfo.pageSize,
+            currentPageSize: pageData.length,
+            totalCount: totalCount
+        };
     }
 }
 //# sourceMappingURL=ResponseHelper.js.map

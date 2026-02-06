@@ -4,7 +4,7 @@ import { ValidationResult } from './ValidationResult';
  */
 export interface IValidateObject {
     /**
-     * Поле содержащие результат все валидации
+     * Поле содержащие результат всей валидации
      */
     validationStatus: ValidationResult;
     /**

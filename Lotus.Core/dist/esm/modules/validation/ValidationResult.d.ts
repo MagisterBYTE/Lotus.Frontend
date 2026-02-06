@@ -63,6 +63,18 @@ export declare class ValidationResult implements IValidationResult {
      */
     isValid(): boolean;
     /**
+     * Хеширирование результата валидации в виде числа
+     * По смыслу должно давать одинаковый результат независимо от порядка ключей
+     * @returns Хеш результат валидации
+     */
+    hash(): number;
+    /**
+   * Сравнивает текущий результат валидации с другим на идентичность
+   * @param other Объект для сравнения
+   * @returns true если результаты идентичны
+   */
+    isEqual(other: ValidationResult): boolean;
+    /**
      * Добавляет элемент валидации
      * @param key Ключ для группировки элементов
      * @param item Элемент валидации для добавления
@@ -136,6 +148,13 @@ export declare class ValidationResult implements IValidationResult {
      * @param errorText Текст ошибки (опционально)
      */
     addErrorRequired(key: string, value: unknown, errorText?: string): void;
+    /**
+     * Проверяет обязательность заполнения поля массива и нахождения там данных
+     * @param key Ключ поля
+     * @param value Значение для проверки
+     * @param errorText Текст ошибки (опционально)
+     */
+    addErrorRequiredArray(key: string, value: unknown, errorText?: string): void;
     /**
      * Проверяет максимальную длину строки
      * @param key Ключ поля

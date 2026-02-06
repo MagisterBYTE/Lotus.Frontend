@@ -1,0 +1,1 @@
+{"version":3,"file":"DisplayNameable.d.ts","sourceRoot":"","sources":["../../../src/types/DisplayNameable.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,MAAM,WAAW,gBAAgB;IAE/B;;OAEG;IACH,WAAW,EAAE,MAAM,CAAC;CACrB;AAED;;;;GAIG;AACH,wBAAgB,yBAAyB,CAAC,KAAK,EAAE,OAAO,GAAG,KAAK,IAAI,gBAAgB,CAQnF;AAED;;;;GAIG;AACH,wBAAgB,qBAAqB,CAAC,KAAK,EAAE,OAAO,GAAG,gBAAgB,GAAG,SAAS,CAUlF"}

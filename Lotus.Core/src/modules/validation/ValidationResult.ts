@@ -153,6 +153,92 @@ export class ValidationResult implements IValidationResult
   {
     return !this.hasErrors();
   }
+
+  /**
+   * Хеширирование результата валидации в виде числа
+   * По смыслу должно давать одинаковый результат независимо от порядка ключей
+   * @returns Хеш результат валидации
+   */
+  public hash(): number 
+  {
+    let totalHash = 0;
+
+    for (const key in this.items) 
+    {
+    // Начальный хеш для конкретного поля (ключа)
+      let fieldHash = 5381;
+
+      // 1. Хешируем имя ключа
+      for (let i = 0; i < key.length; i++) 
+      {
+        fieldHash = ((fieldHash << 5) + fieldHash) + key.charCodeAt(i);
+      }
+
+      // 2. Хешируем все элементы (ошибки/варнинги) этого поля
+      const items = this.items[key];
+      for (const item of items) 
+      {
+      // Создаем уникальную строку состояния элемента
+      // Обязательно учитываем level, error и text
+        const stateString = `${item.level ?? 'error'}|${item.error}|${item.text ?? ''}`;
+      
+        for (let i = 0; i < stateString.length; i++) 
+        {
+          fieldHash = ((fieldHash << 5) + fieldHash) + stateString.charCodeAt(i);
+        }
+      }
+
+      /**
+     * Используем побитовое ИЛИ с нулем для ограничения числа 32 битами
+     * Сложение (totalHash + fieldHash) — коммутативная операция.
+     * Неважно, в каком порядке мы прибавим хеш поля "email" или "phone",
+     * итоговая сумма будет одинаковой.
+     */
+      totalHash = (totalHash + fieldHash) | 0;
+    }
+
+    // Приводим к беззнаковому 32-битному целому
+    return totalHash >>> 0;
+  }
+
+  /**
+ * Сравнивает текущий результат валидации с другим на идентичность
+ * @param other Объект для сравнения
+ * @returns true если результаты идентичны
+ */
+  public isEqual(other: ValidationResult): boolean 
+  {
+  // Быстрая проверка по ссылке или хешу
+    if (this === other) return true;
+    if (this.hash() !== other.hash()) return false;
+
+    const thisKeys = Object.keys(this.items);
+    const otherKeys = Object.keys(other.items);
+
+    if (thisKeys.length !== otherKeys.length) return false;
+
+    for (const key of thisKeys) 
+    {
+      const thisGroup = this.items[key];
+      const otherGroup = other.items[key];
+
+      if (!otherGroup || thisGroup.length !== otherGroup.length) return false;
+
+      // Сравниваем элементы внутри группы
+      // Используем every, так как порядок элементов в массиве обычно важен
+      const isGroupEqual = thisGroup.every((item, idx) => 
+      {
+        const otherItem = otherGroup[idx];
+        return item.error === otherItem.error &&
+             item.level === otherItem.level &&
+             item.text === otherItem.text;
+      });
+
+      if (!isGroupEqual) return false;
+    }
+
+    return true;
+  }
   // #endregion
 
   // #region Item management
@@ -311,6 +397,24 @@ export class ValidationResult implements IValidationResult
   public addErrorRequired(key: string, value: unknown, errorText?: string): void
   {
     if (Assert.emptyValue(value))
+    {
+      this.addValidationItem(key, {
+        text: errorText ?? LocalizationCore.data.validation.required,
+        level: 'error',
+        error: true
+      });
+    }
+  }
+
+  /**
+   * Проверяет обязательность заполнения поля массива и нахождения там данных
+   * @param key Ключ поля
+   * @param value Значение для проверки
+   * @param errorText Текст ошибки (опционально)
+   */
+  public addErrorRequiredArray(key: string, value: unknown, errorText?: string): void
+  {
+    if (Assert.emptyValue(value) || (Array.isArray(value) && value.length === 0))
     {
       this.addValidationItem(key, {
         text: errorText ?? LocalizationCore.data.validation.required,

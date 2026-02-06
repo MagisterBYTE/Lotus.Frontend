@@ -1,5 +1,5 @@
 /**
- * Проверка объекта на поддержку интерфейса IIdentifierId
+ * Проверка объекта на поддержку интерфейса {@link IIdentifierId}
  * @param value Проверяемый объект
  * @returns true, если объект поддерживает интерфейс, false в противном случае
  */
@@ -10,7 +10,7 @@ export function instanceOfIdentifierId(value) {
     return false;
 }
 /**
- * Преобразование объекта к интерфейсу IIdentifierId
+ * Преобразование объекта к интерфейсу {@link IIdentifierId}
  * @param value Объект для преобразования
  * @returns Объект реализующий интерфейс или undefined если объект не поддерживает интерфейс
  */

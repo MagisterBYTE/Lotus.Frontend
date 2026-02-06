@@ -84,10 +84,12 @@ export class ApiService
 
       if (!response.ok)
       {
+        // Клонируем поток, так как методы .json() и .text() читают его один раз
+        const data = await response.clone().json().catch(() => response.text());
         const error: ApiRequestError = new ApiRequestError(`HTTP error ${response.status}`, {
           status: response.status,
           statusText: response.statusText,
-          data: await response.text(),
+          data: data,
           url: response.url
         });
 
@@ -318,9 +320,14 @@ export class ApiService
   /**
    * DELETE запрос
    */
-  public delete<TResponse = unknown>(path: string, config?: ApiRequestConfig): Promise<TResponse>
+  public delete<TResponse = unknown>(path: string, searchParams?: URLSearchParams, config?: ApiRequestConfig): Promise<TResponse>
   {
-    const url = this.createFullUrl(path);
+    let url = this.createFullUrl(path);
+
+    if (searchParams)
+    {
+      url = ApiService.buildFullUrl(url, searchParams);
+    }
 
     const actualConfig = new ApiRequestConfig(config);
     if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false)

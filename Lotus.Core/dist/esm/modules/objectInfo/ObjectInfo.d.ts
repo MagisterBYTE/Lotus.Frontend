@@ -5,6 +5,10 @@ import { IPropertyDescriptor } from './PropertyDescriptor';
  */
 export interface IObjectInfo {
     /**
+     * Название типа объекта
+     */
+    objectName: string;
+    /**
      * Получение списка свойств
      */
     getProperties(): IPropertyDescriptor[];
@@ -26,6 +30,22 @@ export interface IObjectInfo {
  * Класс для представления(описания) свойств объектов
  */
 export declare class ObjectInfo implements IObjectInfo {
+    /**
+     * Конвертация значения по указанному свойству
+     * @param propertyInfo Информация о свойстве
+     * @param value Исходное значение
+     * @returns Целевое значение
+     */
+    static convertedValue(propertyInfo: IPropertyDescriptor, value: any): any;
+    /**
+     * Обновить копию объекта по указанному свойству указанным значением
+     * @param source Исходный объект
+     * @param propertyInfo Информация о свойстве
+     * @param value Значение
+     * @returns Копия объекта с обновленным значением
+     */
+    static updatedObject(source: any, propertyInfo: IPropertyDescriptor, value: any): any;
+    objectName: string;
     descriptors: IPropertyDescriptor[];
     constructor();
     getProperties(): IPropertyDescriptor[];

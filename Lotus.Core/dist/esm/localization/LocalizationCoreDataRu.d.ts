@@ -25,11 +25,14 @@ export declare const LocalizationCoreDataRu: {
         getting: string;
         gettingSucceed: string;
         gettingFailed: string;
+        create: string;
+        createObject: string;
         add: string;
         adding: string;
         addingSucceed: string;
         addingFailed: string;
         edit: string;
+        editObject: string;
         save: string;
         saving: string;
         savingSucceed: string;

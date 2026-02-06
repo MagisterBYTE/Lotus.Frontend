@@ -22,7 +22,10 @@ export const TActionCommandTypes = {
         return TActionCommandTypeValues;
     },
     isActionCommandType(value) {
-        return TActionCommandTypeValues.includes(value);
+        if (typeof value === 'string') {
+            return TActionCommandTypeValues.includes(value);
+        }
+        return false;
     },
     getByIndex(index) {
         return TActionCommandTypeValues[index];

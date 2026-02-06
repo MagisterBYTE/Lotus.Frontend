@@ -13,6 +13,21 @@ export declare abstract class NumberConverter {
      */
     static parseInt(text: string, defaultValue?: number): number;
     /**
+     * Преобразование объекта в целое число.
+     * @param value Объект.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toInteger(value: unknown, defaultValue?: number): number;
+    /**
+     * Преобразование объекта в вещественное число.
+     * @param value Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toIntegerNullable(value: unknown, isNullable: boolean, defaultValue?: number): number | undefined;
+    /**
      * Преобразование в текст который можно сконвертировать в вещественный тип
      * @param text Текст
      * @returns Текст
@@ -25,5 +40,20 @@ export declare abstract class NumberConverter {
      * @returns Значение
      */
     static parseFloat(text: string, defaultValue?: number): number;
+    /**
+     * Преобразование объекта в вещественное число.
+     * @param value Объект.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toFloat(value: unknown, defaultValue?: number): number;
+    /**
+     * Преобразование объекта в вещественное число.
+     * @param value Объект.
+     * @param isNullable Статус поддержки Nullable.
+     * @param defaultValue Значение по умолчанию, если преобразовать не удалось (по умолчанию -1).
+     * @returns Значение.
+     */
+    static toFloatNullable(value: unknown, isNullable: boolean, defaultValue?: number): number | undefined;
 }
 //# sourceMappingURL=NumberConverter.d.ts.map
