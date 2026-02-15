@@ -22,6 +22,7 @@
     "#components/Controls": "./src/components/Controls/index.ts",
     "#components/DataView": "./src/components/DataView/index.ts",
     "#components/Display": "./src/components/Display/index.ts",
+    "#components/Extendeds": "./src/components/Extendeds/index.ts",
     "#components/Feedback": "./src/components/Feedback/index.ts",
     "#components/Layout": "./src/components/Layout/index.ts",
     "#designSystem": "./src/designSystem/index.ts",
@@ -62,6 +63,10 @@
     "./components/Display": {
       "import": "./dist/esm/components/Display/index.js",
       "types": "./dist/esm/components/Display/index.d.ts"
+    },
+    "./components/Extendeds": {
+      "import": "./dist/esm/components/Extendeds/index.js",
+      "types": "./dist/esm/components/Extendeds/index.d.ts"
     },
     "./components/Feedback": {
       "import": "./dist/esm/components/Feedback/index.js",

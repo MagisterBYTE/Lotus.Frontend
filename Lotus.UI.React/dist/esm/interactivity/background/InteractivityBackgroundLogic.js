@@ -11,7 +11,7 @@ export class InteractivityBackgroundLogic {
      * @param element Элемент (его пропсы)
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     static buildEffectByState(element, state, context) {
@@ -23,19 +23,19 @@ export class InteractivityBackgroundLogic {
             case 'normal':
                 {
                     const color = backColor ?? CssVariables.PrimaryColor5;
-                    backProps.backgroundColor = ColorCssHelper.getColorCss(color);
+                    backProps.backgroundColor = ColorCssHelper.getColor(color);
                 }
                 break;
             case 'hover':
                 {
                     const color = backHoverColor ?? ColorTokenHelper.next(backColor, -2) ?? CssVariables.PrimaryColor3;
-                    backProps.backgroundColor = ColorCssHelper.getColorCss(color);
+                    backProps.backgroundColor = ColorCssHelper.getColor(color);
                 }
                 break;
             case 'pressed':
                 {
                     const color = backPressedColor ?? ColorTokenHelper.next(backColor, 2) ?? CssVariables.PrimaryColor7;
-                    backProps.backgroundColor = ColorCssHelper.getColorCss(color);
+                    backProps.backgroundColor = ColorCssHelper.getColor(color);
                 }
                 break;
         }
@@ -47,7 +47,7 @@ export class InteractivityBackgroundLogic {
      * @param type Тии интерактивности фона
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static createProperties(element, type, state, context) {
         const backProps = {};
@@ -60,7 +60,7 @@ export class InteractivityBackgroundLogic {
      * @param type Тии интерактивности фона
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     // eslint-disable-next-line max-params
     static fillProperties(target, element, type, state, context) {

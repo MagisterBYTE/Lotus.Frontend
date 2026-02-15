@@ -1,4 +1,4 @@
-import { TCssBorderRadius, TShadowElevation, TSizeType, TSizeTypes } from '#types';
+import { TCssBorderRadius, TShadowElevation, TSizeType, TSizeTypes, TSizeTypeValues } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ColorCssHelper, ColorTokenHelper, TColorPalette, TColorPalettes, TColorSemantic, TColorSemantics, TColorToken, TColorVariantName } from 'lotus-core/modules/color';
 import { CSSProperties } from 'react';
@@ -8,15 +8,15 @@ function createStyle(colorTheme: TColorPalette | TColorSemantic, colorVariant: T
   const colorToken = ColorTokenHelper.create(colorTheme, colorVariant);
   const style: CSSProperties =
   {
-    backgroundColor: ColorCssHelper.getColorCss(colorToken),
-    color:ColorCssHelper.getColorContrastCss(colorToken),
-    margin: 5,
-    padding: 5,
+    backgroundColor: ColorCssHelper.getColor(colorToken),
+    color:ColorCssHelper.getColorContrast(colorToken),
+    margin: 2,
+    padding: 4,
     minWidth: 100,
     border: '1px solid',
     borderRadius: '4px',
-    fontSize: '10px',
-    borderColor:ColorCssHelper.getColorContrastCss(colorToken),
+    fontSize: '9px',
+    borderColor:ColorCssHelper.getColorContrast(colorToken),
   }
 
   return style;
@@ -24,7 +24,7 @@ function createStyle(colorTheme: TColorPalette | TColorSemantic, colorVariant: T
 
 const DivColorsColumn = (colorTheme: TColorPalette | TColorSemantic, isHarmonious?: boolean) =>
 {
-  return <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 5, backgroundColor: 'lightcoral' }}>
+  return <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'stretch', padding: 5 }}>
     <div style={createStyle(colorTheme, 'black')}>{colorTheme} - black <br></br> </div>
     <div style={createStyle(colorTheme, 'darkest')}>{colorTheme} - darkest <br></br> </div>
     <div style={createStyle(colorTheme, 'darker')}>{colorTheme} - darker <br></br> </div>
@@ -77,7 +77,7 @@ const meta = {
   argTypes:
   {
     isDisabled: { control: 'boolean' },
-    size: { control: 'inline-radio', options: [...TSizeTypes, undefined] },
+    size: { control: 'inline-radio', options: [...TSizeTypeValues, undefined] },
     shadowElevation: { control: 'number' }
   }
 

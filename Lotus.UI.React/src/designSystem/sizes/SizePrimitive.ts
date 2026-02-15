@@ -107,6 +107,7 @@ export class SizePrimitive
     this.value = value ?? 0;
   }
 
+  // #region Main methods
   public toPixel(): string
   {
     return `${this.value}px`;
@@ -133,4 +134,5 @@ export class SizePrimitive
     const pixel = SizePrimitive.fromCss(value)!;
     return new SizePrimitive(this.px + pixel);
   }
+  // #endregion
 }

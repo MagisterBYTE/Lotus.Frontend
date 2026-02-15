@@ -1,34 +1,53 @@
 /**
- * Перечисление для типа обратной связи
+ * Массив значений типов обратной связи
  */
-export const FeedbackTypeDescriptions = {
+export const TFeedbackTypeValues = ['alert', 'snackbar', 'modal', 'progress'];
+/**
+ * Enum типа обратной связи
+ */
+export const TFeedbackTypes = {
     /**
      * Простое предупреждение без взаимодействия
      */
-    Alert: {
-        id: 0,
-        name: 'Alert'
-    },
+    Alert: TFeedbackTypeValues[0],
     /**
      * Информирование с возможностью взаимодействия
      */
-    Snackbar: {
-        id: 1,
-        name: 'Snackbar'
-    },
+    Snackbar: TFeedbackTypeValues[1],
     /**
      * Модальное окно
      */
-    Modal: {
-        id: 2,
-        name: 'Modal'
-    },
+    Modal: TFeedbackTypeValues[2],
     /**
      * Информирование с прогрессом
      */
-    Progress: {
-        id: 3,
-        name: 'Progress'
+    Progress: TFeedbackTypeValues[3],
+    /**
+     * Возвращает массив всех возможных значений
+     */
+    getAllValues() {
+        return TFeedbackTypeValues;
+    },
+    /**
+     * Type Guard для проверки принадлежности значения к TFeedbackType
+     */
+    isFeedbackType(value) {
+        if (typeof value === 'string') {
+            return TFeedbackTypeValues.includes(value);
+        }
+        return false;
+    },
+    /**
+     * Возвращает значение по индексу
+     */
+    getByIndex(index) {
+        return TFeedbackTypeValues[index];
+    },
+    /**
+     * Возвращает значение по строковому имени
+     */
+    getByName(name) {
+        return TFeedbackTypeValues.find((v) => v === name);
     }
 };
 //# sourceMappingURL=FeedbackType.js.map

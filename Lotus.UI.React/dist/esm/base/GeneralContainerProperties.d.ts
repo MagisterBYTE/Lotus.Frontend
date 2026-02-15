@@ -50,16 +50,16 @@ export declare abstract class ContainerPropertiesHelper {
     static getContainerProperties(props: IGeneralContainerProperties): {
         w: TCssWidth | undefined;
         h: TCssHeight | undefined;
-        p: import("#types").TCssPadding | TSizeType | undefined;
-        pl: import("#types").TCssPadding | TSizeType | undefined;
-        pt: import("#types").TCssPadding | TSizeType | undefined;
-        pr: import("#types").TCssPadding | TSizeType | undefined;
-        pb: import("#types").TCssPadding | TSizeType | undefined;
-        m: import("#types").TCssPadding | TSizeType | undefined;
-        ml: import("#types").TCssPadding | TSizeType | undefined;
-        mt: import("#types").TCssPadding | TSizeType | undefined;
-        mr: import("#types").TCssPadding | TSizeType | undefined;
-        mb: import("#types").TCssPadding | TSizeType | undefined;
+        p: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        pl: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        pt: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        pr: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        pb: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        m: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        ml: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        mt: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        mr: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        mb: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
     };
     /**
      * Создать свойства CSS по контейнеру в виде TCssProperties

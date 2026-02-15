@@ -44,8 +44,9 @@ export declare abstract class TextPropertiesHelper {
     /**
      * Создать свойства CSS по общим свойствам текста в виде TCssProperties
      * @param props Общие свойства текста для элемента UI
+     * @param opacityOverride Переопределение прозрачности текста
      * @returns Свойства CSS по общим свойствам текста в виде TCssProperties
      */
-    static createTextProps(props: IGeneralTextProperties): TCssProperties;
+    static createTextProps(props: IGeneralTextProperties, opacityOverride?: number): TCssProperties;
 }
 //# sourceMappingURL=GeneralTextProperties.d.ts.map

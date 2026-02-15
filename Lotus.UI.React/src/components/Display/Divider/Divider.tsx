@@ -1,62 +1,59 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css } from '@emotion/css';
 import { TColorToken } from 'lotus-core/modules/color';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
+import { ComponentPropsWithRef, CSSProperties, useMemo } from 'react';
 import { BorderPropertiesHelper, IGeneralBorderProperties, IGeneralContainerProperties, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
 import { MarginSizes } from '#designSystem/sizes';
 import { CssVariables } from '#designSystem/сssVariables';
 import { CssPropertiesHelper } from '#helpers';
 import { TCssBorderColor, TCssBorderStyle, TCssBorderWidth } from '#types';
 
-export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof IGeneralBorderProperties>, ComponentPropsWithRef<'div'>
+export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof IGeneralBorderProperties>, ComponentPropsWithRef<'div'> 
 {
   isVertical?: boolean;
   lineStyle?: TCssBorderStyle;
   lineThickness?: TCssBorderWidth;
-  lineColor?: TCssBorderColor|TColorToken;
+  lineColor?: TCssBorderColor | TColorToken;
   nml?: boolean;
   nmr?: boolean;
   nmt?: boolean;
   nmb?: boolean;
 }
 
-export function Divider(props: IDividerProps)
+export function Divider(props: IDividerProps) 
 {
   const { isVertical = false, lineStyle = 'solid', lineColor, lineThickness = '1px', nml, nmr, nmt, nmb, children, ...otherProps } = props;
 
-  const styleDiv: CSSProperties = {
-    borderTopStyle: lineStyle,
-    borderTopWidth: lineThickness,
-    borderTopColor: BorderPropertiesHelper.getBorderColorPropsValue(lineColor) ?? CssVariables.BorderColor,
-    ...MarginPropertiesHelper.createMarginProps(props),
-    ...PaddingPropertiesHelper.createPaddingProps(props)
-  };
-
-  if (nml)
+  // 1. Мемоизируем объект стилей
+  const dividerStyle = useMemo((): CSSProperties => 
   {
-    styleDiv.marginLeft = MarginSizes.Default.toCssNegative(props.ml);
-  }
+    const color = BorderPropertiesHelper.getBorderColorPropsValue(lineColor) ?? CssVariables.BorderColor;
 
-  if (nmr)
-  {
-    styleDiv.marginRight = MarginSizes.Default.toCssNegative(props.mr);
-  }
+    const styles: CSSProperties = {
+      // Динамическое переключение границы в зависимости от ориентации
+      borderTop: !isVertical ? `${lineThickness} ${lineStyle} ${color}` : undefined,
+      borderLeft: isVertical ? `${lineThickness} ${lineStyle} ${color}` : undefined,
+      height: isVertical ? '100%' : undefined,
+      width: !isVertical ? '100%' : undefined,
+      display: isVertical ? 'inline-block' : 'block',
 
-  if (nmt)
-  {
-    styleDiv.marginTop = MarginSizes.Default.toCssNegative(props.mt);
-  }
+      ...MarginPropertiesHelper.createMarginProps(otherProps),
+      ...PaddingPropertiesHelper.createPaddingProps(otherProps)
+    };
 
-  if (nmb)
-  {
-    styleDiv.marginBottom = MarginSizes.Default.toCssNegative(props.mb);
-  }
+    // Обработка отрицательных маржинов (Negative Margins)
+    if (nml) styles.marginLeft = MarginSizes.Default.toCssNegative(otherProps.ml);
+    if (nmr) styles.marginRight = MarginSizes.Default.toCssNegative(otherProps.mr);
+    if (nmt) styles.marginTop = MarginSizes.Default.toCssNegative(otherProps.mt);
+    if (nmb) styles.marginBottom = MarginSizes.Default.toCssNegative(otherProps.mb);
 
-  const dividerClass = css({ ...styleDiv, label: 'Divider' });
+    return styles;
+  }, [otherProps, isVertical, lineStyle, lineColor, lineThickness, nml, nmr, nmt, nmb]);
 
-  // Фильтруем кастомные пропсы перед передачей в div
-  const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
+  // 2. Мемоизируем сгенерированный класс Emotion
+  const dividerClass = useMemo(() => css({ ...dividerStyle, label: isVertical ? 'Divider-v' : 'Divider-h' }), [dividerStyle, isVertical]);
+
+  // 3. Фильтруем кастомные пропсы перед передачей в div
+  const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
 
   return (
     <div className={dividerClass} {...domProps}>

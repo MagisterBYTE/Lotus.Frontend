@@ -1,7 +1,6 @@
-import { instanceOfSizeType, TCssMargin } from '#types';
+import { TCssMargin, TSizeTypes } from '#types';
 import { CssVariables } from '../сssVariables';
 import { SizeDimensions } from './SizeDimensions';
-
 
 /**
  * Размеры связанные с внутренним отступом
@@ -25,7 +24,7 @@ export class MarginSizes extends SizeDimensions
     if (value === undefined) return undefined;
     if (typeof value === 'number') return `${value / 16}rem`;
 
-    if (instanceOfSizeType(value))
+    if (TSizeTypes.isSizeType(value))
     {
       switch (value)
       {

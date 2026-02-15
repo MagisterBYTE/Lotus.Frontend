@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-export const useMediaQuery = (mediaQuery) => {
+export function useMediaQuery(mediaQuery) {
     const isSsr = typeof window === 'undefined';
     const [matches, setMatches] = useState(() => isSsr ? false : window.matchMedia(mediaQuery).matches);
     useLayoutEffect(() => {
@@ -17,5 +17,5 @@ export const useMediaQuery = (mediaQuery) => {
         };
     }, [mediaQuery]);
     return matches;
-};
+}
 //# sourceMappingURL=useMediaQuery.js.map

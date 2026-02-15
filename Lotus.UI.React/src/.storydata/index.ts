@@ -4,5 +4,5 @@ export { IconsStory } from './IconsStory'
 export { OptionsStory } from './OptionsStory'
 export { PersonApi } from './PersonApi'
 export { Persons } from './PersonData'
-export { PersonInfoBase, type IPerson } from './PersonInfo'
+export { PersonInfoBase, type IPerson, PersonValidator } from './PersonInfo'
 

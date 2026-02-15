@@ -1,5 +1,5 @@
 export { BackgroundPropertiesHelper } from './GeneralBackgroundProperties';
-export { BorderPropertiesHelper, TBorderSideSet } from './GeneralBorderProperties';
+export { BorderPropertiesHelper } from './GeneralBorderProperties';
 export { ContainerPropertiesHelper } from './GeneralContainerProperties';
 export { MarginPropertiesHelper } from './GeneralMarginProperties';
 export { PaddingPropertiesHelper } from './GeneralPaddingProperties';

@@ -9,17 +9,44 @@ export class PaddingPropertiesHelper {
      * @returns Свойства CSS по внутреннему отступу в виде TCssProperties
      */
     static createPaddingProps(props) {
-        const paddingProps = {};
-        if (props.p) {
-            paddingProps.padding = PaddingSizes.getFromCssVariable(props.p);
+        const { p, pt, pr, pb, pl } = props;
+        // Если ничего не передано, возвращаем пустой объект
+        if (!p && !pt && !pr && !pb && !pl) {
+            return {};
+        }
+        /**
+         * Вспомогательная функция получения значения стороны.
+         * Приоритет: конкретное свойство (pt, pr...) > общее свойство (p) > '0'
+         */
+        const getValue = (specific) => {
+            const value = specific ?? p;
+            return value ? PaddingSizes.getFromCssVariable(value) : '0';
+        };
+        const top = getValue(pt);
+        const right = getValue(pr);
+        const bottom = getValue(pb);
+        const left = getValue(pl);
+        let paddingValue;
+        // Алгоритм сокращения (Shorthand)
+        if (top === right && right === bottom && bottom === left) {
+            // Все стороны равны: padding: 10px;
+            paddingValue = top;
+        }
+        else if (top === bottom && right === left) {
+            // Симметрия по вертикали и горизонтали: padding: 10px 20px;
+            paddingValue = `${top} ${right}`;
+        }
+        else if (right === left) {
+            // Симметрия только по бокам: padding: 10px 20px 5px;
+            paddingValue = `${top} ${right} ${bottom}`;
         }
         else {
-            paddingProps.paddingLeft = PaddingSizes.getFromCssVariable(props.pl);
-            paddingProps.paddingRight = PaddingSizes.getFromCssVariable(props.pr);
-            paddingProps.paddingTop = PaddingSizes.getFromCssVariable(props.pt);
-            paddingProps.paddingBottom = PaddingSizes.getFromCssVariable(props.pb);
+            // Все стороны разные: padding: 10px 15px 5px 8px;
+            paddingValue = `${top} ${right} ${bottom} ${left}`;
         }
-        return paddingProps;
+        return {
+            padding: paddingValue
+        };
     }
 }
 //# sourceMappingURL=GeneralPaddingProperties.js.map

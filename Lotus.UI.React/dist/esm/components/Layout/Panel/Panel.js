@@ -1,8 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css } from '@emotion/css';
 import { Assert } from 'lotus-core/utils';
-import { isValidElement } from 'react';
+import { isValidElement, useMemo } from 'react';
 import { BackgroundPropertiesHelper, BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
 import { Label } from '#components/Display';
 import { PaddingSizes } from '#designSystem/sizes';
@@ -39,20 +38,22 @@ export function Panel(props) {
     const isHeaderText = typeof header === 'string';
     const paddingSizeTopNeed = PaddingSizes.Default.toSizePrimitive(size);
     const paddingSizeTopProps = PaddingSizes.Default.toPixel(p ?? pt);
-    const styleDiv = {
-        ...MarginPropertiesHelper.createMarginProps(props),
-        ...PaddingPropertiesHelper.createPaddingProps(props),
-        ...ContainerPropertiesHelper.createContainerProps(props),
-        ...BackgroundPropertiesHelper.createBackgroundProps(props),
-        ...BackgroundPropertiesHelper.createBoxShadowProps(props),
-        ...BorderPropertiesHelper.createBorderProps(props),
-        ...BorderPropertiesHelper.createBorderShadowProps(props),
+    // 1. Мемоизируем объект стилей
+    const panelStyle = useMemo(() => ({
+        ...MarginPropertiesHelper.createMarginProps(otherProps),
+        ...PaddingPropertiesHelper.createPaddingProps(otherProps),
+        ...ContainerPropertiesHelper.createContainerProps(otherProps),
+        ...BackgroundPropertiesHelper.createBackgroundProps(otherProps),
+        ...BackgroundPropertiesHelper.createBoxShadowProps(otherProps),
+        ...BorderPropertiesHelper.createBorderProps(otherProps),
+        ...BorderPropertiesHelper.createBorderShadowProps(otherProps),
         ...buildPanelProps(props),
         position: 'relative', // Добавляем для абсолютного позиционирования заголовка
         paddingTop: paddingSizeTopNeed.add(paddingSizeTopProps).toRem()
-    };
-    function getHeaderStyle() {
-        const headerStyle = {
+    }), [otherProps, size, p, pt, centerContent]);
+    // 1. Мемоизируем объект стилей
+    const headerStyle = useMemo(() => {
+        const headerBaseStyle = {
             position: 'absolute',
             background: headerProps?.style?.backgroundColor ?? BackgroundPropertiesHelper.getBackgroundColorPropsValue(otherProps.bgColor) ?? 'var(--mantine-color-default)',
             top: 0,
@@ -60,15 +61,16 @@ export function Panel(props) {
             zIndex: 1, // Чтобы заголовок был над границей
             transform: 'translate(-50%, -50%)' // Сдвигаем на половину ширины и высоты
         };
-        return { ...headerStyle, ...headerProps?.style };
-    }
-    const panelClass = css({ ...styleDiv, label: 'Panel' });
-    // Фильтруем кастомные пропсы перед передачей в div
-    const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
+        return { ...headerBaseStyle, ...headerProps?.style };
+    }, [headerProps, headerOffsetPercent]);
+    // 2. Мемоизируем сгенерированный класс Emotion
+    const panelClass = useMemo(() => css({ ...panelStyle, label: 'Panel' }), [panelStyle]);
+    // 3. Фильтруем кастомные пропсы перед передачей в div
+    const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
     if (Assert.existValue(headerProps) || isHeaderText) {
         return (_jsxs("div", { className: panelClass, ...domProps, children: [isHeaderComponent && header, isHeaderComponent === false && (_jsx(Label, { ...headerProps, 
                     // eslint-disable-next-line react/no-children-prop
-                    children: isHeaderText ? header : headerProps?.children, bdColor: headerProps?.bdColor ?? otherProps.bdColor, bdRadius: headerProps?.bdRadius ?? otherProps.bdRadius, bdShadow: headerProps?.bdShadow ?? otherProps.bdShadow, bdStyle: headerProps?.bdStyle ?? otherProps.bdStyle, bdWidth: headerProps?.bdWidth ?? otherProps.bdWidth, fontSize: headerProps?.fontSize ?? size, p: headerProps?.p ?? 'xxs', style: getHeaderStyle(), withBorder: headerProps?.withBorder ?? otherProps.withBorder })), children] }));
+                    children: isHeaderText ? header : headerProps?.children, bdColor: headerProps?.bdColor ?? otherProps.bdColor, bdRadius: headerProps?.bdRadius ?? otherProps.bdRadius, bdShadow: headerProps?.bdShadow ?? otherProps.bdShadow, bdStyle: headerProps?.bdStyle ?? otherProps.bdStyle, bdWidth: headerProps?.bdWidth ?? otherProps.bdWidth, fontSize: headerProps?.fontSize ?? size, p: headerProps?.p ?? 'xxs', style: headerStyle, withBorder: headerProps?.withBorder ?? otherProps.withBorder })), children] }));
     }
     if (isHeaderComponent) {
         return (_jsxs("div", { className: panelClass, ...domProps, children: [header, children] }));

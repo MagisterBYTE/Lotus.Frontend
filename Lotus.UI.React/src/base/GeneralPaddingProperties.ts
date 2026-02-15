@@ -4,7 +4,7 @@ import { TCssPadding, TCssProperties, TSizeType } from '#types';
 /**
  * Общие свойства внутренних отступов элемента UI
  */
-export interface IGeneralPaddingProperties 
+export interface IGeneralPaddingProperties
 {
   /**
    * Внутренний отступ
@@ -44,21 +44,55 @@ export abstract class PaddingPropertiesHelper
    */
   public static createPaddingProps(props: IGeneralPaddingProperties): TCssProperties
   {
-    const paddingProps: TCssProperties = {};
+    const { p, pt, pr, pb, pl } = props;
 
-    if (props.p)
+    // Если ничего не передано, возвращаем пустой объект
+    if (!p && !pt && !pr && !pb && !pl)
     {
-      paddingProps.padding = PaddingSizes.getFromCssVariable(props.p);
+      return {};
+    }
+
+    /**
+     * Вспомогательная функция получения значения стороны.
+     * Приоритет: конкретное свойство (pt, pr...) > общее свойство (p) > '0'
+     */
+    const getValue = (specific?: TCssPadding | TSizeType) =>
+    {
+      const value = specific ?? p;
+      return value ? PaddingSizes.getFromCssVariable(value) : '0';
+    };
+
+    const top = getValue(pt);
+    const right = getValue(pr);
+    const bottom = getValue(pb);
+    const left = getValue(pl);
+
+    let paddingValue: string | undefined | number;
+
+    // Алгоритм сокращения (Shorthand)
+    if (top === right && right === bottom && bottom === left)
+    {
+      // Все стороны равны: padding: 10px;
+      paddingValue = top;
+    }
+    else if (top === bottom && right === left)
+    {
+      // Симметрия по вертикали и горизонтали: padding: 10px 20px;
+      paddingValue = `${top} ${right}`;
+    }
+    else if (right === left)
+    {
+      // Симметрия только по бокам: padding: 10px 20px 5px;
+      paddingValue = `${top} ${right} ${bottom}`;
     }
     else
     {
-      paddingProps.paddingLeft = PaddingSizes.getFromCssVariable(props.pl);
-      paddingProps.paddingRight = PaddingSizes.getFromCssVariable(props.pr);
-      paddingProps.paddingTop = PaddingSizes.getFromCssVariable(props.pt);
-      paddingProps.paddingBottom = PaddingSizes.getFromCssVariable(props.pb);
+      // Все стороны разные: padding: 10px 15px 5px 8px;
+      paddingValue = `${top} ${right} ${bottom} ${left}`;
     }
 
-    return paddingProps;
+    return {
+      padding: paddingValue
+    };
   }
-  // #endregion
 }

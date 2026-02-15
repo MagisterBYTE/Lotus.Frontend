@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
+import { ComponentPropsWithRef, CSSProperties, useMemo } from 'react';
 import
 {
   BackgroundPropertiesHelper,
@@ -36,33 +36,49 @@ export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgro
   vContentAlign?: TCssAlignItems;
 }
 
-export function Grid(props: IGridProps) 
+export function Grid(props: IGridProps)
 {
-  const { gridTemplateColumns, gridTemplateRows, columnGap, rowGap, hAlign, vAlign, hContentAlign, vContentAlign, children, ...otherProps } = props;
+  const {
+    gridTemplateColumns,
+    gridTemplateRows,
+    columnGap,
+    rowGap,
+    hAlign = 'stretch',
+    vAlign = 'center',
+    hContentAlign = 'start',
+    vContentAlign = 'center',
+    children,
+    ...otherProps
+  } = props;
 
-  const styleDiv: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: gridTemplateColumns,
-    gridTemplateRows: gridTemplateRows,
-    columnGap: GapSizes.getFromCssVariable(columnGap),
-    rowGap: GapSizes.getFromCssVariable(rowGap),
-    justifyContent: hAlign ?? 'stretch',
-    alignContent: vAlign ?? 'center',
-    justifyItems: hContentAlign ?? 'start',
-    alignItems: vContentAlign ?? 'center',
-    ...MarginPropertiesHelper.createMarginProps(props),
-    ...PaddingPropertiesHelper.createPaddingProps(props),
-    ...ContainerPropertiesHelper.createContainerProps(props),
-    ...BackgroundPropertiesHelper.createBackgroundProps(props),
-    ...BackgroundPropertiesHelper.createBoxShadowProps(props),
-    ...BorderPropertiesHelper.createBorderProps(props),
-    ...BorderPropertiesHelper.createBorderShadowProps(props)
-  };
+  // 1. Мемоизируем объект стилей
+  const gridStyle = useMemo(
+    (): CSSProperties => ({
+      display: 'grid',
+      gridTemplateColumns,
+      gridTemplateRows,
+      columnGap: GapSizes.getFromCssVariable(columnGap),
+      rowGap: GapSizes.getFromCssVariable(rowGap),
+      justifyContent: hAlign,
+      alignContent: vAlign,
+      justifyItems: hContentAlign,
+      alignItems: vContentAlign,
+      ...MarginPropertiesHelper.createMarginProps(otherProps),
+      ...PaddingPropertiesHelper.createPaddingProps(otherProps),
+      ...ContainerPropertiesHelper.createContainerProps(otherProps),
+      ...BackgroundPropertiesHelper.createBackgroundProps(otherProps),
+      ...BackgroundPropertiesHelper.createBoxShadowProps(otherProps),
+      ...BorderPropertiesHelper.createBorderProps(otherProps),
+      ...BorderPropertiesHelper.createBorderShadowProps(otherProps)
+    }),
+    [otherProps, gridTemplateColumns, gridTemplateRows, columnGap, rowGap, hAlign, vAlign, hContentAlign, vContentAlign]
+  );
 
-  const gridClass = css({ ...styleDiv, label: 'Grid' });
+  // 2. Мемоизируем сгенерированный класс Emotion
+  const gridClass = useMemo(() => css({ ...gridStyle, label: 'Grid' }), [gridStyle]);
 
-  // Фильтруем кастомные пропсы перед передачей в div
-  const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
+  // 3. Фильтруем кастомные пропсы перед передачей в div
+  const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
 
   return (
     <div className={gridClass} {...domProps}>

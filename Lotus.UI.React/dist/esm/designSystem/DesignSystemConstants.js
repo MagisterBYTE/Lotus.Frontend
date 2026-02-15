@@ -42,7 +42,11 @@ export class DesignSystemConstants {
     /**
      * Прозрачность для элементов UI которые недоступны
      */
-    static OpacityForDisabled = 0.65;
+    static OpacityForDisabled = 0.6;
+    /**
+     * Прозрачность для фона бейдж элементов
+     */
+    static OpacityForBadge = 0.2;
     /**
      * Прозрачность тени для границы элементов UI которые при наведении
      */

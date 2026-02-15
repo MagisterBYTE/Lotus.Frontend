@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-export const useInterval = (callback, delay) => {
+export function useInterval(callback, delay) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const savedCallback = useRef(null);
     useEffect(() => {
@@ -14,5 +14,5 @@ export const useInterval = (callback, delay) => {
             return () => clearInterval(id);
         }
     }, [delay]);
-};
+}
 //# sourceMappingURL=useInterval.js.map

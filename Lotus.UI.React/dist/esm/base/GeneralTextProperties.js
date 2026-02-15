@@ -10,9 +10,10 @@ export class TextPropertiesHelper {
     /**
      * Создать свойства CSS по общим свойствам текста в виде TCssProperties
      * @param props Общие свойства текста для элемента UI
+     * @param opacityOverride Переопределение прозрачности текста
      * @returns Свойства CSS по общим свойствам текста в виде TCssProperties
      */
-    static createTextProps(props) {
+    static createTextProps(props, opacityOverride) {
         const textProps = {};
         if (Assert.existValue(props.fontSize)) {
             textProps.fontSize = FontSizes.getFromCssVariable(props.fontSize);
@@ -43,7 +44,17 @@ export class TextPropertiesHelper {
             textProps.textAlign = props.textAlign;
         }
         if (props.textColor) {
-            textProps.color = ColorCssHelper.getColorCss(props.textColor);
+            if (Assert.existValue(opacityOverride)) {
+                textProps.color = ColorCssHelper.getColorWithAlpha(props.textColor, opacityOverride);
+            }
+            else {
+                textProps.color = ColorCssHelper.getColor(props.textColor);
+            }
+        }
+        else {
+            if (Assert.existValue(opacityOverride)) {
+                textProps.opacity = opacityOverride;
+            }
         }
         if (props.textLineSpacing) {
             textProps.lineHeight = LineSpacingSizes.getFromCssVariable(props.textLineSpacing);

@@ -16,7 +16,11 @@ export function SegmentedField(props) {
         const newData = [];
         for (const item of items) {
             newData.push({
-                label: renderItem ? renderItem(item) : (getLabelItem ? getLabelItem(item) : RenderItem.renderItem(otherProps.size ?? 'md', item, props, undefined, true)),
+                label: Assert.isFunction(renderItem)
+                    ? renderItem(item)
+                    : getLabelItem
+                        ? getLabelItem(item)
+                        : RenderItem.renderItem(otherProps.size ?? 'md', item, undefined, {}),
                 value: getValueItem(item).toString(),
                 disabled: getDisabledItem(item)
             });

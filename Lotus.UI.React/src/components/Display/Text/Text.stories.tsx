@@ -4,7 +4,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Text } from './Text';
 import { TColorTokens } from 'lotus-core/modules/color';
 
-
 const meta = {
   title: 'Display/Text',
   component: Text,
@@ -15,6 +14,7 @@ const meta = {
     children: { control: 'text', table: { category: 'Text Component' } },
     asBadge: { control: 'select', options: [undefined, ...TColorTokens], table: { category: 'Text Component' } },
     isBlock: { control: 'boolean', table: { category: 'Text Component' } },
+    disabled: { control: 'boolean', table: { category: 'Text Component' } },
 
     // Text
     ...ArgTypesStory.Text,
@@ -73,4 +73,24 @@ export const TextBadge: Story = {
     bdRadius: 'md',
     bdColor: 'blue'
   }
+};
+
+export const TextSuper: Story = {
+  args: {
+    children: 'Иконка React',
+    asBadge: 'green',
+    disabled: false,
+    fontBold: true,
+    textEffect: 'shadow',
+    p: 'xxs',
+    withBorder: 1,
+    bdStyle: 'double',
+    bdWidth: 4,
+    bdRadiusTopRight: 'md',
+    bdRadiusBottomRight: 'md',
+    fontAccent: 'accent',
+    bdColor: 'red'
+  },
+
+  name: 'Text Super'
 };

@@ -1,26 +1,27 @@
-import { ComboboxItem, ComboboxLikeRenderOptionInput, Group, Select, SelectProps } from '@mantine/core';
-import { IconCheck } from '@tabler/icons-react';
+import { CheckIcon, Combobox, ComboboxItem, ComboboxLikeRenderOptionInput, Group, SelectProps } from '@mantine/core';
 import { ItemsHelper } from 'lotus-core/helpers';
 import { IOption } from 'lotus-core/modules/option';
 import { PropertyType } from 'lotus-core/types';
 import { JSX, useEffect, useState } from 'react';
 import { ContainerPropertiesHelper } from '#base';
+import { SelectEx } from '#components/Extendeds';
 import { IHorizontalStackProps } from '#components/Layout';
-import { RenderIcon, RenderOption } from '#render';
+import { RenderItem, RenderOption } from '#render';
+import { IContextRenderBase } from '#types';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
-import { IItemsBaseProps } from '../types';
+import { IItemsBaseOneProps } from '../types';
 
 type TSelectData = PropertyType<SelectProps, 'data'>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ComboboxItemObject = ComboboxItem & {original: any};
-
-export interface ISelectFieldProps<TItem> extends IBaseFieldProps, IItemsBaseProps<TItem>, IHorizontalStackProps {
+export interface ISelectFieldProps<TItem> extends IBaseFieldProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps
+{
   selectProps?: Omit<SelectProps, keyof IBaseFieldProps | 'data' | 'value'>;
 }
 
 export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): JSX.Element 
 {
+  type ComboboxItemObject = ComboboxItem & { original: TItem };
+
   const {
     items,
     onChangedItem,
@@ -28,16 +29,20 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
     getValueItem = ItemsHelper.getValueOfItem,
     getLabelItem = ItemsHelper.getLabelOfItem,
     getDisabledItem = ItemsHelper.getDisabledOfItem,
+    renderItem,
+    renderValue,
     selectProps,
+    size,
     ...otherProps
   } = props;
 
-  const [selectedIcon, setSelectedIcon] = useState<unknown>(undefined);
   const [data, setData] = useState<TSelectData>([]);
 
   const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;
+
+  const contextRender = { size: size, disabled: selectProps?.disabled } as IContextRenderBase;
 
   const prepareData = () =>
   {
@@ -58,13 +63,11 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
   useEffect(() => 
   {
     prepareData();
-  }, [items, items.length, otherProps.size]);
+  }, [items, items.length, size]);
 
   const handleChange = (value: string | null, option: ComboboxItem) => 
   {
     const optionObject = option as ComboboxItemObject;
-
-    setSelectedIcon((optionObject.original as IOption)?.icon);
 
     if (onChangedItem) 
     {
@@ -74,7 +77,7 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
       }
       else
       {
-        onChangedItem(optionObject.original as TItem);
+        onChangedItem(optionObject.original);
       }
     }
 
@@ -84,16 +87,59 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
     }
   };
 
-  const renderOption = (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => 
+  const renderInternalOption = (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => 
   {
     const optionObject = item.option as ComboboxItemObject;
-    return (
-      <Group flex="1" gap="xs">
-        {RenderOption.renderOption(otherProps.size ?? 'md', optionObject.original as IOption)}
-        {item.checked && <IconCheck style={{ marginInlineStart: 'auto' }} />}
-      </Group>
-    );
+
+    if (typeof renderItem === 'function')
+    {
+      return renderItem(optionObject.original, contextRender);
+    }
+    else
+    {
+      const iconView = Boolean(selectProps?.withCheckIcon) && item.checked;
+      const check = iconView ? (
+        <CheckIcon className={Combobox.classes.optionsDropdownCheckIcon} />
+      ) : selectProps?.withAlignedLabels ? (
+        <div className={Combobox.classes.optionsDropdownCheckPlaceholder} />
+      ) : undefined;
+
+      const left = selectProps?.checkIconPosition === 'left' || selectProps?.checkIconPosition === undefined;
+      const right = selectProps?.checkIconPosition === 'right';
+      return (
+        <Group flex="1" gap="xs">
+          {left && check}
+          {RenderOption.renderOption(size ?? 'md', optionObject.original as IOption)}
+          {right && check}
+        </Group>
+      );
+    }
   };
+
+  // { withBorder: true, p: 'xxs', bdRadius: 'md' }
+
+  const renderInternalValue = (value: string, contextRender?: IContextRenderBase) => 
+  {
+    const item = ItemsHelper.getItemByValueOrUndefined(items, value);
+    if (typeof renderValue === 'function')
+    {
+      return renderValue(item, contextRender);
+    }
+    else
+    {
+      if (item)
+      {
+        return RenderItem.renderItem(size ?? 'md', item, undefined, {});
+      }
+      else
+      {
+        return <>{value}</>;
+      }
+    }
+  };
+
+  const actualRenderOption = (renderItem ? renderInternalOption : undefined);
+  const actualRenderValue = (renderValue ? renderInternalValue : undefined);
 
   if (otherProps.inlinePlace) 
   {
@@ -101,15 +147,15 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
       <ContainerField
         {...otherProps}
         componentField={
-          <Select
+          <SelectEx
             data={data}
             error={otherProps.error}
             errorProps={otherProps.errorProps}
             h={undefined}
             inputWrapperOrder={['input', 'error']}
-            leftSection={RenderIcon.renderIcon(otherProps.size ?? 'md', selectedIcon)}
-            renderOption={renderOption}
-            size={otherProps.size}
+            renderOption={actualRenderOption}
+            renderValue={actualRenderValue}
+            size={size}
             style={{ flex: 1 }}
             value={selectedValue}
             w={undefined}
@@ -123,7 +169,7 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
   else 
   {
     return (
-      <Select
+      <SelectEx
         {...containerProps}
         data={data}
         description={otherProps.description}
@@ -132,10 +178,10 @@ export function SelectField<TItem = unknown>(props: ISelectFieldProps<TItem>): J
         errorProps={otherProps.errorProps}
         label={otherProps.label}
         labelProps={otherProps.labelProps}
-        leftSection={RenderIcon.renderIcon(otherProps.size ?? 'md', selectedIcon)}
-        renderOption={renderOption}
+        renderOption={actualRenderOption}
+        renderValue={actualRenderValue}
         required={otherProps.required}
-        size={otherProps.size}
+        size={size}
         value={selectedValue}
         onChange={handleChange}
         {...selectProps}

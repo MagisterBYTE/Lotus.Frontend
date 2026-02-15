@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Panel } from './Panel';
 import { ArgTypesStory, IconsStory, TextStory } from '#storydata';
-import { TSizeTypes } from '#types';
+import { TSizeTypes, TSizeTypeValues } from '#types';
+import { Box } from '../Box';
 
 const meta = {
   title: 'Layout/Panel',
@@ -12,7 +13,7 @@ const meta = {
   argTypes: {
     // Params
     centerContent: { control: 'inline-radio', options: ['horizontally', 'vertically', 'center', undefined], table: { category: 'Params' } },
-    size: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
+    size: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Params' } },
     header: { control: 'text', table: { category: 'Params' } },
     headerOffsetPercent: { control: { type: 'number', min: 0, max: 100 }, table: { category: 'Params' } },
 
@@ -68,6 +69,7 @@ export const PanelGreen: Story = {
   name: 'Panel Green',
   args: {
     children: TextStory.SmallText(),
+
     headerProps: {
       children: 'Заголовок',
       fontSize: 'lg',
@@ -83,22 +85,17 @@ export const PanelGreen: Story = {
     bdWidth: 3,
     bdShadow: 4,
     bgColor: 'greenPalest',
-    bgShadow: 10
+    bgShadow: 10,
+    p: 'xs'
   }
 };
 
-export const PanelAndPanelCenter: Story = {
+export const PanelCenter: Story = {
   name: 'Panel Center',
   args: {
     children: (
-      <Panel bdRadius bgColor="blueGrayLight" p={'md'}>
-        {TextStory.MiddleText()}
-      </Panel>
+<Box style={{overflow: 'clip'}} >{TextStory.MiddleText()}</Box>
     ),
-    style:
-    {
-      overflow: 'scroll'
-    },
     p: 'lg',
     bdStyle: 'solid',
     w: '50vw',
@@ -106,6 +103,7 @@ export const PanelAndPanelCenter: Story = {
     bgColor: 'blueGrayDark',
     bgShadow: 10,
     header: 'Большой текст',
-    m: 'lg'
+    m: 'lg',
+    headerOffsetPercent: 15
   }
 };

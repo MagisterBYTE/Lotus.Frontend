@@ -6,7 +6,7 @@ import { useLayoutEffect } from 'react';
  */
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-export const useScreenResizeOrOrientation = (callback: Function) =>
+export function useScreenResizeOrOrientation(callback: Function) 
 {
   const handleScreenResizeOrOrientation = () =>
   {
@@ -26,4 +26,4 @@ export const useScreenResizeOrOrientation = (callback: Function) =>
       window.removeEventListener('orientationchange', handleScreenResizeOrOrientation);
     };
   }, []);
-};
+}

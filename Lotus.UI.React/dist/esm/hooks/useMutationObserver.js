@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-export const useMutationObserver = (props) => {
+export function useMutationObserver(props) {
     const { callback, options } = props;
     const mutationRef = useRef(document.documentElement);
     useEffect(() => {
@@ -9,5 +9,5 @@ export const useMutationObserver = (props) => {
             return () => observer.disconnect();
         }
     }, [callback, options]);
-};
+}
 //# sourceMappingURL=useMutationObserver.js.map

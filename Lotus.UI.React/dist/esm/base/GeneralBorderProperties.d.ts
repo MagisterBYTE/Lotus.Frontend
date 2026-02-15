@@ -1,27 +1,6 @@
 import { TColorToken } from 'lotus-core/modules/color';
 import { TCssBorderColor, TCssBorderRadius, TCssBorderStyle, TCssBorderWidth, TCssBoxShadow, TCssProperties, TShadowElevation, TSizeType } from '#types';
 /**
- * Тип стороны границы
- */
-export declare const TBorderSideSet: {
-    /**
-     * Левая граница
-     */
-    readonly Left: 1;
-    /**
-     * Правая граница
-     */
-    readonly Right: 2;
-    /**
-     * Верхняя граница
-     */
-    readonly Top: 4;
-    /**
-     * Нижняя граница
-     */
-    readonly Bottom: 8;
-};
-/**
  * Общие свойства для границы элемента UI
  */
 export interface IGeneralBorderProperties {

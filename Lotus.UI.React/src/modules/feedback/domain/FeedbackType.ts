@@ -1,41 +1,72 @@
+
+/**
+ * Массив значений типов обратной связи
+ */
+export const TFeedbackTypeValues = ['alert', 'snackbar', 'modal', 'progress'] as const;
+
 /**
  * Тип обратной связи
  */
-export type TFeedbackType = 'Alert' | 'Snackbar' | 'Modal' | 'Progress';
+export type TFeedbackType = (typeof TFeedbackTypeValues)[number];
 
 /**
- * Перечисление для типа обратной связи
+ * Enum типа обратной связи
  */
-export const FeedbackTypeDescriptions: Record<TFeedbackType, { id: number; name: TFeedbackType }> = {
+export const TFeedbackTypes = {
+
   /**
    * Простое предупреждение без взаимодействия
    */
-  Alert: {
-    id: 0,
-    name: 'Alert'
-  },
+  Alert: TFeedbackTypeValues[0],
 
   /**
    * Информирование с возможностью взаимодействия
    */
-  Snackbar: {
-    id: 1,
-    name: 'Snackbar'
-  },
+  Snackbar: TFeedbackTypeValues[1],
 
   /**
    * Модальное окно
    */
-  Modal: {
-    id: 2,
-    name: 'Modal'
-  },
+  Modal: TFeedbackTypeValues[2],
 
   /**
    * Информирование с прогрессом
    */
-  Progress: {
-    id: 3,
-    name: 'Progress'
+  Progress: TFeedbackTypeValues[3],
+
+  /**
+   * Возвращает массив всех возможных значений
+   */
+  getAllValues(): typeof TFeedbackTypeValues 
+  {
+    return TFeedbackTypeValues;
+  },
+
+  /**
+   * Type Guard для проверки принадлежности значения к TFeedbackType
+   */
+  isFeedbackType(value: unknown): value is TFeedbackType 
+  {
+    if (typeof value === 'string') 
+    {
+      return TFeedbackTypeValues.includes(value as TFeedbackType);
+    }
+    return false;
+  },
+
+  /**
+   * Возвращает значение по индексу
+   */
+  getByIndex(index: number): TFeedbackType | undefined 
+  {
+    return TFeedbackTypeValues[index];
+  },
+
+  /**
+   * Возвращает значение по строковому имени
+   */
+  getByName(name: string): TFeedbackType | undefined 
+  {
+    return TFeedbackTypeValues.find((v) => v === name);
   }
 } as const;

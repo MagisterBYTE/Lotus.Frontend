@@ -12,7 +12,7 @@ export class FontDesignSystem implements IDesignSystemItem
   /**
    * Стандартные параметры дизайн-системы для шрифтов
    */
-  public static readonly Default = new FontDesignSystem(DesignSystemConstants.FontDefault, DesignSystemConstants.FontAccent, DesignSystemConstants.FontMonospace);
+  public static readonly Default = new FontDesignSystem(DesignSystemConstants.FontDefault, DesignSystemConstants.FontMonospace, DesignSystemConstants.FontAccent);
   // #endregion
 
   // #region Static methods

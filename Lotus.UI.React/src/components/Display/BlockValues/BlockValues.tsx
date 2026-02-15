@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { TColorToken } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { Grid, IGridProps } from '#components/Layout';
-import { TCssColor, TOrientation, TSizeType } from '#types';
+import { TOrientation, TSizeType } from '#types';
 import { BlockValue, IBlockValueProps } from '../BlockValue/BlockValue';
-import { ILabelProps } from '../Label';
 
 export interface IBlockValuesProps extends IGridProps
 {

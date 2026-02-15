@@ -7,16 +7,15 @@ import { ContainerPropertiesHelper } from '#base';
 import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
 import { RenderItem } from '#render';
 import { ContainerField, IBaseFieldProps } from '../ContainerField/ContainerField';
-import { IItemsBaseProps } from '../types';
+import { IItemsBaseOneProps } from '../types';
 
 type TSegmentedData = PropertyType<SegmentedControlProps, 'data'>;
 
-export interface ISegmentedFieldProps<TItem> extends IBaseFieldProps, IItemsBaseProps<TItem>, IHorizontalStackProps
-{
+export interface ISegmentedFieldProps<TItem> extends IBaseFieldProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps {
   segmentedProps?: Omit<SegmentedControlProps, keyof IBaseFieldProps | 'data' | 'value'>;
 }
 
-export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TItem>): JSX.Element
+export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TItem>): JSX.Element 
 {
   const {
     items,
@@ -36,13 +35,17 @@ export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TIte
 
   const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;
 
-  const prepareData = () =>
+  const prepareData = () => 
   {
     const newData: TSegmentedData = [];
-    for (const item of items)
+    for (const item of items) 
     {
       newData.push({
-        label: renderItem ? renderItem(item) : (getLabelItem ? getLabelItem(item) : RenderItem.renderItem(otherProps.size ?? 'md', item, props, undefined, true)),
+        label: Assert.isFunction(renderItem)
+          ? renderItem(item)
+          : getLabelItem
+            ? getLabelItem(item)
+            : RenderItem.renderItem(otherProps.size ?? 'md', item, undefined, {}),
         value: getValueItem(item).toString(),
         disabled: getDisabledItem(item)
       });
@@ -51,24 +54,24 @@ export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TIte
     setData(newData);
   };
 
-  useEffect(() =>
+  useEffect(() => 
   {
     prepareData();
   }, [items, items.length, otherProps.size]);
 
-  const handleChange = (value: string) =>
+  const handleChange = (value: string) => 
   {
-    if (onChangedItem)
+    if (onChangedItem) 
     {
-      if (Assert.emptyValue(value))
+      if (Assert.emptyValue(value)) 
       {
         onChangedItem(undefined);
       }
-      else
+      else 
       {
-        for (const item of items)
+        for (const item of items) 
         {
-          if (getValueItem(item).toString() === value)
+          if (getValueItem(item).toString() === value) 
           {
             onChangedItem(item);
             break;
@@ -77,13 +80,13 @@ export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TIte
       }
     }
 
-    if (segmentedProps?.onChange)
+    if (segmentedProps?.onChange) 
     {
       segmentedProps?.onChange(value);
     }
   };
 
-  if (otherProps.inlinePlace)
+  if (otherProps.inlinePlace) 
   {
     return (
       <ContainerField
@@ -104,9 +107,9 @@ export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TIte
       />
     );
   }
-  else
+  else 
   {
-    if (otherProps.label)
+    if (otherProps.label) 
     {
       return (
         <VerticalStack {...containerProps} hAlign="stretch">
@@ -117,7 +120,7 @@ export function SegmentedField<TItem = unknown>(props: ISegmentedFieldProps<TIte
         </VerticalStack>
       );
     }
-    else
+    else 
     {
       return <SegmentedControl {...containerProps} data={data} size={otherProps.size} value={selectedValue} onChange={handleChange} {...segmentedProps} />;
     }

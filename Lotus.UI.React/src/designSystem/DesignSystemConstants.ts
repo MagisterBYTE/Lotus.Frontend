@@ -50,7 +50,12 @@ export abstract class DesignSystemConstants
   /**
    * Прозрачность для элементов UI которые недоступны
    */
-  public static readonly OpacityForDisabled: number = 0.65;
+  public static readonly OpacityForDisabled: number = 0.6;
+
+  /**
+   * Прозрачность для фона бейдж элементов
+   */
+  public static readonly OpacityForBadge: number = 0.2;
 
   /**
    * Прозрачность тени для границы элементов UI которые при наведении

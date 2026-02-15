@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './ContainerField';
+export * from './MultiSelectField';
 export * from './PasswordField';
 export * from './SegmentedField';
 export * from './SelectField';

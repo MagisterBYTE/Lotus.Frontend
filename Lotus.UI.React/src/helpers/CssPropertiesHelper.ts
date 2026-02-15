@@ -98,6 +98,7 @@ export class CssPropertiesHelper
       'bgColor',
       'bgImage',
       'bgShadow',
+      'bgAccent',
 
       // IGeneralBorderProperties
       'withBorder',

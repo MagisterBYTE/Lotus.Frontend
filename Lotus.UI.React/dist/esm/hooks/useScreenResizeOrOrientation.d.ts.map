@@ -1,1 +1,1 @@
-{"version":3,"file":"useScreenResizeOrOrientation.d.ts","sourceRoot":"","sources":["../../../src/hooks/useScreenResizeOrOrientation.ts"],"names":[],"mappings":"AAEA;;;GAGG;AAGH,eAAO,MAAM,4BAA4B,GAAI,UAAU,QAAQ,SAoB9D,CAAC"}
+{"version":3,"file":"useScreenResizeOrOrientation.d.ts","sourceRoot":"","sources":["../../../src/hooks/useScreenResizeOrOrientation.ts"],"names":[],"mappings":"AAEA;;;GAGG;AAGH,wBAAgB,4BAA4B,CAAC,QAAQ,EAAE,QAAQ,QAoB9D"}

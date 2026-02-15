@@ -1,4 +1,4 @@
-export { AlertTypeDescriptions, type TAlertType } from './AlertType';
+export { type TAlertType, TAlertTypeValues, TAlertTypes } from './AlertType';
 export { type IAlertValue } from './AlertValue';
-export { FeedbackTypeDescriptions, type TFeedbackType } from './FeedbackType';
+export { type TFeedbackType, TFeedbackTypeValues, TFeedbackTypes } from './FeedbackType';
 //# sourceMappingURL=index.d.ts.map

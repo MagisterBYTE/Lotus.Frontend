@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { ComponentPropsWithRef, CSSProperties } from 'react';
+import { ComponentPropsWithRef, CSSProperties, useMemo } from 'react';
 import {
   BackgroundPropertiesHelper,
   BorderPropertiesHelper,
@@ -46,24 +46,28 @@ function buildBoxProps(props: IBoxProps): CSSProperties
 
 export function Box(props: IBoxProps) 
 {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { centerContent, children, ...otherProps } = props;
 
-  const styleDiv: CSSProperties = {
-    ...MarginPropertiesHelper.createMarginProps(props),
-    ...PaddingPropertiesHelper.createPaddingProps(props),
-    ...ContainerPropertiesHelper.createContainerProps(props),
-    ...BackgroundPropertiesHelper.createBackgroundProps(props),
-    ...BackgroundPropertiesHelper.createBoxShadowProps(props),
-    ...BorderPropertiesHelper.createBorderProps(props),
-    ...BorderPropertiesHelper.createBorderShadowProps(props),
-    ...buildBoxProps(props)
-  };
+  // 1. Мемоизируем объект стилей
+  const boxStyle = useMemo((): CSSProperties => (
+    {
+      ...MarginPropertiesHelper.createMarginProps(otherProps),
+      ...PaddingPropertiesHelper.createPaddingProps(otherProps),
+      ...ContainerPropertiesHelper.createContainerProps(otherProps),
+      ...BackgroundPropertiesHelper.createBackgroundProps(otherProps),
+      ...BackgroundPropertiesHelper.createBoxShadowProps(otherProps),
+      ...BorderPropertiesHelper.createBorderProps(otherProps),
+      ...BorderPropertiesHelper.createBorderShadowProps(otherProps),
+      ...buildBoxProps(props)
+    }),
+  [otherProps, centerContent]
+  );
 
-  const boxClass = css({ ...styleDiv, label: 'Box' });
+  // 2. Мемоизируем сгенерированный класс Emotion
+  const boxClass = useMemo(() => css({ ...boxStyle, label: 'Box' }), [boxStyle]);
 
-  // Фильтруем кастомные пропсы перед передачей в div
-  const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
+  // 3. Фильтруем кастомные пропсы перед передачей в div
+  const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
 
   return (
     <div className={boxClass} {...domProps}>

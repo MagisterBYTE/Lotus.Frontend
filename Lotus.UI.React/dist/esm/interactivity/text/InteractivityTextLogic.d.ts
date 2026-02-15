@@ -10,7 +10,7 @@ export declare abstract class InteractivityTextLogic {
      * @param element Элемент (его пропсы)
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static getEffectByState(element: any, state: TInteractivityState, context?: IEffectContextProps): TCssProperties;
     /**
@@ -19,7 +19,7 @@ export declare abstract class InteractivityTextLogic {
      * @param type Тии интерактивности фона
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static createProperties(element: any, type: TInteractivityTextType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties;
     /**
@@ -29,7 +29,7 @@ export declare abstract class InteractivityTextLogic {
      * @param type Тип интерактивности текста
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static fillProperties(target: TCssProperties, element: any, type: TInteractivityTextType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties;
 }

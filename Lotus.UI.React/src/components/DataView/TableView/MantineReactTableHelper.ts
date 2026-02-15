@@ -1,5 +1,5 @@
 import { SortingState } from '@tanstack/react-table';
-import { StringHelper } from 'lotus-core/helpers';
+import { ItemsHelper, StringHelper } from 'lotus-core/helpers';
 import { FilterFunctionDescriptors, IFilterFunctionDesc } from 'lotus-core/modules/filter';
 import { IObjectInfo, IPropertyDescriptor, PropertyTypeDescriptors } from 'lotus-core/modules/objectInfo';
 import { FilterPropertyConstants, IFilterProperty, IFilterPropertyCollection, ISortProperty } from 'lotus-core/modules/requestAndResponse';
@@ -20,11 +20,16 @@ export class MantineReactTableHelper
     const column: MRT_ColumnDef<TItem> = {
       accessorKey: property.fieldName,
       header: property.name,
+      size: (property.visualSettings && property.visualSettings.size) ?? 100,
 
       // Фильтрация
       enableColumnFilter: (property.filtering && property.filtering.enabled) ?? false,
       filterVariant: property.filtering && property.filtering.variant,
       filterFn: MantineReactTableHelper.getDefaultFilterFunction(property),
+      mantineFilterSelectProps:
+        property.filtering?.variant === 'select' ? { data: ItemsHelper.convertToOptionsText(property.possibleValues ?? []) } : undefined,
+      mantineFilterMultiSelectProps:
+        property.filtering?.variant === 'multi-select' ? { data: ItemsHelper.convertToOptionsText(property.possibleValues ?? []) } : undefined,
 
       // Сортировка
       enableSorting: (property.sorting && property.sorting.enabled) ?? false,
@@ -32,6 +37,12 @@ export class MantineReactTableHelper
       // Редактирование
       enableEditing: (property.editing && property.editing.enabled) ?? false
     };
+
+    if (Boolean(property.editing && property.editing.enabled) === false)
+    {
+      // eslint-disable-next-line react/display-name
+      column.Edit = () => null;
+    }
 
     return column;
   }
@@ -113,10 +124,19 @@ export class MantineReactTableHelper
           filter.function === FilterFunctionDescriptors.IncludeNone
         ) 
         {
-          filter.values = column.value as string[];
+          if (Array.isArray(column.value)) 
+          {
+            filter.values = column.value as string[];
+          }
+          else 
+          {
+            filter.values = [String(column.value)];
+          }
+          filter.value = undefined;
         }
         else 
         {
+          filter.values = undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           filter.value = (column.value as any).toString();
         }
@@ -260,7 +280,7 @@ export class MantineReactTableHelper
         propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
         isDesc: column.desc
       };
-    
+
       return sort;
     });
 

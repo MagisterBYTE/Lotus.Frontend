@@ -28,7 +28,8 @@ const meta = {
     ...ArgTypesStory.Background,
 
     // Hide
-    children: { table: { disable: true } }
+    children: { table: { disable: true } },
+    style: { table: { disable: true } }
   }
 } satisfies Meta<typeof Box>;
 
@@ -83,7 +84,7 @@ export const BoxBrown: Story = {
     bdStyle: 'solid',
     w: '30vw',
     h: '50vh',
-    bgColor: ColorDesignSystem.Default.brown[4],
+    bgColor: ColorDesignSystem.LightDefault.colors.brown[4],
     bgShadow: 10,
     style: {
       overflowY: 'auto'

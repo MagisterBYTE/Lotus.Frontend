@@ -11,6 +11,10 @@ export interface ITextProps extends IGeneralContainerProperties, IGeneralTextPro
      * Если указан цвет, показывать как badge
      */
     asBadge?: TCssBackgroundColor | TColorToken;
+    /**
+     * Статус недоступности
+     */
+    disabled?: boolean;
 }
 export declare function Text(props: ITextProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=Text.d.ts.map

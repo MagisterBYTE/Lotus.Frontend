@@ -20,7 +20,7 @@ export abstract class InteractivityBorderLogic
    * @param element Элемент (его пропсы)
    * @param state Состояние интерактивности элемента UI
    * @param context Текущий контекст элемента
-   * @returns 
+   * @returns Свойства Css
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public static getEffectByState(element: any, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
@@ -37,17 +37,17 @@ export abstract class InteractivityBorderLogic
       case 'normal':
         {
           const color = borderColor ?? backColor ?? CssVariables.BorderColor;
-          borderProps.borderColor = ColorCssHelper.getColorCss(color);
+          borderProps.borderColor = ColorCssHelper.getColor(color);
         } break;
       case 'hover':
         {
           const color = borderHoverColor ?? ColorTokenHelper.next(borderColor ?? backColor, -2) ?? CssVariables.PrimaryColor3;
-          borderProps.borderColor = ColorCssHelper.getColorCss(color);
+          borderProps.borderColor = ColorCssHelper.getColor(color);
         } break;
       case 'pressed':
         {
           const color = borderPressedColor ?? ColorTokenHelper.next(borderColor ?? backColor, 2) ?? CssVariables.PrimaryColor7;
-          borderProps.borderColor = ColorCssHelper.getColorCss(color);
+          borderProps.borderColor = ColorCssHelper.getColor(color);
         } break;
     }
 
@@ -60,7 +60,7 @@ export abstract class InteractivityBorderLogic
    * @param type Тии интерактивности фона
    * @param state Состояние интерактивности элемента UI
    * @param context Текущий контекст элемента
-   * @returns 
+   * @returns Свойства Css
    */
   public static createProperties(element: any, type: TInteractivityBorderType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
   {
@@ -76,7 +76,7 @@ export abstract class InteractivityBorderLogic
    * @param type Тип интерактивности границы
    * @param state Состояние интерактивности элемента UI
    * @param context Текущий контекст элемента
-   * @returns 
+   * @returns Свойства Css
    */
   // eslint-disable-next-line max-params
   public static fillProperties(target: TCssProperties, element: any, type: TInteractivityBorderType, state: TInteractivityState, 

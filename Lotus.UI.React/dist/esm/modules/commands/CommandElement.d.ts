@@ -1,5 +1,6 @@
 import { ActionIconProps, ButtonProps, MenuItemProps, NavLinkProps } from '@mantine/core';
 import { BaseActionCommand } from 'lotus-core/modules/actionCommand';
+import { IImageDatabase } from 'lotus-core/resources/image';
 import { TSizeType } from '#types';
 /**
  * Базовый интерфейс с общими свойствами
@@ -13,6 +14,10 @@ interface ICommandElementBaseProps {
      * Команда
      */
     command: BaseActionCommand;
+    /**
+     * База данных изображений
+     */
+    imageDatabase?: IImageDatabase;
 }
 export type ICommandElementProps = (ICommandElementBaseProps & {
     elementType: 'icon';

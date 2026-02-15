@@ -1,9 +1,7 @@
 import React from 'react';
-import { loadImageURL } from './utils/loadImageURL';
-import { loadImageFile } from './utils/loadImageFile';
 import { isPassiveSupported } from './utils/isPassiveSupported';
-import { isTouchDevice } from './utils/isTouchDevice';
 import { isFileAPISupported } from './utils/isFileAPISupported';
+import { DeviceHelper, ImageHelper } from 'node_modules/lotus-core/src/helpers';
 // Draws a rounded rectangle on a 2D context.
 const drawRoundedRect = (context, x, y, width, height, borderRadius) => {
     if (borderRadius === 0) {
@@ -85,7 +83,7 @@ export class AvatarEditor extends React.Component {
         const options = isPassiveSupported() ? { passive: false } : false;
         document.addEventListener('mousemove', this.handleMouseMove, options);
         document.addEventListener('mouseup', this.handleMouseUp, options);
-        if (isTouchDevice) {
+        if (DeviceHelper.isTouchDevice()) {
             document.addEventListener('touchmove', this.handleMouseMove, options);
             document.addEventListener('touchend', this.handleMouseUp, options);
         }
@@ -134,7 +132,7 @@ export class AvatarEditor extends React.Component {
     componentWillUnmount() {
         document.removeEventListener('mousemove', this.handleMouseMove, false);
         document.removeEventListener('mouseup', this.handleMouseUp, false);
-        if (isTouchDevice) {
+        if (DeviceHelper.isTouchDevice()) {
             document.removeEventListener('touchmove', this.handleMouseMove, false);
             document.removeEventListener('touchend', this.handleMouseUp, false);
         }
@@ -277,7 +275,7 @@ export class AvatarEditor extends React.Component {
     async loadImage(file) {
         if (isFileAPISupported && file instanceof File) {
             try {
-                const image = await loadImageFile(file);
+                const image = await ImageHelper.loadImageFile(file);
                 this.handleImageReady(image);
             }
             catch (error) {
@@ -286,7 +284,7 @@ export class AvatarEditor extends React.Component {
         }
         else if (typeof file === 'string') {
             try {
-                const image = await loadImageURL(file, this.props.crossOrigin);
+                const image = await ImageHelper.loadImageURL(file, this.props.crossOrigin);
                 this.handleImageReady(image);
             }
             catch {

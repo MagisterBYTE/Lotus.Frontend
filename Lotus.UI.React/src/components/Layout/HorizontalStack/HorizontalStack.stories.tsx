@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgTypesStory } from '#storydata';
-import { TCssContentAligns, TSizeTypes } from '#types';
+import { TCssContentAligns, TSizeTypes, TSizeTypeValues } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Box } from '../Box/Box';
 import { HorizontalStack } from './HorizontalStack';
@@ -13,9 +13,10 @@ const meta = {
 
   argTypes: {
     // Params
-    spacing: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
+    spacing: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Params' } },
     hAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
     vAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
+    wrap: { control: 'inline-radio', options: [true, false, undefined], table: { category: 'Params' } },
 
     // Size
     ...ArgTypesStory.Size,
@@ -41,7 +42,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   name: 'Default',
   args: {
-    children: <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент</div>
+    children: <>
+        <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент 1 </div>
+        <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент 2 </div>
+        <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент 3 </div>
+        </>
   }
 };
 
@@ -63,6 +68,7 @@ export const Spacing: Story = {
       </>
     ),
     p: 'md',
+    spacing: 'lg',
     bdStyle: 'solid',
     w: '30vw',
     h: 'min-content',

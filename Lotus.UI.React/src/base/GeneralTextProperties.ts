@@ -59,9 +59,10 @@ export abstract class TextPropertiesHelper
   /**
    * Создать свойства CSS по общим свойствам текста в виде TCssProperties
    * @param props Общие свойства текста для элемента UI
+   * @param opacityOverride Переопределение прозрачности текста
    * @returns Свойства CSS по общим свойствам текста в виде TCssProperties
    */
-  public static createTextProps(props: IGeneralTextProperties): TCssProperties
+  public static createTextProps(props: IGeneralTextProperties, opacityOverride?: number): TCssProperties
   {
     const textProps: TCssProperties = {};
 
@@ -106,7 +107,21 @@ export abstract class TextPropertiesHelper
 
     if (props.textColor)
     {
-      textProps.color = ColorCssHelper.getColorCss(props.textColor);
+      if (Assert.existValue(opacityOverride))
+      {
+        textProps.color = ColorCssHelper.getColorWithAlpha(props.textColor, opacityOverride);
+      }
+      else
+      {
+        textProps.color = ColorCssHelper.getColor(props.textColor);
+      }
+    }
+    else
+    {
+      if (Assert.existValue(opacityOverride))
+      {
+        textProps.opacity = opacityOverride;
+      }
     }
 
     if (props.textLineSpacing)

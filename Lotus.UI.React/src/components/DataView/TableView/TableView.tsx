@@ -1,17 +1,22 @@
+ 
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ActionIcon, Tooltip, useMantineTheme } from '@mantine/core';
-import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconX } from '@tabler/icons-react';
-import { LanguageChangeEvent, LanguageChangeEventType, LocalizationCore, LocalizationHelper, TLanguageType, TLanguageTypes } from 'lotus-core/localization';
-import { IObjectInfo } from 'lotus-core/modules/objectInfo';
-import { OptionHelper } from 'lotus-core/modules/option';
-import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage } from 'lotus-core/modules/requestAndResponse';
-import { IEditable, IRecordObject, TKey } from 'lotus-core/types';
-import { RefAttributes, useEffect, useState } from 'react';
+import { ActionIcon, Button, Modal, Pill, Select, Tooltip, useMantineTheme } from '@mantine/core';
+import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconRefresh, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
+import { ItemsHelper, StringHelper } from 'lotus-core/helpers';
+import { LocalizationCore } from 'lotus-core/localization';
+import { IObjectInfo, ObjectInfo } from 'lotus-core/modules/objectInfo';
+import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage, ResponseHelper } from 'lotus-core/modules/requestAndResponse';
+import { IValidator } from 'lotus-core/modules/validation';
+import { IRecordObject, TKey } from 'lotus-core/types';
+import { ObjectName } from 'lotus-core/utils';
+import { RefAttributes, useEffect, useMemo, useState } from 'react';
 import { JSX } from 'react/jsx-runtime';
-import { HorizontalStack } from '#components/Layout';
+import { MultiSelectField, SelectField } from '#components/Controls';
+import { Text } from '#components/Display';
+import { SelectEx } from '#components/Extendeds';
+import { HorizontalStack, VerticalStack } from '#components/Layout';
 import
 {
   MantineReactTable,
@@ -22,19 +27,34 @@ import
   MRT_SortingState,
   MRT_TableInstance,
   MRT_TableOptions,
-  MRT_Localization_RU,
-  MRT_Localization_EN,
-  MRT_Icons
+  MRT_Icons,
+  useMantineReactTable,
+  createRow,
+  MRT_ToggleGlobalFilterButton,
+  MRT_ToggleFiltersButton,
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
+  MRT_ToggleFullScreenButton
 } from '#external/mantine-react-table';
+import { IContextRenderBase, TSizeType, TSizeTypes } from '#types';
 import { MantineReactTableHelper } from './MantineReactTableHelper';
-import { EditTableFilterArray, EditTableFilterEnum, EditTableFilterString } from './TableViewFilterTypes';
+import { createDisabledSaveButtonEvent } from './TableViewEvents';
+import { EditTableFilterArray, EditTableFilterString } from './TableViewFilterTypes';
+import { TableViewMultiSelectView } from './components/TableViewMultiSelectView';
+import { TableViewSelectView } from './components/TableViewSelectView';
+import { TableViewTextView } from './components/TableViewTextView';
+import { useTableViewLocalization } from './useTableViewLocalization';
 
 export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'>
 {
+  disabled?: boolean;
+  size?: TSizeType;
   objectInfo: IObjectInfo;
+  validator?: IValidator;
   onGetItems: <TFilterRequest extends IRequest>(filter: TFilterRequest) => Promise<IResponsePage<TItem>>;
   onTransformFilterRequest?: <TFilterRequest extends IRequest>(filter: TFilterRequest) => TFilterRequest;
-  onAddItem?: () => Promise<IResponse<TItem>>;
+  onCreateItem?: () => Promise<IResponse<TItem>>;
+  onAddItem?: (item: TItem) => Promise<IResponse>;
   onUpdateItem?: (item: TItem) => Promise<IResponse<TItem>>;
   onDuplicateItem?: (id: TKey) => Promise<IResponse<TItem>>;
   onDeleteItem?: (id: TKey) => Promise<IResponse>;
@@ -42,20 +62,42 @@ export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_T
 
 type Updater<T> = T | ((old: T) => T);
 
-const pageInfoResponseDefault:IPageInfoResponse = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 } as const;
+const pageInfoResponseDefault: IPageInfoResponse = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 } as const;
 
-export const TableView = <TItem extends Record<string, any> & IEditable>(props: ITableViewProps<TItem>) => 
+export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TItem>)
 {
-  const { objectInfo, onGetItems, onTransformFilterRequest, onAddItem, onUpdateItem, onDuplicateItem, onDeleteItem } = props;
+  const {
+    size = 'md',
+    objectInfo,
+    validator,
+    onGetItems,
+    onTransformFilterRequest,
+    onAddItem,
+    onCreateItem,
+    onUpdateItem,
+    onDuplicateItem,
+    onDeleteItem
+  } = props;
 
   const properties = objectInfo.getProperties();
-  
+
   const theme = useMantineTheme();
+  const blueColor = theme.colors.blue[5];
+  const redColor = theme.colors.red[5];
 
   const actualIcons: Partial<MRT_Icons> = {
-    IconDeviceFloppy: (props: JSX.IntrinsicAttributes & IconProps & RefAttributes<SVGSVGElement>) => <IconDeviceFloppy {...props} color={theme.colors.info[5]} />,
-    IconCircleX: (props: JSX.IntrinsicAttributes & IconProps & RefAttributes<SVGSVGElement>) => (<IconCircleX {...props} color={theme.colors.red[5]} />)
+    IconDeviceFloppy: (props: JSX.IntrinsicAttributes & IconProps & RefAttributes<SVGSVGElement>) => <IconDeviceFloppy {...props} color={blueColor} />,
+    IconCircleX: (props: JSX.IntrinsicAttributes & IconProps & RefAttributes<SVGSVGElement>) => <IconCircleX {...props} color={redColor} />
   };
+
+  // Статус
+  const isAdd = Boolean(onAddItem);
+  const isCreate = Boolean(onCreateItem);
+  const isUpdate = Boolean(onUpdateItem);
+  const isDelete = Boolean(onDeleteItem);
+
+  // Размер
+  const [actualSize, setActualSize] = useState(size);
 
   // Получение данных
   const [isLoading, setIsLoading] = useState(false);
@@ -71,143 +113,167 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   const [globalFilter, setGlobalFilter] = useState('');
 
   // Редактирование текущей записи
-  const [currentEditRow, setCurrentEditRow] = useState<MRT_Row<TItem> | null>(null);
-  const [currentItem, setCurrentItem] = useState<TItem | null>(null);
-  const [currentItemInvalid, setCurrentItemInvalid] = useState<boolean>(false);
+  const [currentEditRow, setCurrentEditRow] = useState<MRT_Row<TItem> | undefined>(undefined);
+  const [currentItem, setCurrentItem] = useState<TItem | undefined>(undefined);
+  const [currentItemValid, setCurrentItemValid] = useState<boolean>(false);
+  const [editItemName, setEditItemName] = useState<string>('');
+  const [hashValid, setHashValid] = useState<number>(0);
+  const [isUpdatingProcess, setUpdatingProcess] = useState<boolean>(false);
 
-  const isDelete = Boolean(onDeleteItem);
+  // Удаление
+  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+  const [deleteItem, setDeleteItem] = useState<TItem | undefined>(undefined);
+  const [deleteItemName, setDeleteItemName] = useState<string>('');
+  const [isDeletingProcess, setDeletingProcess] = useState<boolean>(false);
 
   // Локализация
-  const localizationFullRU = {
-    filterIncludeAny: LocalizationCore.data.filters.includeAny,
-    filterIncludeAll: LocalizationCore.data.filters.includeAll,
-    filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
-    filterIncludeNone: LocalizationCore.data.filters.includeNone,
-    ...MRT_Localization_RU
-  };
-  const localizationFullEN = {
-    filterIncludeAny: LocalizationCore.data.filters.includeAny,
-    filterIncludeAll: LocalizationCore.data.filters.includeAll,
-    filterIncludeEquals: LocalizationCore.data.filters.includeEquals,
-    filterIncludeNone: LocalizationCore.data.filters.includeNone,
-    ...MRT_Localization_EN
-  };
-  const [localizationFull, setLocalizationFull] = useState<object>(localizationFullRU);
+  const localizationFull = useTableViewLocalization();
+
+  // Текущий контекст ренденинга
+  const contextRender: IContextRenderBase = { disabled: props.disabled, size: actualSize, theme: theme };
 
   // Модифицированные столбцы
-  const editColumns = properties.map((property) => 
-  {
-    const column: MRT_ColumnDef<TItem> = MantineReactTableHelper.convertPropertyDescriptorToColumn(property);
+  const editColumns = useMemo(
+    () =>
+      properties.map((property) =>
+      {
+        const column: MRT_ColumnDef<TItem> = MantineReactTableHelper.convertPropertyDescriptorToColumn(property);
 
-    if (property.editing?.editorType === 'text') 
-    {
-      column.mantineEditTextInputProps = {
-        required: property.editing?.required,
-        type: 'text',
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => 
+        if (property.editing?.editorType === 'text' || property.editing?.editorType === undefined)
         {
-          const newItem: TItem = { ...currentItem! };
-          newItem[column.accessorKey!] = event.target.value as any;
-          setCurrentItem(newItem);
+          // eslint-disable-next-line react/display-name
+          column.Cell = (props: any) => (
+            <TableViewTextView {...props} contextRender={contextRender} objectInfo={objectInfo} property={property} validator={validator} />
+          );
+
+          // Режим редактирования
+          column.mantineEditTextInputProps = {
+            required: property.editing?.required,
+            disabled: props.disabled,
+            size: actualSize,
+            type: 'text',
+            error: validator?.validationStatus.getErrorByKey(property.fieldName),
+            onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+            {
+              const newItem: TItem = { ...currentItem! };
+              newItem[column.accessorKey!] = event.target.value as any;
+              setCurrentItem(newItem);
+            },
+            ...property.visualSettings?.propsEdit
+          };
+
+          // Набор фильтров для строки
+          column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
         }
-      };
 
-      column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
-    }
+        if (property.editing?.editorType === 'select')
+        {
+          // eslint-disable-next-line react/display-name
+          column.Cell = (props: any) => (
+            <TableViewSelectView {...props} contextRender={contextRender} objectInfo={objectInfo} property={property} validator={validator} />
+          );
 
-    if (property.editing?.editorType === 'select') 
-    {
-      // eslint-disable-next-line react/display-name
-      column.Cell = function ({ cell }) 
-      {
-        const id = cell.getValue() as TKey;
-        const options = property.options!;
-        const text = OptionHelper.getLabelByValue(options, id);
-        return <>{text}</>;
-      };
+          // eslint-disable-next-line react/display-name
+          column.Edit = function ({ cell, column, table, row })
+          {
+            const selectedValue = currentItem ? String(currentItem[property.fieldName]) : String(cell.getValue());
+            const items = property.possibleValues!;
+            const isModalMode = table.options.editDisplayMode === 'modal';
+            return (
+              <SelectField<TItem>
+                disabled={props.disabled}
+                error={validator?.validationStatus.getErrorByKey(property.fieldName)}
+                items={items}
+                label={isModalMode ? property.name : undefined}
+                required={isModalMode ? property.editing?.required : undefined}
+                selectedItem={selectedValue}
+                selectProps={{
+                  withAlignedLabels: true,
+                  withCheckIcon: true,
+                  onChange: (value) =>
+                  {
+                    const newItem = ObjectInfo.updatedObject(currentItem, property, value) as TItem;
+                    setCurrentItem(newItem);
+                  } }}
+                size={actualSize}
+                w={'100%'}
+                {...property.visualSettings?.propsEdit}
+              />
+            );
+          };
 
-      // column.Edit = function ({ cell, column, table })
-      // {
-      //   const id = cell.getValue() as TKey;
-      //   const options = property.options!;
+          // Набор фильтров для строки
+          column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+        }
 
-      //   return <SelectOption size='medium'
-      //     width='100%'
-      //     menuPortalTarget={document.body}
-      //     initialSelectedValue={id}
-      //     onSetSelectedValue={(selectedValue) => { setSelectedValue(property.fieldName, selectedValue!) }}
-      //     options={options} />
-      // }
+        if (property.editing?.editorType === 'multi-select')
+        {
+          // eslint-disable-next-line react/display-name
+          column.Cell = (props: any) => (
+            <TableViewMultiSelectView {...props} contextRender={contextRender} objectInfo={objectInfo} property={property} validator={validator} />
+          );
 
-      column.mantineEditTextInputProps = {
-        // error: property.editing?.onValidation(currentItem).text,
-        required: property.editing?.required,
-        size: 'small',
-        variant: 'outlined'
-      };
+          // eslint-disable-next-line react/display-name
+          column.Edit = function ({ cell })
+          {
+            const selectedValues = currentItem ? (currentItem[property.fieldName] as any[]) : (cell.getValue() as any[]);
+            const items = property.possibleValues!;
+            const isModalMode = table.options.editDisplayMode === 'modal';
 
-      column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnum(column, onSelectFilterMode);
-    }
+            return (
+              <MultiSelectField<TItem>
+                disabled={props.disabled}
+                error={validator?.validationStatus.getErrorByKey(property.fieldName)}
+                items={items}
+                label={isModalMode ? property.name : undefined}
+                required={isModalMode ? property.editing?.required : undefined}
+                selectedItems={selectedValues}
+                selectProps={{
+                  withAlignedLabels: true,
+                  withCheckIcon: true,
+                  onChange: (value) =>
+                  {
+                    const newItem = ObjectInfo.updatedObject(currentItem, property, value) as TItem;
+                    setCurrentItem(newItem);
+                  }
+                }}
+                size={actualSize}
+                w="100%"
+                {...property.visualSettings?.propsEdit}
+              />
+            );
+          };
 
-    if (property.editing?.editorType === 'multi-select') 
-    {
-      // eslint-disable-next-line react/display-name
-      column.Cell = function ({ cell }) 
-      {
-        const massive = cell.getValue() as any[];
-        const options = property.options!;
+          column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+        }
 
-        const texts = OptionHelper.getLabelsByValues(options, massive);
-        const text = texts.join(', ');
-        return <>{text}</>;
-      };
-
-      // column.Edit = function ({ cell, column, table })
-      // {
-      //   const massive = cell.getValue() as any[];
-      //   const options = property.options!;
-      //   return <SelectOption size='medium'
-      //     width='100%'
-      //     initialSelectedValues={massive}
-      //     onSetSelectedValues={(selectedValues) => { setSelectedValues(property.fieldName, selectedValues) }}
-      //     options={options} />
-      // }
-
-      column.mantineEditTextInputProps = {
-        // error: property.editing?.onValidation(currentItem).text,
-        required: property.editing?.required,
-        size: 'small',
-        variant: 'outlined'
-      };
-
-      column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
-    }
-
-    if (property.viewImage) 
-    {
-      // column.Cell = function({ cell, row })
-      // {
-      //   const id = cell.getValue() as number;
-      //   return <ImageBox id={id} />
-      // }
-      // column.Edit = function({ cell, column, table })
-      // {
-      //   const id = cell.getValue() as number;
-      //   return <ImageGallery size='small'
-      //     fullWidth
-      //     variant='outlined'
-      //     initialSelectedValue={id}
-      //     onSetSelectedValue={(selectedValue) => { setSelectedValue(property.fieldName, selectedValue); } }
-      //     images={ImageDatabase.getAllImages()} />
-      // }
-    }
-    return column;
-  });
+        if (property.viewImage)
+        {
+          // column.Cell = function({ cell, row })
+          // {
+          //   const id = cell.getValue() as number;
+          //   return <ImageBox id={id} />
+          // }
+          // column.Edit = function({ cell, column, table })
+          // {
+          //   const id = cell.getValue() as number;
+          //   return <ImageGallery size='small'
+          //     fullWidth
+          //     variant='outlined'
+          //     initialSelectedValue={id}
+          //     onSetSelectedValue={(selectedValue) => { setSelectedValue(property.fieldName, selectedValue); } }
+          //     images={ImageDatabase.getAllImages()} />
+          // }
+        }
+        return column;
+      }),
+    [hashValid, currentItem, actualSize]
+  );
 
   //
   // #region Получение данных
   //
-  const getFilterQueryItems = (): IRequest => 
+  const getFilterQueryItems = (): IRequest =>
   {
     const pageInfo: IPageInfoRequest = { pageNumber: paginationModel.pageIndex, pageSize: paginationModel.pageSize };
 
@@ -217,26 +283,26 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
 
     const request = { pageInfo: pageInfo, sorting: sortings, filtering: filtering };
 
-    if (onTransformFilterRequest) 
+    if (onTransformFilterRequest)
     {
       const transformRequest = onTransformFilterRequest(request);
       return transformRequest;
     }
-    else 
+    else
     {
       return request;
     }
   };
 
-  const refreshItems = async (filter: IRequest) => 
+  const refreshItems = async (filter: IRequest) =>
   {
-    try 
+    try
     {
-      if (!items.length) 
+      if (!items.length)
       {
         setIsLoading(true);
       }
-      else 
+      else
       {
         setIsRefetching(true);
       }
@@ -264,7 +330,7 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
       setIsLoading(false);
       setIsRefetching(false);
     }
-    catch (exc) 
+    catch (exc)
     {
       setIsLoading(false);
       setIsRefetching(false);
@@ -276,51 +342,92 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   // #region Добавление данных
   //
-  const handleAddRow = () => 
+  const handleCreateRowBegin = async () =>
   {
-    if (onAddItem) 
+    if (onCreateItem)
     {
-      const result = onAddItem();
-      void result.then(async () => 
+      const response = await onCreateItem();
+      if (ResponseHelper.succeed(response) && response.payload)
       {
-        await refreshItems(getFilterQueryItems());
+        setCurrentItem(response.payload);
+        table.setCreatingRow(createRow(table, response.payload));
+      }
+    }
+    else
+    {
+      setCurrentItem(undefined);
+      table.setCreatingRow(true);
+    }
+
+    const createObjectName = StringHelper.stringFormat(LocalizationCore.data.actions.createObject, objectInfo.objectName);
+    setEditItemName(createObjectName);
+  };
+
+  const handleCreateRowSave = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem>; exitCreatingMode: () => void }) =>
+  {
+    const { row, table, exitCreatingMode } = props;
+    const createdItem: TItem = { ...currentItem } as TItem;
+
+    if (onAddItem)
+    {
+      const responsePromise = onAddItem(createdItem);
+      void responsePromise.then((response) =>
+      {
+        if (ResponseHelper.succeed(response))
+        {
+          const newItems = [...items, createdItem];
+          setItems(newItems);
+        }
       });
     }
+    setCurrentItem(undefined);
+    validator?.reset();
+    exitCreatingMode();
+  };
+
+  const handleCreateRowCancel = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
+  {
+    setCurrentItem(undefined);
+    validator?.reset();
   };
   // #endregion
 
   //
   // #region Редактирование данных
   //
-  const handleEditRowBegin = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) => (event: any) => 
+  const handleEditRowBegin = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => (event: any) =>
   {
     const { row, table } = props;
     table.setEditingRow(row);
     setCurrentEditRow(row);
     setCurrentItem(row.original);
+    const itemName = ObjectName.getName(row.original);
+    const editObjectName = StringHelper.stringFormat(LocalizationCore.data.actions.editObject, itemName);
+    setEditItemName(editObjectName);
   };
 
-  const handleEditRowCancel = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) => 
+  const handleEditRowCancel = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
   {
     const { row, table } = props;
     table.setEditingRow(null);
-    setCurrentEditRow(null);
-    setCurrentItem(null);
+    setCurrentEditRow(undefined);
+    setCurrentItem(undefined);
+    validator?.reset();
   };
 
-  const handleEditRowSave = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) =>
+  const handleEditRowSave = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
   {
     const { row, table } = props;
     const updateItem: TItem = { ...currentItem } as TItem;
 
-    if (onUpdateItem) 
+    if (onUpdateItem)
     {
+      setUpdatingProcess(true);
       const responsePromise = onUpdateItem(updateItem);
-      void responsePromise.then((response) => 
-      {
-        if (response.result)
+      void responsePromise
+        .then((response) =>
         {
-          if (response.result.succeeded)
+          if (ResponseHelper.succeed(response))
           {
             const newItems = [...items];
             newItems[currentEditRow!.index] = response.payload!;
@@ -332,13 +439,17 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
             newItems[currentEditRow!.index] = currentEditRow!.original;
             setItems(newItems);
           }
-        }
-      });
+        })
+        .finally(() =>
+        {
+          setUpdatingProcess(false);
+        });
     }
 
     table.setEditingRow(null);
-    setCurrentEditRow(null);
-    setCurrentItem(null);
+    setCurrentEditRow(undefined);
+    setCurrentItem(undefined);
+    validator?.reset();
   };
   // #endregion
 
@@ -347,123 +458,231 @@ export const TableView = <TItem extends Record<string, any> & IEditable>(props: 
   //
   const handleDeleteRow = (row: MRT_Row<TItem>) => (event: any) =>
   {
-    // setDeleteItem(row.original);
-    // setOpenDeleteDialog(true);
+    setDeleteItem(row.original);
+    setOpenDeleteDialog(true);
+    const itemName = ObjectName.getName(row.original);
+    const deleteObjectName = StringHelper.stringFormat(LocalizationCore.data.actions.deleteObject, itemName);
+    setDeleteItemName(deleteObjectName);
+  };
+
+  const handleCloseDeleteDialog = () =>
+  {
+    setOpenDeleteDialog(false);
+    setDeleteItem(undefined);
+  };
+
+  const handleOkDeleteDialog = async () =>
+  {
+    setOpenDeleteDialog(false);
+    if (deleteItem && onDeleteItem)
+    {
+      setDeletingProcess(true);
+      const response = await onDeleteItem(deleteItem.id);
+      setDeletingProcess(false);
+      if (ResponseHelper.succeed(response))
+      {
+        await refreshItems(getFilterQueryItems());
+      }
+    }
   };
   // #endregion
 
   //
   // Фильтрация
   //
-  const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) => 
+  const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) =>
   {
     const data = updaterOrValue as Record<string, MRT_FilterOption>;
     setColumnFiltersFns(data);
   };
 
-  const handleTranslate = (lang: TLanguageType) =>
+  //
+  // Размер шрифта
+  //
+  const handleIncreaseFont = () =>
   {
-    if (lang === TLanguageTypes.ru_RU)
-    {
-      setLocalizationFull(localizationFullRU);
-    }
-    else
-    {
-      setLocalizationFull(localizationFullEN);
-    }
+    const newFontSize = TSizeTypes.next(actualSize);
+    setActualSize(newFontSize);
   };
 
+  const handleDecreaseFont = () =>
+  {
+    const newFontSize = TSizeTypes.prev(actualSize);
+    setActualSize(newFontSize);
+  };
   //
   // #region Методы жизненного цикла
   //
-  useEffect(() => 
+  useEffect(() =>
   {
     const filter = getFilterQueryItems();
     void refreshItems(filter);
   }, [paginationModel.pageIndex, paginationModel.pageSize, sortingState, columnFiltersState, columnFiltersFns, globalFilter]);
 
-  useEffect(() => 
+  useEffect(() =>
   {
     const initialColumnFiltersFns: Record<string, MRT_FilterOption> = MantineReactTableHelper.getFilterOptions(objectInfo);
     setColumnFiltersFns(initialColumnFiltersFns);
   }, []);
-
-  useEffect(() => 
-  {
-    const currentLang = LocalizationHelper.getDocumentLang();
-    handleTranslate(currentLang);
-  }, []);
   // #endregion
 
-  // 
+  //
   // #region Render
   //
-  const renderRowActionsEditRow = (props: { row: MRT_Row<TItem>, table: MRT_TableInstance<TItem> }) => 
+  const renderRowActionsEditRow = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
   {
-    return (<Tooltip label={LocalizationCore.data.actions.edit}>
-      <ActionIcon size='lg' variant="default" onClick={handleEditRowBegin(props)}>
-        <IconEdit color={theme.colors.info[5]} />
-      </ActionIcon>
-      {isDelete && <ActionIcon size='lg' variant="default" onClick={handleDeleteRow(props.row)}>
-        <IconCircleX color={theme.colors.red[5]} />
-      </ActionIcon>}
-    </Tooltip>);
+    return (
+      <HorizontalStack spacing={actualSize}>
+        {isUpdate && (
+          <Tooltip label={LocalizationCore.data.actions.edit}>
+            <ActionIcon size={TSizeTypes.next(actualSize, 1, 'xl')} variant="default" onClick={handleEditRowBegin(props)}>
+              <IconEdit color={blueColor} height={'100%'} width={'100%'} />
+            </ActionIcon>
+          </Tooltip>
+        )}
+        {isDelete && (
+          <Tooltip label={LocalizationCore.data.actions.delete}>
+            <ActionIcon size={TSizeTypes.next(actualSize, 1, 'xl')} variant="default" onClick={handleDeleteRow(props.row)}>
+              <IconCircleX color={redColor} height={'100%'} width={'100%'} />
+            </ActionIcon>
+          </Tooltip>
+        )}
+      </HorizontalStack>
+    );
+  };
+
+  const renderTopToolbarCustomActionsAddRow = (props: { table: MRT_TableInstance<TItem> }) =>
+  {
+    return (
+      <Button m="md" onClick={handleCreateRowBegin}>
+        {LocalizationCore.data.actions.add}
+        {actualSize}
+        -
+        {TSizeTypes.next(actualSize, 1, 'lg')}
+        -
+        {TSizeTypes.prev(actualSize, 1, 'xs')}
+      </Button>
+    );
+  };
+
+  const renderToolbarInternalActions = (props: { table: MRT_TableInstance<TItem> }) =>
+  {
+    return (
+      <>
+        {/* 1. Сначала отрисовываем стандартные кнопки (поиск, фильтры и т.д.) */}
+        <MRT_ToggleGlobalFilterButton table={table} />
+        <MRT_ToggleFiltersButton table={table} />
+        <MRT_ShowHideColumnsButton table={table} />
+        <MRT_ToggleDensePaddingButton table={table} />
+        <MRT_ToggleFullScreenButton table={table} />
+
+        {/* 2. Добавляем ваши кастомные кнопки в самый конец */}
+        <Tooltip label="Обновить данные">
+          <ActionIcon color="gray" variant="subtle" onClick={handleDecreaseFont}>
+            <IconTextDecrease />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label="Настройки">
+          <ActionIcon color="gray" mr={'md'} variant="subtle" onClick={handleIncreaseFont}>
+            <IconTextIncrease />
+          </ActionIcon>
+        </Tooltip>
+      </>
+    );
   };
   // #endregion
 
+  if (validator && currentItem)
+  {
+    const statusValidation = validator.validate(currentItem);
+    if (statusValidation != currentItemValid)
+    {
+      setCurrentItemValid(statusValidation);
+      dispatchEvent(createDisabledSaveButtonEvent(!statusValidation));
+    }
+
+    const newHash = validator.validationStatus.hash();
+    if (newHash != hashValid)
+    {
+      setHashValid(newHash);
+    }
+  }
+
+  const table = useMantineReactTable({
+    ...props,
+    getRowId: (row) => row.id,
+    columns: editColumns,
+    layoutMode: 'grid',
+    data: items,
+    icons: actualIcons,
+    localization: localizationFull,
+    renderRowActions: props.renderRowActions ?? renderRowActionsEditRow,
+    renderTopToolbarCustomActions: props.renderTopToolbarCustomActions ?? renderTopToolbarCustomActionsAddRow,
+    renderToolbarInternalActions: renderToolbarInternalActions,
+    rowCount: pageInfo.totalCount,
+    state: {
+      isLoading: isLoading,
+      isSaving: isUpdatingProcess || isDeletingProcess,
+      showProgressBars: isRefetching,
+      showSkeletons: false,
+      pagination: paginationModel,
+      columnFilters: columnFiltersState,
+      columnFilterFns: columnFiltersFns,
+      globalFilter: globalFilter,
+      sorting: sortingState
+    },
+    onColumnFilterFnsChange: handleColumnFilterFnsChange,
+    onColumnFiltersChange: setColumnFiltersState,
+    onEditingRowCancel: handleEditRowCancel,
+    onEditingRowSave: handleEditRowSave,
+    onCreatingRowSave: handleCreateRowSave,
+    onCreatingRowCancel: handleCreateRowCancel,
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPaginationModel,
+    onSortingChange: setSortingState,
+    mantineEditRowModalProps: ({ row }) => ({
+      title: editItemName
+    }),
+    mantineCreateRowModalProps: ({ row }) => ({
+      title: editItemName
+    }),
+    filterFns: {
+      includeAny: (row, id, filterValue) =>
+      {
+        return true;
+      },
+      includeAll: (row, id, filterValue) =>
+      {
+        return true;
+      },
+      includeEquals: (row, id, filterValue) =>
+      {
+        return true;
+      },
+      includeNone: (row, id, filterValue) =>
+      {
+        return true;
+      }
+    }
+  });
+
   return (
     <>
-      <MantineReactTable
-        {...props}
-        columns={editColumns}
-        data={items}
-        editDisplayMode="row"
-        enablePagination={true}
-        filterFns={{
-          includeAny: (row, id, filterValue) => 
-          {
-            return true;
-          },
-          includeAll: (row, id, filterValue) => 
-          {
-            return true;
-          },
-          includeEquals: (row, id, filterValue) => 
-          {
-            return true;
-          },
-          includeNone: (row, id, filterValue) => 
-          {
-            return true;
-          }
-        }}
-        icons={actualIcons}
-        localization={localizationFull}
-        manualFiltering={true}
-        manualPagination={true}
-        manualSorting={true}
-        renderRowActions={renderRowActionsEditRow}
-        renderTopToolbarCustomActions={props.renderTopToolbarCustomActions}
-        rowCount={pageInfo.totalCount}
-        state={{
-          isLoading: isLoading,
-          showProgressBars: isRefetching,
-          showSkeletons: false,
-          pagination: paginationModel,
-          columnFilters: columnFiltersState,
-          columnFilterFns: columnFiltersFns,
-          globalFilter: globalFilter,
-          sorting: sortingState
-        }}
-        table={undefined}
-        onColumnFilterFnsChange={handleColumnFilterFnsChange}
-        onColumnFiltersChange={setColumnFiltersState}
-        onEditingRowCancel={handleEditRowCancel}
-        onEditingRowSave={handleEditRowSave}
-        onGlobalFilterChange={setGlobalFilter}
-        onPaginationChange={setPaginationModel}
-        onSortingChange={setSortingState}
-      />
+      <MantineReactTable table={table} />
+      <Modal key={'deleteDialog'} centered opened={openDeleteDialog} title={LocalizationCore.data.actions.delete} onClose={handleCloseDeleteDialog}>
+        <VerticalStack spacing={'md'}>
+          <Text>{deleteItemName}</Text>
+          <HorizontalStack hAlign="space-between" mb="md" mt="md" spacing={'md'}>
+            <Button radius="sm" variant="default" w={'160px'} onClick={handleCloseDeleteDialog}>
+              {LocalizationCore.data.actions.cancel}
+            </Button>
+            <Button color={redColor} radius="sm" variant="filled" w={'160px'} onClick={handleOkDeleteDialog}>
+              {LocalizationCore.data.actions.delete}
+            </Button>
+          </HorizontalStack>
+        </VerticalStack>
+      </Modal>
     </>
   );
-};
+}

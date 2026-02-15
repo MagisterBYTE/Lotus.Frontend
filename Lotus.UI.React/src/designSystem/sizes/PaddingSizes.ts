@@ -1,4 +1,4 @@
-import { instanceOfSizeType, TCssPadding } from '#types';
+import { TCssPadding, TSizeTypes } from '#types';
 import { CssVariables } from '../сssVariables';
 import { SizeDimensions } from './SizeDimensions';
 
@@ -24,7 +24,7 @@ export class PaddingSizes extends SizeDimensions
     if (value === undefined) return undefined;
     if (typeof value === 'number') return `${value / 16}rem`;
 
-    if (instanceOfSizeType(value))
+    if (TSizeTypes.isSizeType(value))
     {
       switch (value)
       {

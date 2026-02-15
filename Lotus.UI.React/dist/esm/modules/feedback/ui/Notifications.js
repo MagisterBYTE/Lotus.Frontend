@@ -5,7 +5,16 @@ import { LocalizationCore } from 'lotus-core/localization';
 import { ColorCssHelper } from 'lotus-core/modules/color';
 import { createResultFromError, instanceOfResult } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
+/**
+ * Класс для информирования
+ */
 export class Notifications {
+    /**
+     * Показать результат
+     * @param result Результат
+     * @param notification Дополнительный параметры нотификации
+     * @returns Идентификатор нотификации
+     */
     // eslint-disable-next-line complexity
     static showResult(result, notification) {
         if (Assert.emptyValue(result))
@@ -19,12 +28,12 @@ export class Notifications {
             notificationData.message = messagesNode;
             if (result.succeeded) {
                 notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.succeed;
-                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColorCss('success');
+                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColor('success');
                 notificationData.icon = Assert.existValue(notification?.icon) ? notification?.icon : _jsx(IconCheck, { size: 18 });
             }
             else {
                 notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.failed;
-                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColorCss('error');
+                notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColor('error');
                 notificationData.icon = Assert.existValue(notification?.icon) ? notification?.icon : _jsx(IconExclamationCircleFilled, { size: 18 });
             }
         }
@@ -45,21 +54,34 @@ export class Notifications {
         const notificationId = showNotification(notificationData);
         return notificationId;
     }
+    /**
+     * Показать успешное информирование
+     * @param message Сообщение
+     * @param notification Дополнительный параметры нотификации
+     * @returns Идентификатор нотификации
+     */
     static showSuccess(message, notification) {
         const resultSuccess = {
             succeeded: true,
             message: message
         };
-        Notifications.showResult(resultSuccess, notification);
+        return Notifications.showResult(resultSuccess, notification);
     }
+    /**
+     * Показать ошибку
+     * @param error Ошибка
+     * @param notification Дополнительный параметры нотификации
+     * @returns Идентификатор нотификации
+     */
     static showError(error, notification) {
         if (instanceOfResult(error)) {
-            Notifications.showResult(error, notification);
+            return Notifications.showResult(error, notification);
         }
         if (error instanceof Error) {
             const result = createResultFromError(error);
-            Notifications.showResult(result, notification);
+            return Notifications.showResult(result, notification);
         }
+        return '';
     }
 }
 //# sourceMappingURL=Notifications.js.map

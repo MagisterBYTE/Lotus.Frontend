@@ -1,6 +1,6 @@
 ﻿import { useLayoutEffect, useState } from 'react';
 
-export const useMediaQuery = (mediaQuery: string) =>
+export function useMediaQuery(mediaQuery: string)
 {
   const isSsr = typeof window === 'undefined';
 
@@ -31,4 +31,4 @@ export const useMediaQuery = (mediaQuery: string) =>
   }, [mediaQuery]);
 
   return matches;
-};
+}

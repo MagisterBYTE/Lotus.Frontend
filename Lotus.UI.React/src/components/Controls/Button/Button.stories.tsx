@@ -4,7 +4,7 @@ import { GiAnt } from 'react-icons/gi';
 import { Button } from './Button';
 import { TButtonVariant } from './ButtonVariant';
 import { ArgTypesStory, IconsStory } from '#storydata';
-import { TCssBackgroundColor, TSizeTypes } from '#types';
+import { TCssBackgroundColor, TSizeTypes, TSizeTypeValues } from '#types';
 
 const DivButton = (variant: TButtonVariant, backColor: TCssBackgroundColor|TColorToken, propsOther: any) =>
 {
@@ -48,7 +48,7 @@ const meta = {
   {
     // IGeneralBaseElementProperties
     disabled: { control: 'boolean', table: { category: 'Base' } },
-    size: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Base' } },
+    size: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Base' } },
     extraClass: { table: { disable: true } },
 
     // IButtonBaseProps

@@ -3,7 +3,7 @@ import { IImageDatabase } from 'lotus-core/resources/image';
 import { CSSProperties, ReactElement, ReactNode } from 'react';
 import { TCssColor, TSizeType } from '#types';
 /**
- * Отрисовка иконки
+ * Вспомогательный класс для отрисовки иконки
  */
 export declare abstract class RenderIcon {
     /**

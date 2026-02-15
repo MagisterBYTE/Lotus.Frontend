@@ -12,9 +12,39 @@ export class BackgroundPropertiesHelper {
      */
     static createBackgroundProps(props) {
         const backProps = {};
-        const backgroundColor = BackgroundPropertiesHelper.getBackgroundColorPropsValue(props.bgColor);
-        if (Assert.existValue(backgroundColor)) {
-            backProps.backgroundColor = backgroundColor;
+        if (Assert.existValue(props.bgAccent)) {
+            switch (props.bgAccent) {
+                case 'accent':
+                    {
+                        if (ColorCssHelper.isLight) {
+                            backProps.backgroundColor = 'rgb(240, 240, 250)';
+                        }
+                        else {
+                            backProps.backgroundColor = 'rgb(40, 40, 45)';
+                        }
+                    }
+                    break;
+                case 'glass':
+                    {
+                        if (ColorCssHelper.isLight) {
+                            backProps.backgroundColor = 'rgba(250, 250, 250, 0.15)';
+                            backProps.backdropFilter = 'blur(12px)';
+                            backProps.WebkitBackdropFilter = 'blur(12px)';
+                        }
+                        else {
+                            backProps.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+                            backProps.backdropFilter = 'blur(16px)';
+                            backProps.WebkitBackdropFilter = 'blur(16px)';
+                        }
+                    }
+                    break;
+            }
+        }
+        else {
+            const backgroundColor = BackgroundPropertiesHelper.getBackgroundColorPropsValue(props.bgColor);
+            if (Assert.existValue(backgroundColor)) {
+                backProps.backgroundColor = backgroundColor;
+            }
         }
         return backProps;
     }
@@ -26,7 +56,7 @@ export class BackgroundPropertiesHelper {
     static getBackgroundColorPropsValue(value) {
         if (Assert.emptyValue(value))
             return undefined;
-        return ColorCssHelper.getColorCss(value);
+        return ColorCssHelper.getColor(value);
     }
     // #endregion
     // #region BoxShadow
@@ -53,7 +83,7 @@ export class BackgroundPropertiesHelper {
     static getBoxShadowPropsValue(elevation, color) {
         if (Assert.emptyValue(elevation))
             return undefined;
-        const colorShadow = Assert.emptyValue(color) ? Colors.black : new Color(ColorCssHelper.getColorCss(color));
+        const colorShadow = Assert.emptyValue(color) ? Colors.black : new Color(ColorCssHelper.getColor(color));
         const rgba02 = colorShadow.toCSSRgbValue(0.2);
         const rgba014 = colorShadow.toCSSRgbValue(0.14);
         const rgba012 = colorShadow.toCSSRgbValue(0.12);

@@ -35,6 +35,10 @@ export declare abstract class DesignSystemConstants {
      */
     static readonly OpacityForDisabled: number;
     /**
+     * Прозрачность для фона бейдж элементов
+     */
+    static readonly OpacityForBadge: number;
+    /**
      * Прозрачность тени для границы элементов UI которые при наведении
      */
     static readonly OpacityForBorderShadowHover: number;

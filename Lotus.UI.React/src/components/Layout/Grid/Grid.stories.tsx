@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgTypesStory, TextStory } from '#storydata';
-import { TCssContentAligns, TSizeTypes } from '#types';
+import { TCssContentAligns, TSizeTypeValues } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { Box } from '../Box/Box';
 import { HorizontalStack } from '../HorizontalStack/HorizontalStack';
 import { Grid } from './Grid';
@@ -17,8 +16,8 @@ const meta = {
     // Params
     gridTemplateColumns: { control: 'text', table: { category: 'Params' } },
     gridTemplateRows: { control: 'text', table: { category: 'Params' } },
-    columnGap: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
-    rowGap: { control: 'inline-radio', options: [...TSizeTypes, undefined], table: { category: 'Params' } },
+    columnGap: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Params' } },
+    rowGap: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Params' } },
     hAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
     vAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
     hContentAlign: { control: 'inline-radio', options: [...TCssContentAligns, undefined], table: { category: 'Params' } },
@@ -101,17 +100,17 @@ export const CardColor: Story = {
         <Box bdRadius bgColor="blueGreyDark" gridColumn={2} gridRow={1}>
           Это текст
         </Box>
-        <Box bdRadius bgColor="blueGreyDark" gridColumn={2} gridRow={2} style={{maxHeight: '50px', overflow: 'scroll'}}>
-        {TextStory.MiddleText()}
+        <Box bdRadius bgColor="blueGreyDark" gridColumn={2} gridRow={2} style={{ maxHeight: '50px', overflow: 'scroll' }}>
+          {TextStory.MiddleText()}
         </Box>
         <Box bdRadius bgColor="blueGreyDark" gridColumn={2} gridRow={3}>
           Это что еще
         </Box>
-        <HorizontalStack gridColumn={1} gridColumnSpan={3} gridRow={4} hAlign={'space-around'} >
-          <Box bdRadius bgColor='brownDarker' w={'200px'}>
+        <HorizontalStack gridColumn={1} gridColumnSpan={3} gridRow={4} hAlign={'space-around'}>
+          <Box bdRadius bgColor="brownDarker" w={'200px'}>
             Первая кнопка
           </Box>
-          <Box bdRadius bgColor='brownDarker' w={'200px'}>
+          <Box bdRadius bgColor="brownDarker" w={'200px'}>
             Вторая кнопка
           </Box>
         </HorizontalStack>
@@ -125,7 +124,7 @@ export const CardColor: Story = {
     hContentAlign: 'stretch',
     vContentAlign: 'flex-start',
     w: '100%',
-    h: '100%',
+    h: 'min-content',
     p: 'xs'
   }
 };

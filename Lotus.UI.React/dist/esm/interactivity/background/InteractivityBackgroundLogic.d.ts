@@ -10,7 +10,7 @@ export declare abstract class InteractivityBackgroundLogic {
      * @param element Элемент (его пропсы)
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static buildEffectByState(element: any, state: TInteractivityState, context?: IEffectContextProps): TCssProperties;
     /**
@@ -19,7 +19,7 @@ export declare abstract class InteractivityBackgroundLogic {
      * @param type Тии интерактивности фона
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static createProperties(element: any, type: TInteractivityBackgroundType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties;
     /**
@@ -29,7 +29,7 @@ export declare abstract class InteractivityBackgroundLogic {
      * @param type Тии интерактивности фона
      * @param state Состояние интерактивности элемента UI
      * @param context Текущий контекст элемента
-     * @returns
+     * @returns Свойства Css
      */
     static fillProperties(target: TCssProperties, element: any, type: TInteractivityBackgroundType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties;
 }

@@ -1,20 +1,20 @@
 import { IOption } from 'lotus-core/modules/option';
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { ReactElement } from 'react';
+import { IHorizontalStackProps } from '#components/Layout';
 import { TSizeType } from '#types';
 /**
- * Отрисовка опции
+ * Вспомогательный класс для отрисовки опции
  */
 export declare abstract class RenderOption {
     /**
-     * Отрисовка иконки и контента
+     * Отрисовка иконки и контента опции
      * @param size Размер элемента UI
      * @param option Опция
-     * @param context Контекст вызова
      * @param imageDatabase База данных изображений
-     * @param wrapContainer Следует ли обвернуть в блок div
+     * @param wrapContainer Следует ли обвернуть в горизонтальный контейнер
      * @returns ReactElement
      */
-    static renderOption(size: TSizeType, option: IOption, context?: any, imageDatabase?: IImageDatabase, wrapContainer?: boolean): ReactElement;
+    static renderOption(size: TSizeType, option: IOption, imageDatabase?: IImageDatabase, wrapContainer?: IHorizontalStackProps): ReactElement;
 }
 //# sourceMappingURL=RenderOption.d.ts.map

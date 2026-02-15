@@ -1,11 +1,13 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 /* eslint-disable jsx-a11y/alt-text */
+import { BrowserHelper, ImageHelper } from 'lotus-core/helpers';
 import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
+import { isValidElement } from 'react';
 import { IconContext } from 'react-icons';
 import { IconSizes } from '#designSystem/sizes';
 /**
- * Отрисовка иконки
+ * Вспомогательный класс для отрисовки иконки
  */
 export class RenderIcon {
     /**
@@ -23,9 +25,9 @@ export class RenderIcon {
     static renderIcon(size, icon, other, iconStyle, iconColor, imageDatabase, wrapDiv, wrapDivStyle) {
         if (Assert.emptyValue(icon))
             return undefined;
-        const iconColorCss = ColorCssHelper.getColorCss(iconColor);
-        // Если строка
-        if (typeof icon === 'string') {
+        const iconColorCss = ColorCssHelper.getColor(iconColor);
+        // Если строка и формат данных DataURL или AbsoluteUrl
+        if (typeof icon === 'string' && (ImageHelper.isDataURL(icon) || BrowserHelper.isAbsoluteUrl(icon))) {
             const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
             if (other) {
                 if (wrapDiv) {
@@ -39,27 +41,26 @@ export class RenderIcon {
                 return _jsx("img", { height: sizeIcon, src: icon, style: iconStyle, width: sizeIcon });
             }
         }
-        // Если это число есть база данных
-        if (typeof icon === 'number' && imageDatabase) {
+        // Если это число или просто строка есть база данных
+        if ((typeof icon === 'number' || typeof icon === 'string') && imageDatabase) {
             const iconData = imageDatabase.getImageByIdOrName(icon);
-            if (iconData) {
-                const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
-                if (other) {
-                    if (wrapDiv) {
-                        return (_jsxs("div", { style: wrapDivStyle, children: [_jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon }), other] }));
-                    }
-                    else {
-                        return (_jsxs(_Fragment, { children: [_jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon }), other] }));
-                    }
+            if (!iconData)
+                return _jsx(_Fragment, { children: icon });
+            const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
+            if (other) {
+                if (wrapDiv) {
+                    return (_jsxs("div", { style: wrapDivStyle, children: [_jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon }), other] }));
                 }
                 else {
-                    return _jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon });
+                    return (_jsxs(_Fragment, { children: [_jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon }), other] }));
                 }
             }
-            return _jsx(_Fragment, {});
+            else {
+                return _jsx("img", { height: sizeIcon, src: iconData.source, style: iconStyle, width: sizeIcon });
+            }
         }
         // Это иконка React
-        else {
+        if (isValidElement(icon)) {
             const sizeIcon = IconSizes.Default.toRemCss(size);
             if (other) {
                 if (wrapDiv) {

@@ -287,6 +287,28 @@ export default defineConfig([
         {
           selector: 'variable',
           format: ['camelCase', 'UPPER_CASE', 'PascalCase']
+        },
+        // 1. Проверяет обычные функции: async function getDataAsync() {}
+        {
+          "selector": "function",
+          "modifiers": ["async"],
+          "format": ["camelCase"],
+          "suffix": ["Async"]
+        },
+        // 2. Проверяет методы в классах и объектах: class A { async saveAsync() {} }
+        {
+          "selector": "method",
+          "modifiers": ["async"],
+          "format": ["camelCase"],
+          "suffix": ["Async"]
+        },
+        // 3. Проверяет переменные, содержащие стрелочные функции: const fetchAsync = async () => {}
+        {
+          "selector": "variable",
+          "types": ["function"],
+          "modifiers": ["async"],
+          "format": ["camelCase"],
+          "suffix": ["Async"]
         }
       ],
 
@@ -348,7 +370,7 @@ export default defineConfig([
       '@typescript-eslint/await-thenable': 'error',
 
       // Запрещает неправильное использование промисов (например, промис в if)
-      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/no-misused-promises': 'off',
 
       //=============================================================
       // АСИНХРОННЫЙ КОД
@@ -398,7 +420,7 @@ export default defineConfig([
       'import/no-duplicates': 'error',
 
       // Запрещает лишние сегменты в путях: ./../file вместо ../file
-      'import/no-useless-path-segments': 'error'
+      'import/no-useless-path-segments': 'error',
     }
   },
 

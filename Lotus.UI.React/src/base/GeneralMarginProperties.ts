@@ -4,7 +4,7 @@ import { TCssPadding, TCssProperties, TSizeType } from '#types';
 /**
  * Общие свойства внешних отступов элемента UI
  */
-export interface IGeneralMarginProperties 
+export interface IGeneralMarginProperties
 {
   /**
    * Внешний отступ
@@ -44,20 +44,48 @@ export abstract class MarginPropertiesHelper
    */
   public static createMarginProps(props: IGeneralMarginProperties): TCssProperties
   {
-    const marginProps: TCssProperties = {};
+    const { m, mt, mr, mb, ml } = props;
 
-    if (props.m)
+    if (!m && !mt && !mr && !mb && !ml)
     {
-      marginProps.margin = MarginSizes.getFromCssVariable(props.m);
+      return {};
+    }
+
+    const getValue = (specific?: TCssPadding | TSizeType) =>
+    {
+      const value = specific ?? m;
+      return value ? MarginSizes.getFromCssVariable(value) : '0';
+    };
+
+    const top = getValue(mt);
+    const right = getValue(mr);
+    const bottom = getValue(mb);
+    const left = getValue(ml);
+
+    // Логика сокращения (Shorthand)
+    let marginValue: string | undefined | number;
+
+    if (top === right && right === bottom && bottom === left)
+    {
+      // Все стороны равны: margin: 10px;
+      marginValue = top;
+    }
+    else if (top === bottom && right === left)
+    {
+      // Пары верх-низ и право-лево равны: margin: 10px 20px;
+      marginValue = `${top} ${right}`;
+    }
+    else if (right === left)
+    {
+      // Право и лево равны: margin: 10px 20px 15px;
+      marginValue = `${top} ${right} ${bottom}`;
     }
     else
     {
-      marginProps.marginLeft = MarginSizes.getFromCssVariable(props.ml);
-      marginProps.marginRight = MarginSizes.getFromCssVariable(props.mr);
-      marginProps.marginTop = MarginSizes.getFromCssVariable(props.mt);
-      marginProps.marginBottom = MarginSizes.getFromCssVariable(props.mb);
+      // Все разные: margin: 10px 20px 15px 5px;
+      marginValue = `${top} ${right} ${bottom} ${left}`;
     }
 
-    return marginProps;
+    return { margin: marginValue };
   }
 }

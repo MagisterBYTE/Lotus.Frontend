@@ -3,27 +3,7 @@ import { Color, ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { RadiusSizes } from '#designSystem/sizes';
 import { CssVariables } from '#designSystem/сssVariables';
-/**
- * Тип стороны границы
- */
-export const TBorderSideSet = {
-    /**
-     * Левая граница
-     */
-    Left: 1,
-    /**
-     * Правая граница
-     */
-    Right: 2,
-    /**
-     * Верхняя граница
-     */
-    Top: 4,
-    /**
-     * Нижняя граница
-     */
-    Bottom: 8
-};
+import { TBorderSideFlags } from '#types';
 /**
  * Вспомогательный класс для работы с общими свойствами границы элемента UI
  */
@@ -80,25 +60,25 @@ export class BorderPropertiesHelper {
             }
             else {
                 if (typeof props.withBorder === 'number') {
-                    const isLeft = NumberHelper.isFlagSet(props.withBorder, TBorderSideSet.Left);
+                    const isLeft = NumberHelper.isFlagSet(props.withBorder, TBorderSideFlags.Left);
                     if (isLeft) {
                         borderProps.borderLeftColor = color;
                         borderProps.borderLeftStyle = style;
                         borderProps.borderLeftWidth = width;
                     }
-                    const isRight = NumberHelper.isFlagSet(props.withBorder, TBorderSideSet.Right);
+                    const isRight = NumberHelper.isFlagSet(props.withBorder, TBorderSideFlags.Right);
                     if (isRight) {
                         borderProps.borderRightColor = color;
                         borderProps.borderRightStyle = style;
                         borderProps.borderRightWidth = width;
                     }
-                    const isTop = NumberHelper.isFlagSet(props.withBorder, TBorderSideSet.Top);
+                    const isTop = NumberHelper.isFlagSet(props.withBorder, TBorderSideFlags.Top);
                     if (isTop) {
                         borderProps.borderTopColor = color;
                         borderProps.borderTopStyle = style;
                         borderProps.borderTopWidth = width;
                     }
-                    const isBottom = NumberHelper.isFlagSet(props.withBorder, TBorderSideSet.Bottom);
+                    const isBottom = NumberHelper.isFlagSet(props.withBorder, TBorderSideFlags.Bottom);
                     if (isBottom) {
                         borderProps.borderBottomColor = color;
                         borderProps.borderBottomStyle = style;
@@ -126,7 +106,7 @@ export class BorderPropertiesHelper {
     static getBorderColorPropsValue(value) {
         if (Assert.emptyValue(value))
             return undefined;
-        return ColorCssHelper.getColorCss(value);
+        return ColorCssHelper.getColor(value);
     }
     /**
      * Получить значение свойства CSS по радиусу в виде TCssBorderRadius
@@ -182,7 +162,7 @@ export class BorderPropertiesHelper {
             return `0px 0px ${elevation}px ${elevation}px ${CssVariables.BorderShadowColor}`;
         }
         else {
-            const colorShadow = new Color(ColorCssHelper.getColorCss(color));
+            const colorShadow = new Color(ColorCssHelper.getColor(color));
             return `0px 0px ${elevation}px ${elevation}px ${colorShadow.toCSSRgbValue(shadowAlpha ?? 0.5)}`;
         }
     }

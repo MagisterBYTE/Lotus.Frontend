@@ -2,7 +2,7 @@
 import { ArgTypesStory, IconsStory } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BlockValue } from './BlockValue';
-import { TSizeTypes } from '#types';
+import { TSizeTypeValues } from '#types';
 import { TColorTokens } from 'lotus-core/modules/color';
 
 const meta = {
@@ -13,16 +13,14 @@ const meta = {
 
   argTypes: {
     // Value
-    size: { control: 'select', options: [undefined, ...TSizeTypes], table: { category: 'Value' } },
+    size: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Value' } },
     label: { control: 'text', table: { category: 'Value' } },
     value: { control: 'text', table: { category: 'Value' } },
     accentColor: { control: 'select', options: [undefined, ...TColorTokens], table: { category: 'Value' } },
     accentBackground: { control: 'boolean', table: { category: 'Value' } },
     asBadge: { control: 'boolean', table: { category: 'Value' } },
     monospaceValue: { control: 'boolean', table: { category: 'Value' } },
-
-    // Text
-    ...ArgTypesStory.Text,
+    isHoverable: { control: 'boolean', table: { category: 'Value' } },
 
     // Size
     ...ArgTypesStory.Size,

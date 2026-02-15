@@ -1,4 +1,4 @@
-import { instanceOfSizeType } from '#types';
+import { TSizeTypes } from '#types';
 import { CssVariables } from '../сssVariables';
 import { SizeDimensions } from './SizeDimensions';
 /**
@@ -38,7 +38,7 @@ export class FontSizes extends SizeDimensions {
             return undefined;
         if (typeof value === 'number')
             return `${value / 16}rem`;
-        if (instanceOfSizeType(value)) {
+        if (TSizeTypes.isSizeType(value)) {
             switch (value) {
                 case 'xxs':
                     return CssVariables.FontSizeXXS;

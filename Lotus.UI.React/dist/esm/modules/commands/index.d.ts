@@ -1,3 +1,3 @@
 export { CommandElement, type ICommandElementProps } from './CommandElement';
-export { TCommandElementType } from './CommandElementType';
+export { TCommandElementType, TCommandElementTypeValues, TCommandElementTypes } from './CommandElementType';
 //# sourceMappingURL=index.d.ts.map

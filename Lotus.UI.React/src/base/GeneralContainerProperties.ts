@@ -156,7 +156,8 @@ export abstract class ContainerPropertiesHelper
       flexDirection: isReverse ? 'row-reverse' : 'row',
       justifyContent: horizontalAlign,
       alignItems: verticalAlign,
-      columnGap: GapSizes.getFromCssVariable(padding)
+      columnGap: GapSizes.getFromCssVariable(padding),
+      rowGap: GapSizes.getFromCssVariable(padding)
     };
   }
 
@@ -181,7 +182,8 @@ export abstract class ContainerPropertiesHelper
       flexDirection: isReverse ? 'column-reverse' : 'column',
       justifyContent: verticalAlign,
       alignItems: horizontalAlign,
-      rowGap: GapSizes.getFromCssVariable(padding)
+      rowGap: GapSizes.getFromCssVariable(padding),
+      columnGap: GapSizes.getFromCssVariable(padding)
     };
   }
   // #endregion

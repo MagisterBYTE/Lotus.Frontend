@@ -1,42 +1,57 @@
 /**
- * Тип простого информирования
+ * Массив значений типа информирования
  */
-export type TAlertType = 'Error' | 'Warning' | 'Info' | 'Success';
+export const TAlertTypeValues = ['error', 'warning', 'info', 'success', 'service'] as const;
 
 /**
- * Перечисление для типа простого информирования
+ * Тип информирования
  */
-export const AlertTypeDescriptions: Record<TAlertType, { id: number; name: TAlertType }> = 
-{
+export type TAlertType = (typeof TAlertTypeValues)[number];
+
+/**
+ * Enum типа информирования
+ */
+export const TAlertTypes = {
+  Error: TAlertTypeValues[0],
+  Warning: TAlertTypeValues[1],
+  Info: TAlertTypeValues[2],
+  Success: TAlertTypeValues[3],
+  Service: TAlertTypeValues[4],
+
   /**
-   * Ошибка
+   * Возвращает массив всех возможных значений
    */
-  Error: {
-    id: 0,
-    name: 'Error'
+  getAllValues(): typeof TAlertTypeValues 
+  {
+    return TAlertTypeValues;
   },
 
   /**
-   * Предупреждение
+   * Type Guard для проверки принадлежности значения к TAlertType
    */
-  Warning: {
-    id: 1,
-    name: 'Warning'
+  isAlertType(value: unknown): value is TAlertType 
+  {
+    if (typeof value === 'string') 
+    {
+      return TAlertTypeValues.includes(value as TAlertType);
+    }
+    return false;
   },
 
   /**
-   * Простая информация
+   * Возвращает значение по индексу
    */
-  Info: {
-    id: 2,
-    name: 'Info'
+  getByIndex(index: number): TAlertType | undefined 
+  {
+    return TAlertTypeValues[index];
   },
 
   /**
-   * Простая информация со статусом успешно
+   * Возвращает значение по строковому имени
    */
-  Success: {
-    id: 3,
-    name: 'Success'
+  getByName(name: string): TAlertType | undefined 
+  {
+    return TAlertTypeValues.find((v) => v === name);
   }
 } as const;
+

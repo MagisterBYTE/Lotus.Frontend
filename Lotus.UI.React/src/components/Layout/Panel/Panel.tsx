@@ -1,12 +1,11 @@
  
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { css } from '@emotion/css';
 import { Assert } from 'lotus-core/utils';
-import { CSSProperties, isValidElement, ReactNode } from 'react';
+import { CSSProperties, isValidElement, ReactNode, useMemo } from 'react';
 import { BackgroundPropertiesHelper, BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
 import { ILabelProps, Label } from '#components/Display';
 import { PaddingSizes } from '#designSystem/sizes';
-import {  CssPropertiesHelper } from '#helpers';
+import { CssPropertiesHelper } from '#helpers';
 import { TSizeType } from '#types';
 import { IBoxProps } from '../Box';
 
@@ -57,37 +56,44 @@ export function Panel(props: IPanelProps)
   const paddingSizeTopNeed = PaddingSizes.Default.toSizePrimitive(size)!;
   const paddingSizeTopProps = PaddingSizes.Default.toPixel(p ?? pt);
 
-  const styleDiv: CSSProperties = {
-    ...MarginPropertiesHelper.createMarginProps(props),
-    ...PaddingPropertiesHelper.createPaddingProps(props),
-    ...ContainerPropertiesHelper.createContainerProps(props),
-    ...BackgroundPropertiesHelper.createBackgroundProps(props),
-    ...BackgroundPropertiesHelper.createBoxShadowProps(props),
-    ...BorderPropertiesHelper.createBorderProps(props),
-    ...BorderPropertiesHelper.createBorderShadowProps(props),
-    ...buildPanelProps(props),
-    position: 'relative', // Добавляем для абсолютного позиционирования заголовка
-    paddingTop: paddingSizeTopNeed.add(paddingSizeTopProps).toRem()
-  };
+  // 1. Мемоизируем объект стилей
+  const panelStyle = useMemo((): CSSProperties => (
+    {
+      ...MarginPropertiesHelper.createMarginProps(otherProps),
+      ...PaddingPropertiesHelper.createPaddingProps(otherProps),
+      ...ContainerPropertiesHelper.createContainerProps(otherProps),
+      ...BackgroundPropertiesHelper.createBackgroundProps(otherProps),
+      ...BackgroundPropertiesHelper.createBoxShadowProps(otherProps),
+      ...BorderPropertiesHelper.createBorderProps(otherProps),
+      ...BorderPropertiesHelper.createBorderShadowProps(otherProps),
+      ...buildPanelProps(props),
+      position: 'relative', // Добавляем для абсолютного позиционирования заголовка
+      paddingTop: paddingSizeTopNeed.add(paddingSizeTopProps).toRem()
+    }),
+  [otherProps, size, p, pt, centerContent]
+  );
 
-  function getHeaderStyle(): CSSProperties
+  // 1. Мемоизируем объект стилей
+  const headerStyle = useMemo((): CSSProperties => 
   {
-    const headerStyle: CSSProperties = {
+    const headerBaseStyle: CSSProperties = {
       position: 'absolute',
-      background: headerProps?.style?.backgroundColor ?? BackgroundPropertiesHelper.getBackgroundColorPropsValue(otherProps.bgColor) ?? 'var(--mantine-color-default)',
+      background:
+        headerProps?.style?.backgroundColor ?? BackgroundPropertiesHelper.getBackgroundColorPropsValue(otherProps.bgColor) ?? 'var(--mantine-color-default)',
       top: 0,
       left: `${headerOffsetPercent}%`,
       zIndex: 1, // Чтобы заголовок был над границей
       transform: 'translate(-50%, -50%)' // Сдвигаем на половину ширины и высоты
     };
 
-    return { ...headerStyle, ...headerProps?.style };
-  }
+    return { ...headerBaseStyle, ...headerProps?.style };
+  }, [headerProps, headerOffsetPercent]);
 
-  const panelClass = css({ ...styleDiv, label: 'Panel' });
+  // 2. Мемоизируем сгенерированный класс Emotion
+  const panelClass = useMemo(() => css({ ...panelStyle, label: 'Panel' }), [panelStyle]);
 
-  // Фильтруем кастомные пропсы перед передачей в div
-  const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
+  // 3. Фильтруем кастомные пропсы перед передачей в div
+  const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
 
   if (Assert.existValue(headerProps) || isHeaderText)
   {
@@ -106,7 +112,7 @@ export function Panel(props: IPanelProps)
             bdWidth={headerProps?.bdWidth ?? otherProps.bdWidth}
             fontSize={headerProps?.fontSize ?? size}
             p={headerProps?.p ?? 'xxs'}
-            style={getHeaderStyle()}
+            style={headerStyle}
             withBorder={headerProps?.withBorder ?? otherProps.withBorder}
           />
         )}

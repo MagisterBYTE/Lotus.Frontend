@@ -2,17 +2,15 @@
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { TCssProperties, TIconPlacement, TSizeType } from '#types';
 
-export type FunctionGeneralIconDelegate = (props: IGeneralIconProperties, context?: any) => any
-
 /**
  * Общие свойства иконки для элемента UI
  */
 export interface IGeneralIconProperties
 {
   /**
-   * Путь к изображению / либо компонент иконки / либо индекс изображения в базе 
+   * Данные иконки
    */
-  icon?: any | FunctionGeneralIconDelegate;
+  icon?: any;
 
   /**
    * Размер иконки

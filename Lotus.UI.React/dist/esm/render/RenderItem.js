@@ -3,22 +3,20 @@ import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
 import { OptionHelper } from 'lotus-core/modules/option';
 import { RenderOption } from './RenderOption';
 /**
- * Отрисовка объекта как опции
+ * Вспомогательный класс для отрисовки произвольного объекта
  */
 export class RenderItem {
     /**
-     * Отрисовка иконки и контента
+     * Отрисовка произвольного элемента
      * @param size Размер элемента UI
      * @param item Объект
-     * @param context Контекст вызова
      * @param imageDatabase База данных изображений
-     * @param wrapContainer Следует ли обвернуть в блок div
+     * @param wrapContainer Следует ли обвернуть в горизонтальный контейнер
      * @returns ReactElement
      */
-    // eslint-disable-next-line max-params
-    static renderItem(size, item, context, imageDatabase, wrapContainer) {
+    static renderItem(size, item, imageDatabase, wrapContainer) {
         if (OptionHelper.instanceOfOption(item)) {
-            return RenderOption.renderOption(size, item, context, imageDatabase, wrapContainer);
+            return RenderOption.renderOption(size, item, imageDatabase, wrapContainer);
         }
         return _jsx(_Fragment, {});
     }

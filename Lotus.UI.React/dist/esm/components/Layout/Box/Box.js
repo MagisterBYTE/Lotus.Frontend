@@ -1,5 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { css } from '@emotion/css';
+import { useMemo } from 'react';
 import { BackgroundPropertiesHelper, BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper } from '#base';
 import { CssPropertiesHelper } from '#helpers';
 function buildBoxProps(props) {
@@ -26,21 +27,22 @@ function buildBoxProps(props) {
     return {};
 }
 export function Box(props) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { centerContent, children, ...otherProps } = props;
-    const styleDiv = {
-        ...MarginPropertiesHelper.createMarginProps(props),
-        ...PaddingPropertiesHelper.createPaddingProps(props),
-        ...ContainerPropertiesHelper.createContainerProps(props),
-        ...BackgroundPropertiesHelper.createBackgroundProps(props),
-        ...BackgroundPropertiesHelper.createBoxShadowProps(props),
-        ...BorderPropertiesHelper.createBorderProps(props),
-        ...BorderPropertiesHelper.createBorderShadowProps(props),
+    // 1. Мемоизируем объект стилей
+    const boxStyle = useMemo(() => ({
+        ...MarginPropertiesHelper.createMarginProps(otherProps),
+        ...PaddingPropertiesHelper.createPaddingProps(otherProps),
+        ...ContainerPropertiesHelper.createContainerProps(otherProps),
+        ...BackgroundPropertiesHelper.createBackgroundProps(otherProps),
+        ...BackgroundPropertiesHelper.createBoxShadowProps(otherProps),
+        ...BorderPropertiesHelper.createBorderProps(otherProps),
+        ...BorderPropertiesHelper.createBorderShadowProps(otherProps),
         ...buildBoxProps(props)
-    };
-    const boxClass = css({ ...styleDiv, label: 'Box' });
-    // Фильтруем кастомные пропсы перед передачей в div
-    const domProps = CssPropertiesHelper.filterDOMProps(otherProps);
+    }), [otherProps, centerContent]);
+    // 2. Мемоизируем сгенерированный класс Emotion
+    const boxClass = useMemo(() => css({ ...boxStyle, label: 'Box' }), [boxStyle]);
+    // 3. Фильтруем кастомные пропсы перед передачей в div
+    const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
     return (_jsx("div", { className: boxClass, ...domProps, children: children }));
 }
 //# sourceMappingURL=Box.js.map

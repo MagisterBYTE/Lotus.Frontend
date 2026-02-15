@@ -8,7 +8,7 @@ export class FontDesignSystem {
     /**
      * Стандартные параметры дизайн-системы для шрифтов
      */
-    static Default = new FontDesignSystem(DesignSystemConstants.FontDefault, DesignSystemConstants.FontAccent, DesignSystemConstants.FontMonospace);
+    static Default = new FontDesignSystem(DesignSystemConstants.FontDefault, DesignSystemConstants.FontMonospace, DesignSystemConstants.FontAccent);
     // #endregion
     // #region Static methods
     /**

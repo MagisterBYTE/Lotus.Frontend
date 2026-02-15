@@ -16,6 +16,7 @@ const meta = {
     children: { control: 'text', table: { category: 'Label' } },
     asBadge: { control: 'select', options: [undefined, ...TColorTokens], table: { category: 'Label' } },
     isBlock: { control: 'boolean', table: { category: 'Label' } },
+    disabled: { control: 'boolean', table: { category: 'Label' } },
 
     // Label
     ...ArgTypesStory.Text,

@@ -7,7 +7,6 @@ import { TCssColor, TCssProperties } from '#types';
 import { IEffectContextProps, TInteractivityState } from '../types';
 import { TInteractivityTextType } from './InteractivityTextType';
 
-
 type TColor = TCssColor|TColorToken;
 
 /**
@@ -20,7 +19,7 @@ export abstract class InteractivityTextLogic
    * @param element Элемент (его пропсы)
    * @param state Состояние интерактивности элемента UI
    * @param context Текущий контекст элемента
-   * @returns 
+   * @returns Свойства Css
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public static getEffectByState(element: any, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
@@ -37,17 +36,17 @@ export abstract class InteractivityTextLogic
       case 'normal':
         {
           const color = textColor ?? CssVariables.TextColor;
-          textProps.color = ColorCssHelper.getColorCss(color);
+          textProps.color = ColorCssHelper.getColor(color);
         } break;
       case 'hover':
         {
           const color = textHoverColor ?? ColorTokenHelper.next(textColor ?? backColor, -2) ?? CssVariables.TextColor;
-          textProps.color = ColorCssHelper.getColorCss(color);
+          textProps.color = ColorCssHelper.getColor(color);
         } break;
       case 'pressed':
         {
           const color = textPressedColor ?? ColorTokenHelper.next(textColor ?? backColor, 2) ?? CssVariables.TextColor;
-          textProps.color = ColorCssHelper.getColorCss(color);
+          textProps.color = ColorCssHelper.getColor(color);
         } break;
     }
 
@@ -60,7 +59,7 @@ export abstract class InteractivityTextLogic
    * @param type Тии интерактивности фона
    * @param state Состояние интерактивности элемента UI
    * @param context Текущий контекст элемента
-   * @returns 
+   * @returns Свойства Css
    */
   public static createProperties(element: any, type: TInteractivityTextType, state: TInteractivityState, context?: IEffectContextProps): TCssProperties
   {
@@ -75,7 +74,7 @@ export abstract class InteractivityTextLogic
    * @param type Тип интерактивности текста
    * @param state Состояние интерактивности элемента UI
    * @param context Текущий контекст элемента
-   * @returns 
+   * @returns Свойства Css
    */
   // eslint-disable-next-line max-params
   public static fillProperties(target: TCssProperties, element: any, type: TInteractivityTextType, state: TInteractivityState, 
@@ -99,7 +98,7 @@ export abstract class InteractivityTextLogic
           }
           else
           {
-            target.color = ColorCssHelper.getColorContrastCss(backColor ?? 'primary');
+            target.color = ColorCssHelper.getColorContrast(backColor ?? 'primary');
           }
         } break;
     }

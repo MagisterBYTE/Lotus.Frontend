@@ -20,6 +20,7 @@ export const TextAreaField: FC<ITextAreaFieldProps> = (props: ITextAreaFieldProp
     errorProps={otherProps.errorProps}
     h={undefined}
     inputWrapperOrder={['input', 'error']}
+    resize="both"
     size={otherProps.size}
     style={{ flex: 1 }}
     w={undefined}
@@ -39,6 +40,7 @@ export const TextAreaField: FC<ITextAreaFieldProps> = (props: ITextAreaFieldProp
   {
     return (
       <Textarea
+        resize="both"
         {...containerProps}
         description={otherProps.description}
         descriptionProps={otherProps.descriptionProps}

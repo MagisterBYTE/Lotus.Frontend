@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { BrowserHelper, ImageHelper } from 'lotus-core/helpers';
 import { ColorCssHelper, TColorToken } from 'lotus-core/modules/color';
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { Assert } from 'lotus-core/utils';
-import { CSSProperties, ReactElement, ReactNode } from 'react';
+import { CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import { IconContext } from 'react-icons';
 import { IconSizes } from '#designSystem/sizes';
 import { TCssColor, TSizeType } from '#types';
 
-
 /**
- * Отрисовка иконки
+ * Вспомогательный класс для отрисовки иконки
  */
 export abstract class RenderIcon
 {
@@ -30,10 +30,10 @@ export abstract class RenderIcon
   {
     if (Assert.emptyValue(icon)) return undefined;
 
-    const iconColorCss = ColorCssHelper.getColorCss(iconColor);
+    const iconColorCss = ColorCssHelper.getColor(iconColor);
 
-    // Если строка
-    if (typeof icon === 'string')
+    // Если строка и формат данных DataURL или AbsoluteUrl
+    if (typeof icon === 'string' && (ImageHelper.isDataURL(icon) || BrowserHelper.isAbsoluteUrl(icon)))
     {
       const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
       if (other)
@@ -59,43 +59,39 @@ export abstract class RenderIcon
       }
     }
 
-    // Если это число есть база данных
-    if (typeof icon === 'number' && imageDatabase)
+    // Если это число или просто строка есть база данных
+    if ((typeof icon === 'number' || typeof icon === 'string') && imageDatabase)
     {
       const iconData = imageDatabase.getImageByIdOrName(icon);
+      if (!iconData) return <>{icon}</>;
       
-      if (iconData)
-      {
-        const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
+      const sizeIcon = `${IconSizes.Default.toPixel(size)}px`;
 
-        if (other)
+      if (other)
+      {
+        if (wrapDiv)
         {
-          if (wrapDiv)
-          {
-            return (<div style={wrapDivStyle}>
-              <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />
-              {other}
-            </div>);
-          }
-          else
-          {
-            return (<>
-              <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />
-              {other}
-            </>);
-          }
+          return (<div style={wrapDivStyle}>
+            <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />
+            {other}
+          </div>);
         }
         else
         {
-          return <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />;
+          return (<>
+            <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />
+            {other}
+          </>);
         }
       }
-
-      return <></>;
+      else
+      {
+        return <img height={sizeIcon} src={iconData.source} style={iconStyle} width={sizeIcon} />;
+      }
     }
 
     // Это иконка React
-    else
+    if (isValidElement(icon))
     {
       const sizeIcon = IconSizes.Default.toRemCss(size);
       if (other)

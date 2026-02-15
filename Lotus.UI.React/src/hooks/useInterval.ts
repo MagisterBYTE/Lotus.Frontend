@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-export const useInterval = (callback: Function, delay: number) => 
+export function useInterval(callback: Function, delay: number)
 {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const savedCallback = useRef<Function>(null);
@@ -23,4 +22,4 @@ export const useInterval = (callback: Function, delay: number) =>
       return () => clearInterval(id);
     }
   }, [delay]);
-};
+}

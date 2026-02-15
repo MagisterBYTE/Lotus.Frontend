@@ -40,4 +40,3 @@ export class BackgroundDesignSystem implements IDesignSystemItem
     document.documentElement.style.setProperty(CssVariables.BackgroundColor.match(CssVariables.RegExtractName)![0], this.color);
   }
 }
-

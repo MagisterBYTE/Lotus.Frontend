@@ -1,7 +1,6 @@
 import { Color, ColorCssHelper, Colors, TColorToken } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
-import { TCssBackgroundColor, TCssBackgroundImage, TCssBoxShadow, TCssProperties, TShadowElevation } from '#types';
-
+import { TBackgroundAccent, TCssBackgroundColor, TCssBackgroundImage, TCssBoxShadow, TCssProperties, TShadowElevation } from '#types';
 
 /**
  * Общие свойства для фона элемента UI
@@ -12,6 +11,11 @@ export interface IGeneralBackgroundProperties
    * Основной цвет
    */
   bgColor?: TCssBackgroundColor|TColorToken;
+
+  /**
+   *  Акцент фона элемента, если он установлен то применяется он а не фоновый цвет
+   */
+  bgAccent?: TBackgroundAccent;
 
   /**
    * Фоновое изображение
@@ -38,10 +42,45 @@ export abstract class BackgroundPropertiesHelper
   public static createBackgroundProps(props: IGeneralBackgroundProperties): TCssProperties
   {
     const backProps: TCssProperties = {};
-    const backgroundColor = BackgroundPropertiesHelper.getBackgroundColorPropsValue(props.bgColor);
-    if (Assert.existValue(backgroundColor))
+    if (Assert.existValue<TBackgroundAccent>(props.bgAccent))
     {
-      backProps.backgroundColor = backgroundColor;
+      switch (props.bgAccent)
+      {
+        case 'accent':
+          {
+            if (ColorCssHelper.isLight)
+            {
+              backProps.backgroundColor = 'rgb(240, 240, 250)';
+            }
+            else
+            {
+              backProps.backgroundColor = 'rgb(40, 40, 45)';
+            }
+          } break;
+        case 'glass':
+          {
+            if (ColorCssHelper.isLight)
+            {
+              backProps.backgroundColor = 'rgba(250, 250, 250, 0.15)';
+              backProps.backdropFilter = 'blur(12px)';
+              backProps.WebkitBackdropFilter = 'blur(12px)';
+            }
+            else
+            {
+              backProps.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+              backProps.backdropFilter = 'blur(16px)';
+              backProps.WebkitBackdropFilter = 'blur(16px)';
+            }
+          } break;
+      }
+    }
+    else
+    {
+      const backgroundColor = BackgroundPropertiesHelper.getBackgroundColorPropsValue(props.bgColor);
+      if (Assert.existValue(backgroundColor))
+      {
+        backProps.backgroundColor = backgroundColor;
+      }
     }
 
     return backProps;
@@ -55,7 +94,7 @@ export abstract class BackgroundPropertiesHelper
   public static getBackgroundColorPropsValue(value?: TCssBackgroundColor|TColorToken): TCssBackgroundColor | undefined
   {
     if (Assert.emptyValue(value)) return undefined;
-    return ColorCssHelper.getColorCss(value);
+    return ColorCssHelper.getColor(value);
   }
   // #endregion
 
@@ -87,7 +126,7 @@ export abstract class BackgroundPropertiesHelper
   {
     if (Assert.emptyValue(elevation)) return undefined;
 
-    const colorShadow = Assert.emptyValue(color) ? Colors.black : new Color(ColorCssHelper.getColorCss(color));
+    const colorShadow = Assert.emptyValue(color) ? Colors.black : new Color(ColorCssHelper.getColor(color));
 
     const rgba02 = colorShadow.toCSSRgbValue(0.2);
     const rgba014 = colorShadow.toCSSRgbValue(0.14);

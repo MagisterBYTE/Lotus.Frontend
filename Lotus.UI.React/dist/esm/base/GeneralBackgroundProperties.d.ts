@@ -1,5 +1,5 @@
 import { TColorToken } from 'lotus-core/modules/color';
-import { TCssBackgroundColor, TCssBackgroundImage, TCssBoxShadow, TCssProperties, TShadowElevation } from '#types';
+import { TBackgroundAccent, TCssBackgroundColor, TCssBackgroundImage, TCssBoxShadow, TCssProperties, TShadowElevation } from '#types';
 /**
  * Общие свойства для фона элемента UI
  */
@@ -8,6 +8,10 @@ export interface IGeneralBackgroundProperties {
      * Основной цвет
      */
     bgColor?: TCssBackgroundColor | TColorToken;
+    /**
+     *  Акцент фона элемента, если он установлен то применяется он а не фоновый цвет
+     */
+    bgAccent?: TBackgroundAccent;
     /**
      * Фоновое изображение
      */

@@ -87,6 +87,7 @@ export class SizePrimitive {
     constructor(value) {
         this.value = value ?? 0;
     }
+    // #region Main methods
     toPixel() {
         return `${this.value}px`;
     }

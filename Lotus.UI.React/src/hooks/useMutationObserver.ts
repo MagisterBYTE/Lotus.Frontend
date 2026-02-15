@@ -6,7 +6,7 @@ export interface IMutationObserverProps
   options: MutationObserverInit;
 }
 
-export const useMutationObserver = (props: IMutationObserverProps) => 
+export function useMutationObserver(props: IMutationObserverProps)
 {
   const { callback, options } = props;
   const mutationRef = useRef(document.documentElement);
@@ -20,4 +20,4 @@ export const useMutationObserver = (props: IMutationObserverProps) =>
       return () => observer.disconnect();
     }
   }, [callback, options]);
-};
+}

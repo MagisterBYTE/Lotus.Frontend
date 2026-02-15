@@ -1,3 +1,3 @@
 export { TableView, type ITableViewProps } from './TableView';
-export { EditActionRow, type IActionRowProps, type IEditActionRowProps } from './TableViewActionsRow';
 export { EditTableFilterString, EditTableFilterEnum,  EditTableFilterArray } from './TableViewFilterTypes';
+export { TableViewPropsPreset } from './TableViewPropsPreset';

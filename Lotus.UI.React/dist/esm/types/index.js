@@ -1,9 +1,11 @@
+export { TBackgroundAccents, TBackgroundAccentValues } from './BackgroundAccent';
+export { TBorderSideFlags } from './BorderSideFlags';
+export { TCenterContents, TCenterContentValues } from './CenterContent';
 export { TCssBorderStyles, TCssContentAligns } from './CssTypes';
-export { instanceOfSizeType, castToSizeType, TSizeTypes } from './SizeType';
-export { TIconPlacements } from './IconPlacement';
-export { TOrientations } from './Orientation';
+export { TFontAccents, TFontAccentValues } from './FontAccent';
+export { TIconPlacements, TIconPlacementValues } from './IconPlacement';
+export { TOrientations, TOrientationValues } from './Orientation';
 export { TShadowElevations } from './ShadowElevation';
-export { TTextEffects } from './TextEffect';
-export { TCenterContents } from './CenterContent';
-export { TFontAccents } from './FontAccent';
+export { TSizeTypes, TSizeTypeValues } from './SizeType';
+export { TTextEffects, TTextEffectValues } from './TextEffect';
 //# sourceMappingURL=index.js.map

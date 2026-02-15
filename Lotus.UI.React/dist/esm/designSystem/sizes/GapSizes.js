@@ -1,4 +1,4 @@
-import { instanceOfSizeType } from '#types';
+import { TSizeTypes } from '#types';
 import { CssVariables } from '../сssVariables';
 import { SizeDimensions } from './SizeDimensions';
 /**
@@ -9,7 +9,7 @@ export class GapSizes extends SizeDimensions {
     /**
      * Стандартные расстояния между элементами
      */
-    static Default = new GapSizes(0.15 * 16, 0.25 * 16, 0.375 * 16, 0.5 * 16, 0.75 * 16, 1.0 * 16, 1.25 * 16);
+    static Default = new GapSizes(0.15 * 16, 0.25 * 16, 0.375 * 16, 0.5 * 16, 1 * 16, 1.5 * 16, 2 * 16);
     // #endregion
     // #region Static methods
     /**
@@ -21,7 +21,7 @@ export class GapSizes extends SizeDimensions {
             return undefined;
         if (typeof value === 'number')
             return `${value / 16}rem`;
-        if (instanceOfSizeType(value)) {
+        if (TSizeTypes.isSizeType(value)) {
             switch (value) {
                 case 'xxs':
                     return CssVariables.GapSizeXXS;

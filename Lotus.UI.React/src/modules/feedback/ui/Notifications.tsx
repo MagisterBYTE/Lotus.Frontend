@@ -5,8 +5,17 @@ import { ColorCssHelper } from 'lotus-core/modules/color';
 import { createResultFromError, instanceOfResult, IResult, IResultMessage, MakeOptional } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
 
+/**
+ * Класс для информирования 
+ */
 export abstract class Notifications
 {
+  /**
+   * Показать результат
+   * @param result Результат
+   * @param notification Дополнительный параметры нотификации
+   * @returns Идентификатор нотификации
+   */
   // eslint-disable-next-line complexity
   public static showResult(result: IResult, notification?: MakeOptional<NotificationData, 'message'>): string
   {
@@ -31,13 +40,13 @@ export abstract class Notifications
       if (result.succeeded)
       {
         notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.succeed;
-        notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColorCss('success');
+        notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColor('success');
         notificationData.icon = Assert.existValue(notification?.icon) ? notification?.icon : <IconCheck size={18} />;
       }
       else
       {
         notificationData.title = Assert.existValue(result.message) ? result.message : LocalizationCore.data.common.failed;
-        notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColorCss('error');
+        notificationData.color = Assert.existValue(notification?.color) ? notification?.color : ColorCssHelper.getColor('error');
         notificationData.icon = Assert.existValue(notification?.icon) ? notification?.icon : <IconExclamationCircleFilled size={18} />;
       }
     }
@@ -63,26 +72,40 @@ export abstract class Notifications
     return notificationId;
   }
 
-  public static showSuccess(message: string, notification?: Omit<NotificationData, 'message'>)
+  /**
+   * Показать успешное информирование
+   * @param message Сообщение
+   * @param notification Дополнительный параметры нотификации
+   * @returns Идентификатор нотификации
+   */
+  public static showSuccess(message: string, notification?: Omit<NotificationData, 'message'>): string
   {
     const resultSuccess: IResult = {
       succeeded: true,
       message: message
     };
 
-    Notifications.showResult(resultSuccess, notification);
+    return Notifications.showResult(resultSuccess, notification);
   }
 
-  public static showError(error: unknown, notification?: MakeOptional<NotificationData, 'message'>)
+  /**
+   * Показать ошибку
+   * @param error Ошибка
+   * @param notification Дополнительный параметры нотификации
+   * @returns Идентификатор нотификации
+   */
+  public static showError(error: unknown, notification?: MakeOptional<NotificationData, 'message'>): string
   {
     if (instanceOfResult(error))
     {
-      Notifications.showResult(error, notification);
+      return Notifications.showResult(error, notification);
     }
     if (error instanceof Error)
     {
       const result = createResultFromError(error);
-      Notifications.showResult(result, notification);
+      return Notifications.showResult(result, notification);
     }
+
+    return '';
   }
 }

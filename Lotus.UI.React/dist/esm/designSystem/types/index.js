@@ -1,2 +1,2 @@
-export { TColorSchemes, ColorSchemeOptions } from './ColorScheme';
+export { TColorSchemes, TColorSchemeValues } from './ColorScheme';
 //# sourceMappingURL=index.js.map
