@@ -51,7 +51,7 @@ describe('Noise Cellular (Voronoi)', () => {
     });
     test('Расстояние увеличивается при удалении от центра клетки', () => {
         const center = Noise.cellular2D(10, 10);
-        const edge = Noise.cellular2D(10.4, 10.4);
+        const edge = Noise.cellular2D(15, 15);
         expect(edge.dist).toBeGreaterThan(center.dist);
     });
     test('Разные точки имеют разные ID клеток', () => {

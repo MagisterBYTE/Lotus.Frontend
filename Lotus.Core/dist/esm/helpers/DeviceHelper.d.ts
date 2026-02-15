@@ -62,7 +62,7 @@ export declare abstract class DeviceHelper {
      * Получает данные о состоянии батареи.
      * Возвращает null, если API не поддерживается (например, в Safari или Firefox).
      */
-    static getBatteryInfo(): Promise<{
+    static getBatteryInfoAsync(): Promise<{
         level: number;
         isCharging: any;
         chargingTime: any;
@@ -77,6 +77,6 @@ export declare abstract class DeviceHelper {
      * Проверяет статус разрешений (например, на геолокацию или уведомления)
      * Позволяет узнать, спросит ли браузер пользователя или уже есть отказ/согласие.
      */
-    static getPermissionStatus(name: PermissionName): Promise<PermissionState | 'unsupported'>;
+    static getPermissionStatusAsync(name: PermissionName): Promise<PermissionState | 'unsupported'>;
 }
 //# sourceMappingURL=DeviceHelper.d.ts.map

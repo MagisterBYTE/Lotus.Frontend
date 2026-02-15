@@ -20,7 +20,18 @@ export const LocalizationCoreDataEn = {
         failed: 'Failed',
         succeed: 'Succeeded'
     },
+    controls: {
+        grid: 'Grid',
+        rotation: 'Rotation',
+        scale: 'Scale',
+        border: 'Border',
+        cornerRounding: 'Corner rounding',
+        transparentBackground: 'Transparent background',
+        smoothingEdges: 'Edge smoothing'
+    },
     actions: {
+        load: 'Load',
+        reset: 'Reset',
         get: 'Get',
         getting: 'Getting...',
         gettingSucceed: 'Data retrieved successfully',

@@ -20,7 +20,18 @@ export declare const LocalizationCoreDataRu: {
         failed: string;
         succeed: string;
     };
+    controls: {
+        grid: string;
+        rotation: string;
+        scale: string;
+        border: string;
+        cornerRounding: string;
+        transparentBackground: string;
+        smoothingEdges: string;
+    };
     actions: {
+        load: string;
+        reset: string;
         get: string;
         getting: string;
         gettingSucceed: string;

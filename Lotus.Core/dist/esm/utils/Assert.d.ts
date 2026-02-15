@@ -9,7 +9,7 @@ export declare abstract class Assert {
      * @param value Проверяемое значение
      * @returns Статус проверки
      */
-    static emptyValue(value: unknown): boolean;
+    static emptyValue(value: unknown): value is undefined | null | '';
     /**
      * Проверка на наличие значения
      * @param value Проверяемое значение
@@ -142,10 +142,17 @@ export declare abstract class Assert {
      */
     static isArrayOfTypeWithData<TItem>(value: unknown, itemValidator: (item: unknown) => item is TItem): value is TItem[];
     /**
-     * Проверка объекта на то, что все его свойства имеют значения undefined
+     * Проверка объекта на то, что все его свойства имеют значения undefined или null
      * @param object Проверяемый объект
      * @returns Статус проверки
      */
-    static objectPropertyEmpty(object: object): boolean;
+    static isObjectEmpty(object: object): boolean;
+    /**
+     * Проверка объекта на то, что у него есть хотя бы одно свойство
+     * со значением, отличным от null и undefined.
+     * @param object Проверяемый объект
+     * @returns Статус проверки
+     */
+    static isObjectNotEmpty(object: object): boolean;
 }
 //# sourceMappingURL=Assert.d.ts.map

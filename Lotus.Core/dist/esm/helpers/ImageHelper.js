@@ -2,13 +2,12 @@
  * Вспомогательный класс для работы с изображениями
  */
 export class ImageHelper {
-    static RegExpDataURL = /^\s*data:([a-z]+\/[a-z]+(;[a-z-]+=[a-z-]+)?)?(;base64)?,[a-z0-9!$&',()*+;=\-._~:@/?%\s]*\s*$/i;
     /**
      * Проверяет, является ли строка форматом Data URL (base64)
      * Используется для определения, нужны ли CORS-настройки для загрузки
      */
     static isDataURL(str) {
-        return !!str.match(ImageHelper.RegExpDataURL);
+        return str.includes('data:image') && str.includes('base64');
     }
     /**
      * Асинхронно загружает изображение по URL

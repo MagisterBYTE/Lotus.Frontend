@@ -7,14 +7,15 @@ export interface IImageDatabase
 {
   /**
   * Получить список всех ресурсов изображений
-  * @returns 
+  * @returns Список всех ресурсов изображений
   */
   getAllImages(): IImageResource[];
 
   /**
-   * Получить идентификатор изображения по его id или имени
+   * Получить ресурс изображения по его id или имени
    * @param id Идентификатор изображения или имени ресурса изображения
    * @param category Категория изображения
+   * @returns Ресурс изображения
    */
   getImageByIdOrName(id?: number | string, category?: string): IImageResource | undefined;
 }

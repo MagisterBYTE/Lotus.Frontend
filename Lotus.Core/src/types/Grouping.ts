@@ -26,7 +26,7 @@ export function instanceOfGrouping(value: unknown): value is IGrouping
 {
   if (value && typeof value === 'object')
   {
-    return 'groupKey' in value && 'items' in value && Array.isArray(value['items']);
+    return 'groupKey' in value && 'items' in value && Array.isArray(value.items);
   }
 
   return false;

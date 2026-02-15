@@ -57,7 +57,7 @@ export class ApiService {
     /**
      * Выполняет HTTP-запрос с обработкой ошибок
      */
-    async request(url, config) {
+    async requestAsync(url, config) {
         try {
             const actualConfig = await this.handleRequest(url, config);
             const response = await fetch(url, {
@@ -230,7 +230,7 @@ export class ApiService {
         if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false) {
             actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
         }
-        return this.request(url, actualConfig.asGet());
+        return this.requestAsync(url, actualConfig.asGet());
     }
     /**
      * POST запрос
@@ -239,7 +239,7 @@ export class ApiService {
         const url = this.createFullUrl(path);
         const actualConfig = new ApiRequestConfig(config);
         actualConfig.setJsonBody(payload);
-        return this.request(url, actualConfig.asPost());
+        return this.requestAsync(url, actualConfig.asPost());
     }
     /**
      * PUT запрос
@@ -248,7 +248,7 @@ export class ApiService {
         const url = this.createFullUrl(path);
         const actualConfig = new ApiRequestConfig(config);
         actualConfig.setJsonBody(payload);
-        return this.request(url, actualConfig.asPut());
+        return this.requestAsync(url, actualConfig.asPut());
     }
     /**
      * DELETE запрос
@@ -262,7 +262,7 @@ export class ApiService {
         if (actualConfig.hasHeader(HeaderNamesConstants.ContentType) === false) {
             actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
         }
-        return this.request(url, actualConfig.asDelete());
+        return this.requestAsync(url, actualConfig.asDelete());
     }
 }
 //# sourceMappingURL=ApiService.js.map

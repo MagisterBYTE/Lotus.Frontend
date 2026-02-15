@@ -1,6 +1,7 @@
 import { Assert } from '#utils';
 import { Color } from './Color';
 import { ColorCssPaletteVariants } from './ColorCssPaletteVariants';
+import { ColorHelper } from './ColorHelper';
 import { ColorPaletteVariants } from './ColorPaletteVariants';
 import { ColorTokenHelper } from './ColorTokenHelper';
 import { ColorVariantsHelper } from './ColorVariantsHelper';
@@ -17,7 +18,7 @@ export class ColorCssHelper {
      * @param color Цвет любого типа
      * @returns Корректный цвет для Css или undefined
      */
-    static getColorCss(color) {
+    static getColor(color) {
         if (Assert.emptyValue(color))
             return undefined;
         if (ColorTokenHelper.instanceOf(color)) {
@@ -44,6 +45,10 @@ export class ColorCssHelper {
                 }
             }
         }
+        const rgb = ColorHelper.getColorName(color);
+        if (Assert.existValue(rgb)) {
+            return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+        }
         return color;
     }
     /**
@@ -52,7 +57,7 @@ export class ColorCssHelper {
      * @param alpha Прозрачность от 0 до 1
      * @returns Корректный цвет для Css с учетом прозрачности или undefined
      */
-    static getColorCssWithAlpha(color, alpha) {
+    static getColorWithAlpha(color, alpha) {
         if (Assert.emptyValue(color))
             return undefined;
         if (ColorTokenHelper.instanceOf(color)) {
@@ -87,7 +92,7 @@ export class ColorCssHelper {
      * @param color Цвет любого типа
      * @returns Контрастный корректный цвет для Css или undefined
      */
-    static getColorContrastCss(color) {
+    static getColorContrast(color) {
         if (Assert.emptyValue(color))
             return undefined;
         if (ColorTokenHelper.instanceOf(color)) {

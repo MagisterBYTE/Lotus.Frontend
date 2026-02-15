@@ -2,7 +2,6 @@
  * Вспомогательный класс для работы с изображениями
  */
 export declare abstract class ImageHelper {
-    static readonly RegExpDataURL: RegExp;
     /**
      * Проверяет, является ли строка форматом Data URL (base64)
      * Используется для определения, нужны ли CORS-настройки для загрузки

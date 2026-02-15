@@ -1,6 +1,7 @@
 import { Assert } from '#utils';
 import { Color } from './Color';
 import { ColorCssPaletteVariants } from './ColorCssPaletteVariants';
+import { ColorHelper } from './ColorHelper';
 import { ColorPaletteVariants } from './ColorPaletteVariants';
 import { ColorTokenHelper } from './ColorTokenHelper';
 import { ColorVariantsHelper } from './ColorVariantsHelper';
@@ -20,7 +21,7 @@ export abstract class ColorCssHelper
    * @param color Цвет любого типа
    * @returns Корректный цвет для Css или undefined
    */
-  public static getColorCss(color?: string): string | undefined
+  public static getColor(color?: string): string | undefined
   {
     if (Assert.emptyValue(color)) return undefined;
 
@@ -56,6 +57,12 @@ export abstract class ColorCssHelper
       }
     }
 
+    const rgb = ColorHelper.getColorName(color);
+    if (Assert.existValue<number[]>(rgb))
+    {
+      return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+    }
+
     return color;
   }
 
@@ -65,7 +72,7 @@ export abstract class ColorCssHelper
    * @param alpha Прозрачность от 0 до 1
    * @returns Корректный цвет для Css с учетом прозрачности или undefined
    */
-  public static getColorCssWithAlpha(color?: string, alpha?: number): string | undefined
+  public static getColorWithAlpha(color?: string, alpha?: number): string | undefined
   {
     if (Assert.emptyValue(color)) return undefined;
 
@@ -111,7 +118,7 @@ export abstract class ColorCssHelper
    * @param color Цвет любого типа
    * @returns Контрастный корректный цвет для Css или undefined
    */
-  public static getColorContrastCss(color?: string): string | undefined
+  public static getColorContrast(color?: string): string | undefined
   {
     if (Assert.emptyValue(color)) return undefined;
 

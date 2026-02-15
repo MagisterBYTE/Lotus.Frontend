@@ -95,6 +95,7 @@ export class ObjectInfo implements IObjectInfo
       {
         if (isEmpty)
         {
+          // eslint-disable-next-line no-console
           console.log(`property ${propertyInfo.name} can not null value`);
           return dest;
         }
@@ -132,6 +133,7 @@ export class ObjectInfo implements IObjectInfo
       {
         if (Assert.emptyValue(value))
         {
+          // eslint-disable-next-line no-console
           console.log(`property ${propertyInfo.name} can not null value`);
           return dest;
         }

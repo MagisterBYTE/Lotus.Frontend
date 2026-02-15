@@ -5,7 +5,7 @@
  */
 export function instanceOfResult(value) {
     if (value && typeof value === 'object') {
-        return ('succeeded' in value && typeof value['succeeded'] === 'boolean');
+        return ('succeeded' in value && typeof value.succeeded === 'boolean');
     }
     return false;
 }

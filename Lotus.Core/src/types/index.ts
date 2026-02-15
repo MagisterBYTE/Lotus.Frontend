@@ -14,6 +14,7 @@ export { castToIdentifierId, instanceOfIdentifierId, type IIdentifierId } from '
 export { type TKey } from './Key';
 export { type MaybeNull, type MaybeUndef } from './MaybeTypes';
 export { castToNameable, instanceOfNameable, type INameable } from './Nameable';
+export { castToNotifyPropertyChanged, instanceOfNotifyPropertyChanged, type INotifyPropertyChanged } from './NotifyPropertyChanged';
 export { type IPoint } from './Point';
 export { type IProxiedObject } from './ProxiedObject';
 export { type IRecordObject } from './RecordObject';

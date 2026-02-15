@@ -101,7 +101,7 @@ export abstract class DeviceHelper
    * Получает данные о состоянии батареи.
    * Возвращает null, если API не поддерживается (например, в Safari или Firefox).
    */
-  public static async getBatteryInfo() 
+  public static async getBatteryInfoAsync() 
   {
     if (typeof navigator === 'undefined' || !('getBattery' in navigator)) 
     {
@@ -161,7 +161,7 @@ export abstract class DeviceHelper
    * Проверяет статус разрешений (например, на геолокацию или уведомления)
    * Позволяет узнать, спросит ли браузер пользователя или уже есть отказ/согласие.
    */
-  public static async getPermissionStatus(name: PermissionName): Promise<PermissionState | 'unsupported'> 
+  public static async getPermissionStatusAsync(name: PermissionName): Promise<PermissionState | 'unsupported'> 
   {
     if (typeof navigator === 'undefined' || !('permissions' in navigator)) 
     {

@@ -5,7 +5,7 @@
  */
 export function instanceOfDestroyable(value) {
     if (value && typeof value === 'object') {
-        return ('destroy' in value && typeof value['destroy'] === 'function');
+        return ('destroy' in value && typeof value.destroy === 'function');
     }
     return false;
 }

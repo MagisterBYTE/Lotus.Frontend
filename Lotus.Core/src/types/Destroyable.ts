@@ -19,7 +19,7 @@ export function instanceOfDestroyable(value: unknown): value is IDestroyable
 {
   if (value && typeof value === 'object')
   {
-    return ('destroy' in value && typeof value['destroy'] === 'function');
+    return ('destroy' in value && typeof value.destroy === 'function');
   }
 
   return false;

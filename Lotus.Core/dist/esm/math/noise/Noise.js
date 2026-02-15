@@ -68,6 +68,7 @@ export class Noise {
     /**
      * Генерация фрактального шума в 2D (Карта высот).
      */
+    // eslint-disable-next-line max-params
     static fBm2D(x, y, octaves = 4, persistence = 0.5, lacunarity = 2.0) {
         let total = 0;
         let freq = 1.0;

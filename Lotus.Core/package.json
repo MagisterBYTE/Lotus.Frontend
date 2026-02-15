@@ -22,6 +22,7 @@
     "#helpers": "./src/helpers/index.ts",
     "#localization": "./src/localization/index.ts",
     "#math": "./src/math/index.ts",
+    "#modules/api": "./src/modules/api/index.ts",
     "#modules/filter": "./src/modules/filter/index.ts",
     "#modules/objectInfo": "./src/modules/objectInfo/index.ts",
     "#modules/option": "./src/modules/option/index.ts",

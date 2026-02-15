@@ -71,7 +71,7 @@ export class ApiService
   /**
    * Выполняет HTTP-запрос с обработкой ошибок
    */
-  protected async request<TResponse = unknown>(url: string, config: ApiRequestConfig): Promise<TResponse>
+  protected async requestAsync<TResponse = unknown>(url: string, config: ApiRequestConfig): Promise<TResponse>
   {
     try
     {
@@ -289,7 +289,7 @@ export class ApiService
       actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
     }
 
-    return this.request<TResponse>(url, actualConfig.asGet());
+    return this.requestAsync<TResponse>(url, actualConfig.asGet());
   }
 
   /**
@@ -301,7 +301,7 @@ export class ApiService
     const actualConfig = new ApiRequestConfig(config);
     actualConfig.setJsonBody(payload);
 
-    return this.request<TResponse>(url, actualConfig.asPost());
+    return this.requestAsync<TResponse>(url, actualConfig.asPost());
   }
 
   /**
@@ -314,7 +314,7 @@ export class ApiService
     const actualConfig = new ApiRequestConfig(config);
     actualConfig.setJsonBody(payload);
 
-    return this.request<TResponse>(url, actualConfig.asPut());
+    return this.requestAsync<TResponse>(url, actualConfig.asPut());
   }
 
   /**
@@ -335,7 +335,7 @@ export class ApiService
       actualConfig.addHeader(HeaderNamesConstants.ContentType, ContentTypeConstants.ApplicationJson);
     }
 
-    return this.request<TResponse>(url, actualConfig.asDelete());
+    return this.requestAsync<TResponse>(url, actualConfig.asDelete());
   }
   // #endregion
 }

@@ -12,7 +12,7 @@ export abstract class Assert
    * @param value Проверяемое значение
    * @returns Статус проверки
    */
-  public static emptyValue(value: unknown): boolean
+  public static emptyValue(value: unknown): value is undefined | null | ''
   {
     return value == undefined || value == null || (typeof value === 'string' && value == '');
   }
@@ -279,12 +279,25 @@ export abstract class Assert
   }
 
   /**
-   * Проверка объекта на то, что все его свойства имеют значения undefined
+   * Проверка объекта на то, что все его свойства имеют значения undefined или null
    * @param object Проверяемый объект
    * @returns Статус проверки
    */
-  public static objectPropertyEmpty(object: object): boolean
+  public static isObjectEmpty(object: object): boolean
   {
-    return !Object.values(object).some((value) => value !== undefined);
+    // В JavaScript/TypeScript оператор != (нестрогое неравенство) с null автоматически отсеивает и undefined
+    return !Object.values(object).some((value) => value != null);
+  }
+
+  /**
+   * Проверка объекта на то, что у него есть хотя бы одно свойство 
+   * со значением, отличным от null и undefined.
+   * @param object Проверяемый объект
+   * @returns Статус проверки
+   */
+  public static isObjectNotEmpty(object: object): boolean
+  {
+    // some вернет true, как только найдет первый элемент, удовлетворяющий условию
+    return Object.values(object).some((value) => value !== undefined && value !== null);
   }
 }

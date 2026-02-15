@@ -25,7 +25,7 @@ export declare class ApiService {
     /**
      * Выполняет HTTP-запрос с обработкой ошибок
      */
-    protected request<TResponse = unknown>(url: string, config: ApiRequestConfig): Promise<TResponse>;
+    protected requestAsync<TResponse = unknown>(url: string, config: ApiRequestConfig): Promise<TResponse>;
     /**
      * Обработка конфигурации запроса
      * @param config

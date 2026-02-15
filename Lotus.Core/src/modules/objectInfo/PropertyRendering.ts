@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type RenderFunction = (item: unknown, context?: unknown) => any
+export type RenderFunction = (item?: unknown, context?: unknown) => any
 
 /**
  * Интерфейс для отрисовки свойства

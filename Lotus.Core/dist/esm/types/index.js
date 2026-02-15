@@ -10,5 +10,6 @@ export { castToGrouping, instanceOfGrouping } from './Grouping';
 export { castToHasRequiredOwner, instanceOfHasRequiredOwner } from './HasOwner';
 export { castToIdentifierId, instanceOfIdentifierId } from './IdentifierId';
 export { castToNameable, instanceOfNameable } from './Nameable';
+export { castToNotifyPropertyChanged, instanceOfNotifyPropertyChanged } from './NotifyPropertyChanged';
 export { castToResult, createResultFromError, instanceOfResult } from './Result';
 //# sourceMappingURL=index.js.map

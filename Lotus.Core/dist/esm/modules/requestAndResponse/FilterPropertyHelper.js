@@ -162,6 +162,7 @@ export class FilterPropertyHelper {
                                     return false;
                                 });
                             case 'includeEquals':
+                                // eslint-disable-next-line complexity
                                 return massive.filter((x) => {
                                     const value = ObjectHelper.getValue(x, key);
                                     if (!filterProperty.values) {

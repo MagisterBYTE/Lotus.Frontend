@@ -53,7 +53,7 @@ export function instanceOfResult(value: unknown): value is IResult
 {
   if (value && typeof value === 'object')
   {
-    return ('succeeded' in value && typeof value['succeeded'] === 'boolean');
+    return ('succeeded' in value && typeof value.succeeded === 'boolean');
   }
 
   return false;

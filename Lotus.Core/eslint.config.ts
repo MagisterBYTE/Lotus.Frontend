@@ -138,6 +138,28 @@ export default defineConfig([
         {
           selector: 'variable',
           format: ['camelCase', 'UPPER_CASE', 'PascalCase']
+        },
+        // 1. Проверяет обычные функции: async function getDataAsync() {}
+        {
+          "selector": "function",
+          "modifiers": ["async"],
+          "format": ["camelCase"],
+          "suffix": ["Async"]
+        },
+        // 2. Проверяет методы в классах и объектах: class A { async saveAsync() {} }
+        {
+          "selector": "method",
+          "modifiers": ["async"],
+          "format": ["camelCase"],
+          "suffix": ["Async"]
+        },
+        // 3. Проверяет переменные, содержащие стрелочные функции: const fetchAsync = async () => {}
+        {
+          "selector": "variable",
+          "types": ["function"],
+          "modifiers": ["async"],
+          "format": ["camelCase"],
+          "suffix": ["Async"]
         }
       ],
 

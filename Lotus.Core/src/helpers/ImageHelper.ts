@@ -4,15 +4,13 @@
  */
 export abstract class ImageHelper 
 {
-  public static readonly RegExpDataURL:RegExp = /^\s*data:([a-z]+\/[a-z]+(;[a-z-]+=[a-z-]+)?)?(;base64)?,[a-z0-9!$&',()*+;=\-._~:@/?%\s]*\s*$/i;
-  
   /**
    * Проверяет, является ли строка форматом Data URL (base64)
    * Используется для определения, нужны ли CORS-настройки для загрузки
    */
   public static isDataURL(str: string): boolean 
   {
-    return !!str.match(ImageHelper.RegExpDataURL);
+    return str.includes('data:image') && str.includes('base64');
   }
 
   /**

@@ -220,12 +220,23 @@ export class Assert {
         return Array.isArray(value) && value.length > 0 && value.every((item) => itemValidator(item));
     }
     /**
-     * Проверка объекта на то, что все его свойства имеют значения undefined
+     * Проверка объекта на то, что все его свойства имеют значения undefined или null
      * @param object Проверяемый объект
      * @returns Статус проверки
      */
-    static objectPropertyEmpty(object) {
-        return !Object.values(object).some((value) => value !== undefined);
+    static isObjectEmpty(object) {
+        // В JavaScript/TypeScript оператор != (нестрогое неравенство) с null автоматически отсеивает и undefined
+        return !Object.values(object).some((value) => value != null);
+    }
+    /**
+     * Проверка объекта на то, что у него есть хотя бы одно свойство
+     * со значением, отличным от null и undefined.
+     * @param object Проверяемый объект
+     * @returns Статус проверки
+     */
+    static isObjectNotEmpty(object) {
+        // some вернет true, как только найдет первый элемент, удовлетворяющий условию
+        return Object.values(object).some((value) => value !== undefined && value !== null);
     }
 }
 //# sourceMappingURL=Assert.js.map

@@ -20,7 +20,18 @@ export const LocalizationCoreDataRu = {
         failed: 'Ошибка',
         succeed: 'Успешно'
     },
+    controls: {
+        grid: 'Сетка',
+        rotation: 'Поворот',
+        scale: 'Масштаб',
+        border: 'Граница',
+        cornerRounding: 'Скругление',
+        transparentBackground: 'Прозрачный фон',
+        smoothingEdges: 'Сглаживание краев'
+    },
     actions: {
+        load: 'Загрузить',
+        reset: 'Сбросить',
         get: 'Получить',
         getting: 'Получение...',
         gettingSucceed: 'Получение данных прошло успешно',

@@ -191,37 +191,37 @@ describe('Assert', () =>
   {
     test('should return true for empty object', () => 
     {
-      expect(Assert.objectPropertyEmpty({})).toBe(true);
+      expect(Assert.isObjectEmpty({})).toBe(true);
     });
 
     test('should return true when all properties are undefined', () => 
     {
       const obj = { a: undefined, b: undefined, c: undefined };
-      expect(Assert.objectPropertyEmpty(obj)).toBe(true);
+      expect(Assert.isObjectEmpty(obj)).toBe(true);
     });
 
     test('should return false when at least one property is defined', () => 
     {
-      expect(Assert.objectPropertyEmpty({ a: undefined, b: null })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: undefined, b: '' })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: undefined, b: 0 })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: undefined, b: false })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: undefined, b: 'value' })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: undefined, b: null })).toBe(true);
+      expect(Assert.isObjectEmpty({ a: undefined, b: '' })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: undefined, b: 0 })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: undefined, b: false })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: undefined, b: 'value' })).toBe(false);
     });
 
     test('should return false for object with any non-undefined value', () => 
     {
-      expect(Assert.objectPropertyEmpty({ a: 1 })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: 'test' })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: [] })).toBe(false);
-      expect(Assert.objectPropertyEmpty({ a: {} })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: 1 })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: 'test' })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: [] })).toBe(false);
+      expect(Assert.isObjectEmpty({ a: {} })).toBe(false);
     });
 
     test('should handle nested objects', () => 
     {
       const obj = { a: undefined, b: { c: undefined } };
       // Метод проверяет только верхний уровень, поэтому вернет false из-за объекта
-      expect(Assert.objectPropertyEmpty(obj)).toBe(false);
+      expect(Assert.isObjectEmpty(obj)).toBe(false);
     });
   });
 

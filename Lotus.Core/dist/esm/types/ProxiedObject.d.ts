@@ -10,6 +10,6 @@ export interface IProxiedObject<TType> {
      * Функция для обновления прокси
      * @param sender Источник обновления
      */
-    refresh: (sender?: any) => void;
+    refresh: (sender?: unknown) => void;
 }
 //# sourceMappingURL=ProxiedObject.d.ts.map

@@ -86,7 +86,7 @@ export class DeviceHelper {
      * Получает данные о состоянии батареи.
      * Возвращает null, если API не поддерживается (например, в Safari или Firefox).
      */
-    static async getBatteryInfo() {
+    static async getBatteryInfoAsync() {
         if (typeof navigator === 'undefined' || !('getBattery' in navigator)) {
             return null;
         }
@@ -130,7 +130,7 @@ export class DeviceHelper {
      * Проверяет статус разрешений (например, на геолокацию или уведомления)
      * Позволяет узнать, спросит ли браузер пользователя или уже есть отказ/согласие.
      */
-    static async getPermissionStatus(name) {
+    static async getPermissionStatusAsync(name) {
         if (typeof navigator === 'undefined' || !('permissions' in navigator)) {
             return 'unsupported';
         }

@@ -233,6 +233,7 @@ export abstract class FilterPropertyHelper
                 });
 
               case 'includeEquals':
+                // eslint-disable-next-line complexity
                 return massive.filter((x) => 
                 {
                   const value = ObjectHelper.getValue(x, key);
