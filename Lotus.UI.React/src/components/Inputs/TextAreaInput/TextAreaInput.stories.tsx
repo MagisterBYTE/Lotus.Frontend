@@ -10,6 +10,10 @@ const meta = {
   args: {},
 
   argTypes: {
+    // TextArea
+    value: { control: 'number', table: { category: 'TextArea' } },
+    disabled: { control: 'boolean', table: { category: 'TextArea' } },
+
     // Label
     required: { control: 'boolean', table: { category: 'Label' } },
     label: { control: 'text', table: { category: 'Label' } },
@@ -32,6 +36,9 @@ const meta = {
     // Hide
     ...ArgTypesStory.BaseField,
     textAreaProps: { table: { disable: true } },
+    onChange: { table: { disable: true } },
+    onChangeValue: { table: { disable: true } },
+    defaultValue: { table: { disable: true } },
     children: { table: { disable: true } }
   }
 } satisfies Meta<typeof TextAreaInput>;

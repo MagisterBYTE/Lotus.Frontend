@@ -11,7 +11,7 @@ import
 import { TCssBorderStyles, TIconPlacements,TShadowElevations, TTextEffects, TSizeTypeValues, TTextEffectValues, TIconPlacementValues, TBackgroundAccentValues, TFontAccentValues } from '#types';
 import { ArgTypes } from 'storybook/internal/types';
 import { TColorTokens } from 'lotus-core/modules/color';
-import { IBaseFieldProps } from '../components/Controls/ContainerField/ContainerField';
+import { IBaseContainerControlProps } from '#components/Common';
 
 export abstract class ArgTypesStory
 {
@@ -77,13 +77,13 @@ export abstract class ArgTypesStory
     imageDatabase: { table: { disable: true } },
   };
 
-  public static readonly BaseField: Partial<ArgTypes<IBaseFieldProps>> = {
+  public static readonly BaseField: Partial<ArgTypes<IBaseContainerControlProps>> = {
     labelProps: { table: { disable: true } },
     descriptionProps: { table: { disable: true } },
     errorProps: { table: { disable: true } }
   };
 
-  public static readonly BaseFieldSize: Partial<ArgTypes<IBaseFieldProps>> = {
+  public static readonly BaseFieldSize: Partial<ArgTypes<IBaseContainerControlProps>> = {
     inlinePlace: { control: 'boolean', table: { category: 'Size' } },
     size: { control: 'inline-radio', options: [...TSizeTypeValues, undefined], table: { category: 'Size' } },
     w: { control: 'inline-radio', options: ['min-content', 'max-content', '100%', '30vw', undefined], table: { category: 'Size' } },

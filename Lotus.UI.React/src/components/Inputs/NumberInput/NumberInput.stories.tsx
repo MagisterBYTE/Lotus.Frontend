@@ -10,6 +10,13 @@ const meta = {
   args: {},
 
   argTypes: {
+    // Number
+    value: { control: 'number', table: { category: 'Number' } },
+    min: { control: 'number', table: { category: 'Number' } },
+    max: { control: 'number', table: { category: 'Number' } },
+    step: { control: 'number', table: { category: 'Number' } },
+    disabled: { control: 'boolean', table: { category: 'Number' } },
+
     // Label
     required: { control: 'boolean', table: { category: 'Label' } },
     label: { control: 'text', table: { category: 'Label' } },
@@ -31,7 +38,10 @@ const meta = {
 
     // Hide
     ...ArgTypesStory.BaseField,
-    textInputProps: { table: { disable: true } },
+    numberInputProps: { table: { disable: true } },
+    onChange: { table: { disable: true } },
+    onChangeValue: { table: { disable: true } },
+    defaultValue: { table: { disable: true } },
     children: { table: { disable: true } }
   }
 } satisfies Meta<typeof NumberInput>;
@@ -42,6 +52,7 @@ type Story = StoryObj<typeof meta>;
 export const NumberInputEmpty: Story = {
   name: 'NumberInput Empty',
   args: {
+    w: 'max-content'
   }
 };
 
@@ -51,7 +62,8 @@ export const NumberInputDefault: Story = {
     label: 'Пример',
     required: true,
     description: 'Описание',
-    error: 'Ошибка'
+    error: 'Ошибка',
+    w: 'max-content'
   }
 };
 
@@ -64,7 +76,7 @@ export const NumberInputInline: Story = {
     error: 'Ошибка',
     inlinePlace: true,
     labelProps: {
-      w: '20%'
+      w: '100px'
     },
     numberInputProps: {
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />
@@ -85,5 +97,5 @@ export const NumberInputBorder: Story = {
     p: 'md',
     bdRadius: 'xs',
     bdShadow: 7
-  },
+  }
 };

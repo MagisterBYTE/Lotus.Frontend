@@ -10,6 +10,10 @@ const meta = {
   args: {},
 
   argTypes: {
+    // TextInput
+    value: { control: 'number', table: { category: 'TextInput' } },
+    disabled: { control: 'boolean', table: { category: 'TextInput' } },
+
     // Label
     required: { control: 'boolean', table: { category: 'Label' } },
     label: { control: 'text', table: { category: 'Label' } },
@@ -32,6 +36,9 @@ const meta = {
     // Hide
     ...ArgTypesStory.BaseField,
     textInputProps: { table: { disable: true } },
+    onChange: { table: { disable: true } },
+    onChangeValue: { table: { disable: true } },
+    defaultValue: { table: { disable: true } },
     children: { table: { disable: true } }
   }
 } satisfies Meta<typeof TextInput>;
@@ -42,6 +49,7 @@ type Story = StoryObj<typeof meta>;
 export const TextInputEmpty: Story = {
   name: 'TextInput Empty',
   args: {
+    w: 'max-content'
   }
 };
 
@@ -51,7 +59,8 @@ export const TextInputDefault: Story = {
     label: 'Пример',
     required: true,
     description: 'Описание',
-    error: 'Ошибка'
+    error: 'Ошибка',
+    w: 'max-content'
   }
 };
 
@@ -64,7 +73,7 @@ export const TextInputInline: Story = {
     error: 'Ошибка',
     inlinePlace: true,
     labelProps: {
-      w: '20%'
+      w: '100px'
     },
     textInputProps: {
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />
@@ -85,5 +94,5 @@ export const TextInputBorder: Story = {
     p: 'md',
     bdRadius: 'xs',
     bdShadow: 7
-  },
+  }
 };

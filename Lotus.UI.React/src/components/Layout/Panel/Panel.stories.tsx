@@ -60,7 +60,7 @@ export const PanelBorder: Story = {
     },
 
     withBorder: 15,
-    p: 'md',
+    p: 'xs',
     bdRadius: 'md'
   }
 };
@@ -93,9 +93,7 @@ export const PanelGreen: Story = {
 export const PanelCenter: Story = {
   name: 'Panel Center',
   args: {
-    children: (
-<Box style={{overflow: 'clip'}} >{TextStory.MiddleText()}</Box>
-    ),
+    children: <Box style={{ overflow: 'clip' }}>{TextStory.MiddleText()}</Box>,
     p: 'lg',
     bdStyle: 'solid',
     w: '50vw',

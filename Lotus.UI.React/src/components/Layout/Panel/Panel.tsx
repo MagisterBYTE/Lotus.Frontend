@@ -50,11 +50,11 @@ function buildPanelProps(props: IPanelProps): CSSProperties
 // eslint-disable-next-line complexity
 export function Panel(props: IPanelProps)
 {
-  const { centerContent, size = 'md', header, headerOffsetPercent = 5, headerProps, children, p, pt, ...otherProps } = props;
+  const { centerContent, size = 'md', header, headerOffsetPercent = 5, headerProps, children, ...otherProps } = props;
   const isHeaderComponent = isValidElement(header);
   const isHeaderText = typeof header === 'string';
   const paddingSizeTopNeed = PaddingSizes.Default.toSizePrimitive(size)!;
-  const paddingSizeTopProps = PaddingSizes.Default.toPixel(p ?? pt);
+  const paddingSizeTopProps = PaddingSizes.Default.toPixel(otherProps.p ?? otherProps.pt);
 
   // 1. Мемоизируем объект стилей
   const panelStyle = useMemo((): CSSProperties => (
@@ -70,7 +70,7 @@ export function Panel(props: IPanelProps)
       position: 'relative', // Добавляем для абсолютного позиционирования заголовка
       paddingTop: paddingSizeTopNeed.add(paddingSizeTopProps).toRem()
     }),
-  [otherProps, size, p, pt, centerContent]
+  [otherProps, size, centerContent]
   );
 
   // 1. Мемоизируем объект стилей

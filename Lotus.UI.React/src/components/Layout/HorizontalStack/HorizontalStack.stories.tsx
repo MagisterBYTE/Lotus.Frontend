@@ -42,11 +42,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   name: 'Default',
   args: {
-    children: <>
+    children: (
+      <>
         <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент 1 </div>
         <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент 2 </div>
         <div style={{ width: 'max-content', border: 'solid 1px black' }}>Это контент 3 </div>
-        </>
+      </>
+    ),
+
+    spacing: 'xs'
   }
 };
 

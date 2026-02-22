@@ -10,6 +10,10 @@ const meta = {
   args: {},
 
   argTypes: {
+    // Password
+    value: { control: 'number', table: { category: 'Password' } },
+    disabled: { control: 'boolean', table: { category: 'Password' } },
+
     // Label
     required: { control: 'boolean', table: { category: 'Label' } },
     label: { control: 'text', table: { category: 'Label' } },
@@ -32,6 +36,9 @@ const meta = {
     // Hide
     ...ArgTypesStory.BaseField,
     passwordInputProps: { table: { disable: true } },
+    onChange: { table: { disable: true } },
+    onChangeValue: { table: { disable: true } },
+    defaultValue: { table: { disable: true } },
     children: { table: { disable: true } }
   }
 } satisfies Meta<typeof PasswordInput>;
@@ -42,6 +49,7 @@ type Story = StoryObj<typeof meta>;
 export const PasswordInputEmpty: Story = {
   name: 'PasswordInput Empty',
   args: {
+    w: '30vw'
   }
 };
 
@@ -63,12 +71,16 @@ export const PasswordInputInline: Story = {
     description: 'Описание',
     error: 'Ошибка',
     inlinePlace: true,
+
     labelProps: {
       w: '20%'
     },
+
     passwordInputProps: {
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />
-    }
+    },
+
+    w: '30vw'
   }
 };
 
