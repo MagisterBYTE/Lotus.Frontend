@@ -62,6 +62,7 @@ export declare const LocalizationCore: {
             cancel: string;
             clear: string;
             confirm: string;
+            search: string;
         };
         filters: {
             equals: string;

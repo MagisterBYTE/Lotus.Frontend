@@ -1,6 +1,8 @@
 import { Box, VerticalStack } from '#components/Layout';
 import { Divider } from '#components/Display';
-import { SegmentedField, SelectField, SliderField, SwitchField, TextField } from '#components/Controls';
+import { TextInput } from '#components/Inputs';
+import { Segmented, Select } from '#components/Selects';
+import { Slider, Switch } from '#components/Controls';
 import
 {
   TCssBackgroundColor,
@@ -10,7 +12,8 @@ import
   TShadowElevation,
   TShadowElevations,
   TSizeType,
-  TSizeTypes
+  TSizeTypes,
+  TSizeTypeValues
 } from '#types';
 import type { Meta, StoryObj } from '@storybook/react';
 import { OptionsStory } from '#storydata';
@@ -45,9 +48,9 @@ const meta = {
     inlinePlace: { control: 'boolean' },
     isDisabled: { control: 'boolean' },
     labelWidth: { control: { type: 'number', min: 10, max: 70 } },
-    size: { control: 'inline-radio', options: [...TSizeTypes, undefined] },
+    size: { control: 'inline-radio', options: [...TSizeTypeValues, undefined] },
     bdStyle: { control: 'inline-radio', options: [...TCssBorderStyles, undefined] },
-    bdRadius: { control: 'inline-radio', options: [...TSizeTypes, undefined] },
+    bdRadius: { control: 'inline-radio', options: [...TSizeTypeValues, undefined] },
     backColor: { control: 'select', options: [undefined, ...TColorTokens] },
     shadowElevation: { control: 'select', options: [undefined, ...TShadowElevations] }
   }
@@ -73,39 +76,39 @@ export const PanelPerson: Story = {
           p={'md'}
           spacing={'sm'}
         >
-          <TextField
+          <TextInput
             inlinePlace={args.inlinePlace}
             label={'Фамилия'}
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
-            textInputProps={{ disabled: args.isDisabled }}
+            disabled={args.isDisabled}
             size={args.size}
             w="100%"
           />
 
-          <TextField
+          <TextInput
             inlinePlace={args.inlinePlace}
             label={'Имя'}
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
-            textInputProps={{ disabled: args.isDisabled }}
+            disabled={args.isDisabled}
             size={args.size}
             w="100%"
           />
 
-          <SelectField
+          <Select
             inlinePlace={args.inlinePlace}
             label="Раса"
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
-            options={OptionsStory.TextAndIconReact}
+            items={OptionsStory.TextAndIconReact}
             size={args.size}
             selectProps={{ disabled: args.isDisabled }}
             w="100%"
           />
 
-          <SegmentedField
+          <Segmented
             inlinePlace={args.inlinePlace}
             label="Раса"
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
-            options={OptionsStory.TextAndIconReact}
+            items={OptionsStory.TextAndIconReact}
             size={args.size}
             segmentedProps={{ disabled: args.isDisabled }}
             w="100%"
@@ -113,23 +116,24 @@ export const PanelPerson: Story = {
 
           <Divider ml={'md'} lineStyle='dotted' mr={'md'} nml nmr/>
 
-          <SliderField
+          <Slider
             mt={'xs'}
             mb={'xs'}
             inlinePlace={args.inlinePlace}
             label="Масштаб"
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
             size={args.size}
-            sliderProps={{ disabled: args.isDisabled }}
+            disabled={args.isDisabled}
             w="100%"
           />
 
-          <SwitchField
+          <Switch
             inlinePlace={args.inlinePlace}
             label="Ускорение"
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
             size={args.size}
-            switchProps={{ disabled: args.isDisabled }}
+            switchProps={{ labelPosition: 'left' }}
+            disabled={args.isDisabled}
             w="100%"
           />
         </VerticalStack>

@@ -35,6 +35,11 @@ interface IHorizontalImageEditorProps extends IBaseImageEditorProps, IHorizontal
     orientation: 'horizontal';
 }
 export type IImageEditorProps = IVerticalImageEditorProps | IHorizontalImageEditorProps;
+/**
+ * Компонент редактор изображения
+ * @param props
+ * @returns
+ */
 export declare function ImageEditor(props: IImageEditorProps): import("react/jsx-runtime").JSX.Element | null;
 export {};
 //# sourceMappingURL=ImageEditor.d.ts.map

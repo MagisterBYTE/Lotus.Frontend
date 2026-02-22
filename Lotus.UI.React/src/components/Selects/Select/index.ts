@@ -1,0 +1,1 @@
+export { Select, type ISelectProps } from './Select';

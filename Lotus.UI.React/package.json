@@ -19,12 +19,15 @@
     "#storydata": "./src/.storydata/index.ts",
     "#base": "./src/base/index.ts",
     "#builder": "./src/builder/index.ts",
+    "#components/Common": "./src/components/Common/index.ts",
     "#components/Controls": "./src/components/Controls/index.ts",
     "#components/DataView": "./src/components/DataView/index.ts",
     "#components/Display": "./src/components/Display/index.ts",
+    "#components/Editors": "./src/components/Editors/index.ts",
     "#components/Extendeds": "./src/components/Extendeds/index.ts",
-    "#components/Feedback": "./src/components/Feedback/index.ts",
+    "#components/Inputs": "./src/components/Inputs/index.ts",
     "#components/Layout": "./src/components/Layout/index.ts",
+    "#components/Selects": "./src/components/Selects/index.ts",
     "#designSystem": "./src/designSystem/index.ts",
     "#designSystem/background": "./src/designSystem/background/index.ts",
     "#designSystem/border": "./src/designSystem/border/index.ts",
@@ -52,6 +55,10 @@
       "import": "./dist/esm/base/index.js",
       "types": "./dist/esm/base/index.d.ts"
     },
+    "./components/Common": {
+      "import": "./dist/esm/components/Common/index.js",
+      "types": "./dist/esm/components/Common/index.d.ts"
+    },
     "./components/Controls": {
       "import": "./dist/esm/components/Controls/index.js",
       "types": "./dist/esm/components/Controls/index.d.ts"
@@ -64,17 +71,25 @@
       "import": "./dist/esm/components/Display/index.js",
       "types": "./dist/esm/components/Display/index.d.ts"
     },
+    "./components/Editors": {
+      "import": "./dist/esm/components/Editors/index.js",
+      "types": "./dist/esm/components/Editors/index.d.ts"
+    },
     "./components/Extendeds": {
       "import": "./dist/esm/components/Extendeds/index.js",
       "types": "./dist/esm/components/Extendeds/index.d.ts"
     },
-    "./components/Feedback": {
-      "import": "./dist/esm/components/Feedback/index.js",
-      "types": "./dist/esm/components/Feedback/index.d.ts"
+    "./components/Inputs": {
+      "import": "./dist/esm/components/Inputs/index.js",
+      "types": "./dist/esm/components/Inputs/index.d.ts"
     },
     "./components/Layout": {
       "import": "./dist/esm/components/Layout/index.js",
       "types": "./dist/esm/components/Layout/index.d.ts"
+    },
+    "./components/Selects": {
+      "import": "./dist/esm/components/Selects/index.js",
+      "types": "./dist/esm/components/Selects/index.d.ts"
     },
     "./designSystem": {
       "import": "./dist/esm/designSystem/index.js",

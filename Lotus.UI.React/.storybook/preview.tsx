@@ -6,6 +6,15 @@ import { theme } from './theme';
 
 
 const preview: Preview = {
+  parameters: {
+    options: {
+      storySort: 
+      {
+        order: ['Display', 'Layout', '*', 'WIP'],
+      },
+    },
+  },
+
   decorators: [
     // 👇 Defining the decorator in the preview file applies it to all stories
     (Story, { context }) =>

@@ -5,13 +5,13 @@ import { Assert } from 'lotus-core/utils';
 import { ReactElement } from 'react';
 import { Text } from '#components/Display';
 import { HorizontalStack, IHorizontalStackProps } from '#components/Layout';
-import { TSizeType } from '#types';
+import { TSizeType, TSizeTypes } from '#types';
 import { RenderIcon } from './RenderIcon';
 
 /**
  * Вспомогательный класс для отрисовки опции
  */
-export abstract class RenderOption
+export abstract class RenderOption 
 {
   /**
    * Отрисовка иконки и контента опции
@@ -21,27 +21,32 @@ export abstract class RenderOption
    * @param wrapContainer Следует ли обвернуть в горизонтальный контейнер
    * @returns ReactElement
    */
-  public static renderOption(size: TSizeType, option: IOption, imageDatabase?: IImageDatabase, wrapContainer?: IHorizontalStackProps): ReactElement
+  public static renderOption(size: TSizeType, option: IOption, imageDatabase?: IImageDatabase, wrapContainer?: IHorizontalStackProps): ReactElement 
   {
-    if (StringHelper.isNullOrEmpty(option.label))
+    if (StringHelper.isNullOrEmpty(option.label)) 
     {
-      if (Assert.existValue(option.icon))
+      if (Assert.existValue(option.icon)) 
       {
         return RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase)!;
       }
-      else
+      else 
       {
         return <></>;
       }
     }
-    else
+    else 
     {
-      if (Assert.existValue(option.icon))
+      if (Assert.existValue(option.icon)) 
       {
-        if (wrapContainer)
+        if (wrapContainer) 
         {
           return (
-            <HorizontalStack {...wrapContainer} hAlign={wrapContainer.hAlign ?? 'flex-start'} spacing={size} vAlign={wrapContainer.vAlign ?? 'center'}>
+            <HorizontalStack
+              {...wrapContainer}
+              hAlign={wrapContainer.hAlign ?? 'flex-start'}
+              spacing={TSizeTypes.clamp(size, 'xs', 'lg')}
+              vAlign={wrapContainer.vAlign ?? 'center'}
+            >
               {RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase)}
               <Text disabled={option.disabled} fontSize={size}>
                 {option.label}
@@ -49,7 +54,7 @@ export abstract class RenderOption
             </HorizontalStack>
           );
         }
-        else
+        else 
         {
           return (
             <>
@@ -61,19 +66,24 @@ export abstract class RenderOption
           );
         }
       }
-      else
+      else 
       {
-        if (wrapContainer)
+        if (wrapContainer) 
         {
           return (
-            <HorizontalStack {...wrapContainer} hAlign={wrapContainer.hAlign ?? 'flex-start'} spacing={size} vAlign={wrapContainer.vAlign ?? 'center'}>
+            <HorizontalStack
+              {...wrapContainer}
+              hAlign={wrapContainer.hAlign ?? 'flex-start'}
+              spacing={TSizeTypes.clamp(size, 'xs', 'lg')}
+              vAlign={wrapContainer.vAlign ?? 'center'}
+            >
               <Text disabled={option.disabled} fontSize={size}>
                 {option.label}
               </Text>
             </HorizontalStack>
           );
         }
-        else
+        else 
         {
           return (
             <Text disabled={option.disabled} fontSize={size}>

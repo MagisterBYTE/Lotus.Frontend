@@ -262,6 +262,7 @@ export const SelectEx = factory<SelectExFactory>((_props, ref) =>
               // @ts-expect-error
               type="button"
               onClick={() => combobox.toggleDropdown()}
+              error={error}
               {...others}
               size={size}
             >

@@ -1,0 +1,1 @@
+export { GallerySelect, type IGallerySelectProps } from './GallerySelect';

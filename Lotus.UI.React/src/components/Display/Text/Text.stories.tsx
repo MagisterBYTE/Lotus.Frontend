@@ -43,10 +43,15 @@ export const TextDefault: Story = {
   }
 };
 
-export const TextLabel: Story = {
-  name: 'Text Label',
+export const TextShadowMonospace: Story = {
+  name: 'Text Shadow Monospace',
   args: {
-    children: 'Иконка React'
+    children: 'Иконка React',
+    textEffect: 'shadow',
+    fontAccent: 'monospace',
+    textColor: 'brown',
+    fontSize: 'lg',
+    fontBold: true
   }
 };
 
@@ -67,7 +72,7 @@ export const TextBadge: Story = {
   args: {
     children: 'Badge',
     asBadge: 'blue',
-    p: 'md',
+    p: 'xxs',
     withBorder: true,
     bdStyle: 'solid',
     bdRadius: 'md',

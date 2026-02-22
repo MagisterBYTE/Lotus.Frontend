@@ -2,9 +2,9 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ActionIcon, Button, Modal, Pill, Select, Tooltip, useMantineTheme } from '@mantine/core';
+import { ActionIcon, Button, Modal, Tooltip, useMantineTheme } from '@mantine/core';
 import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconRefresh, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
-import { ItemsHelper, StringHelper } from 'lotus-core/helpers';
+import { StringHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
 import { IObjectInfo, ObjectInfo } from 'lotus-core/modules/objectInfo';
 import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage, ResponseHelper } from 'lotus-core/modules/requestAndResponse';
@@ -13,9 +13,7 @@ import { IRecordObject, TKey } from 'lotus-core/types';
 import { ObjectName } from 'lotus-core/utils';
 import { RefAttributes, useEffect, useMemo, useState } from 'react';
 import { JSX } from 'react/jsx-runtime';
-import { MultiSelectField, SelectField } from '#components/Controls';
 import { Text } from '#components/Display';
-import { SelectEx } from '#components/Extendeds';
 import { HorizontalStack, VerticalStack } from '#components/Layout';
 import
 {
@@ -44,6 +42,8 @@ import { TableViewMultiSelectView } from './components/TableViewMultiSelectView'
 import { TableViewSelectView } from './components/TableViewSelectView';
 import { TableViewTextView } from './components/TableViewTextView';
 import { useTableViewLocalization } from './useTableViewLocalization';
+import { MultiSelect, Select } from '#components/Selects';
+
 
 export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'>
 {
@@ -180,7 +180,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
             const items = property.possibleValues!;
             const isModalMode = table.options.editDisplayMode === 'modal';
             return (
-              <SelectField<TItem>
+              <Select<TItem>
                 disabled={props.disabled}
                 error={validator?.validationStatus.getErrorByKey(property.fieldName)}
                 items={items}
@@ -221,7 +221,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
             const isModalMode = table.options.editDisplayMode === 'modal';
 
             return (
-              <MultiSelectField<TItem>
+              <MultiSelect<TItem>
                 disabled={props.disabled}
                 error={validator?.validationStatus.getErrorByKey(property.fieldName)}
                 items={items}
@@ -294,7 +294,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     }
   };
 
-  const refreshItems = async (filter: IRequest) =>
+  const refreshItemsAsync = async (filter: IRequest) =>
   {
     try
     {
@@ -342,7 +342,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   // #region Добавление данных
   //
-  const handleCreateRowBegin = async () =>
+  const handleCreateRowBeginAsync = async () =>
   {
     if (onCreateItem)
     {
@@ -471,7 +471,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     setDeleteItem(undefined);
   };
 
-  const handleOkDeleteDialog = async () =>
+  const handleOkDeleteDialogAsync = async () =>
   {
     setOpenDeleteDialog(false);
     if (deleteItem && onDeleteItem)
@@ -481,7 +481,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
       setDeletingProcess(false);
       if (ResponseHelper.succeed(response))
       {
-        await refreshItems(getFilterQueryItems());
+        await refreshItemsAsync(getFilterQueryItems());
       }
     }
   };
@@ -516,7 +516,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   useEffect(() =>
   {
     const filter = getFilterQueryItems();
-    void refreshItems(filter);
+    void refreshItemsAsync(filter);
   }, [paginationModel.pageIndex, paginationModel.pageSize, sortingState, columnFiltersState, columnFiltersFns, globalFilter]);
 
   useEffect(() =>
@@ -554,7 +554,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   const renderTopToolbarCustomActionsAddRow = (props: { table: MRT_TableInstance<TItem> }) =>
   {
     return (
-      <Button m="md" onClick={handleCreateRowBegin}>
+      <Button m="md" onClick={handleCreateRowBeginAsync}>
         {LocalizationCore.data.actions.add}
         {actualSize}
         -
@@ -677,7 +677,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
             <Button radius="sm" variant="default" w={'160px'} onClick={handleCloseDeleteDialog}>
               {LocalizationCore.data.actions.cancel}
             </Button>
-            <Button color={redColor} radius="sm" variant="filled" w={'160px'} onClick={handleOkDeleteDialog}>
+            <Button color={redColor} radius="sm" variant="filled" w={'160px'} onClick={handleOkDeleteDialogAsync}>
               {LocalizationCore.data.actions.delete}
             </Button>
           </HorizontalStack>

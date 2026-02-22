@@ -1,0 +1,1 @@
+export { TextAreaInput, type ITextAreaInputProps } from './TextAreaInput';

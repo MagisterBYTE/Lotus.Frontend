@@ -56,7 +56,8 @@ export const LocalizationCoreDataEn = {
         deleteObject: 'You want to delete the object {objectName}. This action cannot be undone',
         cancel: 'Cancel',
         clear: 'Clear',
-        confirm: 'I confirm'
+        confirm: 'I confirm',
+        search: 'Search'
     },
     filters: {
         equals: 'Equals',

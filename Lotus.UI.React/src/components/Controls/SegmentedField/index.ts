@@ -1,1 +1,0 @@
-export { SegmentedField, type ISegmentedFieldProps } from './SegmentedField';

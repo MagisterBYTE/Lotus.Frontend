@@ -57,6 +57,7 @@ export declare const LocalizationCoreDataEn: {
         cancel: string;
         clear: string;
         confirm: string;
+        search: string;
     };
     filters: {
         equals: string;

@@ -1,11 +1,16 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Button, Checkbox, Slider } from '@mantine/core';
+import { Button, Checkbox } from '@mantine/core';
 import { CanvasHelper } from 'lotus-core/graphics';
 import { ImageHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { SliderField } from '#components/Controls';
+import { Slider } from '#components/Controls';
 import { HorizontalStack, VerticalStack } from '#components/Layout';
+/**
+ * Компонент редактор изображения
+ * @param props
+ * @returns
+ */
 export function ImageEditor(props) {
     const { size, orientation, crossOrigin, sourceImage, maxCanvasWidth = '350px', maxCanvasHeight = '350px', onSavePreview, ...stackProps } = props;
     const [image, setImage] = useState(sourceImage);
@@ -30,7 +35,8 @@ export function ImageEditor(props) {
     const canvasRef = useRef(null);
     const fileInputRef = useRef(null);
     const previewCanvasRef = useRef(null);
-    const padding = 'xs';
+    const padding = 'xxs';
+    const margin = 'xxs';
     // #region Actions
     // 1. Загрузка изображения с очисткой памяти
     const loadImageAsync = useCallback(async (file) => {
@@ -313,44 +319,30 @@ export function ImageEditor(props) {
         return (_jsx("canvas", { ref: canvasRef, style: {
                 width: maxCanvasWidth,
                 height: maxCanvasHeight,
+                marginTop: '1rem',
+                marginLeft: orientation === 'vertical' ? 'auto' : '1rem',
+                marginRight: 'auto',
                 display: 'block',
                 touchAction: 'none', // Обязательно: отключает стандартный скролл браузера
                 cursor: isDragging ? 'grabbing' : 'grab'
             }, onMouseDown: handleMouseDown, onMouseLeave: handleMouseUp, onMouseMove: handleMouseMove, onMouseUp: handleMouseUp, onTouchEnd: handleTouchEnd, onTouchMove: handleTouchMove, onTouchStart: handleTouchStart, onWheel: handleWheel }));
     };
     const renderBlockButtons = () => {
-        return (_jsxs(HorizontalStack, { hAlign: "space-between", p: padding, spacing: 'md', vAlign: "center", w: '100%', children: [_jsx("input", { ref: fileInputRef, accept: "image/*", style: { display: 'none' }, type: "file", onChange: handleImageUpload }), _jsx(Button, { size: size, onClick: () => fileInputRef.current?.click(), children: LocalizationCore.data.actions.load }), _jsx(Button, { disabled: !rawImage, size: size, variant: "outline", onClick: resetTransform, children: LocalizationCore.data.actions.reset }), _jsx(Checkbox, { checked: showGrid, label: LocalizationCore.data.controls.grid, size: size, onChange: (event) => {
+        return (_jsxs(HorizontalStack, { hAlign: "space-between", m: margin, p: padding, spacing: 'md', vAlign: "center", w: '100%', children: [_jsx("input", { ref: fileInputRef, accept: "image/*", style: { display: 'none' }, type: "file", onChange: handleImageUpload }), _jsx(Button, { size: size, onClick: () => fileInputRef.current?.click(), children: LocalizationCore.data.actions.load }), _jsx(Button, { disabled: !rawImage, size: size, variant: "outline", onClick: resetTransform, children: LocalizationCore.data.actions.reset }), _jsx(Checkbox, { checked: showGrid, label: LocalizationCore.data.controls.grid, size: size, onChange: (event) => {
                         setShowGrid(event.target.checked);
                     } })] }));
     };
     const renderSliderRotation = () => {
-        return (_jsx(SliderField, { inlinePlace: true, label: LocalizationCore.data.controls.rotation, labelProps: { w: '120px' }, m: 'xs', p: padding, size: size, sliderProps: {
-                value: rotate,
-                min: 5,
-                max: 355,
-                step: 5,
-                onChange: setRotate
-            } }));
+        return (_jsx(Slider, { inlinePlace: true, label: LocalizationCore.data.controls.rotation, labelProps: { w: '120px' }, m: margin, max: 355, min: 5, p: padding, size: size, step: 5, value: rotate, onChange: setRotate }));
     };
     const renderSliderRadius = () => {
-        return (_jsx(SliderField, { inlinePlace: true, label: LocalizationCore.data.controls.cornerRounding, labelProps: { w: '120px' }, m: 'xs', p: padding, size: size, sliderProps: {
-                value: borderRadius,
-                min: 0,
-                max: 64,
-                onChange: setBorderRadius
-            } }));
+        return (_jsx(Slider, { inlinePlace: true, label: LocalizationCore.data.controls.cornerRounding, labelProps: { w: '120px' }, m: margin, max: 64, min: 0, p: padding, size: size, value: borderRadius, onChange: setBorderRadius }));
     };
     const renderSliderScale = () => {
-        return (_jsx(SliderField, { inlinePlace: true, label: LocalizationCore.data.controls.scale, labelProps: { w: '120px' }, m: 'xs', p: padding, size: size, sliderProps: {
-                value: scale,
-                min: 0.1,
-                max: 10,
-                step: 0.1,
-                onChange: setScale
-            } }));
+        return (_jsx(Slider, { inlinePlace: true, label: LocalizationCore.data.controls.scale, labelProps: { w: '120px' }, m: margin, max: 10, min: 0.1, p: padding, size: size, step: 0.1, value: scale, onChange: setScale }));
     };
     const renderBlockPreview = () => {
-        return (_jsxs(HorizontalStack, { hAlign: "flex-start", p: padding, spacing: 'md', children: [_jsx(VerticalStack, { hAlign: "center", mr: 'xl', children: _jsx("canvas", { ref: previewCanvasRef, style: {
+        return (_jsxs(HorizontalStack, { hAlign: "flex-start", m: margin, p: padding, spacing: 'md', children: [_jsx(VerticalStack, { hAlign: "center", mr: 'xl', children: _jsx("canvas", { ref: previewCanvasRef, style: {
                             width: `${previewSize}px`,
                             height: `${previewSize}px`,
                             border: '1px solid #ccc',

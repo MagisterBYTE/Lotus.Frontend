@@ -3,6 +3,7 @@ import { StringHelper } from 'lotus-core/helpers';
 import { Assert } from 'lotus-core/utils';
 import { Text } from '#components/Display';
 import { HorizontalStack } from '#components/Layout';
+import { TSizeTypes } from '#types';
 import { RenderIcon } from './RenderIcon';
 /**
  * Вспомогательный класс для отрисовки опции
@@ -28,7 +29,7 @@ export class RenderOption {
         else {
             if (Assert.existValue(option.icon)) {
                 if (wrapContainer) {
-                    return (_jsxs(HorizontalStack, { ...wrapContainer, hAlign: wrapContainer.hAlign ?? 'flex-start', spacing: size, vAlign: wrapContainer.vAlign ?? 'center', children: [RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase), _jsx(Text, { disabled: option.disabled, fontSize: size, children: option.label })] }));
+                    return (_jsxs(HorizontalStack, { ...wrapContainer, hAlign: wrapContainer.hAlign ?? 'flex-start', spacing: TSizeTypes.clamp(size, 'xs', 'lg'), vAlign: wrapContainer.vAlign ?? 'center', children: [RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase), _jsx(Text, { disabled: option.disabled, fontSize: size, children: option.label })] }));
                 }
                 else {
                     return (_jsxs(_Fragment, { children: [RenderIcon.renderIcon(size, option.icon, undefined, undefined, undefined, imageDatabase), _jsx(Text, { disabled: option.disabled, fontSize: size, children: option.label })] }));
@@ -36,7 +37,7 @@ export class RenderOption {
             }
             else {
                 if (wrapContainer) {
-                    return (_jsx(HorizontalStack, { ...wrapContainer, hAlign: wrapContainer.hAlign ?? 'flex-start', spacing: size, vAlign: wrapContainer.vAlign ?? 'center', children: _jsx(Text, { disabled: option.disabled, fontSize: size, children: option.label }) }));
+                    return (_jsx(HorizontalStack, { ...wrapContainer, hAlign: wrapContainer.hAlign ?? 'flex-start', spacing: TSizeTypes.clamp(size, 'xs', 'lg'), vAlign: wrapContainer.vAlign ?? 'center', children: _jsx(Text, { disabled: option.disabled, fontSize: size, children: option.label }) }));
                 }
                 else {
                     return (_jsx(Text, { disabled: option.disabled, fontSize: size, children: option.label }));

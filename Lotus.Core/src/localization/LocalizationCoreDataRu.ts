@@ -61,7 +61,8 @@ export const LocalizationCoreDataRu =
     deleteObject: 'Вы хотите удалить объект {objectName}. Это действие нельзя отменить',
     cancel: 'Отменить',
     clear: 'Отчистить',
-    confirm: 'Подтверждаю'
+    confirm: 'Подтверждаю',
+    search: 'Поиск'
   },
   filters:
   {

@@ -1,0 +1,1 @@
+export { PasswordInput, type IPasswordInputProps } from './PasswordInput';

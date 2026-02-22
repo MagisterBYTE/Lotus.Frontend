@@ -1,0 +1,1 @@
+export { Slider, type ISliderProps } from './Slider';

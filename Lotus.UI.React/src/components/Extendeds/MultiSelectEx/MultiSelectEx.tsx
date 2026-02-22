@@ -325,7 +325,7 @@ export const MultiSelectEx = factory<MultiSelectExFactory>((_props, ref) =>
             __staticSelector="MultiSelect"
             __stylesApiProps={{
               ...props,
-              rightSectionPointerEvents: rightSectionPointerEvents || (_clearable ? 'all' : 'none'),
+              rightSectionPointerEvents: rightSectionPointerEvents || 'none',
               multiline: true
             }}
             attributes={attributes}

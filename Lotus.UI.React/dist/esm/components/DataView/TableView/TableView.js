@@ -10,7 +10,6 @@ import { ObjectInfo } from 'lotus-core/modules/objectInfo';
 import { ResponseHelper } from 'lotus-core/modules/requestAndResponse';
 import { ObjectName } from 'lotus-core/utils';
 import { useEffect, useMemo, useState } from 'react';
-import { MultiSelectField, SelectField } from '#components/Controls';
 import { Text } from '#components/Display';
 import { HorizontalStack, VerticalStack } from '#components/Layout';
 import { MantineReactTable, useMantineReactTable, createRow, MRT_ToggleGlobalFilterButton, MRT_ToggleFiltersButton, MRT_ShowHideColumnsButton, MRT_ToggleDensePaddingButton, MRT_ToggleFullScreenButton } from '#external/mantine-react-table';
@@ -22,6 +21,7 @@ import { TableViewMultiSelectView } from './components/TableViewMultiSelectView'
 import { TableViewSelectView } from './components/TableViewSelectView';
 import { TableViewTextView } from './components/TableViewTextView';
 import { useTableViewLocalization } from './useTableViewLocalization';
+import { MultiSelect, Select } from '#components/Selects';
 const pageInfoResponseDefault = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 };
 export function TableView(props) {
     const { size = 'md', objectInfo, validator, onGetItems, onTransformFilterRequest, onAddItem, onCreateItem, onUpdateItem, onDuplicateItem, onDeleteItem } = props;
@@ -98,7 +98,7 @@ export function TableView(props) {
                 const selectedValue = currentItem ? String(currentItem[property.fieldName]) : String(cell.getValue());
                 const items = property.possibleValues;
                 const isModalMode = table.options.editDisplayMode === 'modal';
-                return (_jsx(SelectField, { disabled: props.disabled, error: validator?.validationStatus.getErrorByKey(property.fieldName), items: items, label: isModalMode ? property.name : undefined, required: isModalMode ? property.editing?.required : undefined, selectedItem: selectedValue, selectProps: {
+                return (_jsx(Select, { disabled: props.disabled, error: validator?.validationStatus.getErrorByKey(property.fieldName), items: items, label: isModalMode ? property.name : undefined, required: isModalMode ? property.editing?.required : undefined, selectedItem: selectedValue, selectProps: {
                         withAlignedLabels: true,
                         withCheckIcon: true,
                         onChange: (value) => {
@@ -118,7 +118,7 @@ export function TableView(props) {
                 const selectedValues = currentItem ? currentItem[property.fieldName] : cell.getValue();
                 const items = property.possibleValues;
                 const isModalMode = table.options.editDisplayMode === 'modal';
-                return (_jsx(MultiSelectField, { disabled: props.disabled, error: validator?.validationStatus.getErrorByKey(property.fieldName), items: items, label: isModalMode ? property.name : undefined, required: isModalMode ? property.editing?.required : undefined, selectedItems: selectedValues, selectProps: {
+                return (_jsx(MultiSelect, { disabled: props.disabled, error: validator?.validationStatus.getErrorByKey(property.fieldName), items: items, label: isModalMode ? property.name : undefined, required: isModalMode ? property.editing?.required : undefined, selectedItems: selectedValues, selectProps: {
                         withAlignedLabels: true,
                         withCheckIcon: true,
                         onChange: (value) => {
@@ -164,7 +164,7 @@ export function TableView(props) {
             return request;
         }
     };
-    const refreshItems = async (filter) => {
+    const refreshItemsAsync = async (filter) => {
         try {
             if (!items.length) {
                 setIsLoading(true);
@@ -199,7 +199,7 @@ export function TableView(props) {
     //
     // #region Добавление данных
     //
-    const handleCreateRowBegin = async () => {
+    const handleCreateRowBeginAsync = async () => {
         if (onCreateItem) {
             const response = await onCreateItem();
             if (ResponseHelper.succeed(response) && response.payload) {
@@ -297,14 +297,14 @@ export function TableView(props) {
         setOpenDeleteDialog(false);
         setDeleteItem(undefined);
     };
-    const handleOkDeleteDialog = async () => {
+    const handleOkDeleteDialogAsync = async () => {
         setOpenDeleteDialog(false);
         if (deleteItem && onDeleteItem) {
             setDeletingProcess(true);
             const response = await onDeleteItem(deleteItem.id);
             setDeletingProcess(false);
             if (ResponseHelper.succeed(response)) {
-                await refreshItems(getFilterQueryItems());
+                await refreshItemsAsync(getFilterQueryItems());
             }
         }
     };
@@ -332,7 +332,7 @@ export function TableView(props) {
     //
     useEffect(() => {
         const filter = getFilterQueryItems();
-        void refreshItems(filter);
+        void refreshItemsAsync(filter);
     }, [paginationModel.pageIndex, paginationModel.pageSize, sortingState, columnFiltersState, columnFiltersFns, globalFilter]);
     useEffect(() => {
         const initialColumnFiltersFns = MantineReactTableHelper.getFilterOptions(objectInfo);
@@ -346,7 +346,7 @@ export function TableView(props) {
         return (_jsxs(HorizontalStack, { spacing: actualSize, children: [isUpdate && (_jsx(Tooltip, { label: LocalizationCore.data.actions.edit, children: _jsx(ActionIcon, { size: TSizeTypes.next(actualSize, 1, 'xl'), variant: "default", onClick: handleEditRowBegin(props), children: _jsx(IconEdit, { color: blueColor, height: '100%', width: '100%' }) }) })), isDelete && (_jsx(Tooltip, { label: LocalizationCore.data.actions.delete, children: _jsx(ActionIcon, { size: TSizeTypes.next(actualSize, 1, 'xl'), variant: "default", onClick: handleDeleteRow(props.row), children: _jsx(IconCircleX, { color: redColor, height: '100%', width: '100%' }) }) }))] }));
     };
     const renderTopToolbarCustomActionsAddRow = (props) => {
-        return (_jsxs(Button, { m: "md", onClick: handleCreateRowBegin, children: [LocalizationCore.data.actions.add, actualSize, "-", TSizeTypes.next(actualSize, 1, 'lg'), "-", TSizeTypes.prev(actualSize, 1, 'xs')] }));
+        return (_jsxs(Button, { m: "md", onClick: handleCreateRowBeginAsync, children: [LocalizationCore.data.actions.add, actualSize, "-", TSizeTypes.next(actualSize, 1, 'lg'), "-", TSizeTypes.prev(actualSize, 1, 'xs')] }));
     };
     const renderToolbarInternalActions = (props) => {
         return (_jsxs(_Fragment, { children: [_jsx(MRT_ToggleGlobalFilterButton, { table: table }), _jsx(MRT_ToggleFiltersButton, { table: table }), _jsx(MRT_ShowHideColumnsButton, { table: table }), _jsx(MRT_ToggleDensePaddingButton, { table: table }), _jsx(MRT_ToggleFullScreenButton, { table: table }), _jsx(Tooltip, { label: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0434\u0430\u043D\u043D\u044B\u0435", children: _jsx(ActionIcon, { color: "gray", variant: "subtle", onClick: handleDecreaseFont, children: _jsx(IconTextDecrease, {}) }) }), _jsx(Tooltip, { label: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", children: _jsx(ActionIcon, { color: "gray", mr: 'md', variant: "subtle", onClick: handleIncreaseFont, children: _jsx(IconTextIncrease, {}) }) })] }));
@@ -416,6 +416,6 @@ export function TableView(props) {
             }
         }
     });
-    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { table: table }), _jsx(Modal, { centered: true, opened: openDeleteDialog, title: LocalizationCore.data.actions.delete, onClose: handleCloseDeleteDialog, children: _jsxs(VerticalStack, { spacing: 'md', children: [_jsx(Text, { children: deleteItemName }), _jsxs(HorizontalStack, { hAlign: "space-between", mb: "md", mt: "md", spacing: 'md', children: [_jsx(Button, { radius: "sm", variant: "default", w: '160px', onClick: handleCloseDeleteDialog, children: LocalizationCore.data.actions.cancel }), _jsx(Button, { color: redColor, radius: "sm", variant: "filled", w: '160px', onClick: handleOkDeleteDialog, children: LocalizationCore.data.actions.delete })] })] }) }, 'deleteDialog')] }));
+    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { table: table }), _jsx(Modal, { centered: true, opened: openDeleteDialog, title: LocalizationCore.data.actions.delete, onClose: handleCloseDeleteDialog, children: _jsxs(VerticalStack, { spacing: 'md', children: [_jsx(Text, { children: deleteItemName }), _jsxs(HorizontalStack, { hAlign: "space-between", mb: "md", mt: "md", spacing: 'md', children: [_jsx(Button, { radius: "sm", variant: "default", w: '160px', onClick: handleCloseDeleteDialog, children: LocalizationCore.data.actions.cancel }), _jsx(Button, { color: redColor, radius: "sm", variant: "filled", w: '160px', onClick: handleOkDeleteDialogAsync, children: LocalizationCore.data.actions.delete })] })] }) }, 'deleteDialog')] }));
 }
 //# sourceMappingURL=TableView.js.map

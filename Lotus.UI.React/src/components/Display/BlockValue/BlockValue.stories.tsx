@@ -20,7 +20,6 @@ const meta = {
     accentBackground: { control: 'boolean', table: { category: 'Value' } },
     asBadge: { control: 'boolean', table: { category: 'Value' } },
     monospaceValue: { control: 'boolean', table: { category: 'Value' } },
-    isHoverable: { control: 'boolean', table: { category: 'Value' } },
 
     // Size
     ...ArgTypesStory.Size,
@@ -45,7 +44,7 @@ type Story = StoryObj<typeof meta>;
 export const BlockValueDefault: Story = {
   name: 'BlockValue Default',
   args: {
-    p: 'md',
+    p: 'xxs',
     m: 'sm',
     label: 'Имя',
     value: 'Иванов Иван Иванович',
@@ -59,7 +58,7 @@ export const BlockValueDefault: Story = {
 export const BlockValueIcon: Story = {
   name: 'BlockValue Icon',
   args: {
-    p: 'md',
+    p: 'xxs',
     m: 'sm',
     label: 'Имя',
     value: 'Иванов Иван Иванович',
@@ -67,9 +66,53 @@ export const BlockValueIcon: Story = {
     asBadge: true,
     size: 'md',
     accentBackground: true,
-    labelProps:
-    {
+    labelProps: {
       icon: IconsStory.CurveArray64
     }
   }
+};
+
+export const BlockValueBorder: Story = {
+  args: {
+    p: 'xxs',
+    m: 'sm',
+    label: 'Имя',
+    value: 'Иванов Иван Иванович',
+    accentColor: 'blue',
+    asBadge: true,
+    size: 'md',
+    accentBackground: true,
+
+    labelProps: {
+      icon: IconsStory.CurveArray64
+    },
+
+    withBorder: 15,
+    bdRadius: 'md'
+  },
+
+  name: 'BlockValue Border'
+};
+
+export const BlockValueTeal: Story = {
+  args: {
+    p: 'xxs',
+    m: 'sm',
+    label: 'Имя',
+    value: 'Иванов Иван Иванович',
+    accentColor: 'teal',
+    asBadge: false,
+    size: 'sm',
+    accentBackground: false,
+
+    labelProps: {
+      icon: IconsStory.CurveArray64
+    },
+
+    withBorder: 15,
+    bdRadius: 'md',
+    monospaceValue: true
+  },
+
+  name: 'BlockValue Teal'
 };

@@ -12,6 +12,11 @@ export interface IContextRenderBase
   disabled?: boolean;
 
   /**
+   * Статус выбора элемента
+   */
+  selected?: boolean;
+
+  /**
    * Размер элемента
    */
   size?: TSizeType;

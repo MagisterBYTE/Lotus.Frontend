@@ -1,10 +1,10 @@
-import { Button, Checkbox, Slider } from '@mantine/core';
+import { Button, Checkbox } from '@mantine/core';
 import { CanvasHelper } from 'lotus-core/graphics';
 import { ImageHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
 import { IPoint } from 'lotus-core/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { SliderField } from '#components/Controls';
+import { Slider } from '#components/Controls';
 import { HorizontalStack, IHorizontalStackProps, IVerticalStackProps, VerticalStack } from '#components/Layout';
 import { TCssHeight, TCssWidth, TSizeType } from '#types';
 
@@ -55,6 +55,11 @@ interface IHorizontalImageEditorProps extends IBaseImageEditorProps, IHorizontal
 
 export type IImageEditorProps = IVerticalImageEditorProps | IHorizontalImageEditorProps;
 
+/**
+ * Компонент редактор изображения
+ * @param props 
+ * @returns 
+ */
 export function ImageEditor(props: IImageEditorProps)
 {
   const { size, orientation, crossOrigin, sourceImage, maxCanvasWidth = '350px', maxCanvasHeight = '350px', onSavePreview, ...stackProps } = props;
@@ -86,7 +91,8 @@ export function ImageEditor(props: IImageEditorProps)
   const fileInputRef = useRef<HTMLInputElement>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const padding: TSizeType = 'xs';
+  const padding: TSizeType = 'xxs';
+  const margin: TSizeType = 'xxs';
 
   // #region Actions
   // 1. Загрузка изображения с очисткой памяти
@@ -470,6 +476,9 @@ export function ImageEditor(props: IImageEditorProps)
         style={{
           width: maxCanvasWidth,
           height: maxCanvasHeight,
+          marginTop: '1rem',
+          marginLeft: orientation === 'vertical' ? 'auto' : '1rem',
+          marginRight: 'auto',
           display: 'block',
           touchAction: 'none', // Обязательно: отключает стандартный скролл браузера
           cursor: isDragging ? 'grabbing' : 'grab'
@@ -489,7 +498,7 @@ export function ImageEditor(props: IImageEditorProps)
   const renderBlockButtons = () =>
   {
     return (
-      <HorizontalStack hAlign="space-between" p={padding} spacing={'md'} vAlign="center" w={'100%'}>
+      <HorizontalStack hAlign="space-between" m={margin} p={padding} spacing={'md'} vAlign="center" w={'100%'}>
         <input ref={fileInputRef} accept="image/*" style={{ display: 'none' }} type="file" onChange={handleImageUpload} />
         <Button size={size} onClick={() => fileInputRef.current?.click()}>
           {LocalizationCore.data.actions.load}
@@ -513,20 +522,18 @@ export function ImageEditor(props: IImageEditorProps)
   const renderSliderRotation = () =>
   {
     return (
-      <SliderField
+      <Slider
         inlinePlace={true}
         label={LocalizationCore.data.controls.rotation}
         labelProps={{ w: '120px' }}
-        m={'xs'}
+        m={margin}
+        max={355}
+        min={5}
         p={padding}
         size={size}
-        sliderProps={{
-          value: rotate,
-          min: 5,
-          max: 355,
-          step: 5,
-          onChange: setRotate
-        }}
+        step={5}
+        value={rotate}
+        onChange={setRotate}
       />
     );
   };
@@ -534,19 +541,17 @@ export function ImageEditor(props: IImageEditorProps)
   const renderSliderRadius = () =>
   {
     return (
-      <SliderField
+      <Slider
         inlinePlace={true}
         label={LocalizationCore.data.controls.cornerRounding}
         labelProps={{ w: '120px' }}
-        m={'xs'}
+        m={margin}
+        max={64}
+        min={0}
         p={padding}
         size={size}
-        sliderProps={{
-          value: borderRadius,
-          min: 0,
-          max: 64,
-          onChange: setBorderRadius
-        }}
+        value={borderRadius}
+        onChange={setBorderRadius}
       />
     );
   };
@@ -554,20 +559,18 @@ export function ImageEditor(props: IImageEditorProps)
   const renderSliderScale = () =>
   {
     return (
-      <SliderField
+      <Slider
         inlinePlace={true}
         label={LocalizationCore.data.controls.scale}
         labelProps={{ w: '120px' }}
-        m={'xs'}
+        m={margin}
+        max={10}
+        min={0.1}
         p={padding}
         size={size}
-        sliderProps={{
-          value: scale,
-          min: 0.1,
-          max: 10,
-          step: 0.1,
-          onChange: setScale
-        }}
+        step={0.1}
+        value={scale}
+        onChange={setScale}
       />
     );
   };
@@ -575,7 +578,7 @@ export function ImageEditor(props: IImageEditorProps)
   const renderBlockPreview = () =>
   {
     return (
-      <HorizontalStack hAlign="flex-start" p={padding} spacing={'md'}>
+      <HorizontalStack hAlign="flex-start" m={margin} p={padding} spacing={'md'}>
         {/* Секция превью */}
         <VerticalStack hAlign="center" mr={'xl'}>
           <canvas

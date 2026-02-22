@@ -7,7 +7,7 @@ export class IconSizes extends SizeDimensions {
     /**
      * Стандартные размеры иконок
      */
-    static Default = new IconSizes(12, 15, 20, 24, 28, 36, 42);
+    static Default = new IconSizes(12, 15, 20, 24, 32, 40, 48);
     // #endregion
     // eslint-disable-next-line max-params, @typescript-eslint/no-useless-constructor
     constructor(xxs, xs, sm, md, lg, xl, xxl) {

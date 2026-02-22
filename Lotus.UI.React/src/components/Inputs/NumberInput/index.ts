@@ -1,0 +1,1 @@
+export { NumberInput, type INumberInputProps } from './NumberInput';
