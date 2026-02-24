@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { TableView } from './TableView';
 import { TableViewPropsPreset } from './TableViewPropsPreset';
-import { PersonInfoBase, PersonApi, IPerson, PersonValidator } from '#storydata';
+import { PersonInfoBase, PersonApi, IPerson, PersonValidator, ImageDatabase } from '#storydata';
 import { TSizeTypeValues } from '#types';
 
 const meta: Meta<typeof TableView> = {
@@ -40,6 +40,7 @@ export const DefaultCrud: Story = {
   args: {
     objectInfo: PersonInfoBase.Instance,
     validator: PersonValidator.Instance,
+    imageDatabase: ImageDatabase,
     onGetItems: PersonApi.getPersonsAsync,
     onAddItem: PersonApi.addPersonsAsync,
     onCreateItem: PersonApi.createPersonsAsync,

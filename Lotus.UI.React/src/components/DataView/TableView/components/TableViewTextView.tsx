@@ -4,11 +4,11 @@ import { TableViewComponentProps } from './TableViewComponentProps';
 
 export function TableViewTextView<TItem extends IRecordObject>(props: TableViewComponentProps<TItem>)
 {
-  const { property, row, cell, contextRender } = props;
+  const { property, cell, contextRender } = props;
   if (property.rendering && property.rendering.enabled)
   {
     // Собственный режим отображения
-    return <>{property.rendering.renderField(row.original, contextRender)}</>;
+    return <>{property.rendering.renderField(cell.getValue(), contextRender)}</>;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

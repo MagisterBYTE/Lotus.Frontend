@@ -4,7 +4,7 @@ import { IImageDatabase } from 'lotus-core/resources/image';
 import { Assert } from 'lotus-core/utils';
 import { ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { RenderIcon } from '#render';
+import { Primitive } from '#components/Common';
 import { TSizeType } from '#types';
 import { TCommandElementTypes } from './CommandElementType';
 
@@ -92,7 +92,7 @@ export function CommandElement(props: ICommandElementProps)
       const actionIconProps = propsComponent as ActionIconProps;
       return (
         <ActionIcon {...actionIconProps} disabled={actionIconProps.disabled ?? disabled} size={actionIconProps.size ?? size} onClick={handleClick}>
-          {RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase)}
+          <Primitive.Icon icon={command.icon} iconSize={size} imageDatabase={imageDatabase} />
         </ActionIcon>
       );
     }
@@ -100,7 +100,7 @@ export function CommandElement(props: ICommandElementProps)
       const buttonProps = propsComponent as ButtonProps;
       return (
         <Button {...buttonProps} disabled={buttonProps.disabled ?? disabled}
-          leftSection={RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase)} size={buttonProps.size ?? size} onClick={handleClick}>
+          leftSection={<Primitive.Icon icon={command.icon} iconSize={size} imageDatabase={imageDatabase} />} size={buttonProps.size ?? size} onClick={handleClick}>
           {renderLabel()}
         </Button>
       );
@@ -110,7 +110,7 @@ export function CommandElement(props: ICommandElementProps)
       return (
         <NavLink {...navLinkProps} active={navLinkProps.active ?? isSelected}
           disabled={navLinkProps.disabled ?? disabled}
-          leftSection={RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase)}
+          leftSection={<Primitive.Icon icon={command.icon} iconSize={size} imageDatabase={imageDatabase} />}
           onClick={handleClick}>
           {renderLabel()}
         </NavLink>
@@ -126,7 +126,7 @@ export function CommandElement(props: ICommandElementProps)
       return (
         <Menu.Item {...menuItemProps}
           disabled={menuItemProps.disabled ?? disabled}
-          leftSection={RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase)}
+          leftSection={<Primitive.Icon icon={command.icon} iconSize={size} imageDatabase={imageDatabase} />}
           onClick={handleClick}>
           {renderLabel()}
         </Menu.Item>

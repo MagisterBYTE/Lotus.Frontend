@@ -1,10 +1,10 @@
-import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { css } from '@emotion/css';
 import { Assert } from 'lotus-core/utils';
 import { useEffect, useState } from 'react';
 import { ContainerPropertiesHelper } from '#base';
+import { Primitive } from '#components/Common';
 import { CssPropertiesHelper } from '#helpers';
-import { RenderIcon } from '#render';
 const getFlexContainer = (iconPlacement, gap) => {
     switch (iconPlacement) {
         case 'left':
@@ -54,7 +54,7 @@ export const Button = (props) => {
     // Фильтруем кастомные пропсы перед передачей в div
     const domProps = CssPropertiesHelper.filterDOMProps(propsButton);
     if (isIcon) {
-        return (_jsxs("button", { className: buttonClass, ...domProps, onClick: isSelectedStatus ? handleSelect : onClick, children: [RenderIcon.renderIcon(iconSize ?? 'md', icon, undefined, iconStyle, iconColor, imageDatabase), children] }));
+        return (_jsxs("button", { className: buttonClass, ...domProps, onClick: isSelectedStatus ? handleSelect : onClick, children: [_jsx(Primitive.Icon, { icon: icon, iconColor: iconColor, iconSize: iconSize, iconStyle: iconStyle, imageDatabase: imageDatabase }), children] }));
     }
     else {
         return (_jsx("button", { className: buttonClass, ...domProps, onClick: isSelectedStatus ? handleSelect : onClick, children: children }));

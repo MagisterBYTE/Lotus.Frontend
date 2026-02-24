@@ -1,113 +1,106 @@
-import { SimpleGrid, Card, Button, Menu, Group, Box, Text, Indicator, Checkbox, Stack, Badge, ActionIcon, Popover } from '@mantine/core';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { SimpleGrid, Button, Menu, Group, Box, Text, Indicator, ActionIcon, Popover } from '@mantine/core';
 import { IconCheck, IconFilter, IconFilterSearch } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { ItemsHelper } from 'lotus-core/helpers';
+import { IObjectInfo } from 'lotus-core/modules/objectInfo';
+import { IPageInfoResponse } from 'lotus-core/modules/requestAndResponse';
+import { IRecordObject } from 'lotus-core/types';
+import { JSX, useMemo, useState } from 'react';
 import {
   MRT_ColumnDef,
-  MRT_ColumnFilterFnsState,
+  MRT_ColumnFiltersState,
   MRT_FilterOption,
   MRT_FilterTextInput,
   MRT_Header,
-  MRT_Row,
+  MRT_SortingState,
   MRT_TablePagination,
   useMantineReactTable
 } from '#external/mantine-react-table';
+import { TSizeType } from '#types';
+import { IItemsBaseOneProps, RenderFunction } from 'src/components/Selects/types';
+import { MantineReactTableHelper } from '../TableView/MantineReactTableHelper';
+import { useTableViewLocalization } from '../TableView/useTableViewLocalization';
 
-// --- ТИПЫ ДАННЫХ ---
-interface UserData {
-  id: number;
-  name: string;
-  role: string;
+export interface ICardViewProps<TItem> extends Omit<IItemsBaseOneProps<TItem>, 'renderItem'|'renderValue'>
+{
+  disabled?: boolean;
+  size?: TSizeType;
+  objectInfo: IObjectInfo;
+  renderCard: RenderFunction<TItem>;
 }
 
-// --- МЕМОИЗИРОВАННАЯ КАРТОЧКА ---
-// Это критически важно: компонент карточки не должен перерисовываться,
-// если данные строки или статус выделения не изменились.
+const pageInfoResponseDefault: IPageInfoResponse = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 } as const;
 
-function UserCard(props: { row: MRT_Row<UserData> }) 
+export function CardView<TItem extends IRecordObject>(props: ICardViewProps<TItem>): JSX.Element 
 {
-  const { row } = props;
-  const isSelected = row.getIsSelected();
-  console.log('isSelected', isSelected);
-  return (
-    <Card
-      withBorder
-      // Стилизация теперь зависит только от isSelected
-      shadow={isSelected ? 'md' : 'sm'}
-      p="lg"
-      // !!! УБРАН onClick С КАРТОЧКИ !!!
-      style={{
-        cursor: 'default', // Меняем курсор обратно на стандартный
-        borderColor: isSelected ? 'var(--mantine-color-blue-filled)' : undefined,
-        transition: 'transform 0.1s ease, shadow 0.2s ease'
-      }}
-    >
-      <Group align="flex-start" justify="space-between" mb="xs">
-        <Stack gap={0}>
-          <Text fw={700} size="lg">
-            {row.original.name}
-          </Text>
-          <Text c="dimmed" size="xs">
-            ID: {row.original.id}
-          </Text>
-        </Stack>
+  const {
+    disabled,
+    size,
+    items,
+    objectInfo,
+    onChangedItem,
+    selectedItem,
+    imageDatabase,
+    selectRenderComponent,
+    getValueItem = ItemsHelper.getValueOfItem,
+    getLabelItem = ItemsHelper.getLabelOfItem,
+    getDisabledItem = ItemsHelper.getDisabledOfItem,
+    renderCard,
+    ...otherProps
+  } = props;
 
-        {/* !!! ИСПОЛЬЗУЕМ ОБРАБОТЧИК onChange И checked !!! */}
-        <Checkbox
-          checked={isSelected}
-          // Используем прямой метод переключения вместо хендлера
-          onChange={(event) => row.toggleSelected(event.currentTarget.checked)}
-        />
-      </Group>
+  const properties = objectInfo.getProperties();
 
-      <Badge color={row.original.id > 1000 ? 'green' : 'gray'}>{row.original.role}</Badge>
-    </Card>
-  );
-}
-
-// --- ОСНОВНОЙ КОМПОНЕНТ ---
-export const CardViewTable = () => 
-{
-  // Колонки нужны MRT для работы поисковых движков и фильтров
-  const columns = useMemo<MRT_ColumnDef<UserData>[]>(
-    () => [
-      { accessorKey: 'id', header: 'ID' },
-      { accessorKey: 'name', header: 'Имя' },
-      { accessorKey: 'role', header: 'Роль' }
-    ],
+  const columns = useMemo(
+    () =>
+      properties.map((property) => 
+      {
+        const column: MRT_ColumnDef<TItem> = MantineReactTableHelper.convertPropertyDescriptorToColumn(property);
+        return column;
+      }),
     []
   );
 
-  const data = useMemo<UserData[]>(
-    () => [
-      { id: 1, name: 'Админ', role: 'Admin' },
-      { id: 105, name: 'Мария', role: 'User' },
-      { id: 1002, name: 'Система', role: 'System' },
-      { id: 1003, name: 'Бот', role: 'System' }
-    ],
-    []
-  );
+  // Получение данных
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefetching, setIsRefetching] = useState(false);
+  // const [items, setItems] = useState<TItem[]>([]);
+  const [pageInfo, setPageInfo] = useState<IPageInfoResponse>(pageInfoResponseDefault);
+  const [paginationModel, setPaginationModel] = useState({ pageSize: 10, pageIndex: 0 });
 
-  // 1. Состояние для функций фильтрации (React-state)
-  const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>({
-    id: 'equals',
-    name: 'fuzzy',
-    role: 'contains'
-  });
+  // Сортировка и фильтрация
+  const [sortingState, setSortingState] = useState<MRT_SortingState>([]);
+  const [columnFiltersState, setColumnFiltersState] = useState<MRT_ColumnFiltersState>([]);
+  const [columnFiltersFns, setColumnFiltersFns] = useState<Record<string, MRT_FilterOption>>();
+  const [globalFilter, setGlobalFilter] = useState('');
+
+  // Локализация
+  const localizationFull = useTableViewLocalization();
 
   const table = useMantineReactTable({
-    columns,
-    data,
+    columns: columns,
+    data: items,
+
     enableRowSelection: true,
     enableColumnFilters: true,
     enablePagination: true,
+    rowCount: items.length,
+    state: {
+      isLoading: isLoading,
+      showProgressBars: isRefetching,
+      showSkeletons: false,
+      pagination: paginationModel,
+      columnFilters: columnFiltersState,
+      columnFilterFns: columnFiltersFns,
+      globalFilter: globalFilter,
+      sorting: sortingState
+    },
+    localization: localizationFull,
     // memoMode 'rows' заставляет MRT не пересоздавать объекты строк без нужды
     memoMode: 'rows',
-    positionPagination: 'bottom',
-    initialState: { pagination: { pageSize: 6, pageIndex: 0 } },
-    state: { 
-      columnFilterFns // Передаем состояние в MRT
-    },
-    onColumnFilterFnsChange: setColumnFilterFns // Обработчик изменений
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPaginationModel,
+    onSortingChange: setSortingState
   });
 
   // Достаем отфильтрованные строки
@@ -149,16 +142,19 @@ export const CardViewTable = () =>
             </Indicator>
           </Popover.Target>
 
+          
+
           <Popover.Dropdown p="md">
             <Text fw={700} mb="md" size="sm">Фильтрация колонок</Text>
         
             {table.getLeafHeaders().map((header) => 
             {
-              const mrtHeader = header as MRT_Header<UserData>;
+              const mrtHeader = header as MRT_Header<TItem>;
               const column = mrtHeader.column;
               if (!column.getCanFilter()) return null;
 
-              const currentFn = columnFilterFns[column.id] || 'fuzzy';
+              // const currentFn = columnFiltersFns![column.id] || 'fuzzy';
+              const currentFn = 'fuzzy';
               
               // Создаем уникальный ID для инпута этой колонки
               const inputId = `filter-input-${column.id}`;
@@ -186,18 +182,10 @@ export const CardViewTable = () =>
                             {
                               // Останавливаем всплытие, чтобы Popover не перехватил клик
                               e.stopPropagation(); 
-                              setColumnFilterFns((prev) => ({
+                              setColumnFiltersFns((prev) => ({
                                 ...prev,
                                 [column.id]: opt.value
                               }));
-
-                              // 2. ФОКУС-ХАК: Находим инпут по ID и возвращаем ему фокус
-                              // Используем setTimeout(0), чтобы дождаться окончания обработки клика в меню
-                              // setTimeout(() => 
-                              // {
-                              //   const input = document.getElementById(inputId);
-                              //   if (input) input.focus();
-                              // }, 0);
                             }}
                           >
                             {opt.label}
@@ -208,7 +196,7 @@ export const CardViewTable = () =>
                   </Group>
 
                   {/* Инпут MRT */}
-                  <MRT_FilterTextInput id={inputId} header={mrtHeader} table={table}
+                  <MRT_FilterTextInput  header={mrtHeader} id={inputId} table={table}
                   />
 
                   <Text c="dimmed" mt={2} size="10px">
@@ -236,9 +224,10 @@ export const CardViewTable = () =>
       {/* СЕТКА С КАРТОЧКАМИ */}
       {rows.length > 0 ? (
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
-          {rows.map((row) => (
-            <UserCard key={row.id} row={row} />
-          ))}
+          {rows.map((row) => 
+          {
+            return renderCard(row.original);
+          })}
         </SimpleGrid>
       ) : (
         <Box py="xl" style={{ textAlign: 'center' }}>
@@ -247,4 +236,4 @@ export const CardViewTable = () =>
       )}
     </Box>
   );
-};
+}

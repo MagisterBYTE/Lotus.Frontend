@@ -10,7 +10,7 @@ const preview: Preview = {
     options: {
       storySort: 
       {
-        order: ['Display', 'Layout', 'Inputs', '*', 'WIP'],
+        order: ['Display', 'Layout', 'Inputs', 'Controls', 'Selects', 'Editors', '*', 'WIP'],
       },
     },
   },

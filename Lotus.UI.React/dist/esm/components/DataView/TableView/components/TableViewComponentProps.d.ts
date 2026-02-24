@@ -1,5 +1,6 @@
 import { IObjectInfo, IPropertyDescriptor } from 'lotus-core/modules/objectInfo';
 import { IValidator } from 'lotus-core/modules/validation';
+import { IImageDatabase } from 'lotus-core/resources/image';
 import { IRecordObject } from 'lotus-core/types';
 import { ReactNode, RefObject } from 'react';
 import { MRT_Cell, MRT_Column, MRT_Row, MRT_TableInstance } from '#external/mantine-react-table';
@@ -17,5 +18,6 @@ export interface TableViewComponentProps<TItem extends IRecordObject> {
     validator?: IValidator;
     property: IPropertyDescriptor;
     contextRender: IContextRenderBase;
+    imageDatabase?: IImageDatabase;
 }
 //# sourceMappingURL=TableViewComponentProps.d.ts.map

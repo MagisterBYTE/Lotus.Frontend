@@ -5,11 +5,11 @@ import { IconSearch } from '@tabler/icons-react';
 import { LocalizationCore } from 'lotus-core/localization';
 import { Assert } from 'lotus-core/utils';
 import { useEffect, useMemo, useState } from 'react';
-import { ContainerControl } from '#components/Common';
+import { ContainerControl, Primitive } from '#components/Common';
 import { Box } from '#components/Layout';
 import { useResizer } from '#hooks';
-import { RenderItem } from '#render';
 import { TBorderSideFlags } from '#types';
+const styleContainerItem = { withBorder: true, p: 'xxs', bdRadius: 'md' };
 // eslint-disable-next-line complexity
 export function GallerySelect(props) {
     const { size, columns = 3, hasFilter = false, onFilterItem, items, onChangedItem, selectedItem, renderItem, renderValue, selectRenderComponent, imageDatabase, inputProps, placeholder, containerProps, gridProps, paginationProps, ...otherProps } = props;
@@ -129,7 +129,7 @@ export function GallerySelect(props) {
         }
         else {
             if (item) {
-                return RenderItem.renderItem(size ?? 'md', item, imageDatabase, { withBorder: true, p: 'xxs', bdRadius: 'md' });
+                return _jsx(Primitive.Item, { imageDatabase: imageDatabase, item: item, size: size, wrapContainer: styleContainerItem });
             }
             else {
                 return _jsx(_Fragment, {});
@@ -143,7 +143,7 @@ export function GallerySelect(props) {
         }
         else {
             if (item) {
-                return RenderItem.renderItem(size ?? 'md', item, imageDatabase, { withBorder: true, p: 'xxs', bdRadius: 'md' });
+                return _jsx(Primitive.Item, { imageDatabase: imageDatabase, item: item, size: size, wrapContainer: styleContainerItem });
             }
             else {
                 return _jsx(_Fragment, {});
@@ -161,17 +161,17 @@ export function GallerySelect(props) {
                                 alignItems: 'center'
                             }
                         }, type: "button", w: 'fit-content', onClick: handleOpened, onKeyDown: handleKeyDownInput, ...inputProps, children: renderInternalValue(currentItem) }) }), _jsx(Popover.Dropdown, { p: 0, onKeyDown: handleKeyDown, children: _jsxs("div", { ...containerProps, style: containerStyle, children: [hasFilter && (_jsx(Box, { p: "xs", withBorder: TBorderSideFlags.Bottom, children: _jsx(TextInput, { leftSection: _jsx(IconSearch, { size: size }), placeholder: LocalizationCore.data.actions.search, rightSection: search !== '' ? _jsx(Input.ClearButton, { onClick: handleClearFilter }) : undefined, value: search, onChange: handleFilter }) })), _jsx(ScrollArea, { p: "xs", style: { flex: 1 }, children: _jsx(SimpleGrid, { cols: columns, ...gridProps, children: currentItems.map((item, index) => {
-                                        return (_jsx(Box, { bdColor: selectRenderComponent ? (item === currentItem ? 'primary' : undefined) : undefined, role: "button", withBorder: selectRenderComponent ? true : undefined, onClick: handleMouseDownSelect(item), children: renderInternalItem(item) }, index));
+                                        return (_jsx(Box
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        , { bdColor: selectRenderComponent ? (item === currentItem ? 'primary' : undefined) : undefined, bdRadius: selectRenderComponent ? true : undefined, bdShadow: selectRenderComponent ? (item === currentItem ? 5 : 1) : undefined, centerContent: 'center', m: 'xxs', p: 'xxs', role: "button", withBorder: selectRenderComponent ? true : undefined, onClick: handleMouseDownSelect(item), children: renderInternalItem(item) }, index));
                                     }) }) }), totalPages > 1 && (_jsx(Box, { p: "xs", withBorder: TBorderSideFlags.Top, children: _jsx(Pagination, { size: size, total: totalPages, value: activePage, onChange: setPage, ...paginationProps }) })), _jsx("div", { role: "button", style: handleStyle, onMouseDown: handleMouseDown })] }) })] }));
     };
     // #endregion
     if (otherProps.inlinePlace) {
-        return (_jsx(ContainerControl, { ...otherProps, control: renderComponent(), size: size, vAlign: otherProps.vAlign ?? ((Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description)) ? 'center' : undefined) }));
+        return (_jsx(ContainerControl, { ...otherProps, control: renderComponent(), size: size, vAlign: otherProps.vAlign ?? (Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description) ? 'center' : undefined) }));
     }
     else {
-        {
-            renderComponent();
-        }
+        return renderComponent();
     }
 }
 //# sourceMappingURL=GallerySelect.js.map

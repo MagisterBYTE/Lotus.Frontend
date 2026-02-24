@@ -1,0 +1,1 @@
+export { Option, type IOptionProps } from './Option';

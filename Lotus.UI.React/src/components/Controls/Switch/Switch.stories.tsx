@@ -9,6 +9,10 @@ const meta = {
   args: {},
 
   argTypes: {
+    // Switch
+    checked: { control: 'boolean', table: { category: 'Switch' } },
+    disabled: { control: 'boolean', table: { category: 'Switch' } },
+
     // Label
     label: { control: 'text', table: { category: 'Label' } },
     description: { control: 'text', table: { category: 'Label' } },
@@ -30,7 +34,10 @@ const meta = {
 
     // Hide
     ...ArgTypesStory.BaseField,
-    switchProps: { table: { disable: true } }
+    switchProps: { table: { disable: true } },
+    onChange: { table: { disable: true } },
+    onChangeValue: { table: { disable: true } },
+    defaultValue: { table: { disable: true } },
   }
 } satisfies Meta<typeof Switch>;
 

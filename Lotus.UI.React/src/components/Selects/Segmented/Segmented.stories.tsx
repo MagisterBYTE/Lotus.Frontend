@@ -9,6 +9,9 @@ const meta = {
   args: {},
 
   argTypes: {
+    // Segmented
+    selectRenderComponent: { control: 'boolean', table: { category: 'Segmented' } },
+
     // Label
     label: { control: 'text', table: { category: 'Label' } },
     description: { control: 'text', table: { category: 'Label' } },
@@ -39,6 +42,8 @@ const meta = {
     getLabelItem: { table: { disable: true } },
     getValueItem: { table: { disable: true } },
     renderItem: { table: { disable: true } },
+    renderValue: { table: { disable: true } },
+    imageDatabase: { table: { disable: true } }
   }
 } satisfies Meta<typeof Segmented>;
 
@@ -51,7 +56,8 @@ export const SegmentedDefault: Story = {
     p: 'xs',
     m: 'sm',
     items: OptionsStory.TextAndIconImage,
-    label: 'Иконка Image'
+    label: 'Иконка Image',
+    w: 'max-content'
   }
 };
 
@@ -74,5 +80,6 @@ export const SegmentedStyle: Story = {
     inlinePlace: true,
     label: 'Иконка React',
     items: OptionsStory.TextAndIconReact,
+    w: 'max-content'
   }
 };

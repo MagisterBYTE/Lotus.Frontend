@@ -4,12 +4,17 @@ import { IconShieldBolt } from '@tabler/icons-react';
 import { MultiSelect } from './MultiSelect';
 
 const meta = {
-  title: 'Controls/MultiSelect',
+  title: 'Selects/MultiSelect',
   component: MultiSelect,
   tags: ['autodocs'],
   args: {},
 
   argTypes: {
+    // MultiSelect
+    selectRenderComponent: { control: 'boolean', table: { category: 'MultiSelect' } },
+    renderItem: { control: 'boolean', table: { category: 'MultiSelect' } },
+    renderValue: { control: 'boolean', table: { category: 'MultiSelect' } },
+
     // Label
     label: { control: 'text', table: { category: 'Label' } },
     description: { control: 'text', table: { category: 'Label' } },
@@ -39,7 +44,7 @@ const meta = {
     getDisabledItem: { table: { disable: true } },
     getLabelItem: { table: { disable: true } },
     getValueItem: { table: { disable: true } },
-    renderItem: { table: { disable: true } }
+    imageDatabase: { table: { disable: true } }
   }
 } satisfies Meta<typeof MultiSelect>;
 
@@ -66,11 +71,14 @@ export const MultiSelectLabel: Story = {
     items: OptionsStory.TextAndIconReact,
     renderItem: true,
     renderValue: true,
+
     selectProps: {
       withAlignedLabels: true,
       withCheckIcon: true,
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />
-    }
+    },
+
+    w: 'max-content'
   }
 };
 
@@ -82,10 +90,13 @@ export const MultiSelectStyle: Story = {
     renderItem: true,
     renderValue: true,
     items: OptionsStory.TextAndIconReact,
+
     selectProps: {
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />,
       style: { backgroundColor: 'red' }
-    }
+    },
+
+    w: 'max-content'
   }
 };
 
@@ -108,5 +119,5 @@ export const MultiSelectGreen: Story = {
     bdWidth: 6,
     bdRadius: 'xl',
     bgColor: 'greenPale'
-  },
+  }
 };

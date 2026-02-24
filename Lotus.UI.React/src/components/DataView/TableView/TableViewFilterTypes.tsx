@@ -56,6 +56,126 @@ export const EditTableFilterEnum = (column: any, onSelectFilterMode: (filterMode
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const EditTableFilterEnumNull = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
+{
+  return [
+    <MenuItem
+      key='equals'
+      onClick={() => { onSelectFilterMode('equals'); }}>
+      {LocalizationCore.data.filters.equals}
+    </MenuItem>,
+    <MenuItem
+      key='notEquals'
+      onClick={() => { onSelectFilterMode('notEquals'); }}>
+      {LocalizationCore.data.filters.notEqual}
+    </MenuItem>,
+    <MenuItem
+      key='empty'
+      onClick={() => { onSelectFilterMode('empty'); }}>
+      {LocalizationCore.data.filters.empty}
+    </MenuItem>,
+    <MenuItem
+      key='notEmpty'
+      onClick={() => { onSelectFilterMode('notEmpty'); }}>
+      {LocalizationCore.data.filters.notEmpty}
+    </MenuItem>];
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const EditTableFilterNumber = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
+{
+  return [
+    <MenuItem
+      key='equals'
+      onClick={() => { onSelectFilterMode('equals'); }}>
+      {LocalizationCore.data.filters.equals}
+    </MenuItem>,
+    <MenuItem
+      key='notEquals'
+      onClick={() => { onSelectFilterMode('notEquals'); }}>
+      {LocalizationCore.data.filters.notEqual}
+    </MenuItem>,
+    <MenuItem
+      key='lessThan'
+      onClick={() => { onSelectFilterMode('lessThan'); }}>
+      {LocalizationCore.data.filters.lessThan}
+    </MenuItem>,
+    <MenuItem
+      key='lessThanOrEqualTo'
+      onClick={() => { onSelectFilterMode('lessThanOrEqualTo'); }}>
+      {LocalizationCore.data.filters.lessThanOrEqual}
+    </MenuItem>,
+    <MenuItem
+      key='greaterThan'
+      onClick={() => { onSelectFilterMode('greaterThan'); }}>
+      {LocalizationCore.data.filters.greaterThan}
+    </MenuItem>,
+    <MenuItem
+      key='greaterThanOrEqualTo'
+      onClick={() => { onSelectFilterMode('greaterThanOrEqualTo'); }}>
+      {LocalizationCore.data.filters.greaterThanOrEqual}
+    </MenuItem>,
+    <MenuItem
+      key='between'
+      onClick={() => { onSelectFilterMode('between'); }}>
+      {LocalizationCore.data.filters.between}
+    </MenuItem>
+  ];
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const EditTableFilterNumberNull = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
+{
+  return [
+    <MenuItem
+      key='equals'
+      onClick={() => { onSelectFilterMode('equals'); }}>
+      {LocalizationCore.data.filters.equals}
+    </MenuItem>,
+    <MenuItem
+      key='notEquals'
+      onClick={() => { onSelectFilterMode('notEquals'); }}>
+      {LocalizationCore.data.filters.notEqual}
+    </MenuItem>,
+    <MenuItem
+      key='lessThan'
+      onClick={() => { onSelectFilterMode('lessThan'); }}>
+      {LocalizationCore.data.filters.lessThan}
+    </MenuItem>,
+    <MenuItem
+      key='lessThanOrEqualTo'
+      onClick={() => { onSelectFilterMode('lessThanOrEqualTo'); }}>
+      {LocalizationCore.data.filters.lessThanOrEqual}
+    </MenuItem>,
+    <MenuItem
+      key='greaterThan'
+      onClick={() => { onSelectFilterMode('greaterThan'); }}>
+      {LocalizationCore.data.filters.greaterThan}
+    </MenuItem>,
+    <MenuItem
+      key='greaterThanOrEqualTo'
+      onClick={() => { onSelectFilterMode('greaterThanOrEqualTo'); }}>
+      {LocalizationCore.data.filters.greaterThanOrEqual}
+    </MenuItem>,
+    <MenuItem
+      key='between'
+      onClick={() => { onSelectFilterMode('between'); }}>
+      {LocalizationCore.data.filters.between}
+    </MenuItem>,
+    <MenuItem
+      key='empty'
+      onClick={() => { onSelectFilterMode('empty'); }}>
+      {LocalizationCore.data.filters.empty}
+    </MenuItem>,
+    <MenuItem
+      key='notEmpty'
+      onClick={() => { onSelectFilterMode('notEmpty'); }}>
+      {LocalizationCore.data.filters.notEmpty}
+    </MenuItem>
+  ];
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const EditTableFilterArray = (column: any, onSelectFilterMode: (filterMode: MRT_FilterOption) => void): React.ReactNode[] =>
 {
   return [

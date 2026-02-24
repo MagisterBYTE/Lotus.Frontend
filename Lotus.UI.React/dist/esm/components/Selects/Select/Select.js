@@ -4,9 +4,8 @@ import { ItemsHelper } from 'lotus-core/helpers';
 import { Assert } from 'lotus-core/utils';
 import { useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
-import { ContainerControl } from '#components/Common';
+import { ContainerControl, Primitive } from '#components/Common';
 import { SelectEx } from '#components/Extendeds';
-import { RenderItem, RenderOption } from '#render';
 export function Select(props) {
     const { items, onChangedItem, selectedItem, imageDatabase, selectRenderComponent, getValueItem = ItemsHelper.getValueOfItem, getLabelItem = ItemsHelper.getLabelOfItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, renderValue, selectProps, size, ...otherProps } = props;
     const data = useMemo(() => items.map((item) => ({
@@ -38,7 +37,7 @@ export function Select(props) {
             content = renderItem(itemObject.original, currentContext);
         }
         else {
-            content = RenderOption.renderOption(size ?? 'md', itemObject.original, imageDatabase);
+            content = _jsx(Primitive.Item, { imageDatabase: imageDatabase, item: itemObject.original, size: size });
         }
         // 3. Если не нужно рисовать обертку с иконкой — просто возвращаем контент
         if (!selectRenderComponent && typeof renderItem === 'function') {
@@ -59,7 +58,7 @@ export function Select(props) {
         }
         // Иначе дефолтный рендер элемента или просто текст
         if (item) {
-            return RenderItem.renderItem(size ?? 'md', item, imageDatabase, {});
+            return _jsx(Primitive.Item, { imageDatabase: imageDatabase, item: item, size: size, wrapContainer: {} });
         }
         return val;
     };

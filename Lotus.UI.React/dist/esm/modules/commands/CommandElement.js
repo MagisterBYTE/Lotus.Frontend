@@ -3,7 +3,7 @@ import { ActionIcon, Button, Menu, NavLink } from '@mantine/core';
 import { TActionCommandTypes } from 'lotus-core/modules/actionCommand';
 import { Assert } from 'lotus-core/utils';
 import { useLocation, useNavigate } from 'react-router';
-import { RenderIcon } from '#render';
+import { Primitive } from '#components/Common';
 import { TCommandElementTypes } from './CommandElementType';
 export function CommandElement(props) {
     const { size = 'md', elementType, command, imageDatabase, ...propsComponent } = props;
@@ -36,22 +36,22 @@ export function CommandElement(props) {
     switch (elementType) {
         case TCommandElementTypes.Icon: {
             const actionIconProps = propsComponent;
-            return (_jsx(ActionIcon, { ...actionIconProps, disabled: actionIconProps.disabled ?? disabled, size: actionIconProps.size ?? size, onClick: handleClick, children: RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase) }));
+            return (_jsx(ActionIcon, { ...actionIconProps, disabled: actionIconProps.disabled ?? disabled, size: actionIconProps.size ?? size, onClick: handleClick, children: _jsx(Primitive.Icon, { icon: command.icon, iconSize: size, imageDatabase: imageDatabase }) }));
         }
         case TCommandElementTypes.Button: {
             const buttonProps = propsComponent;
-            return (_jsx(Button, { ...buttonProps, disabled: buttonProps.disabled ?? disabled, leftSection: RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase), size: buttonProps.size ?? size, onClick: handleClick, children: renderLabel() }));
+            return (_jsx(Button, { ...buttonProps, disabled: buttonProps.disabled ?? disabled, leftSection: _jsx(Primitive.Icon, { icon: command.icon, iconSize: size, imageDatabase: imageDatabase }), size: buttonProps.size ?? size, onClick: handleClick, children: renderLabel() }));
         }
         case TCommandElementTypes.ListItem: {
             const navLinkProps = propsComponent;
-            return (_jsx(NavLink, { ...navLinkProps, active: navLinkProps.active ?? isSelected, disabled: navLinkProps.disabled ?? disabled, leftSection: RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase), onClick: handleClick, children: renderLabel() }));
+            return (_jsx(NavLink, { ...navLinkProps, active: navLinkProps.active ?? isSelected, disabled: navLinkProps.disabled ?? disabled, leftSection: _jsx(Primitive.Icon, { icon: command.icon, iconSize: size, imageDatabase: imageDatabase }), onClick: handleClick, children: renderLabel() }));
         }
         case TCommandElementTypes.MenuItem: {
             if (isDelimiter) {
                 return _jsx(Menu.Divider, {});
             }
             const menuItemProps = propsComponent;
-            return (_jsx(Menu.Item, { ...menuItemProps, disabled: menuItemProps.disabled ?? disabled, leftSection: RenderIcon.renderIcon(size, command.icon, undefined, undefined, undefined, imageDatabase), onClick: handleClick, children: renderLabel() }));
+            return (_jsx(Menu.Item, { ...menuItemProps, disabled: menuItemProps.disabled ?? disabled, leftSection: _jsx(Primitive.Icon, { icon: command.icon, iconSize: size, imageDatabase: imageDatabase }), onClick: handleClick, children: renderLabel() }));
         }
     }
     return _jsx(_Fragment, {});

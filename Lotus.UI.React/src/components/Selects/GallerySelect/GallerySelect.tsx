@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import
-{
+import {
   Combobox,
   Input,
   InputBase,
@@ -17,15 +16,13 @@ import { IconSearch } from '@tabler/icons-react';
 import { LocalizationCore } from 'lotus-core/localization';
 import { Assert } from 'lotus-core/utils';
 import React, { ComponentPropsWithRef, useEffect, useMemo, useState } from 'react';
-import { ContainerControl, IBaseContainerControlProps } from '#components/Common';
+import { ContainerControl, IBaseContainerControlProps, Primitive } from '#components/Common';
 import { Box, IHorizontalStackProps } from '#components/Layout';
 import { useResizer } from '#hooks';
-import { RenderItem } from '#render';
 import { IContextRenderBase, TBorderSideFlags, TSizeType } from '#types';
 import { IItemsBaseOneProps } from '../types';
 
-export interface IGallerySelectProps<TItem> extends IBaseContainerControlProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps
-{
+export interface IGallerySelectProps<TItem> extends IBaseContainerControlProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps {
   size?: TSizeType;
   columns?: number;
   hasFilter?: boolean;
@@ -37,8 +34,10 @@ export interface IGallerySelectProps<TItem> extends IBaseContainerControlProps, 
   paginationProps?: PaginationProps;
 }
 
+const styleContainerItem: IHorizontalStackProps = { withBorder: true, p: 'xxs', bdRadius: 'md' };
+
 // eslint-disable-next-line complexity
-export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>)
+export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>) 
 {
   const {
     size,
@@ -107,31 +106,31 @@ export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>
   };
 
   // #region Effect
-  useEffect(() =>
+  useEffect(() => 
   {
     setCurrentItem(selectedItem);
   }, [items, selectedItem]);
   // #endregion
 
   // #region Handlers
-  const handleOpened = () =>
+  const handleOpened = () => 
   {
     setOpened(!opened);
   };
 
-  const handleKeyDownInput = (event: React.KeyboardEvent) =>
+  const handleKeyDownInput = (event: React.KeyboardEvent) => 
   {
-    if (event.key === 'Enter')
+    if (event.key === 'Enter') 
     {
       setOpened(true);
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) =>
+  const handleKeyDown = (event: React.KeyboardEvent) => 
   {
     if (!opened) return;
 
-    switch (event.key)
+    switch (event.key) 
     {
       case 'ArrowRight':
         setFocusedIndex((prev) => Math.min(prev + 1, currentItems.length - 1));
@@ -154,7 +153,7 @@ export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>
     }
   };
 
-  const handleSelect = (item: TItem) =>
+  const handleSelect = (item: TItem) => 
   {
     if (onChangedItem) onChangedItem(item);
     setCurrentItem(item);
@@ -163,19 +162,19 @@ export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>
     setFocusedIndex(-1);
   };
 
-  const handleMouseDownSelect = (item: TItem) => (_event: React.MouseEvent) =>
+  const handleMouseDownSelect = (item: TItem) => (_event: React.MouseEvent) => 
   {
     handleSelect(item);
   };
 
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) =>
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => 
   {
     setSearch(event.target.value);
     setPage(1);
     setFocusedIndex(-1);
   };
 
-  const handleClearFilter = () =>
+  const handleClearFilter = () => 
   {
     setSearch('');
     setPage(1);
@@ -184,55 +183,55 @@ export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>
   // #endregion
 
   // #region Render
-  const renderInternalValue = (item?: TItem) =>
+  const renderInternalValue = (item?: TItem) => 
   {
     const contextRender = { size: size } as IContextRenderBase;
-    if (typeof renderValue === 'function')
+    if (typeof renderValue === 'function') 
     {
       const contentValue = renderValue(item, contextRender);
-      if (Assert.existValue(contentValue))
+      if (Assert.existValue(contentValue)) 
       {
         return contentValue;
       }
-      else
+      else 
       {
         return <Input.Placeholder>{placeholder ?? 'Pick value'}</Input.Placeholder>;
       }
     }
-    else
+    else 
     {
-      if (item)
+      if (item) 
       {
-        return RenderItem.renderItem(size ?? 'md', item, imageDatabase, { withBorder: true, p: 'xxs', bdRadius: 'md' });
+        return <Primitive.Item imageDatabase={imageDatabase} item={item} size={size} wrapContainer={styleContainerItem} />;
       }
-      else
+      else 
       {
         return <></>;
       }
     }
   };
 
-  const renderInternalItem = (item: TItem) =>
+  const renderInternalItem = (item: TItem) => 
   {
     const contextRender = { size: size, selected: item === currentItem } as IContextRenderBase;
-    if (typeof renderItem === 'function')
+    if (typeof renderItem === 'function') 
     {
       return renderItem(item, contextRender);
     }
-    else
+    else 
     {
-      if (item)
+      if (item) 
       {
-        return RenderItem.renderItem(size ?? 'md', item, imageDatabase, { withBorder: true, p: 'xxs', bdRadius: 'md' });
+        return <Primitive.Item imageDatabase={imageDatabase} item={item} size={size} wrapContainer={styleContainerItem} />;
       }
-      else
+      else 
       {
         return <></>;
       }
     }
   };
 
-  const renderComponent = () =>
+  const renderComponent = () => 
   {
     return (
       <Popover withArrow opened={opened} position="bottom-start" onChange={setOpened}>
@@ -282,12 +281,18 @@ export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>
             {/* Сетка с прокруткой */}
             <ScrollArea p="xs" style={{ flex: 1 }}>
               <SimpleGrid cols={columns} {...gridProps}>
-                {currentItems.map((item, index) =>
+                {currentItems.map((item, index) => 
                 {
                   return (
                     <Box
+                      // eslint-disable-next-line react/no-array-index-key
                       key={index}
                       bdColor={selectRenderComponent ? (item === currentItem ? 'primary' : undefined) : undefined}
+                      bdRadius={selectRenderComponent ? true : undefined}
+                      bdShadow={selectRenderComponent ? (item === currentItem ? 5 : 1) : undefined}
+                      centerContent='center'
+                      m={'xxs'}
+                      p={'xxs'}
                       role="button"
                       withBorder={selectRenderComponent ? true : undefined}
                       onClick={handleMouseDownSelect(item)}
@@ -321,12 +326,12 @@ export function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>
         {...otherProps}
         control={renderComponent()}
         size={size}
-        vAlign={otherProps.vAlign ?? ((Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description)) ? 'center' : undefined)}
+        vAlign={otherProps.vAlign ?? (Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description) ? 'center' : undefined)}
       />
     );
   }
   else 
   {
-    { renderComponent(); }
+    return renderComponent();
   }
 }

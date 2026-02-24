@@ -2,9 +2,9 @@ import { css } from '@emotion/css';
 import { Assert } from 'lotus-core/utils';
 import React, { ComponentPropsWithRef, CSSProperties, useEffect, useState } from 'react';
 import { ContainerPropertiesHelper, IGeneralElementProperties, IGeneralIconProperties } from '#base';
+import { Primitive } from '#components/Common';
 import { CssPropertiesHelper } from '#helpers';
 import { IEffectContextProps, IInteractivityBackgroundEffect, IInteractivityElementProperties } from '#interactivity';
-import { RenderIcon } from '#render';
 import { TCssGap, TIconPlacement, TSizeType } from '#types';
 import { TButtonVariant } from './ButtonVariant';
 
@@ -126,7 +126,7 @@ export const Button: React.FC<IButtonProps> = (props: IButtonProps) =>
   {
     return (
       <button className={buttonClass} {...domProps} onClick={isSelectedStatus ? handleSelect : onClick}>
-        {RenderIcon.renderIcon(iconSize ?? 'md', icon, undefined, iconStyle, iconColor, imageDatabase)}
+        <Primitive.Icon icon={icon} iconColor={iconColor} iconSize={iconSize} iconStyle={iconStyle} imageDatabase={imageDatabase} />
         {children}
       </button>
     );

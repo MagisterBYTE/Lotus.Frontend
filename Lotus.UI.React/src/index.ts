@@ -5,5 +5,4 @@ export * from './hooks';
 export * from './interactivity';
 export * from './modules';
 export * from './provider';
-export * from './render';
 export * from './types';

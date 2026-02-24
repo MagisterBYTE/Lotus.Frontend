@@ -1,14 +1,14 @@
-import { jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable react/destructuring-assignment */
 import { css } from '@emotion/css';
 import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { useMemo } from 'react';
 import { BorderPropertiesHelper, ContainerPropertiesHelper, MarginPropertiesHelper, PaddingPropertiesHelper, TextPropertiesHelper } from '#base';
+import { Primitive } from '#components/Common';
 import { DesignSystemConstants } from '#designSystem';
 import { CssVariables } from '#designSystem/сssVariables';
 import { CssPropertiesHelper } from '#helpers';
-import { RenderIcon } from '#render';
 const getFlexContainer = (iconPlacement, gap) => {
     switch (iconPlacement) {
         case 'left':
@@ -58,6 +58,6 @@ export function Label(props) {
     // 4. Фильтруем кастомные пропсы перед передачей в span
     const domProps = useMemo(() => CssPropertiesHelper.filterDOMProps(otherProps), [otherProps]);
     // 5. Единый рендер без дублирования обертки
-    return (_jsxs("span", { className: labelClassName, ...domProps, children: [isIcon && RenderIcon.renderIcon(iconSize, icon, undefined, actualIconStyle, iconColor, imageDatabase), children] }));
+    return (_jsxs("span", { className: labelClassName, ...domProps, children: [isIcon && _jsx(Primitive.Icon, { icon: icon, iconColor: iconColor, iconSize: iconSize, iconStyle: actualIconStyle, imageDatabase: imageDatabase }), children] }));
 }
 //# sourceMappingURL=Label.js.map

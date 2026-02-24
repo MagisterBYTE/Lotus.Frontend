@@ -1,19 +1,19 @@
 import { CheckIcon, Combobox, ComboboxItem, ComboboxLikeRenderOptionInput, Group, MultiSelectProps } from '@mantine/core';
 import { ItemsHelper } from 'lotus-core/helpers';
-import { IOption } from 'lotus-core/modules/option';
 import { Assert } from 'lotus-core/utils';
 import { JSX, useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
-import { ContainerControl, IBaseContainerControlProps } from '#components/Common';
+import { ContainerControl, IBaseContainerControlProps, Primitive } from '#components/Common';
 import { MultiSelectEx } from '#components/Extendeds';
 import { IHorizontalStackProps } from '#components/Layout';
-import { RenderItem, RenderOption } from '#render';
 import { IContextRenderBase } from '#types';
 import { IItemsBaseMultiProps } from '../types';
 
 export interface IMultiSelectProps<TItem> extends IBaseContainerControlProps, IItemsBaseMultiProps<TItem>, IHorizontalStackProps {
   selectProps?: Omit<MultiSelectProps, keyof IBaseContainerControlProps | 'data' | 'value'>;
 }
+
+const styleContainerItem: IHorizontalStackProps = { withBorder: true, p: 'xxs', bdRadius: 'md' };
 
 export function MultiSelect<TItem = unknown>(props: IMultiSelectProps<TItem>): JSX.Element 
 {
@@ -76,7 +76,7 @@ export function MultiSelect<TItem = unknown>(props: IMultiSelectProps<TItem>): J
   {
     const option = input.option as ComboboxItemObject;
     const isSelected = input.checked;
-    
+
     const context: IContextRenderBase = { size, disabled: selectProps?.disabled, selected: isSelected };
 
     let content: React.ReactNode;
@@ -86,7 +86,7 @@ export function MultiSelect<TItem = unknown>(props: IMultiSelectProps<TItem>): J
     }
     else 
     {
-      content = RenderOption.renderOption(size ?? 'md', option.original as IOption, imageDatabase);
+      content = <Primitive.Item imageDatabase={imageDatabase} item={option.original} size={size} />;
     }
 
     // Если не нужен враппер с чекбоксом
@@ -94,7 +94,7 @@ export function MultiSelect<TItem = unknown>(props: IMultiSelectProps<TItem>): J
 
     const isRight = selectProps?.checkIconPosition === 'right';
     const showCheck = selectProps?.withCheckIcon && isSelected;
-    
+
     const checkIcon = showCheck ? (
       <CheckIcon className={Combobox.classes.optionsDropdownCheckIcon} />
     ) : selectProps?.withAlignedLabels ? (
@@ -114,13 +114,14 @@ export function MultiSelect<TItem = unknown>(props: IMultiSelectProps<TItem>): J
   {
     const item = ItemsHelper.getItemByValueOrUndefined(items, value);
     if (typeof renderValue === 'function') return renderValue(item, { size });
-    
-    return item 
-      ? RenderItem.renderItem(size ?? 'md', item, imageDatabase, { withBorder: true, p: 'xxs', bdRadius: 'md' }) 
-      : value;
+
+    return item ? <Primitive.Item key={value} imageDatabase={imageDatabase} item={item} size={size} wrapContainer={styleContainerItem} /> : value;
   };
 
-  const actualRenderOption = useMemo(() => (renderItem ? renderOptionContent : undefined), [renderItem, size, selectProps, imageDatabase, selectRenderComponent]);
+  const actualRenderOption = useMemo(
+    () => (renderItem ? renderOptionContent : undefined),
+    [renderItem, size, selectProps, imageDatabase, selectRenderComponent]
+  );
   const actualRenderPill = useMemo(() => (renderValue ? renderPillContent : undefined), [renderValue, items, size, imageDatabase]);
   // #endregion
 
@@ -147,7 +148,7 @@ export function MultiSelect<TItem = unknown>(props: IMultiSelectProps<TItem>): J
           />
         }
         size={size}
-        vAlign={otherProps.vAlign ?? ((Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description)) ? 'center' : undefined)}
+        vAlign={otherProps.vAlign ?? (Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description) ? 'center' : undefined)}
       />
     );
   }

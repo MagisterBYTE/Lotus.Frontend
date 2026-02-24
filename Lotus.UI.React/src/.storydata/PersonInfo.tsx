@@ -12,8 +12,7 @@ import
   } from 'lotus-core';
 import { OptionsStory } from './OptionsStory';
 import { Box, HorizontalStack } from '#components/Layout';
-import { RenderOption } from '#render';
-import { IContextRenderBase, TSizeTypes, TSizeTypeValues } from '#types';
+import { IContextRenderBase, TSizeTypes } from '#types';
 import { Text } from '#components/Display';
 
 export interface IPerson extends INameable, IEditable
@@ -87,6 +86,9 @@ export class PersonInfoBase extends ObjectInfo
 
     this.descriptors.push(idProp);
 
+    //
+    // Avatar
+    //
     const avatarProp: IPropertyDescriptor = {
       fieldName: 'avatar',
       name: 'Avatar',
@@ -94,27 +96,32 @@ export class PersonInfoBase extends ObjectInfo
       propertyTypeDesc: PropertyTypeDescriptors.String,
       isArray: false,
       isNullable: true,
-      rendering: {
-        enabled: true,
-        renderField: (item: unknown, context?: unknown) =>
+      visualSettings: {
+        size: 50,
+        propsView:
         {
-          const person = item as IPerson;
-          const renderContext = context as IContextRenderBase;
-          // {`https://i.pravatar.cc/64/${person.id}`}
-          return (
-            <>
-              <img src={person.avatar} referrerPolicy="no-referrer" width={64} height={64} alt="it's me" />
-            </>
-          );
+          width: 64,
+          height: 64,
+        },
+        propsEdit:
+        {
+          width: 64,
+          height: 64,
         }
       },
-      visualSettings: {
-        size: 50
-      }
+      editing: {
+        enabled: true,
+        required: true,
+        editorType: 'select'
+      },
+      viewImage: true
     };
 
     this.descriptors.push(avatarProp);
 
+    /**
+     * Имя
+     */
     const nameProp: IPropertyDescriptor = {
       fieldName: 'name',
       name: 'Имя',
@@ -133,9 +140,11 @@ export class PersonInfoBase extends ObjectInfo
         enabled: true
       }
     };
-
     this.descriptors.push(nameProp);
 
+    /**
+     * Фамилия
+     */
     const surnameProp: IPropertyDescriptor = {
       fieldName: 'surname',
       name: 'Фамилия',
@@ -157,15 +166,19 @@ export class PersonInfoBase extends ObjectInfo
         enabled: true,
         renderField: (item: unknown, context?: unknown) =>
         {
-          const person = item as IPerson;
+          if(!item) return <></>
+          //const person = item as IPerson;
           const renderContext = context as IContextRenderBase;
-          return <Text fontSize={renderContext?.size}>{person.surname}</Text>;
+          return <Text fontAccent='monospace' fontBold fontSize={renderContext?.size}>{item.toString()}</Text>;
         }
       }
     };
 
     this.descriptors.push(surnameProp);
 
+    /**
+     * Роль
+     */
     const roleIdProp: IPropertyDescriptor = {
       fieldName: 'roleId',
       name: 'Роль',
@@ -173,11 +186,11 @@ export class PersonInfoBase extends ObjectInfo
       propertyTypeDesc: PropertyTypeDescriptors.Int,
       isArray: false,
       possibleValues: OptionsStory.TextRoles,
-      editing: {
-        enabled: true,
-        required: true,
-        editorType: 'select'
-      },
+      // editing: {
+      //   enabled: false,
+      //   required: true,
+      //   editorType: 'select'
+      // },
       filtering: {
         variant: 'multi-select',
         functionDefaultDesc: FilterFunctionDescriptors.IncludeAny,
@@ -185,20 +198,6 @@ export class PersonInfoBase extends ObjectInfo
       },
       sorting: {
         enabled: true
-      },
-      rendering: {
-        enabled: false,
-        renderField: (item: unknown, context?: unknown) =>
-        {
-          const role = item as IOption<string>;
-          const renderContext = context as IContextRenderBase;
-          return (
-            <>
-              <Text fontSize={renderContext?.size}>{role.label}</Text>
-              <i>{`[${role.value}]`}</i>
-            </>
-          );
-        }
       },
       visualSettings:
       {
@@ -212,6 +211,9 @@ export class PersonInfoBase extends ObjectInfo
 
     this.descriptors.push(roleIdProp);
 
+    /**
+     * Теги
+     */
     const tagsIdProp: IPropertyDescriptor = {
       fieldName: 'tagsIds',
       name: 'Теги',
@@ -231,24 +233,6 @@ export class PersonInfoBase extends ObjectInfo
       },
       sorting: {
         enabled: true
-      },
-      rendering: {
-        enabled: false,
-        renderField: (item: unknown, context?: unknown) =>
-        {
-          const person = item as IPerson;
-          const options = ItemsHelper.getItemsByValues(OptionsStory.PermissionNumber, person.tagsIds);
-          const renderContext = context as IContextRenderBase;
-          const size = renderContext.size ?? 'md';
-          return (
-            <HorizontalStack spacing={'md'} wrap>
-              {options.map((x) =>
-              {
-                return RenderOption.renderOption(size, x, context, undefined, {withBorder:true, bdRadius:size, p:TSizeTypes.prev(size, 2)})
-              })}
-            </HorizontalStack>
-          );
-        }
       },
       visualSettings:
       {

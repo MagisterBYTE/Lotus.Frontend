@@ -3,7 +3,7 @@
  */
 export interface IPropertyVisualSettings {
     /**
-     * Ширина компонента своиства (по умолчанию 100 px)
+     * Ширина компонента свойства (по умолчанию 100 px)
      */
     size?: number;
     /**

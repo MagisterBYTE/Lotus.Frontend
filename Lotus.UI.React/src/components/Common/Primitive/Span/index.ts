@@ -1,0 +1,1 @@
+export { Span, type ISpanProps } from './Span';

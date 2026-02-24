@@ -1,13 +1,11 @@
 import { CheckIcon, Combobox, ComboboxItem, ComboboxLikeRenderOptionInput, Group, SelectProps } from '@mantine/core';
 import { ItemsHelper } from 'lotus-core/helpers';
-import { IOption } from 'lotus-core/modules/option';
 import { Assert } from 'lotus-core/utils';
 import { JSX, useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
-import { ContainerControl, IBaseContainerControlProps } from '#components/Common';
+import { ContainerControl, IBaseContainerControlProps, Primitive } from '#components/Common';
 import { SelectEx } from '#components/Extendeds';
 import { IHorizontalStackProps } from '#components/Layout';
-import { RenderItem, RenderOption } from '#render';
 import { IContextRenderBase } from '#types';
 import { IItemsBaseOneProps } from '../types';
 
@@ -78,7 +76,7 @@ export function Select<TItem = unknown>(props: ISelectProps<TItem>): JSX.Element
     }
     else 
     {
-      content = RenderOption.renderOption(size ?? 'md', itemObject.original as IOption, imageDatabase);
+      content = <Primitive.Item imageDatabase={imageDatabase} item={itemObject.original} size={size} />;
     }
 
     // 3. Если не нужно рисовать обертку с иконкой — просто возвращаем контент
@@ -120,7 +118,7 @@ export function Select<TItem = unknown>(props: ISelectProps<TItem>): JSX.Element
     // Иначе дефолтный рендер элемента или просто текст
     if (item) 
     {
-      return RenderItem.renderItem(size ?? 'md', item, imageDatabase, {});
+      return <Primitive.Item imageDatabase={imageDatabase} item={item} size={size} wrapContainer={{}} />;
     }
 
     return val;

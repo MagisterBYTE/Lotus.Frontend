@@ -15,5 +15,5 @@ export interface IGallerySelectProps<TItem> extends IBaseContainerControlProps, 
     gridProps?: SimpleGridProps;
     paginationProps?: PaginationProps;
 }
-export declare function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>): import("react/jsx-runtime").JSX.Element | undefined;
+export declare function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=GallerySelect.d.ts.map

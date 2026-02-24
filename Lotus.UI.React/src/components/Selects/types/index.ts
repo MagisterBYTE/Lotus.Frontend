@@ -1,1 +1,1 @@
-export { type IItemsBaseOneProps, type IItemsBaseMultiProps } from './ItemsBaseProps';
+export { type IItemsBaseOneProps, type IItemsBaseMultiProps, type RenderFunction } from './ItemsBaseProps';

@@ -3,8 +3,7 @@ import { css } from '@emotion/css';
 import { ColorCssHelper } from 'lotus-core/modules/color';
 import { Assert } from 'lotus-core/utils';
 import { CSSProperties, useMemo } from 'react';
-import
-{
+import {
   BorderPropertiesHelper,
   ContainerPropertiesHelper,
   IGeneralIconProperties,
@@ -12,18 +11,18 @@ import
   PaddingPropertiesHelper,
   TextPropertiesHelper
 } from '#base';
+import { Primitive } from '#components/Common';
 import { DesignSystemConstants } from '#designSystem';
 import { CssVariables } from '#designSystem/сssVariables';
 import { CssPropertiesHelper } from '#helpers';
-import { RenderIcon } from '#render';
 import { TCssGap, TIconPlacement, TSizeType } from '#types';
 import { ITextProps } from '../Text';
 
-export interface ILabelProps extends ITextProps, IGeneralIconProperties { }
+export interface ILabelProps extends ITextProps, IGeneralIconProperties {}
 
-const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TCssGap | TSizeType): CSSProperties | undefined =>
+const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TCssGap | TSizeType): CSSProperties | undefined => 
 {
-  switch (iconPlacement)
+  switch (iconPlacement) 
   {
     case 'left':
       return ContainerPropertiesHelper.getFlexRowContainer(Assert.existValue<TCssGap | TSizeType>(gap) ? gap : 'md');
@@ -38,7 +37,7 @@ const getFlexContainer = (iconPlacement?: TIconPlacement, gap?: TCssGap | TSizeT
   return ContainerPropertiesHelper.getFlexRowContainer(Assert.existValue<TCssGap | TSizeType>(gap) ? gap : 'md');
 };
 
-export function Label(props: ILabelProps)
+export function Label(props: ILabelProps) 
 {
   const { isBlock = false, asBadge, disabled, children, icon, iconPlacement, iconSize = 'md', iconStyle, iconColor, imageDatabase, ...otherProps } = props;
 
@@ -47,7 +46,7 @@ export function Label(props: ILabelProps)
   const isDisabled = Boolean(disabled);
 
   // 1. Мемоизируем объект стилей
-  const styleSpan = useMemo((): CSSProperties =>
+  const styleSpan = useMemo((): CSSProperties => 
   {
     const baseStyles: CSSProperties = {
       lineHeight: 'normal',
@@ -87,7 +86,7 @@ export function Label(props: ILabelProps)
   // 5. Единый рендер без дублирования обертки
   return (
     <span className={labelClassName} {...domProps}>
-      {isIcon && RenderIcon.renderIcon(iconSize, icon, undefined, actualIconStyle, iconColor, imageDatabase)}
+      {isIcon && <Primitive.Icon icon={icon} iconColor={iconColor} iconSize={iconSize} iconStyle={actualIconStyle} imageDatabase={imageDatabase} />}
       {children}
     </span>
   );

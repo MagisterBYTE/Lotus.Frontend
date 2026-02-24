@@ -4,19 +4,15 @@ import { ItemsHelper } from 'lotus-core/helpers';
 import { Assert } from 'lotus-core/utils';
 import { useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
-import { ContainerControl } from '#components/Common';
+import { ContainerControl, Primitive } from '#components/Common';
 import { VerticalStack } from '#components/Layout';
-import { RenderItem } from '#render';
+const styleContainerItem = { style: { padding: '0.25rem' } };
 export function Segmented(props) {
     const { items, onChangedItem, selectedItem, imageDatabase, getValueItem = ItemsHelper.getValueOfItem, getLabelItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, segmentedProps, size, ...otherProps } = props;
-    const data = useMemo(() => items.map(item => ({
+    const data = useMemo(() => items.map((item) => ({
         value: getValueItem(item).toString(),
         disabled: getDisabledItem(item),
-        label: typeof renderItem === 'function'
-            ? renderItem(item)
-            : getLabelItem
-                ? getLabelItem(item)
-                : RenderItem.renderItem(size ?? 'md', item, imageDatabase, { style: { padding: '0.25rem' } })
+        label: typeof renderItem === 'function' ? (renderItem(item)) : getLabelItem ? (getLabelItem(item)) : (_jsx(Primitive.Item, { imageDatabase: imageDatabase, item: item, size: size, wrapContainer: styleContainerItem }))
     })), [items, size, renderItem, getLabelItem, getValueItem, getDisabledItem]);
     const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
     const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;

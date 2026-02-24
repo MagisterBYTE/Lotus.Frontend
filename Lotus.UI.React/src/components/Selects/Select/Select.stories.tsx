@@ -10,6 +10,9 @@ const meta = {
   args: {},
 
   argTypes: {
+    // Select
+    selectRenderComponent: { control: 'boolean', table: { category: 'Select' } },
+
     // Label
     label: { control: 'text', table: { category: 'Label' } },
     description: { control: 'text', table: { category: 'Label' } },
@@ -39,7 +42,9 @@ const meta = {
     getDisabledItem: { table: { disable: true } },
     getLabelItem: { table: { disable: true } },
     getValueItem: { table: { disable: true } },
-    renderItem: { table: { disable: true } }
+    renderItem: { table: { disable: true } },
+    renderValue: { table: { disable: true } },
+    imageDatabase: { table: { disable: true } }
   }
 } satisfies Meta<typeof Select>;
 
@@ -56,11 +61,13 @@ export const SelectDefault: Story = {
     renderItem: true,
     renderValue: true,
     selectRenderComponent: true,
-    selectProps:
-    {
+
+    selectProps: {
       withAlignedLabels: true,
       withCheckIcon: true
-    }
+    },
+
+    w: 'max-content'
   }
 };
 
@@ -72,10 +79,14 @@ export const SelectLabel: Story = {
     renderItem: true,
     renderValue: true,
     items: OptionsStory.TextAndIconReact,
+
     selectProps: {
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />,
       withCheckIcon: true
-    }
+    },
+
+    size: 'lg',
+    w: 'max-content'
   }
 };
 
@@ -87,11 +98,14 @@ export const SelectStyle: Story = {
     renderItem: true,
     renderValue: true,
     items: OptionsStory.TextAndIconReact,
+
     selectProps: {
       rightSection: <IconShieldBolt color="red" size={'2.25rem'} />,
       style: { backgroundColor: 'red' },
       withCheckIcon: true
-    }
+    },
+
+    w: 'max-content'
   }
 };
 
@@ -112,11 +126,11 @@ export const SelectGreen: Story = {
     inlinePlace: true,
     size: 'md',
     required: false,
-    w: 'max-content',
+    w: '30vw',
     withBorder: 3,
     bdColor: 'green',
     bdWidth: 6,
     bdRadius: 'xl',
     bgColor: 'greenPale'
-  },
+  }
 };

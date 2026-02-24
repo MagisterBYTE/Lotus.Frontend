@@ -3,16 +3,18 @@ import { ItemsHelper } from 'lotus-core/helpers';
 import { Assert } from 'lotus-core/utils';
 import { JSX, useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
-import { ContainerControl, IBaseContainerControlProps } from '#components/Common';
+import { ContainerControl, IBaseContainerControlProps, Primitive } from '#components/Common';
 import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
-import { RenderItem } from '#render';
 import { IItemsBaseOneProps } from '../types';
 
-export interface ISegmentedProps<TItem> extends IBaseContainerControlProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps {
+export interface ISegmentedProps<TItem> extends IBaseContainerControlProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps
+{
   segmentedProps?: Omit<SegmentedControlProps, keyof IBaseContainerControlProps | 'data' | 'value'>;
 }
 
-export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.Element 
+const styleContainerItem: IHorizontalStackProps = { style: { padding: '0.25rem' } };
+
+export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.Element
 {
   const {
     items,
@@ -28,33 +30,40 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
     ...otherProps
   } = props;
 
-  const data = useMemo(() => items.map(item => ({
-    value: getValueItem(item).toString(),
-    disabled: getDisabledItem(item),
-    label: typeof renderItem === 'function'
-      ? renderItem(item)
-      : getLabelItem
-        ? getLabelItem(item)
-        : RenderItem.renderItem(size ?? 'md', item, imageDatabase, { style: { padding: '0.25rem' } })
-  })), [items, size, renderItem, getLabelItem, getValueItem, getDisabledItem]);
+  const data = useMemo(
+    () =>
+      items.map((item) => ({
+        value: getValueItem(item).toString(),
+        disabled: getDisabledItem(item),
+        label:
+          typeof renderItem === 'function' ? (
+            renderItem(item)
+          ) : getLabelItem ? (
+            getLabelItem(item)
+          ) : (
+            <Primitive.Item imageDatabase={imageDatabase} item={item} size={size} wrapContainer={styleContainerItem} />
+          )
+      })),
+    [items, size, renderItem, getLabelItem, getValueItem, getDisabledItem]
+  );
 
   const containerProps = ContainerPropertiesHelper.getContainerProperties(otherProps);
 
   const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;
 
-  const handleChange = (value: string) => 
+  const handleChange = (value: string) =>
   {
-    if (onChangedItem) 
+    if (onChangedItem)
     {
-      if (Assert.emptyValue(value)) 
+      if (Assert.emptyValue(value))
       {
         onChangedItem(undefined);
       }
-      else 
+      else
       {
-        for (const item of items) 
+        for (const item of items)
         {
-          if (getValueItem(item).toString() === value) 
+          if (getValueItem(item).toString() === value)
           {
             onChangedItem(item);
             break;
@@ -63,13 +72,13 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
       }
     }
 
-    if (segmentedProps?.onChange) 
+    if (segmentedProps?.onChange)
     {
       segmentedProps?.onChange(value);
     }
   };
 
-  if (otherProps.inlinePlace) 
+  if (otherProps.inlinePlace)
   {
     return (
       <ContainerControl
@@ -91,9 +100,9 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
       />
     );
   }
-  else 
+  else
   {
-    if (otherProps.label) 
+    if (otherProps.label)
     {
       return (
         <VerticalStack {...containerProps} hAlign="stretch">
@@ -109,7 +118,7 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
         </VerticalStack>
       );
     }
-    else 
+    else
     {
       return <SegmentedControl {...containerProps} data={data} size={size} value={selectedValue} onChange={handleChange} {...segmentedProps} />;
     }

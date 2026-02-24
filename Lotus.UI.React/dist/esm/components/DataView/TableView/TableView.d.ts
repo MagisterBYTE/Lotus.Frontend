@@ -1,6 +1,7 @@
 import { IObjectInfo } from 'lotus-core/modules/objectInfo';
 import { IRequest, IResponse, IResponsePage } from 'lotus-core/modules/requestAndResponse';
 import { IValidator } from 'lotus-core/modules/validation';
+import { IImageDatabase } from 'lotus-core/resources/image';
 import { IRecordObject, TKey } from 'lotus-core/types';
 import { JSX } from 'react/jsx-runtime';
 import { MRT_TableOptions } from '#external/mantine-react-table';
@@ -17,6 +18,10 @@ export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_T
     onUpdateItem?: (item: TItem) => Promise<IResponse<TItem>>;
     onDuplicateItem?: (id: TKey) => Promise<IResponse<TItem>>;
     onDeleteItem?: (id: TKey) => Promise<IResponse>;
+    /**
+     * База данных изображений
+     */
+    imageDatabase?: IImageDatabase;
 }
 export declare function TableView<TItem extends IRecordObject>(props: ITableViewProps<TItem>): JSX.Element;
 //# sourceMappingURL=TableView.d.ts.map

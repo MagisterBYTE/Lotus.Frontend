@@ -15,5 +15,12 @@ export interface IImageDatabase {
      * @returns Ресурс изображения
      */
     getImageByIdOrName(id?: number | string, category?: string): IImageResource | undefined;
+    /**
+     * Получить ресурс изображения
+     * @param image Любая идентификация ресурса
+     * @param category Категория изображения
+     * @returns Ресурс изображения
+     */
+    getImage(image?: any, category?: string): IImageResource | undefined;
 }
 //# sourceMappingURL=ImageDatabase.d.ts.map

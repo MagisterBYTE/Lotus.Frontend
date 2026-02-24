@@ -1,22 +1,25 @@
- 
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/destructuring-assignment */
+
 import { ActionIcon, Button, Modal, Tooltip, useMantineTheme } from '@mantine/core';
-import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconRefresh, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
+import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
 import { StringHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
-import { IObjectInfo, ObjectInfo } from 'lotus-core/modules/objectInfo';
+import { IObjectInfo, IPropertyDescriptor, ObjectInfo } from 'lotus-core/modules/objectInfo';
 import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage, ResponseHelper } from 'lotus-core/modules/requestAndResponse';
 import { IValidator } from 'lotus-core/modules/validation';
+import { IImageDatabase } from 'lotus-core/resources/image';
 import { IRecordObject, TKey } from 'lotus-core/types';
-import { ObjectName } from 'lotus-core/utils';
+import { Assert, ObjectName } from 'lotus-core/utils';
 import { RefAttributes, useEffect, useMemo, useState } from 'react';
 import { JSX } from 'react/jsx-runtime';
+import { Primitive } from '#components/Common';
 import { Text } from '#components/Display';
 import { HorizontalStack, VerticalStack } from '#components/Layout';
-import
-{
+import { ImageGallery, MultiSelect, Select } from '#components/Selects';
+import {
   MantineReactTable,
   MRT_ColumnDef,
   MRT_ColumnFiltersState,
@@ -37,16 +40,20 @@ import
 import { IContextRenderBase, TSizeType, TSizeTypes } from '#types';
 import { MantineReactTableHelper } from './MantineReactTableHelper';
 import { createDisabledSaveButtonEvent } from './TableViewEvents';
-import { EditTableFilterArray, EditTableFilterString } from './TableViewFilterTypes';
+import {
+  EditTableFilterArray,
+  EditTableFilterEnum,
+  EditTableFilterEnumNull,
+  EditTableFilterNumber,
+  EditTableFilterNumberNull,
+  EditTableFilterString
+} from './TableViewFilterTypes';
 import { TableViewMultiSelectView } from './components/TableViewMultiSelectView';
 import { TableViewSelectView } from './components/TableViewSelectView';
 import { TableViewTextView } from './components/TableViewTextView';
 import { useTableViewLocalization } from './useTableViewLocalization';
-import { MultiSelect, Select } from '#components/Selects';
 
-
-export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'>
-{
+export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'> {
   disabled?: boolean;
   size?: TSizeType;
   objectInfo: IObjectInfo;
@@ -58,13 +65,17 @@ export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_T
   onUpdateItem?: (item: TItem) => Promise<IResponse<TItem>>;
   onDuplicateItem?: (id: TKey) => Promise<IResponse<TItem>>;
   onDeleteItem?: (id: TKey) => Promise<IResponse>;
+  /**
+   * База данных изображений
+   */
+  imageDatabase?: IImageDatabase;
 }
 
 type Updater<T> = T | ((old: T) => T);
 
 const pageInfoResponseDefault: IPageInfoResponse = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 } as const;
 
-export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TItem>)
+export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TItem>) 
 {
   const {
     size = 'md',
@@ -76,8 +87,11 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     onCreateItem,
     onUpdateItem,
     onDuplicateItem,
-    onDeleteItem
+    onDeleteItem,
+    imageDatabase
   } = props;
+
+  type ComponentTableProps = { tableProps: any; property: IPropertyDescriptor; column?: MRT_ColumnDef<TItem> };
 
   const properties = objectInfo.getProperties();
 
@@ -119,6 +133,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   const [editItemName, setEditItemName] = useState<string>('');
   const [hashValid, setHashValid] = useState<number>(0);
   const [isUpdatingProcess, setUpdatingProcess] = useState<boolean>(false);
+  const [creatingStatus, setCreatingStatus] = useState<boolean>(false);
 
   // Удаление
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -132,148 +147,667 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   // Текущий контекст ренденинга
   const contextRender: IContextRenderBase = { disabled: props.disabled, size: actualSize, theme: theme };
 
+  const CellViewText = (propsComponent: ComponentTableProps) => (
+    <TableViewTextView
+      {...propsComponent.tableProps}
+      contextRender={contextRender}
+      imageDatabase={imageDatabase}
+      objectInfo={objectInfo}
+      property={propsComponent.property}
+      validator={validator}
+    />
+  );
+
+  const CellViewSelect = (propsComponent: ComponentTableProps) => (
+    <TableViewSelectView
+      {...propsComponent.tableProps}
+      contextRender={contextRender}
+      imageDatabase={imageDatabase}
+      objectInfo={objectInfo}
+      property={propsComponent.property}
+      validator={validator}
+    />
+  );
+
+  const CellViewMulti = (propsComponent: ComponentTableProps) => (
+    <TableViewMultiSelectView
+      {...propsComponent.tableProps}
+      contextRender={contextRender}
+      imageDatabase={imageDatabase}
+      objectInfo={objectInfo}
+      property={propsComponent.property}
+      validator={validator}
+    />
+  );
+
+  const CellEditText = (propsComponent: ComponentTableProps) => 
+  {
+    const { column, property } = propsComponent;
+
+    // Режим редактирования
+    column!.mantineEditTextInputProps = {
+      required: property.editing?.required,
+      disabled: props.disabled,
+      size: actualSize,
+      type: 'text',
+      error: validator?.validationStatus.getErrorByKey(property.fieldName),
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => 
+      {
+        const newItem = ObjectInfo.updatedObject(currentItem, property, event.target.value) as TItem;
+        setCurrentItem(newItem);
+      },
+      ...property.visualSettings?.propsEdit
+    };
+  };
+
+  const CellEditSelect = (propsComponent: ComponentTableProps) => 
+  {
+    const { tableProps, property } = propsComponent;
+    const { cell, row, column } = tableProps;
+    const selectedValue = currentItem ? String(currentItem[property.fieldName]) : String(cell.getValue());
+    const items = property.possibleValues!;
+    const isModalMode = creatingStatus ? (table.options.createDisplayMode === 'modal') : (table.options.editDisplayMode === 'modal');
+    return (
+      <Select<TItem>
+        disabled={props.disabled}
+        error={validator?.validationStatus.getErrorByKey(property.fieldName)}
+        imageDatabase={imageDatabase}
+        items={items}
+        label={isModalMode ? property.name : undefined}
+        required={isModalMode ? property.editing?.required : undefined}
+        selectedItem={selectedValue}
+        selectProps={{
+          withAlignedLabels: true,
+          withCheckIcon: true,
+          onChange: (value) => 
+          {
+            const newItem = ObjectInfo.updatedObject(currentItem, property, value) as TItem;
+            setCurrentItem(newItem);
+            row._valuesCache[column.id] = value;
+          }
+        }}
+        size={actualSize}
+        w={'100%'}
+        {...property.visualSettings?.propsEdit}
+      />
+    );
+  };
+
+  const CellEditMulti = (propsComponent: ComponentTableProps) => 
+  {
+    const { tableProps, property } = propsComponent;
+    const { cell, row, column } = tableProps;
+    const selectedValues = currentItem ? (currentItem[property.fieldName] as any[]) : (cell.getValue() as any[]);
+    const items = property.possibleValues!;
+    const isModalMode = creatingStatus ? (table.options.createDisplayMode === 'modal') : (table.options.editDisplayMode === 'modal');
+
+    return (
+      <MultiSelect<TItem>
+        disabled={props.disabled}
+        error={validator?.validationStatus.getErrorByKey(property.fieldName)}
+        imageDatabase={imageDatabase}
+        items={items}
+        label={isModalMode ? property.name : undefined}
+        required={isModalMode ? property.editing?.required : undefined}
+        selectedItems={selectedValues}
+        selectProps={{
+          withAlignedLabels: true,
+          withCheckIcon: true,
+          onChange: (value) => 
+          {
+            const newItem = ObjectInfo.updatedObject(currentItem, property, value) as TItem;
+            setCurrentItem(newItem);
+            row._valuesCache[column.id] = value;
+          }
+        }}
+        size={actualSize}
+        w="100%"
+        {...property.visualSettings?.propsEdit}
+      />
+    );
+  };
+
   // Модифицированные столбцы
   const editColumns = useMemo(
     () =>
-      properties.map((property) =>
+      // eslint-disable-next-line complexity
+      properties.map((property) => 
       {
         const column: MRT_ColumnDef<TItem> = MantineReactTableHelper.convertPropertyDescriptorToColumn(property);
 
-        if (property.editing?.editorType === 'text' || property.editing?.editorType === undefined)
+        // Проверяем специальные свойства
+        if (property.viewImage) 
         {
           // eslint-disable-next-line react/display-name
-          column.Cell = (props: any) => (
-            <TableViewTextView {...props} contextRender={contextRender} objectInfo={objectInfo} property={property} validator={validator} />
-          );
+          column.Cell = function ({ cell, row }) 
+          {
+            const icon = cell.getValue();
+            return <Primitive.Image icon={icon} iconSize={actualSize} {...property.visualSettings?.propsView} />;
+          };
 
-          // Режим редактирования
-          column.mantineEditTextInputProps = {
-            required: property.editing?.required,
-            disabled: props.disabled,
-            size: actualSize,
-            type: 'text',
-            error: validator?.validationStatus.getErrorByKey(property.fieldName),
-            onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+          if (property.editing?.enabled) 
+          {
+            // eslint-disable-next-line react/display-name
+            column.Edit = function ({ cell, row }) 
             {
-              const newItem: TItem = { ...currentItem! };
-              newItem[column.accessorKey!] = event.target.value as any;
-              setCurrentItem(newItem);
-            },
-            ...property.visualSettings?.propsEdit
-          };
-
-          // Набор фильтров для строки
-          column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
-        }
-
-        if (property.editing?.editorType === 'select')
-        {
-          // eslint-disable-next-line react/display-name
-          column.Cell = (props: any) => (
-            <TableViewSelectView {...props} contextRender={contextRender} objectInfo={objectInfo} property={property} validator={validator} />
-          );
-
-          // eslint-disable-next-line react/display-name
-          column.Edit = function ({ cell, column, table, row })
-          {
-            const selectedValue = currentItem ? String(currentItem[property.fieldName]) : String(cell.getValue());
-            const items = property.possibleValues!;
-            const isModalMode = table.options.editDisplayMode === 'modal';
-            return (
-              <Select<TItem>
-                disabled={props.disabled}
-                error={validator?.validationStatus.getErrorByKey(property.fieldName)}
-                items={items}
-                label={isModalMode ? property.name : undefined}
-                required={isModalMode ? property.editing?.required : undefined}
-                selectedItem={selectedValue}
-                selectProps={{
-                  withAlignedLabels: true,
-                  withCheckIcon: true,
-                  onChange: (value) =>
+              const icon = cell.getValue();
+              return (
+                <ImageGallery
+                  imageDatabase={imageDatabase}
+                  selectedImage={icon}
+                  selectRenderComponent={true}
+                  size={actualSize}
+                  {...property.visualSettings?.propsEdit}
+                  onChangedItem={(image) =>
                   {
-                    const newItem = ObjectInfo.updatedObject(currentItem, property, value) as TItem;
+                    const newItem = ObjectInfo.updatedObject(currentItem, property, image?.source) as TItem;
                     setCurrentItem(newItem);
-                  } }}
-                size={actualSize}
-                w={'100%'}
-                {...property.visualSettings?.propsEdit}
-              />
-            );
-          };
 
-          // Набор фильтров для строки
-          column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
-        }
-
-        if (property.editing?.editorType === 'multi-select')
-        {
-          // eslint-disable-next-line react/display-name
-          column.Cell = (props: any) => (
-            <TableViewMultiSelectView {...props} contextRender={contextRender} objectInfo={objectInfo} property={property} validator={validator} />
-          );
-
-          // eslint-disable-next-line react/display-name
-          column.Edit = function ({ cell })
-          {
-            const selectedValues = currentItem ? (currentItem[property.fieldName] as any[]) : (cell.getValue() as any[]);
-            const items = property.possibleValues!;
-            const isModalMode = table.options.editDisplayMode === 'modal';
-
-            return (
-              <MultiSelect<TItem>
-                disabled={props.disabled}
-                error={validator?.validationStatus.getErrorByKey(property.fieldName)}
-                items={items}
-                label={isModalMode ? property.name : undefined}
-                required={isModalMode ? property.editing?.required : undefined}
-                selectedItems={selectedValues}
-                selectProps={{
-                  withAlignedLabels: true,
-                  withCheckIcon: true,
-                  onChange: (value) =>
-                  {
-                    const newItem = ObjectInfo.updatedObject(currentItem, property, value) as TItem;
-                    setCurrentItem(newItem);
+                    // @ts-expect-error row._valuesCache
+                    row._valuesCache[column.id] = image?.source;
                   }
-                }}
-                size={actualSize}
-                w="100%"
-                {...property.visualSettings?.propsEdit}
-              />
-            );
-          };
+                  }
+                />
+              );
+            };
+          }
 
-          column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+          return column;
         }
 
-        if (property.viewImage)
+        const isLink = Assert.existValue(property.possibleValues);
+        switch (property.propertyTypeDesc.type) 
         {
-          // column.Cell = function({ cell, row })
-          // {
-          //   const id = cell.getValue() as number;
-          //   return <ImageBox id={id} />
-          // }
-          // column.Edit = function({ cell, column, table })
-          // {
-          //   const id = cell.getValue() as number;
-          //   return <ImageGallery size='small'
-          //     fullWidth
-          //     variant='outlined'
-          //     initialSelectedValue={id}
-          //     onSetSelectedValue={(selectedValue) => { setSelectedValue(property.fieldName, selectedValue); } }
-          //     images={ImageDatabase.getAllImages()} />
-          // }
+          case 'string':
+            {
+              if (property.isArray) 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // Данные есть - в режиме Multi
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewMulti property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // Данные нет - в режиме Text
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // multi-select (по умолчанию редактор)
+                  if (property.editing?.editorType === 'multi-select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditMulti property={property} tableProps={props} />;
+                  }
+                }
+              }
+              else 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterString(column, onSelectFilterMode);
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewSelect property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // text (по умолчанию редактор)
+                  if (property.editing?.editorType === 'text' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    CellEditText({ property: property, tableProps: {}, column: column });
+                  }
+
+                  // select (может быть если указан прямо)
+                  if (property.editing?.editorType === 'select') 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditSelect property={property} tableProps={props} />;
+                  }
+                }
+              }
+            }
+            break;
+          case 'bool':
+            {
+              if (property.isArray) 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+
+                //
+                // Отображение
+                //
+                // eslint-disable-next-line react/display-name
+                column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // multi-select
+                  if (property.editing?.editorType === 'multi-select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditMulti property={property} tableProps={props} />;
+                  }
+                }
+              }
+              else 
+              {
+                //
+                // Массив фильтров
+                //
+                if (property.isNullable) 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnumNull(column, onSelectFilterMode);
+                }
+                else 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnum(column, onSelectFilterMode);
+                }
+
+                //
+                // Отображение
+                //
+                // eslint-disable-next-line react/display-name
+                column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  /* empty */
+                }
+              }
+            }
+            break;
+          case 'int':
+          case 'long':
+          case 'float':
+          case 'double':
+            {
+              if (property.isArray) 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+
+                if (isLink) 
+                {
+                  // Данные есть - в режиме Multi
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewMulti property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // Данные нет - в режиме Text
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // multi-select (по умолчанию)
+                  if (property.editing?.editorType === 'multi-select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditMulti property={property} tableProps={props} />;
+                  }
+                }
+              }
+              else 
+              {
+                //
+                // Массив фильтров
+                //
+                if (property.isNullable) 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterNumberNull(column, onSelectFilterMode);
+                }
+                else 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterNumber(column, onSelectFilterMode);
+                }
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewSelect property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // text (по умолчанию редактор)
+                  if (property.editing?.editorType === 'text' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    CellEditText({ property: property, tableProps: {}, column: column });
+                  }
+
+                  // select (может быть если указан прямо)
+                  if (property.editing?.editorType === 'select') 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditSelect property={property} tableProps={props} />;
+                  }
+                }
+              }
+            }
+            break;
+          case 'enum':
+            {
+              if (property.isArray) 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // Данные есть - в режиме Multi
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewMulti property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // Данные нет - в режиме Text хотя enun не может
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // Только в режиме multi-select (по умолчанию редактор)
+                  if (property.editing?.editorType === 'multi-select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditMulti property={property} tableProps={props} />;
+                  }
+                }
+              }
+              else 
+              {
+                //
+                // Массив фильтров
+                //
+                if (property.isNullable) 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnumNull(column, onSelectFilterMode);
+                }
+                else 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnum(column, onSelectFilterMode);
+                }
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewSelect property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // select (по умолчанию редактор)
+                  if (property.editing?.editorType === 'select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditSelect property={property} tableProps={props} />;
+                  }
+
+                  // text (может быть если указан прямо указан)
+                  if (property.editing?.editorType === 'text') 
+                  {
+                    CellEditText({ property: property, tableProps: {}, column: column });
+                  }
+                }
+              }
+            }
+            break;
+          case 'dateTime':
+            {
+              if (property.isArray) 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+
+                if (isLink) 
+                {
+                  // Данные есть - в режиме Multi
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewMulti property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // Данные нет - в режиме Text
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // multi-select (по умолчанию)
+                  if (property.editing?.editorType === 'multi-select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditMulti property={property} tableProps={props} />;
+                  }
+                }
+              }
+              else 
+              {
+                //
+                // Массив фильтров
+                //
+                if (property.isNullable) 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterNumberNull(column, onSelectFilterMode);
+                }
+                else 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterNumber(column, onSelectFilterMode);
+                }
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewSelect property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // text (по умолчанию редактор)
+                  if (property.editing?.editorType === 'text' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    CellEditText({ property: property, tableProps: {}, column: column });
+                  }
+
+                  // select (может быть если указан прямо)
+                  if (property.editing?.editorType === 'select') 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditSelect property={property} tableProps={props} />;
+                  }
+                }
+              }
+            }
+            break;
+          case 'guid':
+            {
+              if (property.isArray) 
+              {
+                //
+                // Массив фильтров
+                //
+                column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterArray(column, onSelectFilterMode);
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // Данные есть - в режиме Multi
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewMulti property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // Данные нет - в режиме Text хотя enun не может
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // Только в режиме multi-select (по умолчанию редактор)
+                  if (property.editing?.editorType === 'multi-select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditMulti property={property} tableProps={props} />;
+                  }
+                }
+              }
+              else 
+              {
+                //
+                // Массив фильтров
+                //
+                if (property.isNullable) 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnumNull(column, onSelectFilterMode);
+                }
+                else 
+                {
+                  column.renderColumnFilterModeMenuItems = ({ column, onSelectFilterMode }) => EditTableFilterEnum(column, onSelectFilterMode);
+                }
+
+                //
+                // Отображение
+                //
+                if (isLink) 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewSelect property={property} tableProps={props} />;
+                }
+                else 
+                {
+                  // eslint-disable-next-line react/display-name
+                  column.Cell = (props: any) => <CellViewText property={property} tableProps={props} />;
+                }
+
+                //
+                // Редактирование
+                //
+                if (property.editing?.enabled) 
+                {
+                  // select (по умолчанию редактор)
+                  if (property.editing?.editorType === 'select' || Assert.emptyValue(property.editing?.editorType)) 
+                  {
+                    // eslint-disable-next-line react/display-name
+                    column.Edit = (props: any) => <CellEditSelect property={property} tableProps={props} />;
+                  }
+
+                  // text (может быть если указан прямо указан)
+                  if (property.editing?.editorType === 'text') 
+                  {
+                    CellEditText({ property: property, tableProps: {}, column: column });
+                  }
+                }
+              }
+            }
+            break;
         }
         return column;
       }),
-    [hashValid, currentItem, actualSize]
+    [hashValid, currentItem, actualSize, creatingStatus]
   );
 
   //
   // #region Получение данных
   //
-  const getFilterQueryItems = (): IRequest =>
+  const getFilterQueryItems = (): IRequest => 
   {
     const pageInfo: IPageInfoRequest = { pageNumber: paginationModel.pageIndex, pageSize: paginationModel.pageSize };
 
@@ -283,44 +817,44 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
 
     const request = { pageInfo: pageInfo, sorting: sortings, filtering: filtering };
 
-    if (onTransformFilterRequest)
+    if (onTransformFilterRequest) 
     {
       const transformRequest = onTransformFilterRequest(request);
       return transformRequest;
     }
-    else
+    else 
     {
       return request;
     }
   };
 
-  const refreshItemsAsync = async (filter: IRequest) =>
+  const refreshItemsAsync = async (filter: IRequest) => 
   {
-    try
+    try 
     {
-      if (!items.length)
+      if (!items.length) 
       {
         setIsLoading(true);
       }
-      else
+      else 
       {
         setIsRefetching(true);
       }
 
       const response = await onGetItems(filter);
 
-      if (response.payload && response.pageInfo)
+      if (response.payload && response.pageInfo) 
       {
         setItems(response.payload);
         setPageInfo(response.pageInfo);
       }
-      else
+      else 
       {
-        if (response.payload)
+        if (response.payload) 
         {
           setItems(response.payload);
         }
-        else
+        else 
         {
           setItems([]);
         }
@@ -330,7 +864,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
       setIsLoading(false);
       setIsRefetching(false);
     }
-    catch (exc)
+    catch (exc) 
     {
       setIsLoading(false);
       setIsRefetching(false);
@@ -342,38 +876,40 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   // #region Добавление данных
   //
-  const handleCreateRowBeginAsync = async () =>
+  const handleCreateRowBeginAsync = async () => 
   {
-    if (onCreateItem)
+    if (onCreateItem) 
     {
       const response = await onCreateItem();
-      if (ResponseHelper.succeed(response) && response.payload)
+      if (ResponseHelper.succeed(response) && response.payload) 
       {
         setCurrentItem(response.payload);
         table.setCreatingRow(createRow(table, response.payload));
+        setCreatingStatus(true);
       }
     }
-    else
+    else 
     {
       setCurrentItem(undefined);
       table.setCreatingRow(true);
+      setCreatingStatus(true);
     }
 
     const createObjectName = StringHelper.stringFormat(LocalizationCore.data.actions.createObject, objectInfo.objectName);
     setEditItemName(createObjectName);
   };
 
-  const handleCreateRowSave = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem>; exitCreatingMode: () => void }) =>
+  const handleCreateRowSave = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem>; exitCreatingMode: () => void }) => 
   {
     const { row, table, exitCreatingMode } = props;
     const createdItem: TItem = { ...currentItem } as TItem;
 
-    if (onAddItem)
+    if (onAddItem) 
     {
       const responsePromise = onAddItem(createdItem);
-      void responsePromise.then((response) =>
+      void responsePromise.then((response) => 
       {
-        if (ResponseHelper.succeed(response))
+        if (ResponseHelper.succeed(response)) 
         {
           const newItems = [...items, createdItem];
           setItems(newItems);
@@ -383,11 +919,13 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     setCurrentItem(undefined);
     validator?.reset();
     exitCreatingMode();
+    setCreatingStatus(false);
   };
 
-  const handleCreateRowCancel = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
+  const handleCreateRowCancel = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => 
   {
     setCurrentItem(undefined);
+    setCreatingStatus(false);
     validator?.reset();
   };
   // #endregion
@@ -395,7 +933,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   // #region Редактирование данных
   //
-  const handleEditRowBegin = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => (event: any) =>
+  const handleEditRowBegin = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => (event: any) => 
   {
     const { row, table } = props;
     table.setEditingRow(row);
@@ -406,7 +944,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     setEditItemName(editObjectName);
   };
 
-  const handleEditRowCancel = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
+  const handleEditRowCancel = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => 
   {
     const { row, table } = props;
     table.setEditingRow(null);
@@ -415,32 +953,32 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     validator?.reset();
   };
 
-  const handleEditRowSave = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
+  const handleEditRowSave = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => 
   {
     const { row, table } = props;
     const updateItem: TItem = { ...currentItem } as TItem;
 
-    if (onUpdateItem)
+    if (onUpdateItem) 
     {
       setUpdatingProcess(true);
       const responsePromise = onUpdateItem(updateItem);
       void responsePromise
-        .then((response) =>
+        .then((response) => 
         {
-          if (ResponseHelper.succeed(response))
+          if (ResponseHelper.succeed(response)) 
           {
             const newItems = [...items];
             newItems[currentEditRow!.index] = response.payload!;
             setItems(newItems);
           }
-          else
+          else 
           {
             const newItems = [...items];
             newItems[currentEditRow!.index] = currentEditRow!.original;
             setItems(newItems);
           }
         })
-        .finally(() =>
+        .finally(() => 
         {
           setUpdatingProcess(false);
         });
@@ -456,7 +994,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   // #region Удаление данных
   //
-  const handleDeleteRow = (row: MRT_Row<TItem>) => (event: any) =>
+  const handleDeleteRow = (row: MRT_Row<TItem>) => (event: any) => 
   {
     setDeleteItem(row.original);
     setOpenDeleteDialog(true);
@@ -465,21 +1003,21 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     setDeleteItemName(deleteObjectName);
   };
 
-  const handleCloseDeleteDialog = () =>
+  const handleCloseDeleteDialog = () => 
   {
     setOpenDeleteDialog(false);
     setDeleteItem(undefined);
   };
 
-  const handleOkDeleteDialogAsync = async () =>
+  const handleOkDeleteDialogAsync = async () => 
   {
     setOpenDeleteDialog(false);
-    if (deleteItem && onDeleteItem)
+    if (deleteItem && onDeleteItem) 
     {
       setDeletingProcess(true);
       const response = await onDeleteItem(deleteItem.id);
       setDeletingProcess(false);
-      if (ResponseHelper.succeed(response))
+      if (ResponseHelper.succeed(response)) 
       {
         await refreshItemsAsync(getFilterQueryItems());
       }
@@ -490,7 +1028,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   // Фильтрация
   //
-  const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) =>
+  const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) => 
   {
     const data = updaterOrValue as Record<string, MRT_FilterOption>;
     setColumnFiltersFns(data);
@@ -499,37 +1037,61 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   // Размер шрифта
   //
-  const handleIncreaseFont = () =>
+  const handleIncreaseFont = () => 
   {
     const newFontSize = TSizeTypes.next(actualSize);
     setActualSize(newFontSize);
   };
 
-  const handleDecreaseFont = () =>
+  const handleDecreaseFont = () => 
   {
     const newFontSize = TSizeTypes.prev(actualSize);
     setActualSize(newFontSize);
   };
+  
   //
   // #region Методы жизненного цикла
   //
-  useEffect(() =>
+  useEffect(() => 
   {
     const filter = getFilterQueryItems();
     void refreshItemsAsync(filter);
   }, [paginationModel.pageIndex, paginationModel.pageSize, sortingState, columnFiltersState, columnFiltersFns, globalFilter]);
 
-  useEffect(() =>
+  useEffect(() => 
   {
     const initialColumnFiltersFns: Record<string, MRT_FilterOption> = MantineReactTableHelper.getFilterOptions(objectInfo);
     setColumnFiltersFns(initialColumnFiltersFns);
   }, []);
+
+  useEffect(() => 
+  {
+    if (validator && currentItem) 
+    {
+      const statusValidation = validator.validate(currentItem);
+    
+      // 1. Проверяем изменение статуса валидности
+      if (statusValidation !== currentItemValid) 
+      {
+        setCurrentItemValid(statusValidation);
+        // Теперь событие отправляется ПОСЛЕ рендеринга
+        window.dispatchEvent(createDisabledSaveButtonEvent(!statusValidation));
+      }
+
+      // 2. Проверяем изменение хеша
+      const newHash = validator.validationStatus.hash();
+      if (newHash !== hashValid) 
+      {
+        setHashValid(newHash);
+      }
+    }
+  }, [currentItem, validator, currentItemValid, hashValid]);
   // #endregion
 
   //
   // #region Render
   //
-  const renderRowActionsEditRow = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) =>
+  const renderRowActionsEditRow = (props: { row: MRT_Row<TItem>; table: MRT_TableInstance<TItem> }) => 
   {
     return (
       <HorizontalStack spacing={actualSize}>
@@ -551,21 +1113,16 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     );
   };
 
-  const renderTopToolbarCustomActionsAddRow = (props: { table: MRT_TableInstance<TItem> }) =>
+  const renderTopToolbarCustomActionsAddRow = (props: { table: MRT_TableInstance<TItem> }) => 
   {
     return (
       <Button m="md" onClick={handleCreateRowBeginAsync}>
         {LocalizationCore.data.actions.add}
-        {actualSize}
-        -
-        {TSizeTypes.next(actualSize, 1, 'lg')}
-        -
-        {TSizeTypes.prev(actualSize, 1, 'xs')}
       </Button>
     );
   };
 
-  const renderToolbarInternalActions = (props: { table: MRT_TableInstance<TItem> }) =>
+  const renderToolbarInternalActions = (props: { table: MRT_TableInstance<TItem> }) => 
   {
     return (
       <>
@@ -592,22 +1149,6 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     );
   };
   // #endregion
-
-  if (validator && currentItem)
-  {
-    const statusValidation = validator.validate(currentItem);
-    if (statusValidation != currentItemValid)
-    {
-      setCurrentItemValid(statusValidation);
-      dispatchEvent(createDisabledSaveButtonEvent(!statusValidation));
-    }
-
-    const newHash = validator.validationStatus.hash();
-    if (newHash != hashValid)
-    {
-      setHashValid(newHash);
-    }
-  }
 
   const table = useMantineReactTable({
     ...props,
@@ -647,20 +1188,23 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     mantineCreateRowModalProps: ({ row }) => ({
       title: editItemName
     }),
+    mantineFilterMultiSelectProps: { size: actualSize },
+    mantineFilterSelectProps: { size: actualSize },
+    mantineFilterTextInputProps: { size: actualSize },
     filterFns: {
-      includeAny: (row, id, filterValue) =>
+      includeAny: (row, id, filterValue) => 
       {
         return true;
       },
-      includeAll: (row, id, filterValue) =>
+      includeAll: (row, id, filterValue) => 
       {
         return true;
       },
-      includeEquals: (row, id, filterValue) =>
+      includeEquals: (row, id, filterValue) => 
       {
         return true;
       },
-      includeNone: (row, id, filterValue) =>
+      includeNone: (row, id, filterValue) => 
       {
         return true;
       }

@@ -4,9 +4,9 @@ import { ItemsHelper } from 'lotus-core/helpers';
 import { Assert } from 'lotus-core/utils';
 import { useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
-import { ContainerControl } from '#components/Common';
+import { ContainerControl, Primitive } from '#components/Common';
 import { MultiSelectEx } from '#components/Extendeds';
-import { RenderItem, RenderOption } from '#render';
+const styleContainerItem = { withBorder: true, p: 'xxs', bdRadius: 'md' };
 export function MultiSelect(props) {
     const { items, onChangedItems, selectedItems, imageDatabase, selectRenderComponent, getValueItem = ItemsHelper.getValueOfItem, getLabelItem = ItemsHelper.getLabelOfItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, renderValue, selectProps, size, ...otherProps } = props;
     const data = useMemo(() => items.map((item) => ({
@@ -41,7 +41,7 @@ export function MultiSelect(props) {
             content = renderItem(option.original, context);
         }
         else {
-            content = RenderOption.renderOption(size ?? 'md', option.original, imageDatabase);
+            content = _jsx(Primitive.Item, { imageDatabase: imageDatabase, item: option.original, size: size });
         }
         // Если не нужен враппер с чекбоксом
         if (!selectRenderComponent && typeof renderItem === 'function')
@@ -55,15 +55,13 @@ export function MultiSelect(props) {
         const item = ItemsHelper.getItemByValueOrUndefined(items, value);
         if (typeof renderValue === 'function')
             return renderValue(item, { size });
-        return item
-            ? RenderItem.renderItem(size ?? 'md', item, imageDatabase, { withBorder: true, p: 'xxs', bdRadius: 'md' })
-            : value;
+        return item ? _jsx(Primitive.Item, { imageDatabase: imageDatabase, item: item, size: size, wrapContainer: styleContainerItem }, value) : value;
     };
     const actualRenderOption = useMemo(() => (renderItem ? renderOptionContent : undefined), [renderItem, size, selectProps, imageDatabase, selectRenderComponent]);
     const actualRenderPill = useMemo(() => (renderValue ? renderPillContent : undefined), [renderValue, items, size, imageDatabase]);
     // #endregion
     if (otherProps.inlinePlace) {
-        return (_jsx(ContainerControl, { ...otherProps, control: _jsx(MultiSelectEx, { data: data, error: otherProps.error, errorProps: otherProps.errorProps, h: undefined, inputWrapperOrder: ['input', 'error'], renderOption: actualRenderOption, renderPill: actualRenderPill, size: size, style: { flex: 1, ...selectProps?.style }, value: selectedValues, w: undefined, onChange: handleChange, ...selectProps }), size: size, vAlign: otherProps.vAlign ?? ((Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description)) ? 'center' : undefined) }));
+        return (_jsx(ContainerControl, { ...otherProps, control: _jsx(MultiSelectEx, { data: data, error: otherProps.error, errorProps: otherProps.errorProps, h: undefined, inputWrapperOrder: ['input', 'error'], renderOption: actualRenderOption, renderPill: actualRenderPill, size: size, style: { flex: 1, ...selectProps?.style }, value: selectedValues, w: undefined, onChange: handleChange, ...selectProps }), size: size, vAlign: otherProps.vAlign ?? (Assert.emptyValue(otherProps.error) && Assert.emptyValue(otherProps.description) ? 'center' : undefined) }));
     }
     else {
         return (_jsx(MultiSelectEx, { ...containerProps, withAlignedLabels: true, data: data, description: otherProps.description, descriptionProps: otherProps.descriptionProps, error: otherProps.error, errorProps: otherProps.errorProps, label: otherProps.label, labelProps: otherProps.labelProps, renderOption: actualRenderOption, renderPill: actualRenderPill, required: otherProps.required, size: size, value: selectedValues, onChange: handleChange, ...selectProps }));
