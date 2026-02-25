@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { useMantineReactTable } from '../hooks/useMantineReactTable';
 import {
   type MRT_RowData,
@@ -9,6 +10,7 @@ import { MRT_TablePaper } from './table/MRT_TablePaper';
 
 type TableInstanceProp<TData extends MRT_RowData> = {
   table: MRT_TableInstance<TData>;
+  specificTableBody?: ReactElement;
 };
 
 type Props<TData extends MRT_RowData> = Xor<
@@ -25,6 +27,7 @@ export const MantineReactTable = <TData extends MRT_RowData>(
   props: Props<TData>,
 ) => {
   let table: MRT_TableInstance<TData>;
+  const {specificTableBody} = props;
 
   if (isTableInstanceProp(props)) {
     table = props.table;
@@ -32,5 +35,5 @@ export const MantineReactTable = <TData extends MRT_RowData>(
     table = useMantineReactTable(props);
   }
 
-  return <MRT_TablePaper table={table} />;
+  return <MRT_TablePaper table={table} specificTableBody={specificTableBody} />;
 };

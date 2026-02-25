@@ -129,10 +129,9 @@ export function CardView<TItem extends IRecordObject>(props: ICardViewProps<TIte
           withArrow 
           closeOnClickOutside={true} 
           position="bottom-start" 
-          width={300}
           shadow="md"
-          // Позволяет кликать внутри Popover (включая вложенные меню) без закрытия
-          trapFocus={false} 
+          trapFocus={false}
+          width={300} 
         >
           <Popover.Target>
             <Indicator color="red" disabled={activeFiltersCount === 0} label={activeFiltersCount}>

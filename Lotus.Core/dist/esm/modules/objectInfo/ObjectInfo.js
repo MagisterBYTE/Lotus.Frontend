@@ -99,6 +99,7 @@ export class ObjectInfo {
     // #region Fields
     objectName;
     descriptors = [];
+    renderObject;
     // #endregion
     // #region Constructor
     constructor() {

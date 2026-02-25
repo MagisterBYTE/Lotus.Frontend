@@ -1,12 +1,13 @@
-import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx } from "react/jsx-runtime";
 import { Text } from '#components/Display';
 export function TableViewTextView(props) {
-    const { property, cell, contextRender } = props;
+    const { property, cell, row, contextRender } = props;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const actualValue = cell.getValue();
     if (property.rendering && property.rendering.enabled) {
         // Собственный режим отображения
-        return _jsx(_Fragment, { children: property.rendering.renderField(cell.getValue(), contextRender) });
+        return property.rendering.renderField(row.original, contextRender, actualValue);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return _jsx(Text, { fontSize: contextRender.size, ...property.visualSettings?.propsView, children: cell.getValue() });
+    return _jsx(Text, { fontSize: contextRender.size, ...property.visualSettings?.propsView, children: actualValue });
 }
 //# sourceMappingURL=TableViewTextView.js.map

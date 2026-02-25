@@ -27,7 +27,13 @@ export const LocalizationCoreDataEn = {
         border: 'Border',
         cornerRounding: 'Corner rounding',
         transparentBackground: 'Transparent background',
-        smoothingEdges: 'Edge smoothing'
+        smoothingEdges: 'Edge smoothing',
+        increaseFont: 'Increase font size',
+        decreaseFont: 'Decrease font size',
+        viewTable: 'Table view',
+        viewCard: 'Card view',
+        filters: 'Filters',
+        filterFunction: 'Filter function',
     },
     actions: {
         load: 'Load',
@@ -57,7 +63,9 @@ export const LocalizationCoreDataEn = {
         cancel: 'Cancel',
         clear: 'Clear',
         confirm: 'I confirm',
-        search: 'Search'
+        search: 'Search',
+        resetAll: 'Reset all',
+        apply: 'Apply'
     },
     filters: {
         equals: 'Equals',

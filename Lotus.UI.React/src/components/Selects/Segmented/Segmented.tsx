@@ -1,5 +1,6 @@
 import { InputLabel, SegmentedControl, SegmentedControlProps } from '@mantine/core';
 import { ItemsHelper } from 'lotus-core/helpers';
+import { PropertyType } from 'lotus-core/types';
 import { Assert } from 'lotus-core/utils';
 import { JSX, useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
@@ -7,14 +8,16 @@ import { ContainerControl, IBaseContainerControlProps, Primitive } from '#compon
 import { IHorizontalStackProps, VerticalStack } from '#components/Layout';
 import { IItemsBaseOneProps } from '../types';
 
-export interface ISegmentedProps<TItem> extends IBaseContainerControlProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps
-{
+export interface ISegmentedProps<TItem> extends IBaseContainerControlProps, IItemsBaseOneProps<TItem>, IHorizontalStackProps {
   segmentedProps?: Omit<SegmentedControlProps, keyof IBaseContainerControlProps | 'data' | 'value'>;
+  useAccentSelection?: boolean;
 }
 
-const styleContainerItem: IHorizontalStackProps = { style: { padding: '0.25rem' } };
+type TSegmentedStyles = PropertyType<SegmentedControlProps, 'styles'>;
 
-export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.Element
+const styleContainerItem: IHorizontalStackProps = { hAlign: 'center' };
+
+export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.Element 
 {
   const {
     items,
@@ -27,6 +30,7 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
     renderItem,
     segmentedProps,
     size,
+    useAccentSelection,
     ...otherProps
   } = props;
 
@@ -51,19 +55,19 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
 
   const selectedValue = selectedItem ? getValueItem(selectedItem).toString() : undefined;
 
-  const handleChange = (value: string) =>
+  const handleChange = (value: string) => 
   {
-    if (onChangedItem)
+    if (onChangedItem) 
     {
-      if (Assert.emptyValue(value))
+      if (Assert.emptyValue(value)) 
       {
         onChangedItem(undefined);
       }
-      else
+      else 
       {
-        for (const item of items)
+        for (const item of items) 
         {
-          if (getValueItem(item).toString() === value)
+          if (getValueItem(item).toString() === value) 
           {
             onChangedItem(item);
             break;
@@ -72,13 +76,29 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
       }
     }
 
-    if (segmentedProps?.onChange)
+    if (segmentedProps?.onChange) 
     {
       segmentedProps?.onChange(value);
     }
   };
 
-  if (otherProps.inlinePlace)
+  const styles: TSegmentedStyles | undefined = useAccentSelection
+    ? {
+      // Индикатор (подложка, которая перемещается)
+      indicator: {
+        outline: `1px solid var(--mantine-color-${segmentedProps?.color ?? 'blue'}-filled)`,
+        outlineOffset: '-1px', // Чтобы рамка была внутри и не обрезалась
+        backgroundColor: `var(--mantine-color-${segmentedProps?.color ?? 'blue'}-light)` // Можно сделать легкий фон
+      }
+    }
+    : undefined;
+
+  if (useAccentSelection && segmentedProps) 
+  {
+    segmentedProps.color = undefined;
+  }
+
+  if (otherProps.inlinePlace) 
   {
     return (
       <ContainerControl
@@ -89,6 +109,7 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
             h={undefined}
             size={size}
             style={{ flex: 1, ...segmentedProps?.style }}
+            styles={styles}
             value={selectedValue}
             w={undefined}
             onChange={handleChange}
@@ -100,9 +121,9 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
       />
     );
   }
-  else
+  else 
   {
-    if (otherProps.label)
+    if (otherProps.label) 
     {
       return (
         <VerticalStack {...containerProps} hAlign="stretch">
@@ -118,7 +139,7 @@ export function Segmented<TItem = unknown>(props: ISegmentedProps<TItem>): JSX.E
         </VerticalStack>
       );
     }
-    else
+    else 
     {
       return <SegmentedControl {...containerProps} data={data} size={size} value={selectedValue} onChange={handleChange} {...segmentedProps} />;
     }

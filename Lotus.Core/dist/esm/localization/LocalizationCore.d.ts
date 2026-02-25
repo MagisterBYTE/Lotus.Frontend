@@ -33,6 +33,12 @@ export declare const LocalizationCore: {
             cornerRounding: string;
             transparentBackground: string;
             smoothingEdges: string;
+            increaseFont: string;
+            decreaseFont: string;
+            viewTable: string;
+            viewCard: string;
+            filters: string;
+            filterFunction: string;
         };
         actions: {
             load: string;
@@ -63,6 +69,8 @@ export declare const LocalizationCore: {
             clear: string;
             confirm: string;
             search: string;
+            resetAll: string;
+            apply: string;
         };
         filters: {
             equals: string;

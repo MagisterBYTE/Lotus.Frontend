@@ -4,12 +4,13 @@ import { MRT_TablePaper } from './table/MRT_TablePaper';
 const isTableInstanceProp = (props) => props.table !== undefined;
 export const MantineReactTable = (props) => {
     let table;
+    const { specificTableBody } = props;
     if (isTableInstanceProp(props)) {
         table = props.table;
     }
     else {
         table = useMantineReactTable(props);
     }
-    return _jsx(MRT_TablePaper, { table: table });
+    return _jsx(MRT_TablePaper, { table: table, specificTableBody: specificTableBody });
 };
 //# sourceMappingURL=MantineReactTable.js.map

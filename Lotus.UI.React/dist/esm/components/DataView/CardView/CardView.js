@@ -65,9 +65,7 @@ export function CardView(props) {
         { value: 'equals', label: 'Равно' },
         { value: 'notEquals', label: 'Не равно' }
     ];
-    return (_jsxs(Box, { p: "md", children: [_jsxs(Group, { justify: "space-between", mb: "xl", children: [_jsxs(Popover, { keepMounted: true, withArrow: true, closeOnClickOutside: true, position: "bottom-start", width: 300, shadow: "md", 
-                        // Позволяет кликать внутри Popover (включая вложенные меню) без закрытия
-                        trapFocus: false, children: [_jsx(Popover.Target, { children: _jsx(Indicator, { color: "red", disabled: activeFiltersCount === 0, label: activeFiltersCount, children: _jsx(Button, { leftSection: _jsx(IconFilter, { size: 18 }), variant: "light", children: "\u0424\u0438\u043B\u044C\u0442\u0440\u044B" }) }) }), _jsxs(Popover.Dropdown, { p: "md", children: [_jsx(Text, { fw: 700, mb: "md", size: "sm", children: "\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\u0438\u044F \u043A\u043E\u043B\u043E\u043D\u043E\u043A" }), table.getLeafHeaders().map((header) => {
+    return (_jsxs(Box, { p: "md", children: [_jsxs(Group, { justify: "space-between", mb: "xl", children: [_jsxs(Popover, { keepMounted: true, withArrow: true, closeOnClickOutside: true, position: "bottom-start", shadow: "md", trapFocus: false, width: 300, children: [_jsx(Popover.Target, { children: _jsx(Indicator, { color: "red", disabled: activeFiltersCount === 0, label: activeFiltersCount, children: _jsx(Button, { leftSection: _jsx(IconFilter, { size: 18 }), variant: "light", children: "\u0424\u0438\u043B\u044C\u0442\u0440\u044B" }) }) }), _jsxs(Popover.Dropdown, { p: "md", children: [_jsx(Text, { fw: 700, mb: "md", size: "sm", children: "\u0424\u0438\u043B\u044C\u0442\u0440\u0430\u0446\u0438\u044F \u043A\u043E\u043B\u043E\u043D\u043E\u043A" }), table.getLeafHeaders().map((header) => {
                                         const mrtHeader = header;
                                         const column = mrtHeader.column;
                                         if (!column.getCanFilter())

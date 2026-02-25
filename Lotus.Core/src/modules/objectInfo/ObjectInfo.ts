@@ -5,6 +5,11 @@ import { Assert } from '#utils';
 import { IPropertyDescriptor } from './PropertyDescriptor';
 
 /**
+ * Определение функции для рисования всего объект
+ */
+export type RenderObjectFunction = (item?: unknown, context?: unknown, index?: number) => unknown
+
+/**
  * Интерфейс для представления(описания) свойств объектов
  */
 export interface IObjectInfo
@@ -33,7 +38,12 @@ export interface IObjectInfo
   /**
    * Получение списка функций фильтрации для свойств
    */
-  getFilterFunctionsDesc(): Record<string, IFilterFunctionDesc>
+  getFilterFunctionsDesc(): Record<string, IFilterFunctionDesc>;
+
+  /**
+   * Функция для отрисовки всего объекта
+   */
+  renderObject?: RenderObjectFunction;
 }
 
 /**
@@ -158,6 +168,7 @@ export class ObjectInfo implements IObjectInfo
   // #region Fields
   public objectName: string;
   public descriptors: IPropertyDescriptor[] = [];
+  public renderObject?: RenderObjectFunction;
   // #endregion
 
   // #region Constructor

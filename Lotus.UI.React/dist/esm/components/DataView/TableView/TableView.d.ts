@@ -4,6 +4,7 @@ import { IValidator } from 'lotus-core/modules/validation';
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { IRecordObject, TKey } from 'lotus-core/types';
 import { JSX } from 'react/jsx-runtime';
+import { RenderFunction } from '#components/Selects';
 import { MRT_TableOptions } from '#external/mantine-react-table';
 import { TSizeType } from '#types';
 export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_TableOptions<TItem>, 'columns' | 'data'> {
@@ -18,10 +19,8 @@ export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_T
     onUpdateItem?: (item: TItem) => Promise<IResponse<TItem>>;
     onDuplicateItem?: (id: TKey) => Promise<IResponse<TItem>>;
     onDeleteItem?: (id: TKey) => Promise<IResponse>;
-    /**
-     * База данных изображений
-     */
     imageDatabase?: IImageDatabase;
+    renderCard?: RenderFunction<TItem>;
 }
 export declare function TableView<TItem extends IRecordObject>(props: ITableViewProps<TItem>): JSX.Element;
 //# sourceMappingURL=TableView.d.ts.map

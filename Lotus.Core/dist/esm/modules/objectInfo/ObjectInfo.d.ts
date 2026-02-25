@@ -1,6 +1,10 @@
 import { IFilterFunctionDesc } from '#modules/filter';
 import { IPropertyDescriptor } from './PropertyDescriptor';
 /**
+ * Определение функции для рисования всего объект
+ */
+export type RenderObjectFunction = (item?: unknown, context?: unknown, index?: number) => unknown;
+/**
  * Интерфейс для представления(описания) свойств объектов
  */
 export interface IObjectInfo {
@@ -25,6 +29,10 @@ export interface IObjectInfo {
      * Получение списка функций фильтрации для свойств
      */
     getFilterFunctionsDesc(): Record<string, IFilterFunctionDesc>;
+    /**
+     * Функция для отрисовки всего объекта
+     */
+    renderObject?: RenderObjectFunction;
 }
 /**
  * Класс для представления(описания) свойств объектов
@@ -47,6 +55,7 @@ export declare class ObjectInfo implements IObjectInfo {
     static updatedObject(source: any, propertyInfo: IPropertyDescriptor, value: any): any;
     objectName: string;
     descriptors: IPropertyDescriptor[];
+    renderObject?: RenderObjectFunction;
     constructor();
     getProperties(): IPropertyDescriptor[];
     getPropertiesSorted(): IPropertyDescriptor[];

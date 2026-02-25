@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { useMemo } from 'react';
+import { isValidElement, ReactElement, useMemo } from 'react';
 
 import {
   darken,
@@ -21,10 +21,12 @@ import classes from './MRT_Table.module.css';
 
 interface Props<TData extends MRT_RowData> extends TableProps {
   table: MRT_TableInstance<TData>;
+  specificTableBody?: ReactElement;
 }
 
 export const MRT_Table = <TData extends MRT_RowData>({
   table,
+  specificTableBody,
   ...rest
 }: Props<TData>) => 
 {
@@ -72,9 +74,40 @@ export const MRT_Table = <TData extends MRT_RowData>({
     table
   };
 
+  // 1. Извлекаем высоту тулбаров, чтобы понять, сколько осталось на тело
+  const { 
+    options: { 
+      enableTopToolbar, 
+      enableBottomToolbar 
+    } 
+  } = table;
+
   const { colorScheme } = useMantineColorScheme();
 
   const { stripedColor } = tableProps;
+
+  let height = 0;
+  if(enableTableHead) height += 60;
+  if(enableTableFooter) height += 60;
+  if(enableTopToolbar) height += 70;
+  if(enableBottomToolbar) height += 60;
+
+  const tableBody = <>
+    {enableTableHead && <MRT_TableHead {...commonTableGroupProps} />}
+    {
+      (memoMode === 'table-body' || columnSizingInfo.isResizingColumn) ? 
+      (
+        <Memo_MRT_TableBody
+          {...commonTableGroupProps}
+          tableProps={tableProps}
+        />
+      ) : 
+      (
+        <MRT_TableBody {...commonTableGroupProps} tableProps={tableProps} />
+      )
+    }
+    {enableTableFooter && <MRT_TableFooter {...commonTableGroupProps} />}
+  </>
 
   return (
     <Table
@@ -96,16 +129,10 @@ export const MRT_Table = <TData extends MRT_RowData>({
         ...tableProps.__vars
       }}
     >
-      {enableTableHead && <MRT_TableHead {...commonTableGroupProps} />}
-      {memoMode === 'table-body' || columnSizingInfo.isResizingColumn ? (
-        <Memo_MRT_TableBody
-          {...commonTableGroupProps}
-          tableProps={tableProps}
-        />
-      ) : (
-        <MRT_TableBody {...commonTableGroupProps} tableProps={tableProps} />
-      )}
-      {enableTableFooter && <MRT_TableFooter {...commonTableGroupProps} />}
+      {isValidElement(specificTableBody) ? <div style={{height: `calc(100vh - ${height}px)`, display: 'flex', flexDirection: 'column'}}>
+        {enableTableHead && <MRT_TableHead {...commonTableGroupProps} />}
+        {specificTableBody}  
+        </div> : tableBody}
     </Table>
   );
 };

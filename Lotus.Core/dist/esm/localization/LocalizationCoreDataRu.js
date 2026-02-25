@@ -27,7 +27,13 @@ export const LocalizationCoreDataRu = {
         border: 'Граница',
         cornerRounding: 'Скругление',
         transparentBackground: 'Прозрачный фон',
-        smoothingEdges: 'Сглаживание краев'
+        smoothingEdges: 'Сглаживание краев',
+        increaseFont: 'Увеличь шрифта',
+        decreaseFont: 'Уменьшить шрифта',
+        viewTable: 'Вид таблицы',
+        viewCard: 'Вид карточек',
+        filters: 'Фильтры',
+        filterFunction: 'Функция фильтрации'
     },
     actions: {
         load: 'Загрузить',
@@ -57,7 +63,9 @@ export const LocalizationCoreDataRu = {
         cancel: 'Отменить',
         clear: 'Отчистить',
         confirm: 'Подтверждаю',
-        search: 'Поиск'
+        search: 'Поиск',
+        resetAll: 'Сбросить все',
+        apply: 'Применить'
     },
     filters: {
         equals: 'Равно',

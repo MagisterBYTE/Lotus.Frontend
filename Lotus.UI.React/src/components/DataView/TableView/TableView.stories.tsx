@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { TableView } from './TableView';
 import { TableViewPropsPreset } from './TableViewPropsPreset';
-import { PersonInfoBase, PersonApi, IPerson, PersonValidator, ImageDatabase } from '#storydata';
+import { PersonInfoBase, PersonApi, IPerson, PersonValidator, ImageDatabase, PersonRender } from '#storydata';
 import { TSizeTypeValues } from '#types';
 
 const meta: Meta<typeof TableView> = {
@@ -47,7 +47,8 @@ export const DefaultCrud: Story = {
     onUpdateItem: PersonApi.updatePersonAsync,
     onDeleteItem: PersonApi.deletePersonAsync,
     ...TableViewPropsPreset.getCrud(),
-    editDisplayMode: 'row'
+    editDisplayMode: 'row',
+    renderCard: PersonRender.renderPersonCard
   }
 };
 

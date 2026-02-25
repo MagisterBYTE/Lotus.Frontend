@@ -6,3 +6,4 @@ export { PersonApi } from './PersonApi';
 export { Persons } from './PersonData';
 export { PersonInfoBase, PersonValidator, type IPerson } from './PersonInfo';
 export { TextStory } from './TextStory';
+export { PersonRender } from './PersonRender';

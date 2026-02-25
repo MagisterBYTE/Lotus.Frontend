@@ -10,13 +10,16 @@ import { type MRT_RowData, type MRT_TableInstance } from '../../types';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_BottomToolbar } from '../toolbar/MRT_BottomToolbar';
 import { MRT_TopToolbar } from '../toolbar/MRT_TopToolbar';
+import { ReactElement } from 'react';
 
 interface Props<TData extends MRT_RowData> extends PaperProps {
   table: MRT_TableInstance<TData>;
+  specificTableBody?: ReactElement;
 }
 
 export const MRT_TablePaper = <TData extends MRT_RowData>({
   table,
+  specificTableBody,
   ...rest
 }: Props<TData>) => {
   const {
@@ -81,7 +84,7 @@ export const MRT_TablePaper = <TData extends MRT_RowData>({
         (parseFromValuesOrFunc(renderTopToolbar, { table }) ?? (
           <MRT_TopToolbar table={table} />
         ))}
-      <MRT_TableContainer table={table} />
+      <MRT_TableContainer table={table} specificTableBody={specificTableBody} />
       {enableBottomToolbar &&
         (parseFromValuesOrFunc(renderBottomToolbar, { table }) ?? (
           <MRT_BottomToolbar table={table} />

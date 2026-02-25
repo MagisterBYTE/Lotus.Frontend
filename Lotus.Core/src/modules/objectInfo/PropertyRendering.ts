@@ -1,6 +1,7 @@
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type RenderFunction = (item?: unknown, context?: unknown) => any
+/**
+ * Определение функции для рисования поля объект
+ */
+export type RenderFieldFunction = (item?: unknown, context?: unknown, actualValue?: unknown) => unknown
 
 /**
  * Интерфейс для отрисовки свойства
@@ -15,10 +16,5 @@ export interface IPropertyRendering
   /**
    * Функция для отрисовки поля/свойства
    */
-  renderField: RenderFunction;
-
-  /**
-   * Функция для отрисовки всего объекта
-   */
-  renderObject?: RenderFunction;
+  renderField: RenderFieldFunction;
 }

@@ -3,8 +3,8 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-run
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/destructuring-assignment */
-import { ActionIcon, Button, Modal, Tooltip, useMantineTheme } from '@mantine/core';
-import { IconCircleX, IconDeviceFloppy, IconEdit, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
+import { ActionIcon, Button, Card, Modal, ScrollArea, SimpleGrid, Tooltip, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { IconCircleX, IconDeviceFloppy, IconEdit, IconLayoutGrid, IconTable, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
 import { StringHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
 import { ObjectInfo } from 'lotus-core/modules/objectInfo';
@@ -26,7 +26,7 @@ import { TableViewTextView } from './components/TableViewTextView';
 import { useTableViewLocalization } from './useTableViewLocalization';
 const pageInfoResponseDefault = { pageNumber: 0, pageSize: 10, currentPageSize: 10, totalCount: 10 };
 export function TableView(props) {
-    const { size = 'md', objectInfo, validator, onGetItems, onTransformFilterRequest, onAddItem, onCreateItem, onUpdateItem, onDuplicateItem, onDeleteItem, imageDatabase } = props;
+    const { size = 'md', objectInfo, validator, onGetItems, onTransformFilterRequest, onAddItem, onCreateItem, onUpdateItem, onDuplicateItem, onDeleteItem, imageDatabase, renderCard } = props;
     const properties = objectInfo.getProperties();
     const theme = useMantineTheme();
     const blueColor = theme.colors.blue[5];
@@ -40,8 +40,10 @@ export function TableView(props) {
     const isCreate = Boolean(onCreateItem);
     const isUpdate = Boolean(onUpdateItem);
     const isDelete = Boolean(onDeleteItem);
+    const disableViewCard = Assert.emptyValue(renderCard) && Assert.emptyValue(objectInfo.renderObject);
     // Размер
     const [actualSize, setActualSize] = useState(size);
+    const [isCardView, setIsCardView] = useState(false);
     // Получение данных
     const [isLoading, setIsLoading] = useState(false);
     const [isRefetching, setIsRefetching] = useState(false);
@@ -68,6 +70,7 @@ export function TableView(props) {
     const [isDeletingProcess, setDeletingProcess] = useState(false);
     // Локализация
     const localizationFull = useTableViewLocalization();
+    const { colorScheme } = useMantineColorScheme();
     // Текущий контекст ренденинга
     const contextRender = { disabled: props.disabled, size: actualSize, theme: theme };
     const CellViewText = (propsComponent) => (_jsx(TableViewTextView, { ...propsComponent.tableProps, contextRender: contextRender, imageDatabase: imageDatabase, objectInfo: objectInfo, property: propsComponent.property, validator: validator }));
@@ -94,7 +97,7 @@ export function TableView(props) {
         const { cell, row, column } = tableProps;
         const selectedValue = currentItem ? String(currentItem[property.fieldName]) : String(cell.getValue());
         const items = property.possibleValues;
-        const isModalMode = creatingStatus ? (table.options.createDisplayMode === 'modal') : (table.options.editDisplayMode === 'modal');
+        const isModalMode = creatingStatus ? table.options.createDisplayMode === 'modal' : table.options.editDisplayMode === 'modal';
         return (_jsx(Select, { disabled: props.disabled, error: validator?.validationStatus.getErrorByKey(property.fieldName), imageDatabase: imageDatabase, items: items, label: isModalMode ? property.name : undefined, required: isModalMode ? property.editing?.required : undefined, selectedItem: selectedValue, selectProps: {
                 withAlignedLabels: true,
                 withCheckIcon: true,
@@ -110,7 +113,7 @@ export function TableView(props) {
         const { cell, row, column } = tableProps;
         const selectedValues = currentItem ? currentItem[property.fieldName] : cell.getValue();
         const items = property.possibleValues;
-        const isModalMode = creatingStatus ? (table.options.createDisplayMode === 'modal') : (table.options.editDisplayMode === 'modal');
+        const isModalMode = creatingStatus ? table.options.createDisplayMode === 'modal' : table.options.editDisplayMode === 'modal';
         return (_jsx(MultiSelect, { disabled: props.disabled, error: validator?.validationStatus.getErrorByKey(property.fieldName), imageDatabase: imageDatabase, items: items, label: isModalMode ? property.name : undefined, required: isModalMode ? property.editing?.required : undefined, selectedItems: selectedValues, selectProps: {
                 withAlignedLabels: true,
                 withCheckIcon: true,
@@ -754,10 +757,10 @@ export function TableView(props) {
         return (_jsxs(HorizontalStack, { spacing: actualSize, children: [isUpdate && (_jsx(Tooltip, { label: LocalizationCore.data.actions.edit, children: _jsx(ActionIcon, { size: TSizeTypes.next(actualSize, 1, 'xl'), variant: "default", onClick: handleEditRowBegin(props), children: _jsx(IconEdit, { color: blueColor, height: '100%', width: '100%' }) }) })), isDelete && (_jsx(Tooltip, { label: LocalizationCore.data.actions.delete, children: _jsx(ActionIcon, { size: TSizeTypes.next(actualSize, 1, 'xl'), variant: "default", onClick: handleDeleteRow(props.row), children: _jsx(IconCircleX, { color: redColor, height: '100%', width: '100%' }) }) }))] }));
     };
     const renderTopToolbarCustomActionsAddRow = (props) => {
-        return (_jsx(Button, { m: "md", onClick: handleCreateRowBeginAsync, children: LocalizationCore.data.actions.add }));
+        return (_jsx(HorizontalStack, { children: _jsx(Button, { m: "md", onClick: handleCreateRowBeginAsync, children: LocalizationCore.data.actions.add }) }));
     };
     const renderToolbarInternalActions = (props) => {
-        return (_jsxs(_Fragment, { children: [_jsx(MRT_ToggleGlobalFilterButton, { table: table }), _jsx(MRT_ToggleFiltersButton, { table: table }), _jsx(MRT_ShowHideColumnsButton, { table: table }), _jsx(MRT_ToggleDensePaddingButton, { table: table }), _jsx(MRT_ToggleFullScreenButton, { table: table }), _jsx(Tooltip, { label: "\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0434\u0430\u043D\u043D\u044B\u0435", children: _jsx(ActionIcon, { color: "gray", variant: "subtle", onClick: handleDecreaseFont, children: _jsx(IconTextDecrease, {}) }) }), _jsx(Tooltip, { label: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", children: _jsx(ActionIcon, { color: "gray", mr: 'md', variant: "subtle", onClick: handleIncreaseFont, children: _jsx(IconTextIncrease, {}) }) })] }));
+        return (_jsxs(_Fragment, { children: [_jsx(MRT_ToggleGlobalFilterButton, { table: table }), _jsx(MRT_ToggleFiltersButton, { table: table }), _jsx(MRT_ShowHideColumnsButton, { table: table }), _jsx(MRT_ToggleDensePaddingButton, { table: table }), _jsx(MRT_ToggleFullScreenButton, { table: table }), _jsx(Tooltip, { label: LocalizationCore.data.controls.decreaseFont, children: _jsx(ActionIcon, { color: "gray", variant: "subtle", onClick: handleDecreaseFont, children: _jsx(IconTextDecrease, {}) }) }), _jsx(Tooltip, { label: LocalizationCore.data.controls.increaseFont, children: _jsx(ActionIcon, { color: "gray", variant: "subtle", onClick: handleIncreaseFont, children: _jsx(IconTextIncrease, {}) }) }), _jsx(Tooltip, { label: isCardView ? LocalizationCore.data.controls.viewTable : LocalizationCore.data.controls.viewCard, children: _jsx(ActionIcon, { color: "gray", disabled: disableViewCard, mr: 'md', variant: "subtle", onClick: () => setIsCardView(!isCardView), children: isCardView ? _jsx(IconTable, {}) : _jsx(IconLayoutGrid, {}) }) })] }));
     };
     // #endregion
     const table = useMantineReactTable({
@@ -792,12 +795,8 @@ export function TableView(props) {
         onGlobalFilterChange: setGlobalFilter,
         onPaginationChange: setPaginationModel,
         onSortingChange: setSortingState,
-        mantineEditRowModalProps: ({ row }) => ({
-            title: editItemName
-        }),
-        mantineCreateRowModalProps: ({ row }) => ({
-            title: editItemName
-        }),
+        mantineEditRowModalProps: ({ row }) => ({ title: editItemName }),
+        mantineCreateRowModalProps: ({ row }) => ({ title: editItemName }),
         mantineFilterMultiSelectProps: { size: actualSize },
         mantineFilterSelectProps: { size: actualSize },
         mantineFilterTextInputProps: { size: actualSize },
@@ -816,6 +815,23 @@ export function TableView(props) {
             }
         }
     });
-    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { table: table }), _jsx(Modal, { centered: true, opened: openDeleteDialog, title: LocalizationCore.data.actions.delete, onClose: handleCloseDeleteDialog, children: _jsxs(VerticalStack, { spacing: 'md', children: [_jsx(Text, { children: deleteItemName }), _jsxs(HorizontalStack, { hAlign: "space-between", mb: "md", mt: "md", spacing: 'md', children: [_jsx(Button, { radius: "sm", variant: "default", w: '160px', onClick: handleCloseDeleteDialog, children: LocalizationCore.data.actions.cancel }), _jsx(Button, { color: redColor, radius: "sm", variant: "filled", w: '160px', onClick: handleOkDeleteDialogAsync, children: LocalizationCore.data.actions.delete })] })] }) }, 'deleteDialog')] }));
+    const { rows } = table.getRowModel();
+    const actualRenderCard = (renderCard ?? objectInfo.renderObject);
+    const renderInternalItem = (item) => {
+        const contextRender = { size: size, selected: item.getIsSelected() };
+        return actualRenderCard(item.original, contextRender);
+    };
+    const gridComponent = disableViewCard ? (_jsx(_Fragment, {})) : (_jsx(ScrollArea, { p: "xs", style: { height: 0, flex: 1 }, children: _jsx(SimpleGrid, { cols: { base: 1, sm: 2, lg: 3 }, p: "md", children: rows.map((row) => (_jsx(Card, { withBorder: true, style: (theme) => ({
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease', // Плавность анимации
+                    // Динамическая граница
+                    borderColor: row.getIsSelected() ? theme.colors[theme.primaryColor][6] : undefined,
+                    // Легкое масштабирование при выделении
+                    transform: row.getIsSelected() ? 'scale(1.02)' : 'scale(1)',
+                    backgroundColor: row.getIsSelected() ? (colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]) : undefined
+                }), onClick: () => {
+                    row.toggleSelected(!row.getIsSelected());
+                }, children: renderInternalItem(row) }, row.id))) }) }));
+    return (_jsxs(_Fragment, { children: [_jsx(MantineReactTable, { specificTableBody: isCardView ? gridComponent : undefined, table: table }), _jsx(Modal, { centered: true, opened: openDeleteDialog, title: LocalizationCore.data.actions.delete, onClose: handleCloseDeleteDialog, children: _jsxs(VerticalStack, { spacing: 'md', children: [_jsx(Text, { children: deleteItemName }), _jsxs(HorizontalStack, { hAlign: "space-between", mb: "md", mt: "md", spacing: 'md', children: [_jsx(Button, { radius: "sm", variant: "default", w: '160px', onClick: handleCloseDeleteDialog, children: LocalizationCore.data.actions.cancel }), _jsx(Button, { color: redColor, radius: "sm", variant: "filled", w: '160px', onClick: handleOkDeleteDialogAsync, children: LocalizationCore.data.actions.delete })] })] }) }, 'deleteDialog')] }));
 }
 //# sourceMappingURL=TableView.js.map

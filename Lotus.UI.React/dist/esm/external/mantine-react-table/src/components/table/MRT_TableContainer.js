@@ -7,7 +7,7 @@ import { MRT_Table } from './MRT_Table';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_EditRowModal } from '../modals/MRT_EditRowModal';
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-export const MRT_TableContainer = ({ table, ...rest }) => {
+export const MRT_TableContainer = ({ table, specificTableBody, ...rest }) => {
     const { getState, options: { createDisplayMode, editDisplayMode, enableStickyHeader, mantineLoadingOverlayProps, mantineTableContainerProps, }, refs: { bottomToolbarRef, tableContainerRef, topToolbarRef }, } = table;
     const { creatingRow, editingRow, isFullScreen, isLoading, showLoadingOverlay, } = getState();
     const [totalToolbarHeight, setTotalToolbarHeight] = useState(0);
@@ -38,6 +38,6 @@ export const MRT_TableContainer = ({ table, ...rest }) => {
                     tableContainerProps.ref.current = node;
                 }
             }
-        }, children: [_jsx(LoadingOverlay, { visible: isLoading || showLoadingOverlay, zIndex: 2, ...loadingOverlayProps }), _jsx(MRT_Table, { table: table }), (createModalOpen || editModalOpen) && (_jsx(MRT_EditRowModal, { open: true, table: table }))] }));
+        }, children: [_jsx(LoadingOverlay, { visible: isLoading || showLoadingOverlay, zIndex: 2, ...loadingOverlayProps }), _jsx(MRT_Table, { table: table, specificTableBody: specificTableBody }), (createModalOpen || editModalOpen) && (_jsx(MRT_EditRowModal, { open: true, table: table }))] }));
 };
 //# sourceMappingURL=MRT_TableContainer.js.map

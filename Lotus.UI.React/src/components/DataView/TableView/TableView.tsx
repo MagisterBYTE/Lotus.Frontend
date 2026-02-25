@@ -1,10 +1,11 @@
 /* eslint-disable max-lines */
+ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/destructuring-assignment */
 
-import { ActionIcon, Button, Modal, Tooltip, useMantineTheme } from '@mantine/core';
-import { IconCircleX, IconDeviceFloppy, IconEdit, IconProps, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
+import { ActionIcon, Button, Card, Modal, ScrollArea, SimpleGrid, Tooltip, useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { IconCircleX, IconDeviceFloppy, IconEdit, IconLayoutGrid, IconProps, IconTable, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
 import { StringHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
 import { IObjectInfo, IPropertyDescriptor, ObjectInfo } from 'lotus-core/modules/objectInfo';
@@ -13,12 +14,12 @@ import { IValidator } from 'lotus-core/modules/validation';
 import { IImageDatabase } from 'lotus-core/resources/image';
 import { IRecordObject, TKey } from 'lotus-core/types';
 import { Assert, ObjectName } from 'lotus-core/utils';
-import { RefAttributes, useEffect, useMemo, useState } from 'react';
+import { ReactNode, RefAttributes, useEffect, useMemo, useState } from 'react';
 import { JSX } from 'react/jsx-runtime';
 import { Primitive } from '#components/Common';
 import { Text } from '#components/Display';
 import { HorizontalStack, VerticalStack } from '#components/Layout';
-import { ImageGallery, MultiSelect, Select } from '#components/Selects';
+import { ImageGallery, MultiSelect, RenderFunction, Select } from '#components/Selects';
 import {
   MantineReactTable,
   MRT_ColumnDef,
@@ -35,7 +36,10 @@ import {
   MRT_ToggleFiltersButton,
   MRT_ShowHideColumnsButton,
   MRT_ToggleDensePaddingButton,
-  MRT_ToggleFullScreenButton
+  MRT_ToggleFullScreenButton,
+  MRT_TopToolbar,
+  MRT_TableContainer,
+  MRT_TableBody
 } from '#external/mantine-react-table';
 import { IContextRenderBase, TSizeType, TSizeTypes } from '#types';
 import { MantineReactTableHelper } from './MantineReactTableHelper';
@@ -65,10 +69,8 @@ export interface ITableViewProps<TItem extends IRecordObject> extends Omit<MRT_T
   onUpdateItem?: (item: TItem) => Promise<IResponse<TItem>>;
   onDuplicateItem?: (id: TKey) => Promise<IResponse<TItem>>;
   onDeleteItem?: (id: TKey) => Promise<IResponse>;
-  /**
-   * База данных изображений
-   */
   imageDatabase?: IImageDatabase;
+  renderCard?: RenderFunction<TItem>;
 }
 
 type Updater<T> = T | ((old: T) => T);
@@ -88,7 +90,8 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     onUpdateItem,
     onDuplicateItem,
     onDeleteItem,
-    imageDatabase
+    imageDatabase,
+    renderCard
   } = props;
 
   type ComponentTableProps = { tableProps: any; property: IPropertyDescriptor; column?: MRT_ColumnDef<TItem> };
@@ -109,9 +112,11 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   const isCreate = Boolean(onCreateItem);
   const isUpdate = Boolean(onUpdateItem);
   const isDelete = Boolean(onDeleteItem);
+  const disableViewCard = Assert.emptyValue(renderCard) && Assert.emptyValue(objectInfo.renderObject);
 
   // Размер
   const [actualSize, setActualSize] = useState(size);
+  const [isCardView, setIsCardView] = useState(false);
 
   // Получение данных
   const [isLoading, setIsLoading] = useState(false);
@@ -143,6 +148,8 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
 
   // Локализация
   const localizationFull = useTableViewLocalization();
+
+  const { colorScheme } = useMantineColorScheme();
 
   // Текущий контекст ренденинга
   const contextRender: IContextRenderBase = { disabled: props.disabled, size: actualSize, theme: theme };
@@ -206,7 +213,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     const { cell, row, column } = tableProps;
     const selectedValue = currentItem ? String(currentItem[property.fieldName]) : String(cell.getValue());
     const items = property.possibleValues!;
-    const isModalMode = creatingStatus ? (table.options.createDisplayMode === 'modal') : (table.options.editDisplayMode === 'modal');
+    const isModalMode = creatingStatus ? table.options.createDisplayMode === 'modal' : table.options.editDisplayMode === 'modal';
     return (
       <Select<TItem>
         disabled={props.disabled}
@@ -239,7 +246,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     const { cell, row, column } = tableProps;
     const selectedValues = currentItem ? (currentItem[property.fieldName] as any[]) : (cell.getValue() as any[]);
     const items = property.possibleValues!;
-    const isModalMode = creatingStatus ? (table.options.createDisplayMode === 'modal') : (table.options.editDisplayMode === 'modal');
+    const isModalMode = creatingStatus ? table.options.createDisplayMode === 'modal' : table.options.editDisplayMode === 'modal';
 
     return (
       <MultiSelect<TItem>
@@ -298,15 +305,14 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
                   selectRenderComponent={true}
                   size={actualSize}
                   {...property.visualSettings?.propsEdit}
-                  onChangedItem={(image) =>
+                  onChangedItem={(image) => 
                   {
                     const newItem = ObjectInfo.updatedObject(currentItem, property, image?.source) as TItem;
                     setCurrentItem(newItem);
 
                     // @ts-expect-error row._valuesCache
                     row._valuesCache[column.id] = image?.source;
-                  }
-                  }
+                  }}
                 />
               );
             };
@@ -1048,7 +1054,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     const newFontSize = TSizeTypes.prev(actualSize);
     setActualSize(newFontSize);
   };
-  
+
   //
   // #region Методы жизненного цикла
   //
@@ -1069,7 +1075,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     if (validator && currentItem) 
     {
       const statusValidation = validator.validate(currentItem);
-    
+
       // 1. Проверяем изменение статуса валидности
       if (statusValidation !== currentItemValid) 
       {
@@ -1116,9 +1122,11 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   const renderTopToolbarCustomActionsAddRow = (props: { table: MRT_TableInstance<TItem> }) => 
   {
     return (
-      <Button m="md" onClick={handleCreateRowBeginAsync}>
-        {LocalizationCore.data.actions.add}
-      </Button>
+      <HorizontalStack>
+        <Button m="md" onClick={handleCreateRowBeginAsync}>
+          {LocalizationCore.data.actions.add}
+        </Button>
+      </HorizontalStack>
     );
   };
 
@@ -1134,15 +1142,21 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
         <MRT_ToggleFullScreenButton table={table} />
 
         {/* 2. Добавляем ваши кастомные кнопки в самый конец */}
-        <Tooltip label="Обновить данные">
+        <Tooltip label={LocalizationCore.data.controls.decreaseFont}>
           <ActionIcon color="gray" variant="subtle" onClick={handleDecreaseFont}>
             <IconTextDecrease />
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label="Настройки">
-          <ActionIcon color="gray" mr={'md'} variant="subtle" onClick={handleIncreaseFont}>
+        <Tooltip label={LocalizationCore.data.controls.increaseFont}>
+          <ActionIcon color="gray" variant="subtle" onClick={handleIncreaseFont}>
             <IconTextIncrease />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label={isCardView ? LocalizationCore.data.controls.viewTable : LocalizationCore.data.controls.viewCard}>
+          <ActionIcon color="gray" disabled={disableViewCard} mr={'md'} variant="subtle" onClick={() => setIsCardView(!isCardView)}>
+            {isCardView ? <IconTable /> : <IconLayoutGrid />}
           </ActionIcon>
         </Tooltip>
       </>
@@ -1182,12 +1196,8 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     onGlobalFilterChange: setGlobalFilter,
     onPaginationChange: setPaginationModel,
     onSortingChange: setSortingState,
-    mantineEditRowModalProps: ({ row }) => ({
-      title: editItemName
-    }),
-    mantineCreateRowModalProps: ({ row }) => ({
-      title: editItemName
-    }),
+    mantineEditRowModalProps: ({ row }) => ({ title: editItemName }),
+    mantineCreateRowModalProps: ({ row }) => ({ title: editItemName }),
     mantineFilterMultiSelectProps: { size: actualSize },
     mantineFilterSelectProps: { size: actualSize },
     mantineFilterTextInputProps: { size: actualSize },
@@ -1211,9 +1221,49 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
     }
   });
 
+  const { rows } = table.getRowModel();
+
+  const actualRenderCard = (renderCard ?? objectInfo.renderObject)!;
+
+  const renderInternalItem = (item: MRT_Row<TItem>): ReactNode => 
+  {
+    const contextRender = { size: size, selected: item.getIsSelected() } as IContextRenderBase;
+    return actualRenderCard(item.original, contextRender) as ReactNode;
+  };
+
+  const gridComponent = disableViewCard ? (
+    <></>
+  ) : (
+    <ScrollArea p="xs" style={{ height: 0, flex: 1 }}>
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} p="md">
+        {rows.map((row) => (
+          <Card
+            key={row.id}
+            withBorder
+            style={(theme) => ({
+              cursor: 'pointer',
+              transition: 'all 0.2s ease', // Плавность анимации
+              // Динамическая граница
+              borderColor: row.getIsSelected() ? theme.colors[theme.primaryColor][6] : undefined,
+              // Легкое масштабирование при выделении
+              transform: row.getIsSelected() ? 'scale(1.02)' : 'scale(1)',
+              backgroundColor: row.getIsSelected() ? (colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]) : undefined
+            })}
+            onClick={() => 
+            {
+              row.toggleSelected(!row.getIsSelected());
+            }}
+          >
+            {renderInternalItem(row)}
+          </Card>
+        ))}
+      </SimpleGrid>
+    </ScrollArea>
+  );
+
   return (
     <>
-      <MantineReactTable table={table} />
+      <MantineReactTable specificTableBody={isCardView ? gridComponent : undefined} table={table} />
       <Modal key={'deleteDialog'} centered opened={openDeleteDialog} title={LocalizationCore.data.actions.delete} onClose={handleCloseDeleteDialog}>
         <VerticalStack spacing={'md'}>
           <Text>{deleteItemName}</Text>

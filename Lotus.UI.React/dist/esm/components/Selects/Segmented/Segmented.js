@@ -6,9 +6,9 @@ import { useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { ContainerControl, Primitive } from '#components/Common';
 import { VerticalStack } from '#components/Layout';
-const styleContainerItem = { style: { padding: '0.25rem' } };
+const styleContainerItem = { hAlign: 'center' };
 export function Segmented(props) {
-    const { items, onChangedItem, selectedItem, imageDatabase, getValueItem = ItemsHelper.getValueOfItem, getLabelItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, segmentedProps, size, ...otherProps } = props;
+    const { items, onChangedItem, selectedItem, imageDatabase, getValueItem = ItemsHelper.getValueOfItem, getLabelItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, segmentedProps, size, useAccentSelection, ...otherProps } = props;
     const data = useMemo(() => items.map((item) => ({
         value: getValueItem(item).toString(),
         disabled: getDisabledItem(item),
@@ -34,8 +34,21 @@ export function Segmented(props) {
             segmentedProps?.onChange(value);
         }
     };
+    const styles = useAccentSelection
+        ? {
+            // Индикатор (подложка, которая перемещается)
+            indicator: {
+                outline: `1px solid var(--mantine-color-${segmentedProps?.color ?? 'blue'}-filled)`,
+                outlineOffset: '-1px', // Чтобы рамка была внутри и не обрезалась
+                backgroundColor: `var(--mantine-color-${segmentedProps?.color ?? 'blue'}-light)` // Можно сделать легкий фон
+            }
+        }
+        : undefined;
+    if (useAccentSelection && segmentedProps) {
+        segmentedProps.color = undefined;
+    }
     if (otherProps.inlinePlace) {
-        return (_jsx(ContainerControl, { ...otherProps, control: _jsx(SegmentedControl, { data: data, h: undefined, size: size, style: { flex: 1, ...segmentedProps?.style }, value: selectedValue, w: undefined, onChange: handleChange, ...segmentedProps }), size: size, vAlign: "center" }));
+        return (_jsx(ContainerControl, { ...otherProps, control: _jsx(SegmentedControl, { data: data, h: undefined, size: size, style: { flex: 1, ...segmentedProps?.style }, styles: styles, value: selectedValue, w: undefined, onChange: handleChange, ...segmentedProps }), size: size, vAlign: "center" }));
     }
     else {
         if (otherProps.label) {

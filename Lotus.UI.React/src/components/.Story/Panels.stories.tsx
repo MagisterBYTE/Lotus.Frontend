@@ -107,6 +107,7 @@ export const PanelPerson: Story = {
           <Segmented
             inlinePlace={args.inlinePlace}
             label="Раса"
+            useAccentSelection
             labelProps={{ w: `${args.labelWidth ?? 40}%` }}
             items={OptionsStory.TextAndIconReact}
             size={args.size}

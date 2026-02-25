@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import classes from './MRT_TableContainer.module.css';
 
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { ReactElement, useEffect, useLayoutEffect, useState } from 'react';
 
 import { Box, type BoxProps, LoadingOverlay } from '@mantine/core';
 
@@ -17,10 +17,12 @@ const useIsomorphicLayoutEffect =
 
 interface Props<TData extends MRT_RowData> extends BoxProps {
   table: MRT_TableInstance<TData>;
+  specificTableBody?: ReactElement;
 }
 
 export const MRT_TableContainer = <TData extends MRT_RowData>({
   table,
+  specificTableBody,
   ...rest
 }: Props<TData>) => {
   const {
@@ -99,7 +101,7 @@ export const MRT_TableContainer = <TData extends MRT_RowData>({
         zIndex={2}
         {...loadingOverlayProps}
       />
-      <MRT_Table table={table} />
+      <MRT_Table table={table} specificTableBody={specificTableBody} />
       {(createModalOpen || editModalOpen) && (
         <MRT_EditRowModal open table={table} />
       )}
