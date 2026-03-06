@@ -1,15 +1,31 @@
 
 /**
+ * Функция-обработчик события изменения свойства.
+ * Используется для уведомления подписчиков о том, что значение свойства объекта было изменено.
+ * 
+ * @callback PropertyChangedFunction
+ * @param {string} [propertyName] - Имя изменившегося свойства. Если не указано, подразумевается изменение всех свойств объекта.
+ * @param {unknown} [sender] - Объект, инициировавший событие (источник).
+ * @returns {void}
+ */
+export type PropertyChangedFunction = (propertyName?: string, sender?: unknown) => void;
+
+/**
  * Интерфейс для объектов, которые могут информировать об изменении свойства
  */
 export interface INotifyPropertyChanged
 {
   /**
-   * Метод реализующий информирование об изменении свойства
-   * @param propertyName Имя свойства которого изменилось
-   * @param sender Источник изменения
+   * Метод для добавления наблюдателя за объектом
+   * @param handler Функция-обработчик события изменения свойства
    */
-  onPropertyChanged: (propertyName?: string, sender?: unknown) => void;
+  addPropertyChanged: (handler: PropertyChangedFunction) => void
+
+   /**
+   * Метод для удаления наблюдателя за объектом
+   * @param handler Функция-обработчик события изменения свойства
+   */
+  removePropertyChanged: (handler: PropertyChangedFunction) => void 
 }
 
 /**
@@ -21,7 +37,7 @@ export function instanceOfNotifyPropertyChanged(value: unknown): value is INotif
 {
   if (value && typeof value === 'object')
   {
-    return 'onPropertyChanged' in value && typeof value.onPropertyChanged === 'function';
+    return 'addPropertyChanged' in value && typeof value.addPropertyChanged === 'function';
   }
 
   return false;

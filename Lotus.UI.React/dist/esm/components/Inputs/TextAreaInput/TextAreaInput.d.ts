@@ -4,7 +4,7 @@ import { IBaseContainerControlProps } from '#components/Common';
 import { IHorizontalStackProps } from '#components/Layout';
 type TValueType = PropertyType<TextareaProps, 'value'>;
 type TChangeFunction = PropertyType<TextareaProps, 'onChange'>;
-type TChangedValueFunction = (value: TValueType) => void;
+type TChangedValueFunction = (value: string) => void;
 export interface ITextAreaInputProps extends IBaseContainerControlProps, Omit<IHorizontalStackProps, 'onChange'> {
     textAreaProps?: Omit<TextareaProps, keyof IBaseContainerControlProps | 'value' | 'disabled' | 'onChange'>;
     value?: TValueType;

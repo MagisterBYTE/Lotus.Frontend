@@ -9,7 +9,7 @@ type TValueType = PropertyType<PasswordInputProps, 'value'>;
 
 type TChangeFunction = PropertyType<PasswordInputProps, 'onChange'>;
 
-type TChangedValueFunction = (value: TValueType) => void;
+type TChangedValueFunction = (value: string) => void;
 
 export interface IPasswordInputProps extends IBaseContainerControlProps, Omit<IHorizontalStackProps, 'onChange'>
 {

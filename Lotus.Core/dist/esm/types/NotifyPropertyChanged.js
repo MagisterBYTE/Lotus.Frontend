@@ -5,7 +5,7 @@
  */
 export function instanceOfNotifyPropertyChanged(value) {
     if (value && typeof value === 'object') {
-        return 'onPropertyChanged' in value && typeof value.onPropertyChanged === 'function';
+        return 'addPropertyChanged' in value && typeof value.addPropertyChanged === 'function';
     }
     return false;
 }

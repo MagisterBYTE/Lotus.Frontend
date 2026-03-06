@@ -8,7 +8,7 @@ type TValueMin = PropertyType<NumberInputProps, 'min'>;
 type TValueStep = PropertyType<NumberInputProps, 'step'>;
 type TValueDefaultValue = PropertyType<NumberInputProps, 'defaultValue'>;
 type TChangeFunction = PropertyType<NumberInputProps, 'onChange'>;
-type TChangedValueFunction = (value: TValueType) => void;
+type TChangedValueFunction = (value: number) => void;
 export interface INumberInputProps extends IBaseContainerControlProps, Omit<IHorizontalStackProps, 'onChange' | 'defaultValue'> {
     numberInputProps?: Omit<NumberInputProps, keyof IBaseContainerControlProps | 'value' | 'min' | 'step' | 'value' | 'disabled' | 'onChange'>;
     value?: TValueType;

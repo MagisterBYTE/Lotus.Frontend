@@ -1,0 +1,1 @@
+{"version":3,"file":"GameButton.js","sourceRoot":"","sources":["../../../../src/gameComponents/Buttons/GameButton.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,eAAe,CAAC;AAC5C,OAAO,EAAE,WAAW,EAAE,MAAM,eAAe,CAAC;AAE5C;;GAEG;AACH,MAAM,CAAC,MAAM,UAAU,GAAG;IACxB,KAAK,EAAE,WAAW;IAClB,KAAK,EAAE,WAAW;CACnB,CAAC"}

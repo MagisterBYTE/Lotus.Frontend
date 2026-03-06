@@ -1,0 +1,1 @@
+export { MetalButton, type IMetalButtonProps } from './MetalButton';

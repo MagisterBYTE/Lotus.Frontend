@@ -1,0 +1,1 @@
+export { BlackButton, type IBlackButtonProps } from './BlackButton';

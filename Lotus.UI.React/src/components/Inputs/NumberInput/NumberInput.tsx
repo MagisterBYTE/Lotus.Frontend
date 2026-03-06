@@ -12,7 +12,7 @@ type TValueDefaultValue = PropertyType<NumberInputProps, 'defaultValue'>;
 
 type TChangeFunction = PropertyType<NumberInputProps, 'onChange'>;
 
-type TChangedValueFunction = (value: TValueType) => void;
+type TChangedValueFunction = (value: number) => void;
 
 export interface INumberInputProps extends IBaseContainerControlProps, Omit<IHorizontalStackProps, 'onChange' | 'defaultValue'>
 {
@@ -41,7 +41,7 @@ export function NumberInput(props: INumberInputProps)
     }
     if (onChangeValue)
     {
-      onChangeValue(value);
+      onChangeValue(Number(value));
     }
   };
 

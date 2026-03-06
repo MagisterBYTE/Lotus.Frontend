@@ -10,7 +10,7 @@ export function NumberInput(props) {
             onChange(value);
         }
         if (onChangeValue) {
-            onChangeValue(value);
+            onChangeValue(Number(value));
         }
     };
     if (otherProps.inlinePlace) {

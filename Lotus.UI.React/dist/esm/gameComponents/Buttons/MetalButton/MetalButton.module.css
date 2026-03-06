@@ -1,0 +1,99 @@
+.button {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px; 
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+  
+  /* Важно: разрешаем события для кнопки, но перехватывать их будет сам button */
+  pointer-events: auto; 
+
+  /* Геометрия */
+  clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+
+  /* Градиент на переменных */
+  background: linear-gradient(
+    to bottom,
+    var(--btn-light) 0%,
+    var(--btn-main) 45%,
+    var(--btn-accent) 50%,
+    var(--btn-main) 55%,
+    var(--btn-dark) 100%
+  );
+  
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Цветовые схемы */
+.button.default {
+  --btn-light: #4a5568; --btn-main: #2d3748; --btn-accent: #1a202c; --btn-dark: #10141d;
+}
+
+.button.light {
+  --btn-light: #a0aec0; --btn-main: #718096; --btn-accent: #4a5568; --btn-dark: #2d3748;
+}
+
+.button.gray {
+  --btn-light: #edf2f7; --btn-main: #cbd5e0; --btn-accent: #a0aec0; --btn-dark: #718096;
+}
+
+.button.coffee {
+  --btn-light: #8b735b; --btn-main: #5d4a37; --btn-accent: #3e3226; --btn-dark: #2a2118;
+}
+
+/* Эффект при наведении */
+.button:hover:not(.gray):not(:disabled) {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+.button:hover.gray:not(:disabled) {
+  filter: brightness(0.9);
+  transform: translateY(-2px);
+}
+
+/* Эффект при нажатии */
+/* Добавлен pointer-events: none в .content, чтобы клик проходил сквозь него к кнопке */
+.button:active:not(:disabled) {
+  transform: translateY(1px) !important; 
+  filter: brightness(0.9) !important;
+}
+
+/* Состояние disabled */
+.button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(1) brightness(0.6);
+  opacity: 0.6;
+  transform: none !important;
+  pointer-events: none; /* Блокируем взаимодействие */
+}
+
+/* Контент */
+.content {
+  color: #f8fafc;
+  font-family: sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px #000;
+  white-space: nowrap;
+  
+  /* КРИТИЧЕСКИ ВАЖНО: убираем перехват кликов, чтобы :active работало на кнопке */
+  pointer-events: none;
+  user-select: none; /* Чтобы текст не выделялся при быстрых кликах */
+}
+
+/* Для светлой темы Gray текст делаем темным */
+.button.gray .content {
+  color: #2d3748;
+  text-shadow: none;
+}
+
+/* Disabled текст */
+.button:disabled .content {
+  color: #718096;
+  text-shadow: none;
+}

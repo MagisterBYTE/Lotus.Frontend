@@ -1,10 +1,6 @@
 import { ArgTypesStory, IPerson, PersonRender, Persons } from '#storydata';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GallerySelect } from './GallerySelect';
-import { IContextRenderBase } from '#types';
-import { Box, Grid, HorizontalStack } from '#components/Layout';
-import { Text } from '#components/Display';
-import { Avatar } from '@mantine/core';
 
 const meta = {
   title: 'Selects/GallerySelect',

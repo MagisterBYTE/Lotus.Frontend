@@ -5,7 +5,7 @@ import { IBaseContainerControlProps } from '#components/Common';
 import { IHorizontalStackProps } from '#components/Layout';
 type TValueType = PropertyType<PasswordInputProps, 'value'>;
 type TChangeFunction = PropertyType<PasswordInputProps, 'onChange'>;
-type TChangedValueFunction = (value: TValueType) => void;
+type TChangedValueFunction = (value: string) => void;
 export interface IPasswordInputProps extends IBaseContainerControlProps, Omit<IHorizontalStackProps, 'onChange'> {
     passwordInputProps?: Omit<PasswordInputProps, keyof IBaseContainerControlProps | 'value' | 'disabled' | 'onChange'>;
     value?: TValueType;

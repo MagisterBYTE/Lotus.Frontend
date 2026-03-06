@@ -1,0 +1,1 @@
+{"version":3,"file":"MetalButton.d.ts","sourceRoot":"","sources":["../../../../../src/gameComponents/Buttons/MetalButton/MetalButton.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,OAAO,CAAC;AAC9C,OAAO,EAAE,cAAc,EAAE,MAAM,UAAU,CAAC;AAG1C,MAAM,WAAW,iBAAkB,SAAQ,qBAAqB,CAAC,QAAQ,CAAC;IAEtE,OAAO,CAAC,EAAE,cAAc,CAAC;CAC5B;AAED,wBAAgB,WAAW,CAAC,KAAK,EAAE,iBAAiB,2CAcnD"}

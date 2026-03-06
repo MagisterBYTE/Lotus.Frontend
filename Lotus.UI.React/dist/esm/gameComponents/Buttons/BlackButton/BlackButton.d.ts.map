@@ -1,0 +1,1 @@
+{"version":3,"file":"BlackButton.d.ts","sourceRoot":"","sources":["../../../../../src/gameComponents/Buttons/BlackButton/BlackButton.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,OAAO,CAAC;AAC9C,OAAO,EAAE,cAAc,EAAE,MAAM,UAAU,CAAC;AAG1C,MAAM,WAAW,iBAAkB,SAAQ,qBAAqB,CAAC,QAAQ,CAAC;IAExE,OAAO,CAAC,EAAE,cAAc,CAAC;CAC1B;AAED,wBAAgB,WAAW,CAAC,KAAK,EAAE,iBAAiB,2CAcnD"}

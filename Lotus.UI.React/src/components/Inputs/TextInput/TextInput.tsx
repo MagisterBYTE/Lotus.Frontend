@@ -9,7 +9,7 @@ type TValueType = PropertyType<TextInputProps, 'value'>;
 
 type TChangeFunction = PropertyType<TextInputProps, 'onChange'>;
 
-type TChangedValueFunction = (value: TValueType) => void;
+type TChangedValueFunction = (value: string) => void;
 
 export interface ITextInputProps extends IBaseContainerControlProps, Omit<IHorizontalStackProps, 'onChange'>
 {

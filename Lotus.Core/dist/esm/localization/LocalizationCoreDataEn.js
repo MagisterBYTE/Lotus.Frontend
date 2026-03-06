@@ -33,7 +33,7 @@ export const LocalizationCoreDataEn = {
         viewTable: 'Table view',
         viewCard: 'Card view',
         filters: 'Filters',
-        filterFunction: 'Filter function',
+        filterFunction: 'Filter function'
     },
     actions: {
         load: 'Load',
