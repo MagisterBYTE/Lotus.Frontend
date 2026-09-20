@@ -708,8 +708,10 @@ export function TableView(props) {
     // Фильтрация
     //
     const handleColumnFilterFnsChange = (updaterOrValue) => {
-        const data = updaterOrValue;
-        setColumnFiltersFns(data);
+        setColumnFiltersFns((previous) => {
+            const current = previous ?? {};
+            return typeof updaterOrValue === 'function' ? updaterOrValue(current) : updaterOrValue;
+        });
     };
     //
     // Размер шрифта

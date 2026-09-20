@@ -17,6 +17,7 @@ export class TableViewPropsPreset {
             manualFiltering: true,
             manualPagination: true,
             manualSorting: true,
+            autoResetPageIndex: false,
             // Редактируем по умолчанию в режиме строки
             editDisplayMode: 'modal',
             // Закрепление управляющих столбцов

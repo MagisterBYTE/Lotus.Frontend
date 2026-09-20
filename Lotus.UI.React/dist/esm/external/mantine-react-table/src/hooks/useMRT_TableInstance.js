@@ -124,6 +124,25 @@ export const useMRT_TableInstance = (definedTableOptions) => {
     const showColumnFilters = useSelector(showColumnFiltersAtom);
     const showGlobalFilter = useSelector(showGlobalFilterAtom);
     const showToolbarDropZone = useSelector(showToolbarDropZoneAtom);
+    const userState = definedTableOptions.state ?? {};
+    const isSliceControlled = (key, onChangeKey) => userState[key] !== undefined ||
+        definedTableOptions[onChangeKey] !== undefined;
+    // Table v9: `options.atoms[key]` wins over `options.state[key]`. If MRT
+    // always owns pagination/columnOrder/etc. via atoms, controlled TableView
+    // state and `onPaginationChange` never reach the grid.
+    const tableAtoms = {};
+    if (!isSliceControlled('columnOrder', 'onColumnOrderChange')) {
+        tableAtoms.columnOrder = columnOrderAtom;
+    }
+    if (!isSliceControlled('columnResizing', 'onColumnResizingChange')) {
+        tableAtoms.columnResizing = columnResizingAtom;
+    }
+    if (!isSliceControlled('grouping', 'onGroupingChange')) {
+        tableAtoms.grouping = groupingAtom;
+    }
+    if (!isSliceControlled('pagination', 'onPaginationChange')) {
+        tableAtoms.pagination = paginationAtom;
+    }
     // Mirror values into options.state so utilities that read
     // `tableOptions.state.X` (e.g. column prep, display-column factories) keep
     // working. The user can still override individual slices by setting
@@ -148,7 +167,7 @@ export const useMRT_TableInstance = (definedTableOptions) => {
         showColumnFilters,
         showGlobalFilter,
         showToolbarDropZone,
-        ...definedTableOptions.state,
+        ...userState,
     };
     // The table options now include all state needed to help determine column visibility and order logic
     const statefulTableOptions = definedTableOptions;
@@ -240,17 +259,14 @@ export const useMRT_TableInstance = (definedTableOptions) => {
         statefulTableOptions.state.isLoading,
         statefulTableOptions.state.showSkeletons,
     ]);
+    // Table v9: `options.atoms[key]` wins over controlled `options.state[key]`.
+    // Only pass atoms for slices the consumer is not controlling, otherwise
+    // `onPaginationChange` / `onColumnFiltersChange` update React state but the
+    // grid keeps reading the stale atom (page 0, empty filters).
     const table = useTable({
         ...statefulTableOptions,
         globalFilterFn: (globalFilterFn ?? 'fuzzy'),
-        // Hand TanStack-aware slices over to our external atoms — library writes
-        // (e.g. `table.setPageIndex(...)`, drag-resize) flow straight into them.
-        atoms: {
-            columnOrder: columnOrderAtom,
-            columnResizing: columnResizingAtom,
-            grouping: groupingAtom,
-            pagination: paginationAtom,
-        },
+        atoms: tableAtoms,
     }, (state) => state);
     // v9 spells the resize setter `setcolumnResizing` (lowercase 'c') because
     // it's auto-generated from the state-key name. Expose a camelCase alias so
