@@ -1,7 +1,7 @@
 /**
  * Смысловой тип цвета
  */
-export type TColorSemantic = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
+export type TColorSemantic = "primary" | "secondary" | "error" | "warning" | "info" | "success";
 /**
  * Массив всех смысловых типов цвета
  */

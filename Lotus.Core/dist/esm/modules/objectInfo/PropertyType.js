@@ -1,7 +1,7 @@
 /**
  * Допустимые значения типа свойства.
  */
-export const TPropertyTypeValues = ['bool', 'int', 'long', 'float', 'double', 'enum', 'string', 'dateTime', 'guid'];
+export const TPropertyTypeValues = ['bool', 'int', 'long', 'float', 'double', 'enum', 'string', 'dateTime', 'guid', 'object'];
 /**
  * Объект-обёртка для работы с типами свойств (EnumClass-паттерн).
  */
@@ -21,6 +21,7 @@ export const TPropertyTypes = {
     String: TPropertyTypeValues[6],
     DateTime: TPropertyTypeValues[7],
     Guid: TPropertyTypeValues[8],
+    Object: TPropertyTypeValues[9],
     /**
      * Возвращает все доступные значения.
      */

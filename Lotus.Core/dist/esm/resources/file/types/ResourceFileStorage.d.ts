@@ -1,7 +1,7 @@
 /**
  * Массив значений места хранения файла.
  */
-export declare const TResourceFileStorageValues: readonly ["local", "server", "database"];
+export declare const TResourceFileStorageValues: readonly ['local', 'server', 'database'];
 /**
  * Место хранения файла.
  */

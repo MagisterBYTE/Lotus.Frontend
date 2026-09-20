@@ -82,6 +82,7 @@ export class DateTimeConverter {
      * @param result Значение.
      * @returns Статус успешности преобразования.
      */
+    // oxlint-disable-next-line no-unused-vars -- out-параметр result мутируется по ссылке (Date)
     static tryParse(text, result) {
         if (!text) {
             result = new Date(0);
@@ -89,7 +90,6 @@ export class DateTimeConverter {
         }
         const date = DateTimeConverter.tryParseDate(text);
         if (date) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             result = date;
             return true;
         }

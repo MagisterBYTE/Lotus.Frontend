@@ -174,7 +174,7 @@ export class DateTimeFormatter {
      * @param {Intl.DurationFormatOptions} [options] - Опции форматирования
      * @returns {number} Максимальное количество единиц
      */
-    // eslint-disable-next-line complexity
+    // oxlint-disable-next-line complexity
     static calculateMaxUnits(duration, options) {
         // Подсчитываем количество заданных единиц
         let unitCount = 0;
@@ -476,7 +476,7 @@ export class DateTimeFormatter {
      * @param {string} locale - Локаль
      * @returns {string | undefined} Единица измерения
      */
-    // eslint-disable-next-line complexity
+    // oxlint-disable-next-line complexity
     static guessUnitFromToken(token, locale) {
         const lowerToken = token.toLowerCase();
         // Для русского языка
@@ -576,7 +576,7 @@ export class DateTimeFormatter {
      * DateTimeFormatter.formatRelative(3600, 'en-US', { style: 'short' }); // "1 hr"
      * ```
      */
-    // eslint-disable-next-line complexity
+    // oxlint-disable-next-line complexity
     static formatRelative(seconds, locale = navigator.language, options) {
         // Проверка на нулевую или отрицательную длительность
         if (seconds <= 0.5 || Number.isFinite(seconds) === false || Assert.emptyValue(seconds)) {

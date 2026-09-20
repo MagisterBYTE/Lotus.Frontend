@@ -11,6 +11,6 @@ export interface IValidateItem<TValue = unknown>
    * @param context Контекст вызова
    * @returns Объект валидации отдельного элемента/значения
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   validateItem(value: TValue, context?: any):IValidationItem;
 }

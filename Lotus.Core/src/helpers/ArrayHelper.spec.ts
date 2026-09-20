@@ -111,11 +111,11 @@ describe('ArrayHelper', () =>
       const result = ArrayHelper.groupBy(testData, 'category');
 
       expect(result.length).toBe(3);
-      // eslint-disable-next-line max-nested-callbacks
+      // oxlint-disable-next-line max-nested-callbacks
       expect(result.find(g => g.groupKey == 'A')?.items.length).toBe(2);
-      // eslint-disable-next-line max-nested-callbacks
+      // oxlint-disable-next-line max-nested-callbacks
       expect(result.find(g => g.groupKey == 'B')?.items.length).toBe(1);
-      // eslint-disable-next-line max-nested-callbacks
+      // oxlint-disable-next-line max-nested-callbacks
       expect(result.find(g => g.groupKey == 'C')?.items.length).toBe(1);
     });
 
@@ -126,7 +126,7 @@ describe('ArrayHelper', () =>
 
     it('should handle non-existent property by creating groups with undefined keys', () => 
     {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // oxlint-disable-next-line typescript/no-explicit-any
       const result = ArrayHelper.groupBy(testData, 'nonexistent' as any);
       expect(result.length).toBe(1);
       expect(result[0].groupKey).toBeUndefined();
@@ -147,7 +147,7 @@ describe('ArrayHelper', () =>
     {
       const result = ArrayHelper.uniqueBy(testData, 'id');
       expect(result.length).toBe(3);
-      // eslint-disable-next-line max-nested-callbacks
+      // oxlint-disable-next-line max-nested-callbacks
       expect(result.map(i => i.id)).toEqual([1, 2, 3]);
     });
 

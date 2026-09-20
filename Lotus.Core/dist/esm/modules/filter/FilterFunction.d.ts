@@ -1,7 +1,7 @@
 /**
  * Массив значений типов функций фильтрации
  */
-export declare const TFilterFunctionValues: readonly ["equals", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan", "greaterThanOrEqual", "between", "contains", "startsWith", "endsWith", "like", "notEmpty", "empty", "includeAny", "includeAll", "includeEquals", "includeNone"];
+export declare const TFilterFunctionValues: readonly ['equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'between', 'contains', 'startsWith', 'endsWith', 'like', 'notEmpty', 'empty', 'includeAny', 'includeAll', 'includeEquals', 'includeNone'];
 /**
  * Тип функции для фильтрации данных
  */

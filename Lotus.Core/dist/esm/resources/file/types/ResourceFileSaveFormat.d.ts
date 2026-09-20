@@ -1,7 +1,7 @@
 /**
  * Массив форматов хранения файла в базе данных.
  */
-export declare const TResourceFileSaveFormatValues: readonly ["base64", "raw"];
+export declare const TResourceFileSaveFormatValues: readonly ['base64', 'raw'];
 /**
  * Формат хранения файла в базе данных.
  */

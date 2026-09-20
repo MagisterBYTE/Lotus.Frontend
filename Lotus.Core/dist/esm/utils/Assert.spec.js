@@ -1,4 +1,4 @@
-/* eslint-disable max-nested-callbacks */
+/* oxlint-disable max-nested-callbacks */
 import { Assert } from './Assert'; // путь к вашему файлу
 describe('Assert', () => {
     describe('emptyValue', () => {

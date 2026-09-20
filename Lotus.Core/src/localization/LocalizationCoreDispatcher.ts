@@ -69,7 +69,7 @@ export class LocalizationCoreDispatcherClass implements ILocalizationDispatcher
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   public onLanguageChangeEvent(event: LanguageChangeEvent|any)
   {
     this.setLanguage(event.detail.lang);

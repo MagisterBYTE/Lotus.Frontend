@@ -1,5 +1,5 @@
 import { FilterFunctionDescriptors } from '#modules/filter';
-import { PropertyTypeDescriptors } from '#modules/objectInfo';
+import { TPropertyTypes } from '#modules/objectInfo';
 import { IFilterProperty } from './FilterProperty';
 
 /**
@@ -13,6 +13,6 @@ export abstract class FilterPropertyConstants
   public static readonly Empty: IFilterProperty = {
     function: FilterFunctionDescriptors.Equals,
     propertyPath: '',
-    propertyTypeDesc: PropertyTypeDescriptors.Bool
+    propertyType: TPropertyTypes.Bool
   } as const;
 }

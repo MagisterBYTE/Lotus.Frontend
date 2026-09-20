@@ -94,7 +94,7 @@ export class ColorHelper {
         }
         // Обработка RGB/RGBA строк
         let m;
-        // eslint-disable-next-line no-cond-assign
+        // oxlint-disable-next-line no-cond-assign
         if (m = c.match(/rgb\( ?(\d+), ?(\d+), ?(\d+) ?\)/)) {
             const r = parseInt(m[1], 10);
             const g = parseInt(m[2], 10);
@@ -103,7 +103,7 @@ export class ColorHelper {
                 return [r, g, b];
             }
         }
-        // eslint-disable-next-line no-cond-assign
+        // oxlint-disable-next-line no-cond-assign
         if (m = c.match(/rgba\( ?(\d+), ?(\d+), ?(\d+), ?(\d+.?\d*) ?\)/)) {
             const r = parseInt(m[1], 10);
             const g = parseInt(m[2], 10);
@@ -143,7 +143,7 @@ export class ColorHelper {
      * @param hsla - Проверяемый объект
      * @returns true если объект содержит h, s, l свойства с валидными значениями
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static isHSL(hsla) {
         return (typeof hsla === 'object' &&
             'h' in hsla && ColorHelper.isAlphaValue(hsla.h) &&
@@ -198,7 +198,7 @@ export class ColorHelper {
      * @param hsl - HSL объект {h, s, l}
      * @returns RGB массив [R, G, B]
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static hsl2rgbOld(hsl) {
         const h = hsl.h, s = hsl.s, l = hsl.l;
         let r, g, b;
@@ -220,7 +220,7 @@ export class ColorHelper {
    * @param hsl - объект HSL цвета
    * @returns объект RGB цвета
    */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static hsl2rgb(hsl) {
         const { h, s, l } = hsl;
         // Нормализуем hue в диапазон 0-1

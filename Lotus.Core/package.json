@@ -1,13 +1,14 @@
 {
   "name": "lotus-core",
-  "version": "3.5.0",
+  "version": "4.0.0",
   "scripts": {
     "test": "jest",
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
-    "lint": "eslint .",
-    "format": "prettier --write ."
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "keywords": [],
   "author": "MagisterBYTE aka DanielDem",
@@ -90,20 +91,16 @@
     "./package.json": "./package.json"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.3",
     "@types/jest": "^30.0.0",
-    "@types/lodash": "^4.17.24",
-    "eslint": "^9.39.3",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
-    "globals": "^17.4.0",
-    "jest": "^30.2.0",
-    "jiti": "^2.6.1",
-    "prettier": "3.8.1",
-    "ts-jest": "^29.4.6",
+    "@types/lodash": "^4.17.25",
+    "@types/node": "^26.6.2",
+    "jest": "^30.5.1",
+    "oxfmt": "^0.68.0",
+    "oxlint": "^1.83.0",
+    "oxlint-tsgolint": "^7.0.2002",
+    "ts-jest": "^29.4.12",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1"
+    "typescript": "^7.0.2"
   },
   "type": "module",
   "main": "dist/cjs/index.js",
@@ -116,6 +113,6 @@
     "esm"
   ],
   "dependencies": {
-    "lodash": "^4.17.23"
+    "lodash": "^4.18.1"
   }
 }

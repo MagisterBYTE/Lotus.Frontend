@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable typescript/no-explicit-any */
 import { LocalizationCore } from '#localization';
 import { Assert } from '#utils';
 import { ValidationHelper } from './ValidationHelper';
@@ -472,7 +472,7 @@ export class ValidationResult implements IValidationResult
    * @param maxLength Максимальная длина строки
    * @param errorText Текст ошибки (опционально)
    */
-  // eslint-disable-next-line max-params
+  // oxlint-disable-next-line max-params
   public addErrorRangeString(key: string, value: string | undefined, minLength: number, maxLength: number, errorText?: string): void
   {
     if (Assert.existValue<string>(value))
@@ -536,7 +536,7 @@ export class ValidationResult implements IValidationResult
    * @param max Максимальное значение
    * @param errorText Текст ошибки (опционально)
    */
-  // eslint-disable-next-line max-params
+  // oxlint-disable-next-line max-params
   public addErrorRangeNumber(key: string, value: number, min: number, max: number, errorText?: string): void
   {
     if (Assert.existValue(value))
@@ -705,7 +705,7 @@ export class ValidationResult implements IValidationResult
           const result = validator(value);
           if (result)
           {
-            this.addValidationItem(key as string, result);
+            this.addValidationItem(key, result);
           }
         }
       }

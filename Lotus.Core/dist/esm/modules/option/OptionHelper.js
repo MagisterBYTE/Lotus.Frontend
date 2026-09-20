@@ -168,10 +168,10 @@ export class OptionHelper {
      * @param initialSelectedValue Начальное значение
      * @returns Корректная иконка по умолчанию или первая иконка из списка опций
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static getIconOrFirst(options, initialSelectedValue) {
         if (Assert.existValue(initialSelectedValue)) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             let icon = undefined;
             for (const option of options) {
                 if (option.value == initialSelectedValue) {
@@ -259,9 +259,9 @@ export class OptionHelper {
      * @param selectedValue Выбранное значение
      * @returns Иконка выбранного значения
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static getIconByValue(options, selectedValue) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line typescript/no-explicit-any
         let icon = undefined;
         if (Assert.existValue(selectedValue)) {
             for (const option of options) {
@@ -285,7 +285,7 @@ export class OptionHelper {
                 if (selectedValues.length > 0) {
                     const optionsSelected = [];
                     for (const option of options) {
-                        // eslint-disable-next-line max-depth
+                        // oxlint-disable-next-line max-depth
                         if (selectedValues.find((x) => x == option.value)) {
                             optionsSelected.push(option);
                         }
@@ -329,10 +329,10 @@ export class OptionHelper {
      * @param item Неопределённое значение
      * @returns Массив текста выбранных значений
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static getLabelsByUnknownValues(options, item) {
         if (Array.isArray(item)) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             const massive = item;
             if (ArrayHelper.checkIsNumbers(massive)) {
                 const numbers = massive.map((x) => {
@@ -371,7 +371,7 @@ export class OptionHelper {
      * @param context Контекст вызова
      * @returns Статус наличия иконки
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static hasIcons(options, context) {
         for (const option of options) {
             if (option.icon) {

@@ -3,7 +3,7 @@ import { IPropertyFiltering } from './PropertyFiltering';
 import { IPropertyGrouping } from './PropertyGrouping';
 import { IPropertyRendering } from './PropertyRendering';
 import { IPropertySorting } from './PropertySorting';
-import { IPropertyTypeDesc } from './PropertyTypeDesc';
+import { TPropertyType } from './PropertyType';
 import { IPropertyVisualSettings } from './PropertyVisualSettings';
 /**
  * Интерфейс для описания свойства объекта
@@ -28,7 +28,7 @@ export interface IPropertyDescriptor {
     /**
      * Описание типа свойства
      */
-    propertyTypeDesc: IPropertyTypeDesc;
+    propertyType: TPropertyType;
     /**
      * Типа свойства - массив
      */

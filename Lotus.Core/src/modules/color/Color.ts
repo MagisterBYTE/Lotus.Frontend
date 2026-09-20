@@ -1,5 +1,6 @@
-/* eslint-disable prefer-rest-params */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable prefer-rest-params */
+/* oxlint-disable typescript/no-explicit-any */
+/* oxlint-disable max-depth */
 import { ColorHelper } from './ColorHelper';
 import { IColorModelHSL } from './ColorModel';
 
@@ -66,7 +67,7 @@ export class Color
   constructor(any: IColorModelHSL, alpha: number);
   constructor(red: number, green: number, blue: number);
   constructor(red: number, green: number, blue: number, alpha: number);
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   constructor(red?: any, green?: number, blue?: number, alpha?: number) 
   {
     if (arguments.length === 0) 
@@ -926,7 +927,7 @@ export class Color
    * Получить цвет и цвет тени гармоничный к текущему
    * @returns Цвет и цвет тени гармоничный к текущему
    */
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   public createHarmoniousColorAndShadow(): { text: Color, shadow: Color }
   {
     const hsl = this._getHSL();

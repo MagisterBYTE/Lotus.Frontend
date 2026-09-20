@@ -42,4 +42,11 @@ export type PropertyType<TType, TPropertyName extends keyof TType> = TType[TProp
 export type Dictionary<TKey extends string | symbol | number | TGuid, TValue> = {
     [key in TKey]: TValue;
 };
+/**
+ * Делает все свойства типа T необязательными.
+ * @template TType - тип, свойства которого мы делаем необязательными.
+ */
+export type DeepPartial<TType> = TType extends (infer UType)[] ? Array<DeepPartial<UType>> : TType extends object ? {
+    [K in keyof TType]?: DeepPartial<TType[K]>;
+} : TType;
 //# sourceMappingURL=CommonTypes.d.ts.map

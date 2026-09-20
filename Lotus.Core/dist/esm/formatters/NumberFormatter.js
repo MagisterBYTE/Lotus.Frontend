@@ -27,7 +27,7 @@ export class NumberFormatter {
         const parts = formatter.formatToParts(number);
         // Ищем символы разделения
         const decimalSeparator = parts.find(part => part.type === 'decimal')?.value; // Запятая (",") для ru-RU
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // oxlint-disable-next-line no-unused-vars
         const groupSeparator = parts.find(part => part.type === 'group')?.value; // Неразрывный пробел ("\u202F") для ru-RU
         // Разделяем целую и дробную части
         const [integerPart, fractionalPart] = formatter.format(number).split(decimalSeparator ?? '.');

@@ -1,7 +1,7 @@
 /**
  * Допустимые значения типа свойства.
  */
-export declare const TPropertyTypeValues: readonly ["bool", "int", "long", "float", "double", "enum", "string", "dateTime", "guid"];
+export declare const TPropertyTypeValues: readonly ['bool', 'int', 'long', 'float', 'double', 'enum', 'string', 'dateTime', 'guid', 'object'];
 /**
  * Тип свойства
  */
@@ -25,6 +25,7 @@ export declare const TPropertyTypes: {
     readonly String: "string";
     readonly DateTime: "dateTime";
     readonly Guid: "guid";
+    readonly Object: "object";
     /**
      * Возвращает все доступные значения.
      */

@@ -1,4 +1,4 @@
-import { IPropertyTypeDesc } from '#modules/objectInfo';
+import { TPropertyType } from '#modules/objectInfo';
 
 /**
  * Интерфейс для сортировки по одному свойству
@@ -14,7 +14,7 @@ export interface ISortProperty
   /**
    * Описание типа свойства. Обязательно только при сортировке на фронте
    */
-  propertyTypeDesc?: IPropertyTypeDesc;
+  propertyType?: TPropertyType;
 
   /**
    * Статус сортировки по убыванию

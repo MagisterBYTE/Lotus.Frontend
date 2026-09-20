@@ -1,7 +1,7 @@
 /**
  * Массив значений форматов имени
  */
-export declare const TPersonNameFormatValues: readonly ["short", "full", "display", "initials"];
+export declare const TPersonNameFormatValues: readonly ['short', 'full', 'display', 'initials'];
 /**
  * Форматы имени
  */

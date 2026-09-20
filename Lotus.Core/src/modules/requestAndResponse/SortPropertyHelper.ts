@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { BooleanConverter, DateTimeConverter } from '#converters';
-import { BooleanHelper, DateTimeHelper, NumberHelper, StringHelper } from '#helpers';
-import { TPropertyType } from '#modules/objectInfo';
-import { ISortProperty, ISortPropertyCollection } from './SortProperty';
+/* oxlint-disable typescript/no-explicit-any */
+import { BooleanConverter, DateTimeConverter } from "#converters";
+import { BooleanHelper, DateTimeHelper, NumberHelper, StringHelper } from "#helpers";
+import { TPropertyType, TPropertyTypes } from "#modules/objectInfo";
+import { ISortProperty, ISortPropertyCollection } from "./SortProperty";
 
 export abstract class SortPropertyHelper
 {
@@ -14,13 +14,13 @@ export abstract class SortPropertyHelper
    */
   public static sortArrayByProperty<TItem = object>(massive: TItem[], sortProperty: ISortProperty): TItem[]
   {
-    const propertyType: TPropertyType = sortProperty.propertyTypeDesc!.type;
+    const propertyType: TPropertyType = sortProperty.propertyType!;
     const result: TItem[] = [...massive];
     const key = StringHelper.lowercaseFirstLetter(sortProperty.propertyPath);
 
     switch (propertyType)
     {
-      case 'bool':
+      case TPropertyTypes.Bool:
         {
           return result.sort((a, b) =>
           {
@@ -28,11 +28,12 @@ export abstract class SortPropertyHelper
             const r: boolean = BooleanConverter.toBoolean((b as any)[key]);
             return BooleanHelper.compare(l, r, sortProperty.isDesc);
           });
-        } break;
-      case 'int':
-      case 'long':
-      case 'float':
-      case 'double':
+        }
+        // break;
+      case TPropertyTypes.Int:
+      case TPropertyTypes.Long:
+      case TPropertyTypes.Float:
+      case TPropertyTypes.Double:
         {
           return result.sort((a, b) =>
           {
@@ -40,15 +41,16 @@ export abstract class SortPropertyHelper
             const r: number = Number((b as any)[key]);
             return NumberHelper.compare(l, r, sortProperty.isDesc);
           });
-        } break;
-      case 'string':
-      case 'guid':
+        }
+        // break;
+      case TPropertyTypes.String:
+      case TPropertyTypes.Guid:
         {
           return result.sort((a, b) =>
           {
             const l: string = String((a as any)[key]);
             const r: string = String((b as any)[key]);
-            const status =  l.localeCompare(r);
+            const status = l.localeCompare(r);
             if (sortProperty.isDesc)
             {
               if (status > 0) return -1;
@@ -56,8 +58,9 @@ export abstract class SortPropertyHelper
             }
             return status;
           });
-        } break;
-      case 'dateTime':
+        }
+        //break;
+      case TPropertyTypes.DateTime:
         {
           return result.sort((a, b) =>
           {
@@ -65,7 +68,18 @@ export abstract class SortPropertyHelper
             const r: Date = DateTimeConverter.toDateTime((b as any)[key]);
             return DateTimeHelper.compare(l, r, sortProperty.isDesc);
           });
-        } break;
+        }
+        // break;
+      case TPropertyTypes.Object:
+        {
+          return result.sort((a, b) =>
+          {
+            const l: any = (a as any)[key];
+            const r: any = (b as any)[key];
+            return l.localeCompare(r);
+          });
+        }
+        //break;
     }
 
     return massive;
@@ -83,7 +97,7 @@ export abstract class SortPropertyHelper
 
     let result: TItem[] = [...massive];
 
-    for (const sortProperty of sortProperties) 
+    for (const sortProperty of sortProperties)
     {
       result = SortPropertyHelper.sortArrayByProperty(result, sortProperty);
     }

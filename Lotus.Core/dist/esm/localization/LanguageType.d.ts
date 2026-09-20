@@ -2,7 +2,7 @@ import { IOption } from '#modules/option';
 /**
  * Массив значений типов языков
  */
-export declare const TLanguageTypeValues: readonly ["ru-RU", "en-US", "de-DE", "zh-CN"];
+export declare const TLanguageTypeValues: readonly ['ru-RU', 'en-US', 'de-DE', 'zh-CN'];
 /**
  * Тип языка
  */

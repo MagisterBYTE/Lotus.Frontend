@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable typescript/no-explicit-any */
 import { BooleanConverter } from '#converters';
 import { TEnvironmentFeatures, TEnvironmentFeature } from './EnvironmentFeature';
 import { IEnvironmentOptions } from './EnvironmentOptions';
@@ -96,7 +96,7 @@ export abstract class Environment
   {
     if (!Environment.isProduction) 
     {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.log('[DEV]', ...args);
     }
   }

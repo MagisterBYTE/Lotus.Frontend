@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable typescript/no-explicit-any */
 import { BooleanConverter } from '#converters';
 import { TEnvironmentFeatures } from './EnvironmentFeature';
 export class Environment {
@@ -62,7 +62,7 @@ export class Environment {
     // #region Log methods
     static log(...args) {
         if (!Environment.isProduction) {
-            // eslint-disable-next-line no-console
+            // oxlint-disable-next-line no-console
             console.log('[DEV]', ...args);
         }
     }

@@ -20,7 +20,7 @@ export type ReplaceValues<T, V> = { [K in keyof T]: V };
  * Утилита для извлечения только значений-не-функций 
  */
 export type OnlyValues<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  // oxlint-disable-next-line typescript/no-unsafe-function-type
   [K in keyof T]: T[K] extends Function ? never : T[K]
 }[keyof T];
 
@@ -43,3 +43,13 @@ export type PropertyType<TType, TPropertyName extends keyof TType> = TType[TProp
  * @template TValue - Тип значений, связанных с ключами.
  */
 export type Dictionary<TKey extends string | symbol | number | TGuid, TValue> = { [key in TKey]: TValue }
+
+/**
+ * Делает все свойства типа T необязательными.
+ * @template TType - тип, свойства которого мы делаем необязательными.
+ */
+export type DeepPartial<TType> = TType extends (infer UType)[]
+  ? Array<DeepPartial<UType>> // Если это массив, рекурсивно обрабатываем его элементы
+  : TType extends object
+  ? { [K in keyof TType]?: DeepPartial<TType[K]> } // Если объект, делаем ключи необязательными и уходим вглубь
+  : TType; // Если примитив, возвращаем как есть

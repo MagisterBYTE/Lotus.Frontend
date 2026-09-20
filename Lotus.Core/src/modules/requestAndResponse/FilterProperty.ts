@@ -1,5 +1,5 @@
 import { IFilterFunctionDesc } from '#modules/filter';
-import { IPropertyTypeDesc } from '#modules/objectInfo';
+import { TPropertyType } from '#modules/objectInfo';
 
 /**
  * Интерфейс для фильтрации по одному свойству
@@ -20,7 +20,7 @@ export interface IFilterProperty
   /**
    * Описание типа свойства
    */
-  propertyTypeDesc: IPropertyTypeDesc;
+  propertyType: TPropertyType;
 
   /**
    * Статус типа свойства - массив

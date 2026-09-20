@@ -63,7 +63,7 @@ describe('Color class constructor', () => {
         try {
             new Color('this is not a color string');
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line typescript/no-explicit-any
         catch (e) {
             expect(e.message).toBe('invalid color');
             done();
@@ -73,7 +73,7 @@ describe('Color class constructor', () => {
         try {
             new Color(['a', -10, 0, 1.01]);
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line typescript/no-explicit-any
         catch (e) {
             expect(e.message).toBe('invalid color');
             done();
@@ -83,7 +83,7 @@ describe('Color class constructor', () => {
         try {
             new Color(255, 0, 0, -1);
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line typescript/no-explicit-any
         catch (e) {
             expect(e.message).toBe('invalid color');
             done();

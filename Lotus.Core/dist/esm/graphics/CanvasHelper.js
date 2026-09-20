@@ -15,7 +15,7 @@ export class CanvasHelper {
      * @param strokeWidth - Толщина линий в пикселях.
      * @param gridColor - Цвет линий.
      */
-    // eslint-disable-next-line max-params
+    // oxlint-disable-next-line max-params
     static drawGrid(ctx, x, y, width, height, divisions = 3, strokeWidth = 1, gridColor = '#000000') {
         if (divisions <= 1)
             return; // Смысла в сетке из 1 деления нет
@@ -332,14 +332,14 @@ export class CanvasHelper {
                 // Проверяем сетку 3x3 вокруг пикселя
                 for (let ny = -1; ny <= 1; ny++) {
                     for (let nx = -1; nx <= 1; nx++) {
-                        // eslint-disable-next-line max-depth
+                        // oxlint-disable-next-line max-depth
                         if (nx === 0 && ny === 0)
                             continue; // Пропускаем сам пиксель
                         const curX = x + nx;
                         const curY = y + ny;
-                        // eslint-disable-next-line max-depth
+                        // oxlint-disable-next-line max-depth
                         if (curX >= 0 && curX < width && curY >= 0 && curY < height) {
-                            // eslint-disable-next-line max-depth
+                            // oxlint-disable-next-line max-depth
                             if (alphaMap[curY * width + curX] > 0) {
                                 neighbors++;
                             }

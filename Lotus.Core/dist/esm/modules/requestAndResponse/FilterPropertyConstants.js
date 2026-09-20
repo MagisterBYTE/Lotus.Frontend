@@ -1,5 +1,5 @@
 import { FilterFunctionDescriptors } from '#modules/filter';
-import { PropertyTypeDescriptors } from '#modules/objectInfo';
+import { TPropertyTypes } from '#modules/objectInfo';
 /**
  * Константы для фильтрации
  */
@@ -10,7 +10,7 @@ export class FilterPropertyConstants {
     static Empty = {
         function: FilterFunctionDescriptors.Equals,
         propertyPath: '',
-        propertyTypeDesc: PropertyTypeDescriptors.Bool
+        propertyType: TPropertyTypes.Bool
     };
 }
 //# sourceMappingURL=FilterPropertyConstants.js.map

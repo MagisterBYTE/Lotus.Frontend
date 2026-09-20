@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable typescript/no-explicit-any */
 import { IOption } from '#modules/option';
 import { TKey } from '#types';
 
@@ -194,7 +194,7 @@ export abstract class ItemsHelper
 
           for (const item of items)
           {
-            // eslint-disable-next-line max-depth
+            // oxlint-disable-next-line max-depth
             if (selectedValues.find((x) => x == ItemsHelper.getValueOfItem(item)))
             {
               itemsSelected.push(item);

@@ -1,0 +1,105 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // Плагины: без unicorn (в старом ESLint его не было). oxc оставляем выключенным по умолчанию через plugins.
+  "plugins": ["typescript", "import"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2020": true
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "coverage/**",
+    "jest.config.ts"
+  ],
+  "options": {
+    "typeAware": true
+  },
+  // Не включаем целые категории Oxlint — только правила из прежнего eslint.config.ts
+  // (+ базовые correctness, которые давал eslint:recommended).
+  "categories": {
+    "correctness": "off",
+    "suspicious": "off",
+    "pedantic": "off",
+    "perf": "off",
+    "style": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "rules": {
+    //=============================================================
+    // БЕЗОПАСНОСТЬ И ПРЕДОТВРАЩЕНИЕ ОШИБОК
+    //=============================================================
+    "no-constant-condition": "error",
+    "no-debugger": "error",
+    "no-duplicate-case": "error",
+    "no-empty": "error",
+    // "no-extra-semi": нет в Oxlint — Oxfmt (semi: true)
+    "no-fallthrough": "error",
+    "no-var": "error",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    // из eslint:recommended (было через extends js/recommended)
+    "no-unreachable": "error",
+    "no-cond-assign": "error",
+    "no-extra-boolean-cast": "error",
+    "prefer-rest-params": "error",
+
+    //=============================================================
+    // СТИЛЬ КОДА И ФОРМАТИРОВАНИЕ
+    //=============================================================
+    // quotes, indent, brace-style(allman), padded-blocks, *-spacing, semi*,
+    // spaced-comment, max-len, comma-dangle — нет в Oxlint → Oxfmt (.oxfmtrc.json).
+    // @typescript-eslint/naming-convention (Async suffix) — аналога в Oxlint нет.
+    "max-lines": ["warn", { "max": 1200 }],
+
+    //=============================================================
+    // СОВРЕМЕННЫЙ JAVASCRIPT/TYPESCRIPT
+    //=============================================================
+    "prefer-arrow-callback": "error",
+    "prefer-template": "error",
+    // "template-curly-spacing": нет в Oxlint — Oxfmt
+    "no-useless-constructor": "warn",
+    "prefer-const": "error",
+    "no-inner-declarations": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "typescript/explicit-function-return-type": "off",
+    "typescript/explicit-module-boundary-types": "off",
+    "typescript/no-explicit-any": "warn",
+    "typescript/no-unnecessary-type-assertion": "error",
+    "typescript/prefer-as-const": "error",
+    "typescript/no-floating-promises": "error",
+    "typescript/await-thenable": "error",
+    "typescript/no-misused-promises": "error",
+    "typescript/ban-ts-comment": "error",
+    "typescript/no-unsafe-function-type": "error",
+    "typescript/no-empty-object-type": "error",
+
+    //=============================================================
+    // АСИНХРОННЫЙ КОД
+    //=============================================================
+    "typescript/return-await": "error",
+    "require-await": "error",
+
+    //=============================================================
+    // КОНТРОЛЬ СЛОЖНОСТИ КОДА
+    //=============================================================
+    "complexity": ["warn", 20],
+    "max-params": ["warn", 4],
+    "max-depth": ["warn", 4],
+    "max-nested-callbacks": ["warn", 3],
+
+    //=============================================================
+    // ОРГАНИЗАЦИЯ ИМПОРТОВ
+    //=============================================================
+    // import/order и import/no-useless-path-segments — нет в Oxlint.
+    // sort-imports не эквивалентен import/order (другой порядок групп) — не включаем.
+    "import/no-duplicates": "error"
+  }
+}

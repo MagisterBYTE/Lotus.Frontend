@@ -154,5 +154,42 @@ export declare abstract class XMath {
      * @returns {number} Округленное значение.
      */
     static roundToSingle(value: number, round: number): number;
+    /**
+     * Нормализация угла в пределах от 0 до 360.
+     *
+     * @param angle - Угол, задается в градусах.
+     * @returns Нормализованный угол в пределах от 0 до 360.
+     */
+    static angleNormalizationFull(angle: number): number;
+    /**
+     * Нормализация угла в пределах от -180 до 180.
+     *
+     * @param angle - Угол, задается в градусах.
+     * @returns Нормализованный угол в пределах от -180 до 180.
+     */
+    static angleNormalizationHalf(angle: number): number;
+    /**
+     * Ограничение угла в заданном диапазоне.
+     *
+     * @param angle - Угол, задается в градусах.
+     * @param min - Минимальный угол.
+     * @param max - Максимальный угол.
+     * @returns Ограниченный угол.
+     */
+    static angleClamp(angle: number, min: number, max: number): number;
+    /**
+     * Преобразует градусы в радианы.
+     *
+     * @param degrees - Угол в градусах.
+     * @returns Угол в радианах.
+     */
+    static toRadians(degrees: number): number;
+    /**
+     * Преобразует радианы в градусы.
+     *
+     * @param radians - Угол в радианах.
+     * @returns Угол в градусах.
+     */
+    static toDegrees(radians: number): number;
 }
 //# sourceMappingURL=XMath.d.ts.map

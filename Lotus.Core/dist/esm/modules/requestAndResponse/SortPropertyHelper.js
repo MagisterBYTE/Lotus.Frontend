@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { BooleanConverter, DateTimeConverter } from '#converters';
-import { BooleanHelper, DateTimeHelper, NumberHelper, StringHelper } from '#helpers';
+/* oxlint-disable typescript/no-explicit-any */
+import { BooleanConverter, DateTimeConverter } from "#converters";
+import { BooleanHelper, DateTimeHelper, NumberHelper, StringHelper } from "#helpers";
+import { TPropertyTypes } from "#modules/objectInfo";
 export class SortPropertyHelper {
     /**
      * Сортировка массива по указанному свойству сортировки
@@ -9,11 +10,11 @@ export class SortPropertyHelper {
      * @returns Отсортированный массив
      */
     static sortArrayByProperty(massive, sortProperty) {
-        const propertyType = sortProperty.propertyTypeDesc.type;
+        const propertyType = sortProperty.propertyType;
         const result = [...massive];
         const key = StringHelper.lowercaseFirstLetter(sortProperty.propertyPath);
         switch (propertyType) {
-            case 'bool':
+            case TPropertyTypes.Bool:
                 {
                     return result.sort((a, b) => {
                         const l = BooleanConverter.toBoolean(a[key]);
@@ -21,11 +22,11 @@ export class SortPropertyHelper {
                         return BooleanHelper.compare(l, r, sortProperty.isDesc);
                     });
                 }
-                break;
-            case 'int':
-            case 'long':
-            case 'float':
-            case 'double':
+            // break;
+            case TPropertyTypes.Int:
+            case TPropertyTypes.Long:
+            case TPropertyTypes.Float:
+            case TPropertyTypes.Double:
                 {
                     return result.sort((a, b) => {
                         const l = Number(a[key]);
@@ -33,9 +34,9 @@ export class SortPropertyHelper {
                         return NumberHelper.compare(l, r, sortProperty.isDesc);
                     });
                 }
-                break;
-            case 'string':
-            case 'guid':
+            // break;
+            case TPropertyTypes.String:
+            case TPropertyTypes.Guid:
                 {
                     return result.sort((a, b) => {
                         const l = String(a[key]);
@@ -50,8 +51,8 @@ export class SortPropertyHelper {
                         return status;
                     });
                 }
-                break;
-            case 'dateTime':
+            //break;
+            case TPropertyTypes.DateTime:
                 {
                     return result.sort((a, b) => {
                         const l = DateTimeConverter.toDateTime(a[key]);
@@ -59,7 +60,16 @@ export class SortPropertyHelper {
                         return DateTimeHelper.compare(l, r, sortProperty.isDesc);
                     });
                 }
-                break;
+            // break;
+            case TPropertyTypes.Object:
+                {
+                    return result.sort((a, b) => {
+                        const l = a[key];
+                        const r = b[key];
+                        return l.localeCompare(r);
+                    });
+                }
+            //break;
         }
         return massive;
     }

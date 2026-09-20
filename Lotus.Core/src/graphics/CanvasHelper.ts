@@ -17,7 +17,7 @@ export abstract class CanvasHelper
    * @param strokeWidth - Толщина линий в пикселях.
    * @param gridColor - Цвет линий.
    */
-  // eslint-disable-next-line max-params
+  // oxlint-disable-next-line max-params
   public static drawGrid(
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -440,16 +440,16 @@ export abstract class CanvasHelper
         {
           for (let nx = -1; nx <= 1; nx++) 
           {
-            // eslint-disable-next-line max-depth
+            // oxlint-disable-next-line max-depth
             if (nx === 0 && ny === 0) continue; // Пропускаем сам пиксель
 
             const curX = x + nx;
             const curY = y + ny;
 
-            // eslint-disable-next-line max-depth
+            // oxlint-disable-next-line max-depth
             if (curX >= 0 && curX < width && curY >= 0 && curY < height) 
             {
-              // eslint-disable-next-line max-depth
+              // oxlint-disable-next-line max-depth
               if (alphaMap[curY * width + curX] > 0) 
               {
                 neighbors++;

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable typescript/no-explicit-any */
 import { TKey } from '#types';
 
 /**
@@ -46,7 +46,7 @@ export abstract class Assert
   {
     for (const arg of args)
     {
-      // eslint-disable-next-line no-extra-boolean-cast
+      // oxlint-disable-next-line no-extra-boolean-cast
       if (Boolean(arg))
       {
         return true;
@@ -66,7 +66,7 @@ export abstract class Assert
     for (const arg of args)
     {
       // Если хотя бы один аргумент преобразуется в false,
-      // eslint-disable-next-line no-extra-boolean-cast
+      // oxlint-disable-next-line no-extra-boolean-cast
       if (!Boolean(arg))
       {
         // немедленно возвращаем false (короткое замыкание)
@@ -106,7 +106,7 @@ export abstract class Assert
   {
     for (const arg of args)
     {
-      // eslint-disable-next-line no-extra-boolean-cast
+      // oxlint-disable-next-line no-extra-boolean-cast
       if (Boolean(arg))
       {
         return false;
@@ -191,7 +191,7 @@ export abstract class Assert
    * @param value - Проверяемое значение
    * @returns true, если значение является функцией, иначе false
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  // oxlint-disable-next-line typescript/no-unsafe-function-type
   static isFunction(value: unknown): value is Function
   {
     return typeof value === 'function';

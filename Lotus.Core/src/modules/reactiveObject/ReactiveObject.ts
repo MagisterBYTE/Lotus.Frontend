@@ -1,6 +1,5 @@
 import { FunctionHelper } from '#helpers';
-import { INotifyPropertyChanged } from '#types';
-import { PropertyChangedFunction } from 'src/types/NotifyPropertyChanged';
+import { INotifyPropertyChanged, PropertyChangedFunction } from '#types';
 
 /**
  * Базовый класс реализующий уведомление об изменение своих свойств

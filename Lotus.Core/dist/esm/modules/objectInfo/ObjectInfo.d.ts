@@ -35,6 +35,16 @@ export interface IObjectInfo {
     renderObject?: RenderObjectFunction;
 }
 /**
+ * Интерфейс для получение информации о объекте
+ */
+export interface IObjectInfoInspectable {
+    /**
+     * Получение информации о объекте
+     * @returns Информация о объекте
+     */
+    getObjectInfo(): IObjectInfo;
+}
+/**
  * Класс для представления(описания) свойств объектов
  */
 export declare class ObjectInfo implements IObjectInfo {
@@ -45,6 +55,13 @@ export declare class ObjectInfo implements IObjectInfo {
      * @returns Целевое значение
      */
     static convertedValue(propertyInfo: IPropertyDescriptor, value: any): any;
+    /**
+     * Обновить существующий объект по указанному свойству указанным значением
+     * @param dest Целевой объект
+     * @param propertyInfo Информация о свойстве
+     * @param value Значение
+     */
+    static updateObject(dest: any, propertyInfo: IPropertyDescriptor, value: any): any;
     /**
      * Обновить копию объекта по указанному свойству указанным значением
      * @param source Исходный объект
@@ -58,6 +75,7 @@ export declare class ObjectInfo implements IObjectInfo {
     renderObject?: RenderObjectFunction;
     constructor();
     getProperties(): IPropertyDescriptor[];
+    getPropertiesWithAnExceptions(exceptions: string[]): IPropertyDescriptor[];
     getPropertiesSorted(): IPropertyDescriptor[];
     getPropertyByName(name: string): IPropertyDescriptor;
     getFilterFunctionsDesc(): Record<string, IFilterFunctionDesc>;

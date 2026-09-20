@@ -3,7 +3,7 @@ import { IPropertyFiltering } from './PropertyFiltering';
 import { IPropertyGrouping } from './PropertyGrouping';
 import { IPropertyRendering } from './PropertyRendering';
 import { IPropertySorting } from './PropertySorting';
-import { IPropertyTypeDesc } from './PropertyTypeDesc';
+import { TPropertyType } from './PropertyType';
 import { IPropertyVisualSettings } from './PropertyVisualSettings';
 
 /**
@@ -34,7 +34,7 @@ export interface IPropertyDescriptor
   /**
    * Описание типа свойства
    */
-  propertyTypeDesc: IPropertyTypeDesc;
+  propertyType: TPropertyType;
 
   /**
    * Типа свойства - массив
@@ -54,7 +54,7 @@ export interface IPropertyDescriptor
   /**
    * Набор возможных значений свойства
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   possibleValues?: any[];
 
   /**

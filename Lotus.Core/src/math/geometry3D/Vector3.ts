@@ -1,9 +1,10 @@
-import { Vector2D } from '../geometry2D';
+import { XMath } from '../XMath';
+import { Vector2 } from '../geometry2D';
 
 /**
  * Интерфейс для описания трехмерного вектора
  */
-export interface IVector3D
+export interface IVector3
 {
   /**
    * Координата X
@@ -25,48 +26,48 @@ export interface IVector3D
  * Трехмерный вектор.
  * Реализация трехмерного вектора, представляющего собой базовую математическую сущность в трехмерном пространстве.
  */
-export class Vector3D implements IVector3D
+export class Vector3 implements IVector3
 {
   // #region Const
   /**
    * Единичный вектор.
    */
-  public static readonly One: Vector3D = new Vector3D(1, 1, 1);
+  public static readonly One: Vector3 = new Vector3(1, 1, 1);
 
   /**
    * Вектор - право.
    */
-  public static readonly Right: Vector3D = new Vector3D(1, 0, 0);
+  public static readonly Right: Vector3 = new Vector3(1, 0, 0);
 
   /**
    * Вектор - влево.
    */
-  public static readonly Left: Vector3D = new Vector3D(-1, 0, 0);
+  public static readonly Left: Vector3 = new Vector3(-1, 0, 0);
 
   /**
    * Вектор - вверх.
    */
-  public static readonly Up: Vector3D = new Vector3D(0, 1, 0);
+  public static readonly Up: Vector3 = new Vector3(0, 1, 0);
 
   /**
    * Вектор - вниз.
    */
-  public static readonly Down: Vector3D = new Vector3D(0, -1, 0);
+  public static readonly Down: Vector3 = new Vector3(0, -1, 0);
 
   /**
    * Вектор - вперед.
    */
-  public static readonly Forward: Vector3D = new Vector3D(0, 0, 1);
+  public static readonly Forward: Vector3 = new Vector3(0, 0, 1);
 
   /**
    * Вектор - назад.
    */
-  public static readonly Back: Vector3D = new Vector3D(0, 0, -1);
+  public static readonly Back: Vector3 = new Vector3(0, 0, -1);
 
   /**
    * Нулевой вектор.
    */
-  public static readonly Zero: Vector3D = new Vector3D(0, 0, 0);
+  public static readonly Zero: Vector3 = new Vector3(0, 0, 0);
 
   /**
    * Текстовый формат отображения параметров вектора.
@@ -82,33 +83,33 @@ export class Vector3D implements IVector3D
   // #region Static methods
   /**
    * Сложение векторов.
-   * @param {Vector3D} a - Первый вектор.
-   * @param {Vector3D} b - Второй вектор.
-   * @returns {Vector3D} Результирующий вектор.
+   * @param {Vector3} a - Первый вектор.
+   * @param {Vector3} b - Второй вектор.
+   * @returns {Vector3} Результирующий вектор.
    */
-  public static add(a: Vector3D, b: Vector3D): Vector3D
+  public static add(a: Vector3, b: Vector3): Vector3
   {
-    return new Vector3D(a.x + b.x, a.y + b.y, a.z + b.z);
+    return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
   }
 
   /**
    * Разность векторов.
-   * @param {Vector3D} a - Первый вектор.
-   * @param {Vector3D} b - Второй вектор.
-   * @returns {Vector3D} Результирующий вектор.
+   * @param {Vector3} a - Первый вектор.
+   * @param {Vector3} b - Второй вектор.
+   * @returns {Vector3} Результирующий вектор.
    */
-  public static subtract(a: Vector3D, b: Vector3D): Vector3D
+  public static subtract(a: Vector3, b: Vector3): Vector3
   {
-    return new Vector3D(a.x - b.x, a.y - b.y, a.z - b.z);
+    return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
   }
 
   /**
    * Косинус угла между векторами.
-   * @param {Vector3D} from - Начальный вектор.
-   * @param {Vector3D} to - Конечный вектор.
+   * @param {Vector3} from - Начальный вектор.
+   * @param {Vector3} to - Конечный вектор.
    * @returns {number} Косинус угла.
    */
-  public static cos(from: Vector3D, to: Vector3D): number
+  public static cos(from: Vector3, to: Vector3): number
   {
     const dot = from.x * to.x + from.y * to.y + from.z * to.z;
     const ll = from.length * to.length;
@@ -117,11 +118,11 @@ export class Vector3D implements IVector3D
 
   /**
    * Угол между двумя векторами (в градусах).
-   * @param {Vector3D} from - Начальный вектор.
-   * @param {Vector3D} to - Конечный вектор.
+   * @param {Vector3} from - Начальный вектор.
+   * @param {Vector3} to - Конечный вектор.
    * @returns {number} Угол в градусах.
    */
-  public static angle(from: Vector3D, to: Vector3D): number
+  public static angle(from: Vector3, to: Vector3): number
   {
     const dot = from.x * to.x + from.y * to.y + from.z * to.z;
     const ll = from.length * to.length;
@@ -130,12 +131,30 @@ export class Vector3D implements IVector3D
   }
 
   /**
+   * Поворот вектора вокруг оси Y.
+   * @param {Vector3} vector - Вектор.
+   * @param {number} degrees - Угол поворота в градусах.
+   * @returns {Vector3} Повернутый вектор.
+   */
+  public static rotateY(vector: IVector3, degrees: number): IVector3
+  {
+    const angle = XMath.toRadians(degrees);
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return {
+      x: vector.x * cos + vector.z * sin,
+      y: vector.y,
+      z: -vector.x * sin + vector.z * cos
+    };
+  }
+
+  /**
    * Расстояние между двумя векторами.
-   * @param {Vector3D} a - Первый вектор.
-   * @param {Vector3D} b - Второй вектор.
+   * @param {Vector3} a - Первый вектор.
+   * @param {Vector3} b - Второй вектор.
    * @returns {number} Расстояние между двумя векторами.
    */
-  public static distance(a: Vector3D, b: Vector3D): number
+  public static distance(a: Vector3, b: Vector3): number
   {
     const x = b.x - a.x;
     const y = b.y - a.y;
@@ -145,47 +164,47 @@ export class Vector3D implements IVector3D
 
   /**
    * Скалярное произведение векторов.
-   * @param {Vector3D} a - Первый вектор.
-   * @param {Vector3D} b - Второй вектор.
+   * @param {Vector3} a - Первый вектор.
+   * @param {Vector3} b - Второй вектор.
    * @returns {number} Скаляр.
    */
-  public static dot(a: Vector3D, b: Vector3D): number
+  public static dot(a: Vector3, b: Vector3): number
   {
     return a.x * b.x + a.y * b.y + a.z * b.z;
   }
 
   /**
    * Векторное произведение векторов.
-   * @param {Vector3D} left - Левый вектор.
-   * @param {Vector3D} right - Правый вектор.
-   * @returns {Vector3D} Вектор, перпендикулярный обоим векторам.
+   * @param {Vector3} left - Левый вектор.
+   * @param {Vector3} right - Правый вектор.
+   * @returns {Vector3} Вектор, перпендикулярный обоим векторам.
    */
-  public static cross(left: Vector3D, right: Vector3D): Vector3D
+  public static cross(left: Vector3, right: Vector3): Vector3
   {
-    return new Vector3D(left.y * right.z - left.z * right.y, left.z * right.x - left.x * right.z, left.x * right.y - left.y * right.x);
+    return new Vector3(left.y * right.z - left.z * right.y, left.z * right.x - left.x * right.z, left.x * right.y - left.y * right.x);
   }
 
   /**
    * Линейная интерполяция векторов.
-   * @param {Vector3D} from - Начальный вектор.
-   * @param {Vector3D} to - Конечный вектор.
+   * @param {Vector3} from - Начальный вектор.
+   * @param {Vector3} to - Конечный вектор.
    * @param {number} time - Время от 0 до 1.
-   * @returns {Vector3D} Интерполированный вектор.
+   * @returns {Vector3} Интерполированный вектор.
    */
-  public static lerp(from: Vector3D, to: Vector3D, time: number): Vector3D
+  public static lerp(from: Vector3, to: Vector3, time: number): Vector3
   {
-    return new Vector3D(from.x + (to.x - from.x) * time, from.y + (to.y - from.y) * time, from.z + (to.z - from.z) * time);
+    return new Vector3(from.x + (to.x - from.x) * time, from.y + (to.y - from.y) * time, from.z + (to.z - from.z) * time);
   }
 
   /**
    * Десериализация трехмерного вектора из строки.
    * @param {string} data - Строка данных.
-   * @returns {Vector3D} Трехмерный вектор.
+   * @returns {Vector3} Трехмерный вектор.
    */
-  public static deserializeFromString(data: string): Vector3D
+  public static deserializeFromString(data: string): Vector3
   {
     const vectorData = data.split(';');
-    return new Vector3D(parseFloat(vectorData[0]), parseFloat(vectorData[1]), parseFloat(vectorData[2]));
+    return new Vector3(parseFloat(vectorData[0]), parseFloat(vectorData[1]), parseFloat(vectorData[2]));
   }
   // #endregion
 
@@ -215,10 +234,10 @@ export class Vector3D implements IVector3D
   /**
    * Нормализованный вектор.
    */
-  public get normalized(): Vector3D
+  public get normalized(): Vector3
   {
     const invLength = 1 / this.length;
-    return new Vector3D(this.x * invLength, this.y * invLength, this.z * invLength);
+    return new Vector3(this.x * invLength, this.y * invLength, this.z * invLength);
   }
   // #endregion
 
@@ -233,13 +252,13 @@ export class Vector3D implements IVector3D
 
   /**
    * Конструктор инициализирует вектор указанным вектором.
-   * @param {Vector3D} source - Вектор.
+   * @param {Vector3} source - Вектор.
    */
-  constructor(source: Vector3D);
+  constructor(source: Vector3);
 
-  constructor(arg1: number | Vector3D, arg2?: number, arg3?: number)
+  constructor(arg1: number | Vector3, arg2?: number, arg3?: number)
   {
-    if (arg1 instanceof Vector3D)
+    if (arg1 instanceof Vector3)
     {
       this.x = arg1.x;
       this.y = arg1.y;
@@ -253,7 +272,7 @@ export class Vector3D implements IVector3D
     }
     else
     {
-      throw new Error('Invalid arguments for Vector3D constructor');
+      throw new Error('Invalid arguments for Vector3 constructor');
     }
   }
   // #endregion
@@ -261,20 +280,20 @@ export class Vector3D implements IVector3D
   // #region System methods
   /**
    * Проверка равенства векторов по значению.
-   * @param {Vector3D} other - Сравниваемый вектор.
+   * @param {Vector3} other - Сравниваемый вектор.
    * @returns {boolean} Статус равенства векторов.
    */
-  public equals(other: Vector3D): boolean
+  public equals(other: Vector3): boolean
   {
     return this.x === other.x && this.y === other.y && this.z === other.z;
   }
 
   /**
    * Сравнение векторов для упорядочивания.
-   * @param {Vector3D} other - Вектор.
+   * @param {Vector3} other - Вектор.
    * @returns {number} Статус сравнения векторов.
    */
-  public compareTo(other: Vector3D): number
+  public compareTo(other: Vector3): number
   {
     if (this.x > other.x)
     {
@@ -314,7 +333,7 @@ export class Vector3D implements IVector3D
    */
   public toStringWithFormat(format: string): string
   {
-    const formattedFormat = Vector3D.toStringFormat.replace('{0}', format).replace('{1}', format).replace('{2}', format);
+    const formattedFormat = Vector3.toStringFormat.replace('{0}', format).replace('{1}', format).replace('{2}', format);
     return formattedFormat.replace('{0}', this.x.toFixed(2)).replace('{1}', this.y.toFixed(2)).replace('{2}', this.z.toFixed(2));
   }
 
@@ -334,7 +353,7 @@ export class Vector3D implements IVector3D
    */
   public toStringValueWithFormat(format: string): string
   {
-    const formattedFormat = Vector3D.toStringFormatValue.replace('{0}', format).replace('{1}', format).replace('{2}', format);
+    const formattedFormat = Vector3.toStringFormatValue.replace('{0}', format).replace('{1}', format).replace('{2}', format);
     return formattedFormat.replace('{0}', this.x.toFixed(2)).replace('{1}', this.y.toFixed(2)).replace('{2}', this.z.toFixed(2));
   }
   // #endregion
@@ -342,112 +361,112 @@ export class Vector3D implements IVector3D
   // #region Operators
   /**
    * Сложение векторов.
-   * @param {Vector3D} other - Второй вектор.
-   * @returns {Vector3D} Сумма векторов.
+   * @param {Vector3} other - Второй вектор.
+   * @returns {Vector3} Сумма векторов.
    */
-  public add(other: Vector3D): Vector3D
+  public add(other: Vector3): Vector3
   {
-    return Vector3D.add(this, other);
+    return Vector3.add(this, other);
   }
 
   /**
    * Вычитание векторов.
-   * @param {Vector3D} other - Второй вектор.
-   * @returns {Vector3D} Разность векторов.
+   * @param {Vector3} other - Второй вектор.
+   * @returns {Vector3} Разность векторов.
    */
-  public subtract(other: Vector3D): Vector3D
+  public subtract(other: Vector3): Vector3
   {
-    return Vector3D.subtract(this, other);
+    return Vector3.subtract(this, other);
   }
 
   /**
    * Умножение вектора на скаляр.
    * @param {number} scalar - Скаляр.
-   * @returns {Vector3D} Масштабированный вектор.
+   * @returns {Vector3} Масштабированный вектор.
    */
-  public multiply(scalar: number): Vector3D
+  public multiply(scalar: number): Vector3
   {
-    return new Vector3D(this.x * scalar, this.y * scalar, this.z * scalar);
+    return new Vector3(this.x * scalar, this.y * scalar, this.z * scalar);
   }
 
   /**
    * Деление вектора на скаляр.
    * @param {number} scalar - Скаляр.
-   * @returns {Vector3D} Масштабированный вектор.
+   * @returns {Vector3} Масштабированный вектор.
    */
-  public divide(scalar: number): Vector3D
+  public divide(scalar: number): Vector3
   {
     const invScalar = 1 / scalar;
-    return new Vector3D(this.x * invScalar, this.y * invScalar, this.z * invScalar);
+    return new Vector3(this.x * invScalar, this.y * invScalar, this.z * invScalar);
   }
 
   /**
    * Скалярное произведение векторов.
-   * @param {Vector3D} other - Второй вектор.
+   * @param {Vector3} other - Второй вектор.
    * @returns {number} Скаляр.
    */
-  public dot(other: Vector3D): number
+  public dot(other: Vector3): number
   {
-    return Vector3D.dot(this, other);
+    return Vector3.dot(this, other);
   }
 
   /**
    * Векторное произведение векторов.
-   * @param {Vector3D} other - Второй вектор.
-   * @returns {Vector3D} Вектор, перпендикулярный обоим векторам.
+   * @param {Vector3} other - Второй вектор.
+   * @returns {Vector3} Вектор, перпендикулярный обоим векторам.
    */
-  public cross(other: Vector3D): Vector3D
+  public cross(other: Vector3): Vector3
   {
-    return Vector3D.cross(this, other);
+    return Vector3.cross(this, other);
   }
 
   /**
    * Сравнение векторов на равенство.
-   * @param {Vector3D} other - Второй вектор.
+   * @param {Vector3} other - Второй вектор.
    * @returns {boolean} Статус равенства векторов.
    */
-  public isEqual(other: Vector3D): boolean
+  public isEqual(other: Vector3): boolean
   {
     return this.equals(other);
   }
 
   /**
    * Сравнение векторов на неравенство.
-   * @param {Vector3D} other - Второй вектор.
+   * @param {Vector3} other - Второй вектор.
    * @returns {boolean} Статус неравенства векторов.
    */
-  public isNotEqual(other: Vector3D): boolean
+  public isNotEqual(other: Vector3): boolean
   {
     return !this.equals(other);
   }
 
   /**
    * Реализация лексикографического порядка отношений векторов (меньше).
-   * @param {Vector3D} other - Второй вектор.
+   * @param {Vector3} other - Второй вектор.
    * @returns {boolean} Статус меньше.
    */
-  public isLessThan(other: Vector3D): boolean
+  public isLessThan(other: Vector3): boolean
   {
     return this.x < other.x || (this.x === other.x && this.y < other.y) || (this.x === other.x && this.y === other.y && this.z < other.z);
   }
 
   /**
    * Реализация лексикографического порядка отношений векторов (больше).
-   * @param {Vector3D} other - Второй вектор.
+   * @param {Vector3} other - Второй вектор.
    * @returns {boolean} Статус больше.
    */
-  public isGreaterThan(other: Vector3D): boolean
+  public isGreaterThan(other: Vector3): boolean
   {
     return this.x > other.x || (this.x === other.x && this.y > other.y) || (this.x === other.x && this.y === other.y && this.z > other.z);
   }
 
   /**
    * Обратный вектор.
-   * @returns {Vector3D} Обратный вектор.
+   * @returns {Vector3} Обратный вектор.
    */
-  public negate(): Vector3D
+  public negate(): Vector3
   {
-    return new Vector3D(-this.x, -this.y, -this.z);
+    return new Vector3(-this.x, -this.y, -this.z);
   }
   // #endregion
 
@@ -468,7 +487,7 @@ export class Vector3D implements IVector3D
       case 2:
         return this.z;
       default:
-        throw new Error('Invalid index for Vector3D component');
+        throw new Error('Invalid index for Vector3 component');
     }
   }
 
@@ -491,7 +510,7 @@ export class Vector3D implements IVector3D
         this.z = value;
         break;
       default:
-        throw new Error('Invalid index for Vector3D component');
+        throw new Error('Invalid index for Vector3 component');
     }
   }
   // #endregion
@@ -510,20 +529,20 @@ export class Vector3D implements IVector3D
 
   /**
    * Вычисление расстояния до вектора.
-   * @param {Vector3D} vector - Вектор.
+   * @param {Vector3} vector - Вектор.
    * @returns {number} Расстояние до вектора.
    */
-  public distance(vector: Vector3D): number
+  public distance(vector: Vector3): number
   {
-    return Vector3D.distance(this, vector);
+    return Vector3.distance(this, vector);
   }
 
   /**
    * Установка компонентов вектора из наибольших компонентов двух векторов.
-   * @param {Vector3D} a - Первый вектор.
-   * @param {Vector3D} b - Второй вектор.
+   * @param {Vector3} a - Первый вектор.
+   * @param {Vector3} b - Второй вектор.
    */
-  public setMaximize(a: Vector3D, b: Vector3D): void
+  public setMaximize(a: Vector3, b: Vector3): void
   {
     this.x = a.x > b.x ? a.x : b.x;
     this.y = a.y > b.y ? a.y : b.y;
@@ -532,10 +551,10 @@ export class Vector3D implements IVector3D
 
   /**
    * Установка компонентов вектора из наименьших компонентов двух векторов.
-   * @param {Vector3D} a - Первый вектор.
-   * @param {Vector3D} b - Второй вектор.
+   * @param {Vector3} a - Первый вектор.
+   * @param {Vector3} b - Второй вектор.
    */
-  public setMinimize(a: Vector3D, b: Vector3D): void
+  public setMinimize(a: Vector3, b: Vector3): void
   {
     this.x = a.x < b.x ? a.x : b.x;
     this.y = a.y < b.y ? a.y : b.y;
@@ -544,10 +563,10 @@ export class Vector3D implements IVector3D
 
   /**
    * Векторное произведение с нормализацией результата.
-   * @param {Vector3D} left - Левый вектор.
-   * @param {Vector3D} right - Правый вектор.
+   * @param {Vector3} left - Левый вектор.
+   * @param {Vector3} right - Правый вектор.
    */
-  public crossNormalize(left: Vector3D, right: Vector3D): void
+  public crossNormalize(left: Vector3, right: Vector3): void
   {
     this.x = left.y * right.z - left.z * right.y;
     this.y = left.z * right.x - left.x * right.z;
@@ -571,101 +590,101 @@ export class Vector3D implements IVector3D
   // #region Convert methods
   /**
    * Преобразование в вектор с нулевой X-компонентой.
-   * @returns {Vector2D} Вектор.
+   * @returns {Vector2} Вектор.
    */
-  public toVector2X(): Vector2D
+  public toVector2X(): Vector2
   {
-    return new Vector2D(this.x, 0);
+    return new Vector2(this.x, 0);
   }
 
   /**
    * Преобразование в вектор с нулевой Y-компонентой.
-   * @returns {Vector2D} Вектор.
+   * @returns {Vector2} Вектор.
    */
-  public toVector2Y(): Vector2D
+  public toVector2Y(): Vector2
   {
-    return new Vector2D(0, this.y);
+    return new Vector2(0, this.y);
   }
 
   /**
    * Преобразование в двухмерный вектор плоскости XY.
-   * @returns {Vector2D} Вектор.
+   * @returns {Vector2} Вектор.
    */
-  public toVector2XY(): Vector2D
+  public toVector2XY(): Vector2
   {
-    return new Vector2D(this.x, this.y);
+    return new Vector2(this.x, this.y);
   }
 
   /**
    * Преобразование в двухмерный вектор плоскости XZ.
-   * @returns {Vector2D} Вектор.
+   * @returns {Vector2} Вектор.
    */
-  public toVector2XZ(): Vector2D
+  public toVector2XZ(): Vector2
   {
-    return new Vector2D(this.x, this.z);
+    return new Vector2(this.x, this.z);
   }
 
   /**
    * Преобразование в двухмерный вектор плоскости YZ.
-   * @returns {Vector2D} Вектор.
+   * @returns {Vector2} Вектор.
    */
-  public toVector2YZ(): Vector2D
+  public toVector2YZ(): Vector2
   {
-    return new Vector2D(this.y, this.z);
+    return new Vector2(this.y, this.z);
   }
 
   /**
    * Преобразование в трехмерный вектор только с компонентой X.
-   * @returns {Vector3D} Вектор.
+   * @returns {Vector3} Вектор.
    */
-  public toVector3X(): Vector3D
+  public toVector3X(): Vector3
   {
-    return new Vector3D(this.x, 0, 0);
+    return new Vector3(this.x, 0, 0);
   }
 
   /**
    * Преобразование в трехмерный вектор только с компонентой Y.
-   * @returns {Vector3D} Вектор.
+   * @returns {Vector3} Вектор.
    */
-  public toVector3Y(): Vector3D
+  public toVector3Y(): Vector3
   {
-    return new Vector3D(0, this.y, 0);
+    return new Vector3(0, this.y, 0);
   }
 
   /**
    * Преобразование в трехмерный вектор только с компонентой Z.
-   * @returns {Vector3D} Вектор.
+   * @returns {Vector3} Вектор.
    */
-  public toVector3Z(): Vector3D
+  public toVector3Z(): Vector3
   {
-    return new Vector3D(0, 0, this.z);
+    return new Vector3(0, 0, this.z);
   }
 
   /**
    * Преобразование в трехмерный вектор плоскости XY.
-   * @returns {Vector3D} Вектор.
+   * @returns {Vector3} Вектор.
    */
-  public toVector3XY(): Vector3D
+  public toVector3XY(): Vector3
   {
-    return new Vector3D(this.x, this.y, 0);
+    return new Vector3(this.x, this.y, 0);
   }
 
   /**
    * Преобразование в трехмерный вектор плоскости XZ.
-   * @returns {Vector3D} Вектор.
+   * @returns {Vector3} Вектор.
    */
-  public toVector3XZ(): Vector3D
+  public toVector3XZ(): Vector3
   {
-    return new Vector3D(this.x, 0, this.z);
+    return new Vector3(this.x, 0, this.z);
   }
 
   /**
    * Преобразование в трехмерный вектор плоскости YZ.
-   * @returns {Vector3D} Вектор.
+   * @returns {Vector3} Вектор.
    */
-  public toVector3YZ(): Vector3D
+  public toVector3YZ(): Vector3
   {
-    return new Vector3D(0, this.y, this.z);
+    return new Vector3(0, this.y, this.z);
   }
   // #endregion
 }

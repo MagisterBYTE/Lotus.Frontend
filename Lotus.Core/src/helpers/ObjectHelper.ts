@@ -8,7 +8,7 @@ export abstract class ObjectHelper
    * @param propertyPath Имя/путь свойства
    * @param defaultValue Значение по умолчанию если свойство не найдено
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   public static getValue<TValue = any>(source: TValue, propertyPath: string, defaultValue?: any): TValue | undefined
   {
     if (source === undefined || source === null) return undefined;
@@ -23,7 +23,7 @@ export abstract class ObjectHelper
    * @param propertyPath Имя/путь свойства
    * @param value Значение
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   public static setValue<TValue = any>(source: TValue, propertyPath: string, value?: any)
   {
     if (source === undefined || source === null) return; 
@@ -34,12 +34,12 @@ export abstract class ObjectHelper
    * Получить глубокую копию объекта
    * @param source 
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   public static cloneDeep<TValue = any>(source?: TValue|null): TValue|undefined
   {
     if (source === undefined || source === null) return undefined; 
 
-    return _.cloneDeep(source) as TValue;
+    return _.cloneDeep(source);
   }
 
   /**
@@ -47,7 +47,7 @@ export abstract class ObjectHelper
    * @param a Первый объект
    * @param b Второй объект
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   public static equality(a: any, b: any): boolean
   {
     return _.isEqual(a, b);
@@ -65,7 +65,7 @@ export abstract class ObjectHelper
    * @returns {*}
    */
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   public static getPropertyDefinitionObject(scope: object, prop: string): any 
   {
     if (!scope) return null;

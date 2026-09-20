@@ -1,1 +1,1 @@
-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/math/geometry3D/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,KAAK,SAAS,EAAE,MAAM,WAAW,CAAC"}
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../../src/math/geometry3D/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,KAAK,QAAQ,EAAE,MAAM,WAAW,CAAC;AACnD,OAAO,EAAE,KAAK,KAAK,EAAE,MAAM,QAAQ,CAAC"}

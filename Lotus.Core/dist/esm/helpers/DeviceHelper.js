@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable typescript/no-explicit-any */
 /**
  * Вспомогательный класс для получения информации об устройстве и окружении
  */

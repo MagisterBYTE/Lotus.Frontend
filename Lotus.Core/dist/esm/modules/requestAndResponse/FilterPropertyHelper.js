@@ -1,5 +1,6 @@
 import { BooleanConverter, DateTimeConverter } from '#converters';
 import { StringHelper, ObjectHelper } from '#helpers';
+import { TPropertyTypes } from '#modules/objectInfo';
 export class FilterPropertyHelper {
     /**
      * Проверка на значение фильтра свойства
@@ -41,14 +42,14 @@ export class FilterPropertyHelper {
      * @param filterProperty Параметры фильтрации свойства
      * @returns Отфильтрованный массив
      */
-    // eslint-disable-next-line complexity
+    // oxlint-disable-next-line complexity
     static filterArrayByProperty(massive, filterProperty) {
         if (FilterPropertyHelper.hasValue(filterProperty)) {
-            const propertyType = filterProperty.propertyTypeDesc.type;
+            const propertyType = filterProperty.propertyType;
             const filterFunction = filterProperty.function.type;
             const key = StringHelper.lowercaseFirstLetter(filterProperty.propertyPath);
             switch (propertyType) {
-                case 'bool':
+                case TPropertyTypes.Bool:
                     {
                         switch (filterFunction) {
                             case 'equals':
@@ -58,10 +59,10 @@ export class FilterPropertyHelper {
                         }
                     }
                     break;
-                case 'int':
-                case 'long':
-                case 'float':
-                case 'double':
+                case TPropertyTypes.Int:
+                case TPropertyTypes.Long:
+                case TPropertyTypes.Float:
+                case TPropertyTypes.Double:
                     {
                         switch (filterFunction) {
                             case 'equals':
@@ -162,7 +163,7 @@ export class FilterPropertyHelper {
                                     return false;
                                 });
                             case 'includeEquals':
-                                // eslint-disable-next-line complexity
+                                // oxlint-disable-next-line complexity
                                 return massive.filter((x) => {
                                     const value = ObjectHelper.getValue(x, key);
                                     if (!filterProperty.values) {
@@ -266,8 +267,8 @@ export class FilterPropertyHelper {
                         }
                     }
                     break;
-                case 'string':
-                case 'guid':
+                case TPropertyTypes.String:
+                case TPropertyTypes.Guid:
                     {
                         switch (filterFunction) {
                             case 'equals':
@@ -452,7 +453,7 @@ export class FilterPropertyHelper {
                         }
                     }
                     break;
-                case 'dateTime':
+                case TPropertyTypes.DateTime:
                     {
                         switch (filterFunction) {
                             case 'equals':
@@ -470,6 +471,11 @@ export class FilterPropertyHelper {
                         }
                     }
                     break;
+                case TPropertyTypes.Object:
+                    {
+                        return massive.filter((x) => ObjectHelper.getValue(x, key) === filterProperty.value);
+                    }
+                //break;
             }
         }
         return massive;

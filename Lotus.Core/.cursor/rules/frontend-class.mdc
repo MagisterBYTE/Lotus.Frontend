@@ -1,0 +1,262 @@
+---
+name: frontend-class
+description: Это требования и паттерны классов при написания кода для frontend приложений
+---
+
+# Паттерн ClassInterface:
+Условие применение: при прямом указании в запросе
+Цель: Класс имплементирует интерфейс и является его объектной моделью
+Требования:
+  - Реализация должна соответствовать примеру ниже.
+  - Конструктор класс принимает Partial<Интерфейс>
+  - Должен быть реализован метод toИнтерфейс 
+
+<example>
+export interface ITestInterface
+{
+  name: string;
+  position: IVector3;
+  rotation?: number;
+  levels?: ILevelData[];
+  bounds: IBox3;
+}
+
+export class TestInterface implements ITestInterface
+{
+  // #region Fields
+  public name: string;
+  public position: IVector3;
+  public rotation?: number;
+  public levels?: ILevelData[];
+  public bounds: IBox3;
+  // #endregion
+
+  constructor(props?: Partial<ITestInterface>, otherProps?: ITestInterfaceOtherProps) 
+  {
+    this.name = props?.name || '';
+    this.position = props?.position || Vector3.Zero;
+    this.rotation = props?.rotation;
+    this.levels = props?.levels;
+    this.bounds = props?.bounds || { min: Vector3.Zero, max: Vector3.Zero };
+  }
+
+  public toTestInterface(): ITestInterface
+  {
+    return {
+      name: this.name,
+      position: this.position,
+      rotation: this.rotation,
+      levels: this.levels,
+      bounds: this.bounds
+    };
+  }
+}
+</example>
+
+
+# Паттерн ClassOtherProps:
+Условие применение: при прямом указании в запросе
+Цель: Класс поддерживает дополнительные необязательные пропсы, которые передаются в качестве последнего аргумента конструктора
+Требования:
+  - Реализация должна соответствовать примеру ниже.
+  - Названия типа пропсов `interface I[НАЗВАНИЕ_КЛАССА]OtherProps`
+
+<example>
+interface ITestInterfaceOtherProps
+{
+
+}
+
+export class TestInterface implements ITestInterface
+{
+  // #region Fields
+  ...
+  // #endregion
+
+  constructor(`аргументы по требованию`, otherProps?: ITestInterfaceOtherProps) 
+  {
+
+  }
+}
+</example>
+
+# Паттерн ClassFillCopy:
+Условие применение: при прямом указании в запросе
+Цель: Класс поддерживает методы по копированию и заполнению данных класса
+Требования:
+  - Реализация должна соответствовать примеру ниже.
+  - Класс реализовывает методы `fill`, `copy`, 
+  - Методы обвернуть в регион `FillCopy`
+
+<example>
+interface ITestInterface
+{
+  name: string;
+  position: IVector3;
+}
+
+export class TestInterface implements ITestInterface
+{
+  // #region Fields
+  name: string;
+  position: IVector3;
+  // #endregion
+
+  #region FillCopy
+  public fill(props: Partial<ITestInterface>)
+  {
+    if (!props) return;
+    if (props.name) this.name = props.name;
+    if (props.position) this.position = props.position;
+  }
+
+  public copy(`аргументы по требованию`): TestInterface
+  {
+    const newCopy = new TestInterface();
+    newCopy.fill(this);
+    return newCopy; 
+  }
+  #endregion
+}
+</example>
+
+# Паттерн ClassDatasave:
+Условие применение: при прямом указании в запросе
+Цель: Обеспечить минимальный необходимый набор для сохранения/загрузки данных
+Требования:
+  - Реализация должна соответствовать примеру ниже.
+  - Класс реализовывает статические методы `toDatasave`и `fromDatasave`. 
+  - Метод `fromDatasave` должен из datasave создавать объект класса
+  - Метод `toDatasave` должен из объекта класса или его интерфейса создавать объект datasave
+
+<example>
+interface ITestInterfaceDatasave
+{
+  name: string;
+  position: IVector3;
+}
+
+export class TestInterface implements ITestInterface
+{
+  // #region Static methods
+  public static fromDatasave(datasave: ITestInterfaceDatasave): TestInterface
+  {
+    const testInterface = new TestInterface();
+    testInterface.fill(datasave);
+    return testInterface;
+  }
+  public static toDatasave(testInterface: ITestInterface): ITestInterfaceDatasave
+  {
+    return {
+      name: testInterface.name,
+      position: testInterface.position
+    };
+  }
+  // #endregion
+
+  // #region Fields
+  name: string;
+  position: IVector3;
+  // #endregion
+}
+</example>
+
+# Паттерн ClassPropertyInfo:
+Условие применение: при прямом указании в запросе
+Цель: Обеспечить инспектор свойств набор доступных для редактирования свойств объекта
+Требования:
+  - Реализация должна соответствовать примеру ниже.
+  - Для примера: для класса `UserPermission` создается класс `UserPermissionObjectInfoClass` работа с которым осуществляется через глобальный Instance
+  - Класс `UserPermissionObjectInfoClass` является наследником ObjectInfo
+
+class UserPermissionObjectInfoClass extends ObjectInfo
+{
+  // #region Instance
+  private static _permissionObjectInfo: UserPermissionObjectInfoClass;
+
+  public static get Instance(): UserPermissionObjectInfoClass 
+  {
+    return (this._permissionObjectInfo || (this._permissionObjectInfo = new this()));
+  }
+  // #endregion
+
+  constructor() 
+  {
+    super();
+    this.Init();
+  }
+
+  private Init()
+  {
+    const idProp: IPropertyDescriptor =
+    {
+      fieldName: 'id',
+      name: LocalizationAccount.data.permission.id,
+      desc: LocalizationAccount.data.permission.idDesc,
+      propertyTypeDesc: PropertyTypeDescriptors.Int,
+      sorting:
+      {
+        enabled: true
+      }
+    };
+
+    this.descriptors.push(idProp);
+
+    const nameProp: IPropertyDescriptor =
+    {
+      fieldName: 'name',
+      name: LocalizationAccount.data.permission.name,
+      desc: LocalizationAccount.data.permission.nameDesc,
+      propertyTypeDesc: PropertyTypeDescriptors.String,
+      editing:
+      {
+        enabled: true,
+        required: true,
+        editorType: 'text'
+      },
+      filtering:
+      {
+        functionDefaultDesc: FilterFunctionDescriptors.Contains,
+        enabled: true
+      },
+      sorting:
+      {
+        enabled: true
+      }
+    };
+
+    this.descriptors.push(nameProp);
+
+    const displayNameProp: IPropertyDescriptor =
+    {
+      fieldName: 'displayName',
+      name: LocalizationAccount.data.permission.displayName,
+      desc: LocalizationAccount.data.permission.displayNameDesc,
+      propertyTypeDesc: PropertyTypeDescriptors.String,
+      editing:
+      {
+        enabled: true,
+        required: true,
+        editorType: 'text'
+      },
+      filtering:
+      {
+        functionDefaultDesc: FilterFunctionDescriptors.Contains,
+        enabled: true
+      },
+      sorting:
+      {
+        enabled: true
+      }
+    };
+
+    this.descriptors.push(displayNameProp);
+  }
+}
+
+/**
+ * Глобальный экземпляр для доступа к описанию свойств разрешений 
+ */
+export const UserPermissionObjectInfo = UserPermissionObjectInfoClass.Instance;
+</example>
+

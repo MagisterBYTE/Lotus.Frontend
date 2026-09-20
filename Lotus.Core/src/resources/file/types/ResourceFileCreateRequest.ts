@@ -53,7 +53,7 @@ export interface IResourceFileCreateStreamRequest extends IResourcesFileCreateRe
   /**
    * Поток для чтения файла.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   readStream: any;
 
   /**

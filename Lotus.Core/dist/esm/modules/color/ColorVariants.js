@@ -71,7 +71,7 @@ export class ColorVariants {
         }
     }
     // #endregion
-    // eslint-disable-next-line max-params
+    // oxlint-disable-next-line max-params
     constructor(white, palest, pale, lighter, light, main, dark, darker, darkest, black) {
         this.white = white;
         this.palest = palest;

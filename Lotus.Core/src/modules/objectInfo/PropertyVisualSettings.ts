@@ -12,12 +12,12 @@ export interface IPropertyVisualSettings
   /**
    * Дополнительные пропсы компонента для просмотра
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   propsView?: any;
 
   /**
    * Дополнительные пропсы компонента для редактирования
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   propsEdit?: any;
 }

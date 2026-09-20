@@ -1,5 +1,6 @@
-/* eslint-disable prefer-rest-params */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable prefer-rest-params */
+/* oxlint-disable typescript/no-explicit-any */
+/* oxlint-disable max-depth */
 import { ColorHelper } from './ColorHelper';
 /** @class Color
 * Color class accepts a CSS color string, rgb, hsl data as the input, manipulate the color, and returns a CSS-compatible color string.
@@ -50,7 +51,7 @@ export class Color {
     rgb;
     hsl;
     a;
-    // eslint-disable-next-line complexity
+    // oxlint-disable-next-line complexity
     constructor(red, green, blue, alpha) {
         if (arguments.length === 0) {
             this.rgb = [0, 0, 0];
@@ -794,7 +795,7 @@ export class Color {
      * Получить цвет и цвет тени гармоничный к текущему
      * @returns Цвет и цвет тени гармоничный к текущему
      */
-    // eslint-disable-next-line complexity
+    // oxlint-disable-next-line complexity
     createHarmoniousColorAndShadow() {
         const hsl = this._getHSL();
         let h = hsl.h * 360;

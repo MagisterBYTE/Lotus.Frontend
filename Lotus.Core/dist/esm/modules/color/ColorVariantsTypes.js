@@ -17,7 +17,7 @@ export const TColorVariantNames = ['white', 'palest', 'pale', 'lighter', 'light'
  * @param value Проверяемое значение
  * @returns Статус проверки
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line typescript/no-explicit-any
 export function instanceOfColorVariantName(value) {
     if (typeof value === 'string') {
         return TColorVariantNames.includes(value);

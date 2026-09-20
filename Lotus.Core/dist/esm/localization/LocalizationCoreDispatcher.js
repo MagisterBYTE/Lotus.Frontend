@@ -56,7 +56,7 @@ export class LocalizationCoreDispatcherClass {
                 LocalizationCore.data = LocalizationCoreDataRu;
         }
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     onLanguageChangeEvent(event) {
         this.setLanguage(event.detail.lang);
     }

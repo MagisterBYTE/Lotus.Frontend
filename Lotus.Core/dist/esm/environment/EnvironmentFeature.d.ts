@@ -1,7 +1,7 @@
 /**
  * Массив значений типов стандартных свойств/фич для окружения
  */
-export declare const TEnvironmentFeatureValues: readonly ["cookieAuth", "tokenAuth", "frontApi", "backendApi"];
+export declare const TEnvironmentFeatureValues: readonly ['cookieAuth', 'tokenAuth', 'frontApi', 'backendApi'];
 /**
  * Типы стандартных свойств/фич для окружения
  */

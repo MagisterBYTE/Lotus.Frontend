@@ -45,7 +45,7 @@ export type TColorVariantTuple = readonly [
  * @param value Проверяемое значение
  * @returns Статус проверки
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line typescript/no-explicit-any
 export function instanceOfColorVariantName(value: any): value is TColorVariantName 
 {
   if (typeof value === 'string')

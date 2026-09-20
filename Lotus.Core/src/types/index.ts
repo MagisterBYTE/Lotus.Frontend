@@ -1,5 +1,5 @@
 export { castToChangeStateNotifier, instanceOfChangeStateNotifier, type IChangeStateNotifier } from './ChangeStateNotifier';
-export { type Dictionary, type MakeOptional, type OnlyValues, type PropertyType, type ReplaceValues } from './CommonTypes';
+export { type Dictionary, type MakeOptional, type OnlyValues, type PropertyType, type ReplaceValues, type DeepPartial } from './CommonTypes';
 export { castToConstantable, instanceOfConstantable, type IConstantable } from './Constantable';
 export { castToDatasavable, instanceOfDatasavable, type IDatasavable } from './Datasavable';
 export { castToDestroyable, instanceOfDestroyable, type IDestroyable } from './Destroyable';
@@ -14,7 +14,7 @@ export { castToIdentifierId, instanceOfIdentifierId, type IIdentifierId } from '
 export { type TKey } from './Key';
 export { type MaybeNull, type MaybeUndef } from './MaybeTypes';
 export { castToNameable, instanceOfNameable, type INameable } from './Nameable';
-export { castToNotifyPropertyChanged, instanceOfNotifyPropertyChanged, type INotifyPropertyChanged } from './NotifyPropertyChanged';
+export { castToNotifyPropertyChanged, instanceOfNotifyPropertyChanged, type INotifyPropertyChanged, type PropertyChangedFunction } from './NotifyPropertyChanged';
 export { type IPoint } from './Point';
 export { type IProxiedObject } from './ProxiedObject';
 export { type IRecordObject } from './RecordObject';

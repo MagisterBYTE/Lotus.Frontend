@@ -337,7 +337,7 @@ export class ArrayHelper {
         if (newIndex >= array.length) {
             let k = newIndex - array.length + 1;
             while (k--) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // oxlint-disable-next-line typescript/no-explicit-any
                 array.push(undefined);
             }
         }

@@ -1,7 +1,7 @@
 /**
  * Допустимые значения типа свойства.
  */
-export const TPropertyTypeValues = ['bool', 'int', 'long', 'float', 'double', 'enum', 'string', 'dateTime', 'guid'] as const;
+export const TPropertyTypeValues = ['bool', 'int', 'long', 'float', 'double', 'enum', 'string', 'dateTime', 'guid', 'object'] as const;
 
 /**
  * Тип свойства
@@ -28,6 +28,7 @@ export const TPropertyTypes = {
   String: TPropertyTypeValues[6],
   DateTime: TPropertyTypeValues[7],
   Guid: TPropertyTypeValues[8],
+  Object: TPropertyTypeValues[9],
 
   /**
    * Возвращает все доступные значения.

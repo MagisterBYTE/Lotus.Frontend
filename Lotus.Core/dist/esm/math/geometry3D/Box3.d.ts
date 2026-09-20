@@ -1,0 +1,15 @@
+import { IVector3 } from './Vector3';
+/**
+ * Интерфейс для описания ограничивающего объёма (axis-aligned bounding box) в трёхмерном пространстве.
+ */
+export interface IBox3 {
+    /**
+     * Минимальная точка объёма (нижний левый дальний угол).
+     */
+    min: IVector3;
+    /**
+     * Максимальная точка объёма (верхний правый ближний угол).
+     */
+    max: IVector3;
+}
+//# sourceMappingURL=Box3.d.ts.map

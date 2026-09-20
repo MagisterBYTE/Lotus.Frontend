@@ -1,7 +1,7 @@
 /**
  *  Массив значений типов команд действий
  */
-export declare const TActionCommandTypeValues: readonly ["default", "navigation", "delimiter"];
+export declare const TActionCommandTypeValues: readonly ['default', 'navigation', 'delimiter'];
 /**
  * Стандартные типы команды действия
  */

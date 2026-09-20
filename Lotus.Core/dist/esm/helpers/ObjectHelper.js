@@ -6,7 +6,7 @@ export class ObjectHelper {
      * @param propertyPath Имя/путь свойства
      * @param defaultValue Значение по умолчанию если свойство не найдено
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static getValue(source, propertyPath, defaultValue) {
         if (source === undefined || source === null)
             return undefined;
@@ -19,7 +19,7 @@ export class ObjectHelper {
      * @param propertyPath Имя/путь свойства
      * @param value Значение
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static setValue(source, propertyPath, value) {
         if (source === undefined || source === null)
             return;
@@ -29,7 +29,7 @@ export class ObjectHelper {
      * Получить глубокую копию объекта
      * @param source
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static cloneDeep(source) {
         if (source === undefined || source === null)
             return undefined;
@@ -40,7 +40,7 @@ export class ObjectHelper {
      * @param a Первый объект
      * @param b Второй объект
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static equality(a, b) {
         return _.isEqual(a, b);
     }
@@ -55,7 +55,7 @@ export class ObjectHelper {
      * @param prop    The name of the property we're searching for
      * @returns {*}
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static getPropertyDefinitionObject(scope, prop) {
         if (!scope)
             return null;

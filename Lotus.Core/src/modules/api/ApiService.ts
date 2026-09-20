@@ -128,7 +128,7 @@ export class ApiService
   /**
    * Обработка ошибок ответа
    */
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   protected handleResponseError(uri: string, error: ApiRequestError): Promise<never>
   {
     // Запрос был сделан, и сервер ответил кодом состояния, который выходит за пределы 2xx

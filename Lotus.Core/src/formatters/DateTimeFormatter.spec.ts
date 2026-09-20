@@ -1,6 +1,6 @@
-/* eslint-disable max-nested-callbacks */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable max-nested-callbacks */
+/* oxlint-disable no-unused-vars */
+/* oxlint-disable typescript/no-explicit-any */
 
 import { StringHelper } from '#helpers';
 import { DateTimeFormatter } from './DateTimeFormatter';

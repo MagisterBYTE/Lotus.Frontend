@@ -16,6 +16,18 @@ export interface IPropertyEditable {
      */
     editorType?: 'text' | 'select' | 'multi-select' | 'range' | 'checkbox' | 'date' | 'date-range' | 'autocomplete';
     /**
+     * Минимальное значение свойства
+     */
+    min?: number;
+    /**
+     * Максимальное значение свойства
+     */
+    max?: number;
+    /**
+     * Шаг свойства
+     */
+    step?: number;
+    /**
      * Валидации свойства
      * @param value Значения свойства
      * @returns Статус валидации

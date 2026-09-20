@@ -48,6 +48,6 @@ export interface IStorage
    * Позволяет обращаться к значениям как к свойствам объекта: storage[key]
    * @param key - имя ключа
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   [name: string]: any;
 }

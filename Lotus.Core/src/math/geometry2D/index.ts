@@ -1,1 +1,1 @@
-export { Vector2D, type IVector2D } from './Vector2';
+export { Vector2, type IVector2, Vector2Constants } from './Vector2';

@@ -250,8 +250,8 @@ export abstract class ColorTokenHelper
    */
   public static create(color: TColorPalette | TColorSemantic, colorVariant: TColorVariantName): TColorToken
   {
-    if (colorVariant === 'main') return color as TColorToken;
-    return `${color}${StringHelper.capitalizeFirstLetter(colorVariant)}` as TColorToken;
+    if (colorVariant === 'main') return color;
+    return `${color}${StringHelper.capitalizeFirstLetter(colorVariant)}` as unknown as TColorToken;
   }
 
   /**

@@ -142,7 +142,7 @@ export class ItemsHelper {
                 if (selectedValues.length > 0) {
                     const itemsSelected = [];
                     for (const item of items) {
-                        // eslint-disable-next-line max-depth
+                        // oxlint-disable-next-line max-depth
                         if (selectedValues.find((x) => x == ItemsHelper.getValueOfItem(item))) {
                             itemsSelected.push(item);
                         }

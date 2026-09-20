@@ -20,7 +20,7 @@ export class GuidHelper {
      * @param {any} value - Проверяемое значение.
      * @returns {value is TGuid} `true`, если значение является строкой и соответствует формату TGuid, иначе `false`.
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     static instanceOfGuid(value) {
         // Проверка на существование значения и соответствие регулярному выражению
         if (value) {

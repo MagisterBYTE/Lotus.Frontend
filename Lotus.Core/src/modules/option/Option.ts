@@ -23,7 +23,7 @@ export interface IOption<TValueOption extends TKey = TKey>
   /**
    * Данные иконки
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line typescript/no-explicit-any
   icon?: any;
 
   /**

@@ -1,7 +1,7 @@
 import { BooleanConverter, DateTimeConverter } from '#converters';
 import { StringHelper, ObjectHelper } from '#helpers';
 import { TFilterFunction } from '#modules/filter';
-import { TPropertyType } from '#modules/objectInfo';
+import { TPropertyType, TPropertyTypes } from '#modules/objectInfo';
 import { IFilterPropertyCollection, IFilterProperty } from './FilterProperty';
 
 export abstract class FilterPropertyHelper 
@@ -59,18 +59,18 @@ export abstract class FilterPropertyHelper
    * @param filterProperty Параметры фильтрации свойства
    * @returns Отфильтрованный массив
    */
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   public static filterArrayByProperty<TItem = object>(massive: TItem[], filterProperty: IFilterProperty): TItem[] 
   {
     if (FilterPropertyHelper.hasValue(filterProperty)) 
     {
-      const propertyType: TPropertyType = filterProperty.propertyTypeDesc.type;
+      const propertyType: TPropertyType = filterProperty.propertyType;
       const filterFunction: TFilterFunction = filterProperty.function.type;
       const key = StringHelper.lowercaseFirstLetter(filterProperty.propertyPath);
 
       switch (propertyType) 
       {
-        case 'bool':
+        case TPropertyTypes.Bool:
           {
             switch (filterFunction) 
             {
@@ -81,10 +81,10 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
-        case 'int':
-        case 'long':
-        case 'float':
-        case 'double':
+        case TPropertyTypes.Int:
+        case TPropertyTypes.Long:
+        case TPropertyTypes.Float:
+        case TPropertyTypes.Double:
           {
             switch (filterFunction) 
             {
@@ -233,7 +233,7 @@ export abstract class FilterPropertyHelper
                 });
 
               case 'includeEquals':
-                // eslint-disable-next-line complexity
+                // oxlint-disable-next-line complexity
                 return massive.filter((x) => 
                 {
                   const value = ObjectHelper.getValue(x, key);
@@ -389,8 +389,8 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
-        case 'string':
-        case 'guid':
+        case TPropertyTypes.String:
+        case TPropertyTypes.Guid:
           {
             switch (filterFunction) 
             {
@@ -661,7 +661,7 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
-        case 'dateTime':
+        case TPropertyTypes.DateTime:
           {
             switch (filterFunction) 
             {
@@ -688,6 +688,11 @@ export abstract class FilterPropertyHelper
             }
           }
           break;
+        case TPropertyTypes.Object:
+          {
+            return massive.filter((x) => ObjectHelper.getValue(x, key) === filterProperty.value);
+          }
+          //break;
       }
     }
 

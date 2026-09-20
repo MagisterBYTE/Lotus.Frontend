@@ -421,7 +421,7 @@ export abstract class ArrayHelper
       let k = newIndex - array.length + 1;
       while (k--)
       {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line typescript/no-explicit-any
         array.push(undefined as any);
       }
     }

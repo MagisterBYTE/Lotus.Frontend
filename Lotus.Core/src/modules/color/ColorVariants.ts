@@ -134,7 +134,7 @@ export class ColorVariants implements IColorVariants
   }
   // #endregion
 
-  // eslint-disable-next-line max-params
+  // oxlint-disable-next-line max-params
   constructor(white: Color, palest: Color, pale: Color, lighter: Color, light: Color, main: Color, dark: Color, darker: Color, darkest: Color, black: Color)
   {
     this.white = white;

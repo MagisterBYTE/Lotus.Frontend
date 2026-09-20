@@ -163,7 +163,7 @@ export class XMath {
      * @param {number} value - Исходное значение.
      * @returns {number} Целевое значение.
      */
-    // eslint-disable-next-line max-params
+    // oxlint-disable-next-line max-params
     static convertInterval(destStart, destEnd, sourceStart, sourceEnd, value) {
         const x1 = destStart;
         const x2 = destEnd;
@@ -213,6 +213,80 @@ export class XMath {
         else {
             return Math.ceil((value - round / 2) / round) * round;
         }
+    }
+    // #endregion
+    // #region Angle methods
+    /**
+     * Нормализация угла в пределах от 0 до 360.
+     *
+     * @param angle - Угол, задается в градусах.
+     * @returns Нормализованный угол в пределах от 0 до 360.
+     */
+    static angleNormalizationFull(angle) {
+        let degreeNorm = angle;
+        if (angle >= 360.0 || angle < 0.0) {
+            // Используем стандартный Math для вычисления
+            degreeNorm -= Math.floor(angle / 360.0) * 360.0;
+        }
+        return degreeNorm;
+    }
+    /**
+     * Нормализация угла в пределах от -180 до 180.
+     *
+     * @param angle - Угол, задается в градусах.
+     * @returns Нормализованный угол в пределах от -180 до 180.
+     */
+    static angleNormalizationHalf(angle) {
+        let degreeNorm = angle;
+        if (angle >= 360.0 || angle < 0.0) {
+            degreeNorm -= Math.floor(angle / 360.0) * 360.0;
+        }
+        if (degreeNorm > 180.0) {
+            degreeNorm -= 360.0;
+        }
+        return degreeNorm;
+    }
+    /**
+     * Ограничение угла в заданном диапазоне.
+     *
+     * @param angle - Угол, задается в градусах.
+     * @param min - Минимальный угол.
+     * @param max - Максимальный угол.
+     * @returns Ограниченный угол.
+     */
+    static angleClamp(angle, min, max) {
+        // Простая коррекция для выхода за пределы одного оборота
+        if (angle < -360) {
+            angle += 360;
+        }
+        if (angle > 360) {
+            angle -= 360;
+        }
+        if (angle > max) {
+            return max;
+        }
+        if (angle < min) {
+            return min;
+        }
+        return angle;
+    }
+    /**
+     * Преобразует градусы в радианы.
+     *
+     * @param degrees - Угол в градусах.
+     * @returns Угол в радианах.
+     */
+    static toRadians(degrees) {
+        return (degrees * Math.PI) / 180;
+    }
+    /**
+     * Преобразует радианы в градусы.
+     *
+     * @param radians - Угол в радианах.
+     * @returns Угол в градусах.
+     */
+    static toDegrees(radians) {
+        return (radians * 180) / Math.PI;
     }
 }
 //# sourceMappingURL=XMath.js.map
