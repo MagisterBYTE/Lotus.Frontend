@@ -26,6 +26,7 @@ export abstract class TableViewPropsPreset
       manualFiltering: true,
       manualPagination: true,
       manualSorting: true,
+      autoResetPageIndex: false,
 
       // Редактируем по умолчанию в режиме строки
       editDisplayMode: 'modal',
@@ -49,7 +50,7 @@ export abstract class TableViewPropsPreset
 
       // Начальное состояние
       initialState: {
-        columnPinning: { right: ['mrt-row-actions'], left: ['mrt-row-expand', 'mrt-row-select'] }
+        columnPinning: { end: ['mrt-row-actions'], start: ['mrt-row-expand', 'mrt-row-select'] }
       },
 
       // Редактирование всегда справа

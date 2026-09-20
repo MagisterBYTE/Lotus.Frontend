@@ -13,5 +13,5 @@ export interface IImageProps extends IGeneralIconProperties {
      */
     crossOrigin?: '' | 'anonymous' | 'use-credentials';
 }
-export declare const Image: import("react").MemoExoticComponent<(props: IImageProps) => import("react/jsx-runtime").JSX.Element | null>;
+export declare const Image: import("react").MemoExoticComponent<(props: IImageProps) => import("react").JSX.Element | null>;
 //# sourceMappingURL=Image.d.ts.map

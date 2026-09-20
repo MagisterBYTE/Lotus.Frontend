@@ -1,14 +1,14 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_ExpandAllButton.module.css';
+import { ActionIcon, Tooltip } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import classes from './MRT_ExpandAllButton.module.css'
+import type { ActionIconProps } from '@mantine/core'
 
-import { ActionIcon, type ActionIconProps, Tooltip } from '@mantine/core';
-
-import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import type { MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends ActionIconProps {
-  table: MRT_TableInstance<TData>;
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
@@ -19,7 +19,7 @@ export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
     getCanSomeRowsExpand,
     getIsAllRowsExpanded,
     getIsSomeRowsExpanded,
-    getState,
+    state,
     options: {
       icons: { IconChevronsDown },
       localization,
@@ -27,17 +27,17 @@ export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
       renderDetailPanel,
     },
     toggleAllRowsExpanded,
-  } = table;
-  const { density, isLoading } = getState();
+  } = table
+  const { density, isLoading } = state
 
   const actionIconProps = {
     ...parseFromValuesOrFunc(mantineExpandAllButtonProps, {
       table,
     }),
     ...rest,
-  };
+  }
 
-  const isAllRowsExpanded = getIsAllRowsExpanded();
+  const isAllRowsExpanded = getIsAllRowsExpanded()
 
   return (
     <Tooltip
@@ -78,5 +78,5 @@ export const MRT_ExpandAllButton = <TData extends MRT_RowData>({
         )}
       </ActionIcon>
     </Tooltip>
-  );
-};
+  )
+}

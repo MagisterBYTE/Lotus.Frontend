@@ -1,4 +1,4 @@
-import { rankings, rankItem, } from '@tanstack/match-sorter-utils';
+import { rankItem, rankings } from '@tanstack/match-sorter-utils';
 import { filterFns } from '@tanstack/react-table';
 const fuzzy = (row, columnId, filterValue, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), filterValue, {

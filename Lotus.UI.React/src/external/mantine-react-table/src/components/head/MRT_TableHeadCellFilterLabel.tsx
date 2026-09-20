@@ -1,30 +1,20 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableHeadCellFilterLabel.module.css';
+import { useState } from 'react'
 
-import { type MouseEvent, useState } from 'react';
+import { ActionIcon, Popover, Tooltip, Transition } from '@mantine/core'
 
-import {
-  ActionIcon,
-  type ActionIconProps,
-  Popover,
-  Tooltip,
-  Transition,
-} from '@mantine/core';
-
-import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
-
-import { localizedFilterOption } from '../../fns/filterFns';
-import {
-  type MRT_Header,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { dataVariable } from '../../utils/style.utils';
+import { localizedFilterOption } from '../../fns/filterFns'
+import { dataVariable } from '../../utils/style.utils'
+import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer'
+import classes from './MRT_TableHeadCellFilterLabel.module.css'
+import type { MRT_Header, MRT_RowData, MRT_TableInstance } from '../../types'
+import type { ActionIconProps } from '@mantine/core'
+import type { MouseEvent } from 'react'
 
 interface Props<TData extends MRT_RowData> extends ActionIconProps {
-  header: MRT_Header<TData>;
-  table: MRT_TableInstance<TData>;
+  header: MRT_Header<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData>({
@@ -40,28 +30,28 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData>({
     },
     refs: { filterInputRefs },
     setShowColumnFilters,
-  } = table;
-  const { column } = header;
-  const { columnDef } = column;
+  } = table
+  const { column } = header
+  const { columnDef } = column
 
-  const filterValue = column.getFilterValue();
+  const filterValue = column.getFilterValue()
 
-  const [popoverOpened, setPopoverOpened] = useState(false);
+  const [popoverOpened, setPopoverOpened] = useState(false)
 
   const isFilterActive =
     (Array.isArray(filterValue) && filterValue.some(Boolean)) ||
-    (!!filterValue && !Array.isArray(filterValue));
+    (!!filterValue && !Array.isArray(filterValue))
 
   const isRangeFilter =
     columnDef.filterVariant === 'range' ||
     columnDef.filterVariant === 'date-range' ||
     ['between', 'betweenInclusive', 'inNumberRange'].includes(
       columnDef._filterFn,
-    );
-  const currentFilterOption = columnDef._filterFn;
+    )
+  const currentFilterOption = columnDef._filterFn
   const filterValueFn =
-    columnDef.filterTooltipValueFn || ((value) => value as string);
-  type FilterValueType = Parameters<typeof filterValueFn>[0];
+    columnDef.filterTooltipValueFn || ((value) => value as string)
+  type FilterValueType = Parameters<typeof filterValueFn>[0]
   const filterTooltip =
     columnFilterDisplayMode === 'popover' && !isFilterActive
       ? localization.filterByColumn?.replace(
@@ -91,7 +81,7 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData>({
                 : filterValueFn(column.getFilterValue())
             }"`,
           )
-          .replace('" "', '');
+          .replace('" "', '')
 
   return (
     <>
@@ -133,17 +123,17 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData>({
                   size={18}
                   {...dataVariable('active', isFilterActive)}
                   onClick={(event: MouseEvent<HTMLButtonElement>) => {
-                    event.stopPropagation();
+                    event.stopPropagation()
                     if (columnFilterDisplayMode === 'popover') {
-                      setPopoverOpened((opened) => !opened);
+                      setPopoverOpened((opened) => !opened)
                     } else {
-                      setShowColumnFilters(true);
+                      setShowColumnFilters(true)
                     }
                     setTimeout(() => {
-                      const input = filterInputRefs.current[`${column.id}-0`];
-                      input?.focus();
-                      input?.select();
-                    }, 100);
+                      const input = filterInputRefs.current[`${column.id}-0`]
+                      input?.focus()
+                      input?.select()
+                    }, 100)
                   }}
                   {...rest}
                 >
@@ -166,5 +156,5 @@ export const MRT_TableHeadCellFilterLabel = <TData extends MRT_RowData>({
         )}
       </Popover>
     </>
-  );
-};
+  )
+}

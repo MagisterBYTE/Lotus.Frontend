@@ -1,1 +1,1 @@
-{"version":3,"file":"aggregationFns.js","sourceRoot":"","sources":["../../../../../../src/external/mantine-react-table/src/fns/aggregationFns.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,uBAAuB,CAAC;AAEvD,MAAM,CAAC,MAAM,kBAAkB,GAAG,EAAE,GAAG,cAAc,EAAE,CAAC"}
+{"version":3,"file":"aggregationFns.js","sourceRoot":"","sources":["../../../../../../src/external/mantine-react-table/src/fns/aggregationFns.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,uBAAuB,CAAA;AAEtD,MAAM,CAAC,MAAM,qBAAqB,GAAG,EAAE,GAAG,cAAc,EAAE,CAAA"}

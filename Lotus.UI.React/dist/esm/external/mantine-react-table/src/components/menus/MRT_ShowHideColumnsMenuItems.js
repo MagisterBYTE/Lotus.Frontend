@@ -1,15 +1,15 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import classes from './MRT_ShowHideColumnsMenuItems.module.css';
-import { useRef, useState, } from 'react';
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useRef, useState } from 'react';
 import { Box, Menu, Switch, Text, Tooltip, useMantineTheme, } from '@mantine/core';
 import { reorderColumn } from '../../utils/column.utils';
 import { dataVariable, getPrimaryColor } from '../../utils/style.utils';
 import { MRT_ColumnPinningButtons } from '../buttons/MRT_ColumnPinningButtons';
 import { MRT_GrabHandleButton } from '../buttons/MRT_GrabHandleButton';
+import classes from './MRT_ShowHideColumnsMenuItems.module.css';
 export const MRT_ShowHideColumnsMenuItems = ({ allColumns, column, hoveredColumn, setHoveredColumn, table, }) => {
     const theme = useMantineTheme();
-    const { getState, options: { enableColumnOrdering, enableColumnPinning, enableHiding, localization, }, setColumnOrder, } = table;
-    const { columnOrder } = getState();
+    const { state, options: { enableColumnOrdering, enableColumnPinning, enableHiding, localization, }, setColumnOrder, } = table;
+    const { columnOrder } = state;
     const { columnDef } = column;
     const { columnDefType } = columnDef;
     const switchChecked = (columnDefType !== 'group' && column.getIsVisible()) ||

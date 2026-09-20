@@ -21,7 +21,7 @@ import {
 import { useId, usePrevious, useUncontrolled } from '@mantine/hooks';
 import { ReactNode, useEffect, useMemo, useRef } from 'react';
 
-export interface ISelectExProps extends SelectProps {
+export interface ISelectExProps extends SelectProps<string> {
   renderValue?: (value: string, contextRender?: IContextRenderBase) => ReactNode;
 }
 
@@ -39,9 +39,10 @@ export type SelectExFactory = Factory<{
   variant: InputVariant;
 }>;
 
-export const SelectEx = factory<SelectExFactory>((_props, ref) => 
+export const SelectEx = factory<SelectExFactory>((_props) => 
 {
-  const props = useProps('Select', defaultProps, _props);
+  const { ref, ...restProps } = _props;
+  const props = useProps('Select', defaultProps, restProps);
   const {
     classNames,
     styles,
@@ -99,12 +100,13 @@ export const SelectEx = factory<SelectExFactory>((_props, ref) =>
     openOnFocus,
     attributes,
     renderValue,
+    type: _ignoredType,
     ...others
   } = props;
 
-  const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
-  const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
+  const parsedData = useMemo(() => getParsedComboboxData<string>(data), [data]);
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<string>>>({});
+  const optionsLockup = useMemo(() => getOptionsLockup<string>(parsedData), [parsedData]);
   const _id = useId(id);
 
   const [_value, setValue, controlled] = useUncontrolled({
@@ -248,6 +250,7 @@ export const SelectEx = factory<SelectExFactory>((_props, ref) =>
       >
         <Combobox.Target autoComplete={autoComplete} targetType={searchable ? (renderValue ? 'button' : 'input') : 'button'}>
           {renderValue && (
+            // @ts-expect-error polymorphic InputBase as button
             <InputBase
               multiline
               pointer
@@ -259,12 +262,11 @@ export const SelectEx = factory<SelectExFactory>((_props, ref) =>
               id={_id}
               rightSection={rightSection}
               rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
-              // @ts-expect-error
-              type="button"
               onClick={() => combobox.toggleDropdown()}
               error={error}
               {...others}
               size={size}
+              type="button"
             >
               {selectedOption ? <>{renderValue(selectedOption.value, contextRender)}</> : <Input.Placeholder>{props.placeholder}</Input.Placeholder>}
             </InputBase>
@@ -325,7 +327,7 @@ export const SelectEx = factory<SelectExFactory>((_props, ref) =>
           aria-label={others.label ? undefined : others['aria-label']}
           checkIconPosition={checkIconPosition}
           data={parsedData}
-          filter={filter}
+          filter={filter as never}
           filterOptions={!!searchable && selectedOption?.label !== search}
           hidden={readOnly || disabled}
           hiddenWhenEmpty={!nothingFoundMessage}

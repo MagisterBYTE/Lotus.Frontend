@@ -50,16 +50,16 @@ export declare abstract class ContainerPropertiesHelper {
     static getContainerProperties(props: IGeneralContainerProperties): {
         w: TCssWidth | undefined;
         h: TCssHeight | undefined;
-        p: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        pl: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        pt: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        pr: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        pb: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        m: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        ml: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        mt: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        mr: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
-        mb: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | import("#types").TCssPadding | undefined;
+        p: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        pl: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        pt: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        pr: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        pb: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        m: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        ml: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        mt: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        mr: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
+        mb: "lg" | "md" | "sm" | "xl" | "xs" | "xxl" | "xxs" | import("#types").TCssPadding | undefined;
     };
     /**
      * Создать свойства CSS по контейнеру в виде TCssProperties

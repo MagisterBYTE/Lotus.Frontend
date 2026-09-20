@@ -1,12 +1,12 @@
 import { createElement as _createElement } from "react";
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Flex, Modal, Stack } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_EditActionButtons } from '../buttons/MRT_EditActionButtons';
 import { MRT_EditCellTextInput } from '../inputs/MRT_EditCellTextInput';
 export const MRT_EditRowModal = ({ open, table, ...rest }) => {
-    const { getState, options: { mantineCreateRowModalProps, mantineEditRowModalProps, onCreatingRowCancel, onEditingRowCancel, renderCreateRowModalContent, renderEditRowModalContent, }, setCreatingRow, setEditingRow, } = table;
-    const { creatingRow, editingRow } = getState();
+    const { state, options: { mantineCreateRowModalProps, mantineEditRowModalProps, onCreatingRowCancel, onEditingRowCancel, renderCreateRowModalContent, renderEditRowModalContent, }, setCreatingRow, setEditingRow, } = table;
+    const { creatingRow, editingRow } = state;
     const row = (creatingRow ?? editingRow);
     const arg = { row, table };
     const modalProps = {
@@ -27,7 +27,7 @@ export const MRT_EditRowModal = ({ open, table, ...rest }) => {
             onEditingRowCancel?.({ row, table });
             setEditingRow(null);
         }
-        row._valuesCache = {}; //reset values cache
+        row._valuesCache = {}; // reset values cache
         modalProps.onClose?.();
     };
     return (_createElement(Modal, { opened: open, withCloseButton: false, ...modalProps, key: row.id, onClose: handleCancel }, ((creatingRow &&

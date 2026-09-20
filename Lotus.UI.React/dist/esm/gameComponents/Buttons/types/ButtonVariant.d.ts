@@ -1,7 +1,7 @@
 /**
  * Массив доступных значений вариантов кнопки
  */
-export declare const TButtonVariantValues: readonly ["default", "light", "gray", "coffee"];
+export declare const TButtonVariantValues: readonly ['default', 'light', 'gray', 'coffee'];
 /**
  * Тип варианта кнопки
  */

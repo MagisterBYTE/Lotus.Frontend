@@ -1,25 +1,18 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_GlobalFilterTextInput.module.css';
+import { useEffect, useRef, useState } from 'react'
 
-import { useEffect, useRef, useState } from 'react';
+import { ActionIcon, Collapse, Menu, TextInput, Tooltip } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
 
-import {
-  ActionIcon,
-  Collapse,
-  Menu,
-  TextInput,
-  type TextInputProps,
-  Tooltip,
-} from '@mantine/core';
-import { useDebouncedValue } from '@mantine/hooks';
-
-import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_FilterOptionMenu } from '../menus/MRT_FilterOptionMenu';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_FilterOptionMenu } from '../menus/MRT_FilterOptionMenu'
+import classes from './MRT_GlobalFilterTextInput.module.css'
+import type { MRT_RowData, MRT_TableInstance } from '../../types'
+import type { TextInputProps } from '@mantine/core'
 
 interface Props<TData extends MRT_RowData> extends TextInputProps {
-  table: MRT_TableInstance<TData>;
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_GlobalFilterTextInput = <TData extends MRT_RowData>({
@@ -27,7 +20,7 @@ export const MRT_GlobalFilterTextInput = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       enableGlobalFilterModes,
       icons: { IconSearch, IconX },
@@ -38,46 +31,46 @@ export const MRT_GlobalFilterTextInput = <TData extends MRT_RowData>({
     },
     refs: { searchInputRef },
     setGlobalFilter,
-  } = table;
-  const { globalFilter, showGlobalFilter } = getState();
+  } = table
+  const { globalFilter, showGlobalFilter } = state
 
   const textFieldProps = {
     ...parseFromValuesOrFunc(mantineSearchTextInputProps, {
       table,
     }),
     ...rest,
-  };
+  }
 
-  const isMounted = useRef(false);
-  const [searchValue, setSearchValue] = useState(globalFilter ?? '');
+  const isMounted = useRef(false)
+  const [searchValue, setSearchValue] = useState(globalFilter ?? '')
 
   const [debouncedSearchValue] = useDebouncedValue(
     searchValue,
     manualFiltering ? 500 : 250,
-  );
+  )
 
   useEffect(() => {
-    setGlobalFilter(debouncedSearchValue || undefined);
-  }, [debouncedSearchValue]);
+    setGlobalFilter(debouncedSearchValue || undefined)
+  }, [debouncedSearchValue])
 
   const handleClear = () => {
-    setSearchValue('');
-    setGlobalFilter(undefined);
-  };
+    setSearchValue('')
+    setGlobalFilter(undefined)
+  }
 
   useEffect(() => {
     if (isMounted.current) {
       if (globalFilter === undefined) {
-        handleClear();
+        handleClear()
       } else {
-        setSearchValue(globalFilter);
+        setSearchValue(globalFilter)
       }
     }
-    isMounted.current = true;
-  }, [globalFilter]);
+    isMounted.current = true
+  }, [globalFilter])
 
   return (
-    <Collapse className={classes.collapse} in={showGlobalFilter}>
+    <Collapse className={classes.collapse} expanded={showGlobalFilter}>
       {enableGlobalFilterModes && (
         <Menu withinPortal>
           <Menu.Target>
@@ -127,14 +120,14 @@ export const MRT_GlobalFilterTextInput = <TData extends MRT_RowData>({
         )}
         ref={(node) => {
           if (node) {
-            searchInputRef.current = node;
+            searchInputRef.current = node
             if (textFieldProps?.ref) {
               // @ts-ignore
-              textFieldProps.ref = node;
+              textFieldProps.ref = node
             }
           }
         }}
       />
     </Collapse>
-  );
-};
+  )
+}

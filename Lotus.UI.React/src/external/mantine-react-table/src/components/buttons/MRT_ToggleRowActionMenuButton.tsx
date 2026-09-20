@@ -1,23 +1,21 @@
-import { type MouseEvent } from 'react';
+import { ActionIcon, Tooltip } from '@mantine/core'
 
-import { ActionIcon, Tooltip } from '@mantine/core';
-
-import { MRT_EditActionButtons } from './MRT_EditActionButtons';
-
-import {
-  type MRT_Cell,
-  type MRT_CellValue,
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_RowActionMenu } from '../menus/MRT_RowActionMenu';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_RowActionMenu } from '../menus/MRT_RowActionMenu'
+import { MRT_EditActionButtons } from './MRT_EditActionButtons'
+import type {
+  MRT_Cell,
+  MRT_CellValue,
+  MRT_Row,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
+import type { MouseEvent } from 'react'
 
 interface Props<TData extends MRT_RowData, TValue = MRT_CellValue> {
-  cell: MRT_Cell<TData, TValue>;
-  row: MRT_Row<TData>;
-  table: MRT_TableInstance<TData>;
+  cell: MRT_Cell<TData, TValue>
+  row: MRT_Row<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
@@ -26,7 +24,7 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
   table,
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       createDisplayMode,
       editDisplayMode,
@@ -37,21 +35,21 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
       renderRowActions,
     },
     setEditingRow,
-  } = table;
+  } = table
 
-  const { creatingRow, editingRow } = getState();
+  const { creatingRow, editingRow } = state
 
-  const isCreating = creatingRow?.id === row.id;
-  const isEditing = editingRow?.id === row.id;
+  const isCreating = creatingRow?.id === row.id
+  const isEditing = editingRow?.id === row.id
 
   const handleStartEditMode = (event: MouseEvent) => {
-    event.stopPropagation();
-    setEditingRow({ ...row });
-  };
+    event.stopPropagation()
+    setEditingRow(row)
+  }
 
   const showEditActionButtons =
     (isCreating && createDisplayMode === 'row') ||
-    (isEditing && editDisplayMode === 'row');
+    (isEditing && editDisplayMode === 'row')
 
   return (
     <>
@@ -81,5 +79,5 @@ export const MRT_ToggleRowActionMenuButton = <TData extends MRT_RowData>({
         />
       ) : null}
     </>
-  );
-};
+  )
+}

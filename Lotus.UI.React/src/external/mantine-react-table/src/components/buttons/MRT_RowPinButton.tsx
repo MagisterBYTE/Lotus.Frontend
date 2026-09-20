@@ -1,19 +1,17 @@
-import { type MouseEvent, useState } from 'react';
+import { useState } from 'react'
+import { ActionIcon, Tooltip } from '@mantine/core'
+import type { MouseEvent } from 'react'
 
-import { type RowPinningPosition } from '@tanstack/react-table';
+import type { RowPinningPosition } from '@tanstack/react-table'
 
-import { ActionIcon, type ActionIconProps, Tooltip } from '@mantine/core';
+import type { ActionIconProps } from '@mantine/core'
 
-import {
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import type { MRT_Row, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends ActionIconProps {
-  pinningPosition: RowPinningPosition;
-  row: MRT_Row<TData>;
-  table: MRT_TableInstance<TData>;
+  pinningPosition: RowPinningPosition
+  row: MRT_Row<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_RowPinButton = <TData extends MRT_RowData>({
@@ -28,17 +26,17 @@ export const MRT_RowPinButton = <TData extends MRT_RowData>({
       localization,
       rowPinningDisplayMode,
     },
-  } = table;
+  } = table
 
-  const isPinned = row.getIsPinned();
+  const isPinned = row.getIsPinned()
 
-  const [tooltipOpened, setTooltipOpened] = useState(false);
+  const [tooltipOpened, setTooltipOpened] = useState(false)
 
   const handleTogglePin = (event: MouseEvent<HTMLButtonElement>) => {
-    setTooltipOpened(false);
-    event.stopPropagation();
-    row.pin(isPinned ? false : pinningPosition);
-  };
+    setTooltipOpened(false)
+    event.stopPropagation()
+    row.pin(isPinned ? false : pinningPosition)
+  }
 
   return (
     <Tooltip
@@ -78,5 +76,5 @@ export const MRT_RowPinButton = <TData extends MRT_RowData>({
         )}
       </ActionIcon>
     </Tooltip>
-  );
-};
+  )
+}

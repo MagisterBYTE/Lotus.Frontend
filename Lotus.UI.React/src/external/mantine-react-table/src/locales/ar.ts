@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_AR: MRT_Localization = {
   actions: 'إجراءات',
@@ -93,4 +93,4 @@ export const MRT_Localization_AR: MRT_Localization = {
   ungroupByColumn: 'فك التجميع حسب {column}',
   unpin: 'عدم التثبيت',
   unpinAll: 'عدم تثبيت الكل',
-};
+}

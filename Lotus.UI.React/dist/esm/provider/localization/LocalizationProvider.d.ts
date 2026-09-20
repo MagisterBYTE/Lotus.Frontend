@@ -8,5 +8,5 @@ export interface ILocalizationProviderProps {
      */
     children: React.ReactNode;
 }
-export declare const LocalizationProvider: (props: ILocalizationProviderProps) => import("react/jsx-runtime").JSX.Element;
+export declare const LocalizationProvider: (props: ILocalizationProviderProps) => import("react").JSX.Element;
 //# sourceMappingURL=LocalizationProvider.d.ts.map

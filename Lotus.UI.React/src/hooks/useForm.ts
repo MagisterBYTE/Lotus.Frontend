@@ -10,9 +10,9 @@ export function useForm<TContent extends IRecordObject>(defaultValues: TContent)
     {
       event.preventDefault();
 
-      const form = event.target as HTMLFormElement;
+      const form = event.target;
       // Используем HTMLFormControlElement для поддержки select и textarea
-      const elements = Array.from(form.elements) as HTMLInputElement[];
+      const elements = Array.from(form.elements) as unknown as HTMLInputElement[];
   
       const data = elements
         .filter((element) => element.hasAttribute('name'))

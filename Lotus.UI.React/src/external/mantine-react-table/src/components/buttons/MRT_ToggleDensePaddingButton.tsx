@@ -1,29 +1,29 @@
-import { ActionIcon, type ActionIconProps, Tooltip } from '@mantine/core';
+import { ActionIcon, Tooltip } from '@mantine/core'
+import type { ActionIconProps } from '@mantine/core'
 
-import {
-  type HTMLPropsRef,
-  type MRT_DensityState,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import type {
+  HTMLPropsRef,
+  MRT_DensityState,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
 
 interface Props<TData extends MRT_RowData>
-  extends ActionIconProps,
-    HTMLPropsRef<HTMLButtonElement> {
-  table: MRT_TableInstance<TData>;
+  extends ActionIconProps, HTMLPropsRef<HTMLButtonElement> {
+  table: MRT_TableInstance<TData>
 }
 
-type TogglableDensityState = Exclude<MRT_DensityState, 'lg' | 'sm'>;
+type TogglableDensityState = Exclude<MRT_DensityState, 'lg' | 'sm'>
 
 const next: Record<TogglableDensityState, TogglableDensityState> = {
   md: 'xs',
   xl: 'md',
   xs: 'xl',
-};
+}
 
 export const MRT_ToggleDensePaddingButton = <TData extends MRT_RowData>({
   table: {
-    getState,
+    state,
     options: {
       icons: {
         IconBaselineDensityLarge,
@@ -37,7 +37,7 @@ export const MRT_ToggleDensePaddingButton = <TData extends MRT_RowData>({
   title,
   ...rest
 }: Props<TData>) => {
-  const { density } = getState();
+  const { density } = state
 
   return (
     <Tooltip label={title ?? toggleDensity} withinPortal>
@@ -60,5 +60,5 @@ export const MRT_ToggleDensePaddingButton = <TData extends MRT_RowData>({
         )}
       </ActionIcon>
     </Tooltip>
-  );
-};
+  )
+}

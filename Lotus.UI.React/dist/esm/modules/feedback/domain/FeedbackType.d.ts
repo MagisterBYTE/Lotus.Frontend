@@ -1,7 +1,7 @@
 /**
  * Массив значений типов обратной связи
  */
-export declare const TFeedbackTypeValues: readonly ["alert", "snackbar", "modal", "progress"];
+export declare const TFeedbackTypeValues: readonly ['alert', 'snackbar', 'modal', 'progress'];
 /**
  * Тип обратной связи
  */

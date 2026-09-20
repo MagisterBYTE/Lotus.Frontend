@@ -1,5 +1,5 @@
 import { compareItems } from '@tanstack/match-sorter-utils';
-import { sortingFns } from '@tanstack/react-table';
+import { sortFns } from '@tanstack/react-table';
 const fuzzy = (rowA, rowB, columnId) => {
     let dir = 0;
     if (rowA.columnFiltersMeta[columnId]) {
@@ -7,11 +7,11 @@ const fuzzy = (rowA, rowB, columnId) => {
     }
     // Provide a fallback for when the item ranks are equal
     return dir === 0
-        ? sortingFns.alphanumeric(rowA, rowB, columnId)
+        ? sortFns.alphanumeric(rowA, rowB, columnId)
         : dir;
 };
-export const MRT_SortingFns = {
-    ...sortingFns,
+export const MRT_SortFns = {
+    ...sortFns,
     fuzzy,
 };
 export const rankGlobalFuzzy = (rowA, rowB) => Math.max(...Object.values(rowB.columnFiltersMeta).map((v) => v.rank)) -

@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_HE: MRT_Localization = {
   actions: 'פעולות',
@@ -93,4 +93,4 @@ export const MRT_Localization_HE: MRT_Localization = {
   ungroupByColumn: 'בטל קיבוץ לפי {column}',
   unpin: 'בטל נעיצה',
   unpinAll: 'בטל נעיצת הכל',
-};
+}

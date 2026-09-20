@@ -3,7 +3,7 @@ export * from './Controls';
 export * from './DataView';
 export * from './Display';
 export * from './Editors';
-export * from './Extendeds';
+export * from './Extended';
 export * from './Inputs';
 export * from './Layout';
 export * from './Selects';

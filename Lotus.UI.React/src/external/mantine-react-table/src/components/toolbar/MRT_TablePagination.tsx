@@ -1,27 +1,19 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TablePagination.module.css';
+import { ActionIcon, Box, Group, Pagination, Select, Text } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import classes from './MRT_TablePagination.module.css'
+import type { PaginationProps } from '@mantine/core'
 
-import {
-  ActionIcon,
-  Box,
-  Group,
-  Pagination,
-  type PaginationProps,
-  Select,
-  Text,
-} from '@mantine/core';
-
-import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import type { MRT_RowData, MRT_TableInstance } from '../../types'
 
 const defaultRowsPerPage = [5, 10, 15, 20, 25, 30, 50, 100].map((x) =>
   x.toString(),
-);
+)
 
 interface Props<TData extends MRT_RowData> extends Partial<PaginationProps> {
-  position?: 'bottom' | 'top';
-  table: MRT_TableInstance<TData>;
+  position?: 'bottom' | 'top'
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TablePagination = <TData extends MRT_RowData>({
@@ -30,8 +22,8 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
   ...props
 }: Props<TData>) => {
   const {
-    getPrePaginationRowModel,
-    getState,
+    getPrePaginatedRowModel,
+    state,
     options: {
       enableToolbarInternalActions,
       icons: {
@@ -47,34 +39,34 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
     },
     setPageIndex,
     setPageSize,
-  } = table;
+  } = table
   const {
     pagination: { pageIndex = 0, pageSize = 10 },
     showGlobalFilter,
-  } = getState();
+  } = state
 
   const paginationProps = {
     ...parseFromValuesOrFunc(mantinePaginationProps, {
       table,
     }),
     ...props,
-  };
+  }
 
-  const totalRowCount = rowCount ?? getPrePaginationRowModel().rows.length;
-  const numberOfPages = Math.ceil(totalRowCount / pageSize);
-  const showFirstLastPageButtons = numberOfPages > 2;
-  const firstRowIndex = pageIndex * pageSize;
-  const lastRowIndex = Math.min(pageIndex * pageSize + pageSize, totalRowCount);
+  const totalRowCount = rowCount ?? getPrePaginatedRowModel().rows.length
+  const numberOfPages = Math.ceil(totalRowCount / pageSize)
+  const showFirstLastPageButtons = numberOfPages > 2
+  const firstRowIndex = pageIndex * pageSize
+  const lastRowIndex = Math.min(pageIndex * pageSize + pageSize, totalRowCount)
 
   const {
     rowsPerPageOptions = defaultRowsPerPage,
     showRowsPerPage = true,
     withEdges = showFirstLastPageButtons,
     ...rest
-  } = paginationProps ?? {};
+  } = paginationProps ?? {}
 
   const needsTopMargin =
-    position === 'top' && enableToolbarInternalActions && !showGlobalFilter;
+    position === 'top' && enableToolbarInternalActions && !showGlobalFilter
 
   return (
     <Box
@@ -161,5 +153,5 @@ export const MRT_TablePagination = <TData extends MRT_RowData>({
         </>
       ) : null}
     </Box>
-  );
-};
+  )
+}

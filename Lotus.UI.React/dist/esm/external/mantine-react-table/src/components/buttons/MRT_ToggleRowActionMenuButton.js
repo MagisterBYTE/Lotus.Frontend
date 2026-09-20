@@ -1,16 +1,16 @@
-import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
 import { ActionIcon, Tooltip } from '@mantine/core';
-import { MRT_EditActionButtons } from './MRT_EditActionButtons';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_RowActionMenu } from '../menus/MRT_RowActionMenu';
+import { MRT_EditActionButtons } from './MRT_EditActionButtons';
 export const MRT_ToggleRowActionMenuButton = ({ cell, row, table, }) => {
-    const { getState, options: { createDisplayMode, editDisplayMode, enableEditing, icons: { IconEdit }, localization: { edit }, renderRowActionMenuItems, renderRowActions, }, setEditingRow, } = table;
-    const { creatingRow, editingRow } = getState();
+    const { state, options: { createDisplayMode, editDisplayMode, enableEditing, icons: { IconEdit }, localization: { edit }, renderRowActionMenuItems, renderRowActions, }, setEditingRow, } = table;
+    const { creatingRow, editingRow } = state;
     const isCreating = creatingRow?.id === row.id;
     const isEditing = editingRow?.id === row.id;
     const handleStartEditMode = (event) => {
         event.stopPropagation();
-        setEditingRow({ ...row });
+        setEditingRow(row);
     };
     const showEditActionButtons = (isCreating && createDisplayMode === 'row') ||
         (isEditing && editDisplayMode === 'row');

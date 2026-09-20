@@ -32,7 +32,7 @@ import {
   IconSortAscending,
   IconSortDescending,
   IconX,
-} from '@tabler/icons-react';
+} from '@tabler/icons-react'
 
 export const MRT_Default_Icons = {
   IconArrowAutofitContent,
@@ -68,6 +68,6 @@ export const MRT_Default_Icons = {
   IconSortAscending,
   IconSortDescending,
   IconX,
-} as const;
+} as const
 
-export type MRT_Icons = Record<keyof typeof MRT_Default_Icons, any>;
+export type MRT_Icons = Record<keyof typeof MRT_Default_Icons, any>

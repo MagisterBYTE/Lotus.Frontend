@@ -1,18 +1,13 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_ColumnPinningButtons.module.css';
+import { ActionIcon, Flex, Tooltip } from '@mantine/core'
 
-import { ActionIcon, Flex, Tooltip } from '@mantine/core';
-
-import {
-  type MRT_Column,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import classes from './MRT_ColumnPinningButtons.module.css'
+import type { MRT_Column, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> {
-  column: MRT_Column<TData>;
-  table: MRT_TableInstance<TData>;
+  column: MRT_Column<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
@@ -24,7 +19,7 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
       icons: { IconPinned, IconPinnedOff },
       localization,
     },
-  } = table;
+  } = table
   return (
     <Flex className={clsx('mrt-column-pinning-buttons', classes.root)}>
       {column.getIsPinned() ? (
@@ -43,7 +38,7 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
           <Tooltip label={localization.pinToLeft} withinPortal>
             <ActionIcon
               color="gray"
-              onClick={() => column.pin('left')}
+              onClick={() => column.pin('start')}
               size="md"
               variant="subtle"
             >
@@ -53,7 +48,7 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
           <Tooltip label={localization.pinToRight} withinPortal>
             <ActionIcon
               color="gray"
-              onClick={() => column.pin('right')}
+              onClick={() => column.pin('end')}
               size="md"
               variant="subtle"
             >
@@ -63,5 +58,5 @@ export const MRT_ColumnPinningButtons = <TData extends MRT_RowData>({
         </>
       )}
     </Flex>
-  );
-};
+  )
+}

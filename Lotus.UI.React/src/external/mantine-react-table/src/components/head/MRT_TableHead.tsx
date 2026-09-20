@@ -1,27 +1,21 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableHead.module.css';
+import { TableTh, TableThead, TableTr } from '@mantine/core'
 
-import {
-  TableTh,
-  TableThead,
-  type TableTheadProps,
-  TableTr,
-} from '@mantine/core';
-
-import { MRT_TableHeadRow } from './MRT_TableHeadRow';
-
-import {
-  type MRT_ColumnVirtualizer,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_ToolbarAlertBanner } from '../toolbar/MRT_ToolbarAlertBanner';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_ToolbarAlertBanner } from '../toolbar/MRT_ToolbarAlertBanner'
+import { MRT_TableHeadRow } from './MRT_TableHeadRow'
+import classes from './MRT_TableHead.module.css'
+import type {
+  MRT_ColumnVirtualizer,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
+import type { TableTheadProps } from '@mantine/core'
 
 interface Props<TData extends MRT_RowData> extends TableTheadProps {
-  columnVirtualizer?: MRT_ColumnVirtualizer;
-  table: MRT_TableInstance<TData>;
+  columnVirtualizer?: MRT_ColumnVirtualizer
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableHead = <TData extends MRT_RowData>({
@@ -32,7 +26,7 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
   const {
     getHeaderGroups,
     getSelectedRowModel,
-    getState,
+    state,
     options: {
       enableStickyHeader,
       layoutMode,
@@ -40,17 +34,17 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
       positionToolbarAlertBanner,
     },
     refs: { tableHeadRef },
-  } = table;
-  const { isFullScreen, showAlertBanner } = getState();
+  } = table
+  const { isFullScreen, showAlertBanner } = state
 
   const tableHeadProps = {
     ...parseFromValuesOrFunc(mantineTableHeadProps, {
       table,
     }),
     ...rest,
-  };
+  }
 
-  const stickyHeader = enableStickyHeader || isFullScreen;
+  const stickyHeader = enableStickyHeader || isFullScreen
 
   return (
     <TableThead
@@ -67,10 +61,10 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
         stickyHeader && layoutMode?.startsWith('grid') ? 'sticky' : 'relative'
       }
       ref={(ref: HTMLTableSectionElement) => {
-        tableHeadRef.current = ref;
+        tableHeadRef.current = ref
         if (tableHeadProps?.ref) {
           // @ts-ignore
-          tableHeadProps.ref.current = ref;
+          tableHeadProps.ref.current = ref
         }
       }}
     >
@@ -103,5 +97,5 @@ export const MRT_TableHead = <TData extends MRT_RowData>({
         ))
       )}
     </TableThead>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -7,7 +7,7 @@ import { ActionIcon, Button, Card, Modal, ScrollArea, SimpleGrid, Tooltip, useMa
 import { IconCircleX, IconDeviceFloppy, IconEdit, IconLayoutGrid, IconTable, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
 import { StringHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
-import { ObjectInfo } from 'lotus-core/modules/objectInfo';
+import { ObjectInfo, TPropertyTypes } from 'lotus-core/modules/objectInfo';
 import { ResponseHelper } from 'lotus-core/modules/requestAndResponse';
 import { Assert, ObjectName } from 'lotus-core/utils';
 import { useEffect, useMemo, useState } from 'react';
@@ -151,8 +151,8 @@ export function TableView(props) {
             return column;
         }
         const isLink = Assert.existValue(property.possibleValues);
-        switch (property.propertyTypeDesc.type) {
-            case 'string':
+        switch (property.propertyType) {
+            case TPropertyTypes.String:
                 {
                     if (property.isArray) {
                         //
@@ -216,7 +216,7 @@ export function TableView(props) {
                     }
                 }
                 break;
-            case 'bool':
+            case TPropertyTypes.Bool:
                 {
                     if (property.isArray) {
                         //
@@ -263,10 +263,10 @@ export function TableView(props) {
                     }
                 }
                 break;
-            case 'int':
-            case 'long':
-            case 'float':
-            case 'double':
+            case TPropertyTypes.Int:
+            case TPropertyTypes.Long:
+            case TPropertyTypes.Float:
+            case TPropertyTypes.Double:
                 {
                     if (property.isArray) {
                         //
@@ -332,7 +332,7 @@ export function TableView(props) {
                     }
                 }
                 break;
-            case 'enum':
+            case TPropertyTypes.Enum:
                 {
                     if (property.isArray) {
                         //
@@ -401,7 +401,7 @@ export function TableView(props) {
                     }
                 }
                 break;
-            case 'dateTime':
+            case TPropertyTypes.DateTime:
                 {
                     if (property.isArray) {
                         //
@@ -467,7 +467,7 @@ export function TableView(props) {
                     }
                 }
                 break;
-            case 'guid':
+            case TPropertyTypes.Guid:
                 {
                     if (property.isArray) {
                         //

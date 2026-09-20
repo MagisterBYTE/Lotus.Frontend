@@ -1,22 +1,18 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { ActionIcon, type ActionIconProps, Tooltip } from '@mantine/core';
+import { ActionIcon, Tooltip } from '@mantine/core'
+import type { ActionIconProps } from '@mantine/core'
 
-import {
-  type HTMLPropsRef,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import type { HTMLPropsRef, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData>
-  extends ActionIconProps,
-    HTMLPropsRef<HTMLButtonElement> {
-  table: MRT_TableInstance<TData>;
+  extends ActionIconProps, HTMLPropsRef<HTMLButtonElement> {
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ToggleFullScreenButton = <TData extends MRT_RowData>({
   table: {
-    getState,
+    state,
     options: {
       icons: { IconMaximize, IconMinimize },
       localization: { toggleFullScreen },
@@ -26,13 +22,13 @@ export const MRT_ToggleFullScreenButton = <TData extends MRT_RowData>({
   title,
   ...rest
 }: Props<TData>) => {
-  const { isFullScreen } = getState();
-  const [tooltipOpened, setTooltipOpened] = useState(false);
+  const { isFullScreen } = state
+  const [tooltipOpened, setTooltipOpened] = useState(false)
 
   const handleToggleFullScreen = () => {
-    setTooltipOpened(false);
-    setIsFullScreen((current) => !current);
-  };
+    setTooltipOpened(false)
+    setIsFullScreen((current) => !current)
+  }
 
   return (
     <Tooltip
@@ -53,5 +49,5 @@ export const MRT_ToggleFullScreenButton = <TData extends MRT_RowData>({
         {isFullScreen ? <IconMinimize /> : <IconMaximize />}
       </ActionIcon>
     </Tooltip>
-  );
-};
+  )
+}

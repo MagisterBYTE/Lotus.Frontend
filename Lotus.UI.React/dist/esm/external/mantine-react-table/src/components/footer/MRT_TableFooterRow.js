@@ -1,9 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableFooterRow.module.css';
 import { Box, TableTr } from '@mantine/core';
-import { MRT_TableFooterCell } from './MRT_TableFooterCell';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_TableFooterCell } from './MRT_TableFooterCell';
+import classes from './MRT_TableFooterRow.module.css';
 export const MRT_TableFooterRow = ({ columnVirtualizer, footerGroup, table, ...rest }) => {
     const { options: { layoutMode, mantineTableFooterRowProps }, } = table;
     const { virtualColumns, virtualPaddingLeft, virtualPaddingRight } = columnVirtualizer ?? {};

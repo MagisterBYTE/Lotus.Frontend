@@ -1,28 +1,27 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_ToolbarAlertBanner.module.css';
-
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo } from 'react'
 
 import {
   ActionIcon,
   Alert,
-  type AlertProps,
   Badge,
   Button,
   Collapse,
   Flex,
   Stack,
-} from '@mantine/core';
+} from '@mantine/core'
 
-import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { getMRT_SelectAllHandler } from '../../utils/row.utils';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_SelectCheckbox } from '../inputs/MRT_SelectCheckbox';
+import { getMRT_SelectAllHandler } from '../../utils/row.utils'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_SelectCheckbox } from '../inputs/MRT_SelectCheckbox'
+import classes from './MRT_ToolbarAlertBanner.module.css'
+import type { MRT_RowData, MRT_TableInstance } from '../../types'
+import type { AlertProps } from '@mantine/core'
 
 interface Props<TData extends MRT_RowData> extends Partial<AlertProps> {
-  stackAlertBanner?: boolean;
-  table: MRT_TableInstance<TData>;
+  stackAlertBanner?: boolean
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
@@ -32,8 +31,8 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
 }: Props<TData>) => {
   const {
     getFilteredSelectedRowModel,
-    getPrePaginationRowModel,
-    getState,
+    getPrePaginatedRowModel,
+    state,
     options: {
       enableRowSelection,
       enableSelectAll,
@@ -46,21 +45,21 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
       renderToolbarAlertBannerContent,
       rowCount,
     },
-  } = table;
-  const { density, grouping, rowSelection, showAlertBanner } = getState();
+  } = table
+  const { density, grouping, rowSelection, showAlertBanner } = state
 
   const alertProps = {
     ...parseFromValuesOrFunc(mantineToolbarAlertBannerProps, {
       table,
     }),
     ...rest,
-  };
+  }
   const badgeProps = parseFromValuesOrFunc(
     mantineToolbarAlertBannerBadgeProps,
     { table },
-  );
+  )
 
-  const totalRowCount = rowCount ?? getPrePaginationRowModel().flatRows.length;
+  const totalRowCount = rowCount ?? getPrePaginatedRowModel().flatRows.length
 
   const selectedRowCount = useMemo(
     () =>
@@ -68,7 +67,7 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
         ? Object.values(rowSelection).filter(Boolean).length
         : getFilteredSelectedRowModel().rows.length,
     [rowSelection, totalRowCount, manualPagination],
-  );
+  )
 
   const selectedAlert = selectedRowCount ? (
     <Flex align="center" gap="sm">
@@ -85,7 +84,7 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
         {localization.clearSelection}
       </Button>
     </Flex>
-  ) : null;
+  ) : null
 
   const groupedAlert =
     grouping.length > 0 ? (
@@ -114,11 +113,11 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
           </Fragment>
         ))}
       </Flex>
-    ) : null;
+    ) : null
 
   return (
     <Collapse
-      in={showAlertBanner || !!selectedAlert || !!groupedAlert}
+      expanded={showAlertBanner || !!selectedAlert || !!groupedAlert}
       transitionDuration={stackAlertBanner ? 200 : 0}
     >
       <Alert
@@ -163,5 +162,5 @@ export const MRT_ToolbarAlertBanner = <TData extends MRT_RowData>({
         )}
       </Alert>
     </Collapse>
-  );
-};
+  )
+}

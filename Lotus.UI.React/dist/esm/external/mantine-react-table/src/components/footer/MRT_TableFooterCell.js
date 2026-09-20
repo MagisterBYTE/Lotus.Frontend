@@ -1,9 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableFooterCell.module.css';
 import { TableTh, useDirection } from '@mantine/core';
 import { parseCSSVarId } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_TableFooterCell.module.css';
 export const MRT_TableFooterCell = ({ footer, renderedColumnIndex, table, ...rest }) => {
     const direction = useDirection();
     const { options: { enableColumnPinning, layoutMode, mantineTableFooterCellProps }, } = table;
@@ -31,9 +31,9 @@ export const MRT_TableFooterCell = ({ footer, renderedColumnIndex, table, ...res
     else if (layoutMode === 'grid-no-grow') {
         widthStyles.flex = `${+(columnDef.grow || 0)} 0 auto`;
     }
-    return (_jsx(TableTh, { colSpan: footer.colSpan, "data-column-pinned": isColumnPinned || undefined, "data-first-right-pinned": (isColumnPinned === 'right' &&
-            column.getIsFirstColumn(isColumnPinned)) ||
-            undefined, "data-index": renderedColumnIndex, "data-last-left-pinned": (isColumnPinned === 'left' && column.getIsLastColumn(isColumnPinned)) ||
+    return (_jsx(TableTh, { colSpan: footer.colSpan, "data-column-pinned": isColumnPinned || undefined, "data-first-end-pinned": (isColumnPinned === 'end' && column.getIsFirstColumn(isColumnPinned)) ||
+            undefined, "data-index": renderedColumnIndex, "data-last-start-pinned": (isColumnPinned === 'start' &&
+            column.getIsLastColumn(isColumnPinned)) ||
             undefined, ...tableCellProps, __vars: {
             '--mrt-cell-align': tableCellProps.align ??
                 (columnDefType === 'group'
@@ -41,10 +41,10 @@ export const MRT_TableFooterCell = ({ footer, renderedColumnIndex, table, ...res
                     : direction.dir === 'rtl'
                         ? 'right'
                         : 'left'),
-            '--mrt-table-cell-left': isColumnPinned === 'left'
+            '--mrt-table-cell-start': isColumnPinned === 'start'
                 ? `${column.getStart(isColumnPinned)}`
                 : undefined,
-            '--mrt-table-cell-right': isColumnPinned === 'right'
+            '--mrt-table-cell-end': isColumnPinned === 'end'
                 ? `${column.getAfter(isColumnPinned)}`
                 : undefined,
             ...tableCellProps?.__vars,

@@ -1,7 +1,7 @@
 /**
  * Массив доступных акцентов шрифта
  */
-export declare const TFontAccentValues: readonly ["default", "accent", "monospace"];
+export declare const TFontAccentValues: readonly ['default', 'accent', 'monospace'];
 /**
  * Тип акцента шрифта
  */

@@ -362,6 +362,5 @@ export function ImageEditor(props) {
     else {
         return (_jsxs(HorizontalStack, { ...stackProps, children: [_jsxs(VerticalStack, { p: padding, children: [renderCanvas(), renderBlockButtons()] }), _jsxs(VerticalStack, { p: padding, children: [renderSliderRotation(), renderSliderRadius(), renderSliderScale(), renderBlockPreview()] })] }));
     }
-    return null;
 }
 //# sourceMappingURL=ImageEditor.js.map

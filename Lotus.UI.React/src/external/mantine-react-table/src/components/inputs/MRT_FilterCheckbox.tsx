@@ -1,21 +1,23 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_FilterCheckBox.module.css';
+import { Checkbox, Tooltip } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import classes from './MRT_FilterCheckBox.module.css'
+import type { CheckboxProps } from '@mantine/core'
 
-import { Checkbox, type CheckboxProps, Tooltip } from '@mantine/core';
+import type {
+  MRT_CellValue,
+  MRT_Column,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
 
-import {
-  type MRT_CellValue,
-  type MRT_Column,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-
-interface Props<TData extends MRT_RowData, TValue = MRT_CellValue>
-  extends CheckboxProps {
-  column: MRT_Column<TData, TValue>;
-  table: MRT_TableInstance<TData>;
+interface Props<
+  TData extends MRT_RowData,
+  TValue = MRT_CellValue,
+> extends CheckboxProps {
+  column: MRT_Column<TData, TValue>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_FilterCheckbox = <TData extends MRT_RowData>({
@@ -24,25 +26,25 @@ export const MRT_FilterCheckbox = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: { localization, mantineFilterCheckboxProps },
-  } = table;
-  const { density } = getState();
-  const { columnDef } = column;
+  } = table
+  const { density } = state
+  const { columnDef } = column
 
-  const arg = { column, table };
+  const arg = { column, table }
   const checkboxProps = {
     ...parseFromValuesOrFunc(mantineFilterCheckboxProps, arg),
     ...parseFromValuesOrFunc(columnDef.mantineFilterCheckboxProps, arg),
     ...rest,
-  } as CheckboxProps;
+  } as CheckboxProps
 
   const filterLabel = localization.filterByColumn?.replace(
     '{column}',
     columnDef.header,
-  );
+  )
 
-  const value = column.getFilterValue();
+  const value = column.getFilterValue()
 
   return (
     <Tooltip
@@ -64,15 +66,15 @@ export const MRT_FilterCheckbox = <TData extends MRT_RowData>({
               : column.getFilterValue() === 'true'
                 ? 'false'
                 : undefined,
-          );
-          checkboxProps?.onChange?.(e);
+          )
+          checkboxProps?.onChange?.(e)
         }}
         onClick={(e) => {
-          e.stopPropagation();
-          checkboxProps?.onClick?.(e);
+          e.stopPropagation()
+          checkboxProps?.onClick?.(e)
         }}
         title={undefined}
       />
     </Tooltip>
-  );
-};
+  )
+}

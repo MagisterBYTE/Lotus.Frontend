@@ -1,7 +1,7 @@
 /**
  * Массив значений компонента для элемента команды
  */
-export declare const TCommandElementTypeValues: readonly ["button", "icon", "listItem", "menuItem"];
+export declare const TCommandElementTypeValues: readonly ['button', 'icon', 'listItem', 'menuItem'];
 /**
  * Компонент отображения для элемента команды
  */

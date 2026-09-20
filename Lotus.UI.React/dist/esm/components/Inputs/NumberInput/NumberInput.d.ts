@@ -20,6 +20,6 @@ export interface INumberInputProps extends IBaseContainerControlProps, Omit<IHor
     onChangeValue?: TChangedValueFunction;
     disabled?: boolean;
 }
-export declare function NumberInput(props: INumberInputProps): import("react/jsx-runtime").JSX.Element;
+export declare function NumberInput(props: INumberInputProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=NumberInput.d.ts.map

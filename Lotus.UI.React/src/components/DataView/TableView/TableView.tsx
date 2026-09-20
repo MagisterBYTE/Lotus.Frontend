@@ -8,7 +8,7 @@ import { ActionIcon, Button, Card, Modal, ScrollArea, SimpleGrid, Tooltip, useMa
 import { IconCircleX, IconDeviceFloppy, IconEdit, IconLayoutGrid, IconProps, IconTable, IconTextDecrease, IconTextIncrease } from '@tabler/icons-react';
 import { StringHelper } from 'lotus-core/helpers';
 import { LocalizationCore } from 'lotus-core/localization';
-import { IObjectInfo, IPropertyDescriptor, ObjectInfo } from 'lotus-core/modules/objectInfo';
+import { IObjectInfo, IPropertyDescriptor, ObjectInfo, TPropertyTypes } from 'lotus-core/modules/objectInfo';
 import { IPageInfoRequest, IPageInfoResponse, IRequest, IResponse, IResponsePage, ResponseHelper } from 'lotus-core/modules/requestAndResponse';
 import { IValidator } from 'lotus-core/modules/validation';
 import { IImageDatabase } from 'lotus-core/resources/image';
@@ -322,9 +322,9 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
         }
 
         const isLink = Assert.existValue(property.possibleValues);
-        switch (property.propertyTypeDesc.type) 
+        switch (property.propertyType) 
         {
-          case 'string':
+          case TPropertyTypes.String:
             {
               if (property.isArray) 
               {
@@ -403,7 +403,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
               }
             }
             break;
-          case 'bool':
+          case TPropertyTypes.Bool:
             {
               if (property.isArray) 
               {
@@ -461,10 +461,10 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
               }
             }
             break;
-          case 'int':
-          case 'long':
-          case 'float':
-          case 'double':
+          case TPropertyTypes.Int:
+          case TPropertyTypes.Long:
+          case TPropertyTypes.Float:
+          case TPropertyTypes.Double:
             {
               if (property.isArray) 
               {
@@ -548,7 +548,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
               }
             }
             break;
-          case 'enum':
+          case TPropertyTypes.Enum:
             {
               if (property.isArray) 
               {
@@ -634,7 +634,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
               }
             }
             break;
-          case 'dateTime':
+          case TPropertyTypes.DateTime:
             {
               if (property.isArray) 
               {
@@ -718,7 +718,7 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
               }
             }
             break;
-          case 'guid':
+          case TPropertyTypes.Guid:
             {
               if (property.isArray) 
               {
@@ -1036,8 +1036,11 @@ export function TableView<TItem extends IRecordObject>(props: ITableViewProps<TI
   //
   const handleColumnFilterFnsChange = (updaterOrValue: Updater<{ [key: string]: MRT_FilterOption }>) => 
   {
-    const data = updaterOrValue as Record<string, MRT_FilterOption>;
-    setColumnFiltersFns(data);
+    setColumnFiltersFns((previous) =>
+    {
+      const current = previous ?? {};
+      return typeof updaterOrValue === 'function' ? updaterOrValue(current) : updaterOrValue;
+    });
   };
 
   //

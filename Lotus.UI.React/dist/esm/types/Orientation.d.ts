@@ -1,7 +1,7 @@
 /**
  * Массив доступных ориентаций
  */
-export declare const TOrientationValues: readonly ["horizontal", "vertical"];
+export declare const TOrientationValues: readonly ['horizontal', 'vertical'];
 /**
  * Ориентация
  */

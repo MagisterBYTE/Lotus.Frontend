@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_EL: MRT_Localization = {
   actions: 'Ενέργειες',
@@ -93,4 +93,4 @@ export const MRT_Localization_EL: MRT_Localization = {
   ungroupByColumn: 'Αναίρεση ομαδοποίησης κατά {column}',
   unpin: 'Αποκαρφίτσωση',
   unpinAll: 'Αποκαρφίτσωση όλων',
-};
+}

@@ -5,5 +5,5 @@ export interface IItemProps extends Omit<IOptionProps, 'option'> {
      */
     item: unknown;
 }
-export declare const Item: import("react").MemoExoticComponent<(props: IItemProps) => import("react/jsx-runtime").JSX.Element>;
+export declare const Item: import("react").MemoExoticComponent<(props: IItemProps) => import("react").JSX.Element>;
 //# sourceMappingURL=Item.d.ts.map

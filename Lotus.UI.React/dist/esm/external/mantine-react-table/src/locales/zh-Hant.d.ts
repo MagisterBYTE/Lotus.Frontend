@@ -1,3 +1,3 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..';
 export declare const MRT_Localization_ZH_HANT: MRT_Localization;
 //# sourceMappingURL=zh-Hant.d.ts.map

@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_KO: MRT_Localization = {
   actions: '동작',
@@ -93,4 +93,4 @@ export const MRT_Localization_KO: MRT_Localization = {
   ungroupByColumn: '{column} 그룹 해제',
   unpin: '고정 해제',
   unpinAll: '전체 고정 해제',
-};
+}

@@ -14,5 +14,5 @@ export interface IImageGalleryProps extends Omit<IGallerySelectProps<IImageResou
      */
     height?: number;
 }
-export declare function ImageGallery(props: IImageGalleryProps): import("react/jsx-runtime").JSX.Element;
+export declare function ImageGallery(props: IImageGalleryProps): import("react").JSX.Element;
 //# sourceMappingURL=ImageGallery.d.ts.map

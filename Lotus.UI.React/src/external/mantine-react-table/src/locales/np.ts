@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_NP: MRT_Localization = {
   actions: 'कार्यहरू',
@@ -94,4 +94,4 @@ export const MRT_Localization_NP: MRT_Localization = {
   ungroupByColumn: '{column} का आधारमा समूह हटाउनुहोस्',
   unpin: 'अनपिन गर्नुहोस्',
   unpinAll: 'सबै अनपिन गर्नुहोस्',
-};
+}

@@ -1,21 +1,20 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableFooter.module.css';
+import { TableTfoot } from '@mantine/core'
 
-import { TableTfoot, type TableTfootProps } from '@mantine/core';
-
-import { MRT_TableFooterRow } from './MRT_TableFooterRow';
-
-import {
-  type MRT_ColumnVirtualizer,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_TableFooterRow } from './MRT_TableFooterRow'
+import classes from './MRT_TableFooter.module.css'
+import type {
+  MRT_ColumnVirtualizer,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
+import type { TableTfootProps } from '@mantine/core'
 
 interface Props<TData extends MRT_RowData> extends TableTfootProps {
-  columnVirtualizer?: MRT_ColumnVirtualizer;
-  table: MRT_TableInstance<TData>;
+  columnVirtualizer?: MRT_ColumnVirtualizer
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableFooter = <TData extends MRT_RowData>({
@@ -25,21 +24,21 @@ export const MRT_TableFooter = <TData extends MRT_RowData>({
 }: Props<TData>) => {
   const {
     getFooterGroups,
-    getState,
+    state,
     options: { enableStickyFooter, layoutMode, mantineTableFooterProps },
     refs: { tableFooterRef },
-  } = table;
-  const { isFullScreen } = getState();
+  } = table
+  const { isFullScreen } = state
 
   const tableFooterProps = {
     ...parseFromValuesOrFunc(mantineTableFooterProps, {
       table,
     }),
     ...rest,
-  };
+  }
 
   const stickFooter =
-    (isFullScreen || enableStickyFooter) && enableStickyFooter !== false;
+    (isFullScreen || enableStickyFooter) && enableStickyFooter !== false
 
   return (
     <TableTfoot
@@ -51,10 +50,10 @@ export const MRT_TableFooter = <TData extends MRT_RowData>({
         layoutMode?.startsWith('grid') && classes.grid,
       )}
       ref={(ref: HTMLTableSectionElement) => {
-        tableFooterRef.current = ref;
+        tableFooterRef.current = ref
         if (tableFooterProps?.ref) {
           // @ts-ignore
-          tableFooterProps.ref.current = ref;
+          tableFooterProps.ref.current = ref
         }
       }}
     >
@@ -67,5 +66,5 @@ export const MRT_TableFooter = <TData extends MRT_RowData>({
         />
       ))}
     </TableTfoot>
-  );
-};
+  )
+}

@@ -411,7 +411,7 @@ export function ImageEditor(props: IImageEditorProps)
     const rotatedDx = dx * Math.cos(rad) + dy * Math.sin(rad);
     const rotatedDy = dy * Math.cos(rad) - dx * Math.sin(rad);
 
-    setOffset((prev) => ({
+    setOffset((prev: IPoint) => ({
       x: prev.x + rotatedDx,
       y: prev.y + rotatedDy
     }));
@@ -446,7 +446,7 @@ export function ImageEditor(props: IImageEditorProps)
     // С учетом того, что offset у нас в локальных осях, для простоты здесь считаем дельту масштаба:
     const ratio = newScale / scale;
 
-    setOffset((prev) => ({
+    setOffset((prev: IPoint) => ({
       x: prev.x * ratio + (mouseX - mouseX * ratio),
       y: prev.y * ratio + (mouseY - mouseY * ratio)
     }));
@@ -666,6 +666,4 @@ export function ImageEditor(props: IImageEditorProps)
       </VerticalStack>
     </HorizontalStack>);
   }
-
-  return null;
 }

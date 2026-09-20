@@ -1,7 +1,7 @@
 /**
  * Массив доступных размеров
  */
-export declare const TSizeTypeValues: readonly ["xxs", "xs", "sm", "md", "lg", "xl", "xxl"];
+export declare const TSizeTypeValues: readonly ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 /**
  * Определение тип размера
  */

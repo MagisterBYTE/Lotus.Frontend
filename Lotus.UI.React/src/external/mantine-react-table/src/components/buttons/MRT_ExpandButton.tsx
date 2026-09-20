@@ -1,27 +1,17 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_ExpandButton.module.css';
+import { ActionIcon, Tooltip, useDirection } from '@mantine/core'
 
-import { type MouseEvent } from 'react';
-
-import {
-  ActionIcon,
-  type ActionIconProps,
-  Tooltip,
-  useDirection,
-} from '@mantine/core';
-
-import {
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_EditCellTextInput } from '../inputs/MRT_EditCellTextInput';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_EditCellTextInput } from '../inputs/MRT_EditCellTextInput'
+import classes from './MRT_ExpandButton.module.css'
+import type { MRT_Row, MRT_RowData, MRT_TableInstance } from '../../types'
+import type { ActionIconProps } from '@mantine/core'
+import type { MouseEvent } from 'react'
 
 interface Props<TData extends MRT_RowData> extends ActionIconProps {
-  row: MRT_Row<TData>;
-  table: MRT_TableInstance<TData>;
+  row: MRT_Row<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ExpandButton = <TData extends MRT_RowData>({
@@ -29,7 +19,7 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
   table,
   ...rest
 }: Props<TData>) => {
-  const direction = useDirection();
+  const direction = useDirection()
   const {
     options: {
       icons: { IconChevronDown },
@@ -38,7 +28,7 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
       positionExpandColumn,
       renderDetailPanel,
     },
-  } = table;
+  } = table
 
   const actionIconProps = {
     ...parseFromValuesOrFunc(mantineExpandButtonProps, {
@@ -46,31 +36,31 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
       table,
     }),
     ...rest,
-  };
+  }
 
   const internalEditComponents = row
     .getAllCells()
     .filter((cell) => cell.column.columnDef.columnDefType === 'data')
     .map((cell) => (
       <MRT_EditCellTextInput cell={cell} key={cell.id} table={table} />
-    ));
+    ))
 
-  const canExpand = row.getCanExpand();
-  const isExpanded = row.getIsExpanded();
+  const canExpand = row.getCanExpand()
+  const isExpanded = row.getIsExpanded()
 
   const DetailPanel = !!renderDetailPanel?.({
     internalEditComponents,
     row,
     table,
-  });
+  })
 
   const handleToggleExpand = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    row.toggleExpanded();
-    actionIconProps?.onClick?.(event);
-  };
+    event.stopPropagation()
+    row.toggleExpanded()
+    actionIconProps?.onClick?.(event)
+  }
 
-  const rtl = direction.dir === 'rtl' || positionExpandColumn === 'last';
+  const rtl = direction.dir === 'rtl' || positionExpandColumn === 'last'
 
   return (
     <Tooltip
@@ -115,5 +105,5 @@ export const MRT_ExpandButton = <TData extends MRT_RowData>({
         )}
       </ActionIcon>
     </Tooltip>
-  );
-};
+  )
+}

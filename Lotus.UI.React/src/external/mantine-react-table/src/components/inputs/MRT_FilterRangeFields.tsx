@@ -1,20 +1,16 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_FilterRangeFields.module.css';
+import { Box } from '@mantine/core'
+import classes from './MRT_FilterRangeFields.module.css'
 
-import { Box, type BoxProps } from '@mantine/core';
+import { MRT_FilterTextInput } from './MRT_FilterTextInput'
+import type { BoxProps } from '@mantine/core'
 
-import { MRT_FilterTextInput } from './MRT_FilterTextInput';
-
-import {
-  type MRT_Header,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import type { MRT_Header, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends BoxProps {
-  header: MRT_Header<TData>;
-  table: MRT_TableInstance<TData>;
+  header: MRT_Header<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_FilterRangeFields = <TData extends MRT_RowData>({
@@ -30,5 +26,5 @@ export const MRT_FilterRangeFields = <TData extends MRT_RowData>({
       <MRT_FilterTextInput header={header} rangeFilterIndex={0} table={table} />
       <MRT_FilterTextInput header={header} rangeFilterIndex={1} table={table} />
     </Box>
-  );
-};
+  )
+}

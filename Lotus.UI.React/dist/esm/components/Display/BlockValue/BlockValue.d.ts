@@ -41,5 +41,5 @@ export interface IBlockValueProps extends IGeneralContainerProperties, Component
      */
     monospaceValue?: boolean;
 }
-export declare function BlockValue(props: IBlockValueProps): import("react/jsx-runtime").JSX.Element;
+export declare function BlockValue(props: IBlockValueProps): import("react").JSX.Element;
 //# sourceMappingURL=BlockValue.d.ts.map

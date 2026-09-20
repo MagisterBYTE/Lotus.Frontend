@@ -7,5 +7,5 @@ export interface IVerticalStackProps extends IGeneralContainerProperties, IGener
     vAlign?: TCssJustifyContent;
     wrap?: boolean;
 }
-export declare function VerticalStack(props: IVerticalStackProps): import("react/jsx-runtime").JSX.Element;
+export declare function VerticalStack(props: IVerticalStackProps): import("react").JSX.Element;
 //# sourceMappingURL=VerticalStack.d.ts.map

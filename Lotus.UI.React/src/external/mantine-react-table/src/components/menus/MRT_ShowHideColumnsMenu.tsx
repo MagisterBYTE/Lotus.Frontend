@@ -1,22 +1,16 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_ShowHideColumnsMenu.module.css';
+import { useMemo, useState } from 'react'
 
-import { useMemo, useState } from 'react';
+import { Button, Flex, Menu } from '@mantine/core'
 
-import { Button, Flex, Menu } from '@mantine/core';
-
-import { MRT_ShowHideColumnsMenuItems } from './MRT_ShowHideColumnsMenuItems';
-
-import {
-  type MRT_Column,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { getDefaultColumnOrderIds } from '../../utils/displayColumn.utils';
+import { getDefaultColumnOrderIds } from '../../utils/displayColumn.utils'
+import { MRT_ShowHideColumnsMenuItems } from './MRT_ShowHideColumnsMenuItems'
+import classes from './MRT_ShowHideColumnsMenu.module.css'
+import type { MRT_Column, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> {
-  table: MRT_TableInstance<TData>;
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
@@ -29,51 +23,51 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
     getIsAllColumnsVisible,
     getIsSomeColumnsPinned,
     getIsSomeColumnsVisible,
-    getLeftLeafColumns,
-    getRightLeafColumns,
-    getState,
+    getStartLeafColumns,
+    getEndLeafColumns,
+    state,
     options: {
       enableColumnOrdering,
       enableColumnPinning,
       enableHiding,
       localization,
     },
-  } = table;
-  const { columnOrder, columnPinning } = getState();
+  } = table
+  const { columnOrder, columnPinning } = state
 
   const handleToggleAllColumns = (value?: boolean) => {
     getAllLeafColumns()
       .filter((col) => col.columnDef.enableHiding !== false)
-      .forEach((col) => col.toggleVisibility(value));
-  };
+      .forEach((col) => col.toggleVisibility(value))
+  }
 
   const allColumns = useMemo(() => {
-    const columns = getAllColumns();
+    const columns = getAllColumns()
     if (
       columnOrder.length > 0 &&
       !columns.some((col) => col.columnDef.columnDefType === 'group')
     ) {
       return [
-        ...getLeftLeafColumns(),
+        ...getStartLeafColumns(),
         ...Array.from(new Set(columnOrder)).map((colId) =>
           getCenterLeafColumns().find((col) => col?.id === colId),
         ),
-        ...getRightLeafColumns(),
-      ].filter(Boolean);
+        ...getEndLeafColumns(),
+      ].filter(Boolean)
     }
-    return columns;
+    return columns
   }, [
     columnOrder,
     columnPinning,
     getAllColumns(),
     getCenterLeafColumns(),
-    getLeftLeafColumns(),
-    getRightLeafColumns(),
-  ]) as MRT_Column<TData>[];
+    getStartLeafColumns(),
+    getEndLeafColumns(),
+  ]) as Array<MRT_Column<TData>>
 
   const [hoveredColumn, setHoveredColumn] = useState<MRT_Column<TData> | null>(
     null,
-  );
+  )
 
   return (
     <Menu.Dropdown className={clsx('mrt-show-hide-columns-menu', classes.root)}>
@@ -91,7 +85,13 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
           <Button
             onClick={() =>
               table.setColumnOrder(
-                getDefaultColumnOrderIds(table.options as any, true),
+                getDefaultColumnOrderIds(
+                  {
+                    ...table.options,
+                    state,
+                  },
+                  true,
+                ),
               )
             }
             variant="subtle"
@@ -130,5 +130,5 @@ export const MRT_ShowHideColumnsMenu = <TData extends MRT_RowData>({
         />
       ))}
     </Menu.Dropdown>
-  );
-};
+  )
+}

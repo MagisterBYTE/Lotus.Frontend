@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import classes from './MRT_FilterOptionMenu.module.css';
 import { Fragment, useMemo } from 'react';
 import { Menu } from '@mantine/core';
+import classes from './MRT_FilterOptionMenu.module.css';
 export const mrtFilterOptions = (localization) => [
     {
         divider: false,
@@ -93,8 +93,8 @@ const emptyModes = ['empty', 'notEmpty'];
 const arrModes = ['arrIncludesSome', 'arrIncludesAll', 'arrIncludes'];
 const rangeVariants = ['range-slider', 'date-range', 'range'];
 export const MRT_FilterOptionMenu = ({ header, onSelect, table, }) => {
-    const { getState, options: { columnFilterModeOptions, globalFilterModeOptions, localization, renderColumnFilterModeMenuItems, renderGlobalFilterModeMenuItems, }, setColumnFilterFns, setGlobalFilterFn, } = table;
-    const { globalFilterFn } = getState();
+    const { state, options: { columnFilterModeOptions, globalFilterModeOptions, localization, renderColumnFilterModeMenuItems, renderGlobalFilterModeMenuItems, }, setColumnFilterFns, setGlobalFilterFn, } = table;
+    const { globalFilterFn } = state;
     const { column } = header ?? {};
     const { columnDef } = column ?? {};
     const currentFilterValue = column?.getFilterValue();

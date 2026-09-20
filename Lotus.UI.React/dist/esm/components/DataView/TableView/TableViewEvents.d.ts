@@ -1,7 +1,7 @@
 /**
  * Тип события для включения/отключения кнопки сохранить
  */
-export declare const DisabledSaveButtonEventType: "DisabledSaveButtonEventType";
+export declare const DisabledSaveButtonEventType: 'DisabledSaveButtonEventType';
 /**
  * Данные события для включения/отключения кнопки сохранить
  */

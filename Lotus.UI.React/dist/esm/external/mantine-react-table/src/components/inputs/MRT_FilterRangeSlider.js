@@ -1,9 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_FilterRangeSlider.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { RangeSlider } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_FilterRangeSlider.module.css';
 export const MRT_FilterRangeSlider = ({ header, table, ...rest }) => {
     const { options: { mantineFilterRangeSliderProps }, refs: { filterInputRefs }, } = table;
     const { column } = header;
@@ -17,7 +17,7 @@ export const MRT_FilterRangeSlider = ({ header, table, ...rest }) => {
     let [min, max] = rangeSliderProps.min !== undefined && rangeSliderProps.max !== undefined
         ? [rangeSliderProps.min, rangeSliderProps.max]
         : (column.getFacetedMinMaxValues() ?? [0, 1]);
-    //fix potential TanStack Table bugs where min or max is an array
+    // fix potential TanStack Table bugs where min or max is an array
     if (Array.isArray(min))
         min = min[0];
     if (Array.isArray(max))
@@ -26,10 +26,7 @@ export const MRT_FilterRangeSlider = ({ header, table, ...rest }) => {
         min = 0;
     if (max === null)
         max = 1;
-    const [filterValues, setFilterValues] = useState([
-        min,
-        max,
-    ]);
+    const [filterValues, setFilterValues] = useState([min, max]);
     const columnFilterValue = column.getFilterValue();
     const isMounted = useRef(false);
     useEffect(() => {
@@ -48,7 +45,7 @@ export const MRT_FilterRangeSlider = ({ header, table, ...rest }) => {
         }, onChangeEnd: (values) => {
             if (Array.isArray(values)) {
                 if (values[0] <= min && values[1] >= max) {
-                    //if the user has selected the entire range, remove the filter
+                    // if the user has selected the entire range, remove the filter
                     column.setFilterValue(undefined);
                 }
                 else {
@@ -57,11 +54,11 @@ export const MRT_FilterRangeSlider = ({ header, table, ...rest }) => {
             }
         }, value: filterValues, ...rangeSliderProps, ref: (node) => {
             if (node) {
-                //@ts-ignore
+                // @ts-ignore
                 filterInputRefs.current[`${column.id}-0`] = node;
                 // @ts-ignore
                 if (rangeSliderProps?.ref) {
-                    //@ts-ignore
+                    // @ts-ignore
                     rangeSliderProps.ref = node;
                 }
             }

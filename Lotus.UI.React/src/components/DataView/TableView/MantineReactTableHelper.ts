@@ -1,10 +1,11 @@
 import { SortingState } from '@tanstack/react-table';
 import { ItemsHelper, StringHelper } from 'lotus-core/helpers';
 import { FilterFunctionDescriptors, IFilterFunctionDesc } from 'lotus-core/modules/filter';
-import { IObjectInfo, IPropertyDescriptor, PropertyTypeDescriptors } from 'lotus-core/modules/objectInfo';
+import { IObjectInfo, IPropertyDescriptor, TPropertyTypes } from 'lotus-core/modules/objectInfo';
 import { FilterPropertyConstants, IFilterProperty, IFilterPropertyCollection, ISortProperty } from 'lotus-core/modules/requestAndResponse';
 import { IRecordObject } from 'lotus-core/types';
-import { ISortPropertyCollection } from 'node_modules/lotus-core/dist/esm/modules/requestAndResponse/SortProperty';
+
+type ISortPropertyCollection = ISortProperty[];
 import { MRT_ColumnDef, MRT_ColumnFiltersState, MRT_FilterOption } from '#external/mantine-react-table';
 
 export class MantineReactTableHelper 
@@ -74,11 +75,11 @@ export class MantineReactTableHelper
    */
   public static getDefaultFilterFunction(property: IPropertyDescriptor): MRT_FilterOption 
   {
-    switch (property.propertyTypeDesc) 
+    switch (property.propertyType) 
     {
-      case PropertyTypeDescriptors.String:
+      case TPropertyTypes.String:
         return 'contains';
-      case PropertyTypeDescriptors.Enum:
+      case TPropertyTypes.Enum:
         return 'arrIncludesSome';
     }
 
@@ -113,7 +114,7 @@ export class MantineReactTableHelper
         const filterFn = columnFiltersFns[column.id];
 
         filter.propertyPath = StringHelper.capitalizeFirstLetter(column.id);
-        filter.propertyTypeDesc = property.propertyTypeDesc!;
+        filter.propertyType = property.propertyType!;
         filter.function = MantineReactTableHelper.convertToFilterFunctionDesc(filterFn);
 
         if (
@@ -277,7 +278,7 @@ export class MantineReactTableHelper
     {
       const sort: ISortProperty = {
         propertyPath: StringHelper.capitalizeFirstLetter(column.id),
-        propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
+        propertyType: objectInfo.getPropertyByName(column.id).propertyType,
         isDesc: column.desc
       };
 

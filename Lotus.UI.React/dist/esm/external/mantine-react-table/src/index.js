@@ -1,4 +1,4 @@
-//body components
+// body components
 export * from './components/body/MRT_TableBody';
 export * from './components/body/MRT_TableBodyCell';
 export * from './components/body/MRT_TableBodyCellValue';
@@ -7,7 +7,7 @@ export * from './components/body/MRT_TableBodyRow';
 export * from './components/body/MRT_TableBodyRowGrabHandle';
 export * from './components/body/MRT_TableBodyRowPinButton';
 export * from './components/body/MRT_TableDetailPanel';
-//button components
+// button components
 export * from './components/buttons/MRT_ColumnPinningButtons';
 export * from './components/buttons/MRT_CopyButton';
 export * from './components/buttons/MRT_EditActionButtons';
@@ -21,11 +21,11 @@ export * from './components/buttons/MRT_ToggleFiltersButton';
 export * from './components/buttons/MRT_ToggleFullScreenButton';
 export * from './components/buttons/MRT_ToggleGlobalFilterButton';
 export * from './components/buttons/MRT_ToggleRowActionMenuButton';
-//footer components
+// footer components
 export * from './components/footer/MRT_TableFooter';
 export * from './components/footer/MRT_TableFooterCell';
 export * from './components/footer/MRT_TableFooterRow';
-//head components
+// head components
 export * from './components/head/MRT_TableHead';
 export * from './components/head/MRT_TableHeadCell';
 export * from './components/head/MRT_TableHeadCellFilterContainer';
@@ -34,7 +34,7 @@ export * from './components/head/MRT_TableHeadCellGrabHandle';
 export * from './components/head/MRT_TableHeadCellResizeHandle';
 export * from './components/head/MRT_TableHeadCellSortLabel';
 export * from './components/head/MRT_TableHeadRow';
-//input components
+// input components
 export * from './components/inputs/MRT_EditCellTextInput';
 export * from './components/inputs/MRT_FilterCheckbox';
 export * from './components/inputs/MRT_FilterRangeFields';
@@ -42,21 +42,21 @@ export * from './components/inputs/MRT_FilterRangeSlider';
 export * from './components/inputs/MRT_FilterTextInput';
 export * from './components/inputs/MRT_GlobalFilterTextInput';
 export * from './components/inputs/MRT_SelectCheckbox';
-//components
+// components
 export * from './components/MantineReactTable';
-//menu components
+// menu components
 export * from './components/menus/MRT_ColumnActionMenu';
 export * from './components/menus/MRT_FilterOptionMenu';
 export * from './components/menus/MRT_RowActionMenu';
 export * from './components/menus/MRT_ShowHideColumnsMenu';
 export * from './components/menus/MRT_ShowHideColumnsMenuItems';
-//modal components
+// modal components
 export * from './components/modals/MRT_EditRowModal';
-//table components
+// table components
 export * from './components/table/MRT_Table';
 export * from './components/table/MRT_TableContainer';
 export * from './components/table/MRT_TablePaper';
-//toolbar components
+// toolbar components
 export * from './components/toolbar/MRT_BottomToolbar';
 export * from './components/toolbar/MRT_ProgressBar';
 export * from './components/toolbar/MRT_TablePagination';
@@ -64,11 +64,11 @@ export * from './components/toolbar/MRT_ToolbarAlertBanner';
 export * from './components/toolbar/MRT_ToolbarDropZone';
 export * from './components/toolbar/MRT_ToolbarInternalButtons';
 export * from './components/toolbar/MRT_TopToolbar';
-//fns
+// fns
 export * from './fns/aggregationFns';
 export * from './fns/filterFns';
 export * from './fns/sortingFns';
-//hooks
+// hooks
 export * from './hooks/useMantineReactTable';
 export * from './hooks/useMRT_ColumnVirtualizer';
 export * from './hooks/useMRT_Effects';
@@ -81,10 +81,10 @@ export * from './utils/column.utils';
 export * from './utils/displayColumn.utils';
 export * from './utils/row.utils';
 export * from './utils/style.utils';
-//helpers
+// helpers
 export * from './utils/tanstack.helpers';
 export * from './utils/utils';
-//locales
+// locales
 export * from './locales/ru';
 export * from './locales/en';
 //# sourceMappingURL=index.js.map

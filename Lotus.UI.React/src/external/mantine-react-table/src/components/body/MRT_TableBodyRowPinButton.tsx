@@ -1,16 +1,13 @@
-import { type ActionIconProps, Box } from '@mantine/core';
+import { Box } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_RowPinButton } from '../buttons/MRT_RowPinButton'
+import type { ActionIconProps } from '@mantine/core'
 
-import {
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_RowPinButton } from '../buttons/MRT_RowPinButton';
+import type { MRT_Row, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends ActionIconProps {
-  row: MRT_Row<TData>;
-  table: MRT_TableInstance<TData>;
+  row: MRT_Row<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableBodyRowPinButton = <TData extends MRT_RowData>({
@@ -19,20 +16,20 @@ export const MRT_TableBodyRowPinButton = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: { enableRowPinning, rowPinningDisplayMode },
-  } = table;
-  const { density } = getState();
+  } = table
+  const { density } = state
 
-  const canPin = parseFromValuesOrFunc(enableRowPinning, row as any);
+  const canPin = parseFromValuesOrFunc(enableRowPinning, row as any)
 
-  if (!canPin) return null;
+  if (!canPin) return null
 
   const rowPinButtonProps = {
     row,
     table,
     ...rest,
-  };
+  }
 
   if (rowPinningDisplayMode === 'top-and-bottom' && !row.getIsPinned()) {
     return (
@@ -45,7 +42,7 @@ export const MRT_TableBodyRowPinButton = <TData extends MRT_RowData>({
         <MRT_RowPinButton pinningPosition="top" {...rowPinButtonProps} />
         <MRT_RowPinButton pinningPosition="bottom" {...rowPinButtonProps} />
       </Box>
-    );
+    )
   }
 
   return (
@@ -53,5 +50,5 @@ export const MRT_TableBodyRowPinButton = <TData extends MRT_RowData>({
       pinningPosition={rowPinningDisplayMode === 'bottom' ? 'bottom' : 'top'}
       {...rowPinButtonProps}
     />
-  );
-};
+  )
+}

@@ -19,7 +19,7 @@ export const MRT_Localization_RU = {
     expand: 'Раскрыть',
     expandAll: 'Раскрыть все',
     filterArrIncludes: 'Включить',
-    filterArrIncludesAll: 'Включить все',
+    filterArrIncludesAll: 'Влючить все',
     filterArrIncludesSome: 'Включить',
     filterBetween: 'Между',
     filterBetweenInclusive: 'Между включительно',

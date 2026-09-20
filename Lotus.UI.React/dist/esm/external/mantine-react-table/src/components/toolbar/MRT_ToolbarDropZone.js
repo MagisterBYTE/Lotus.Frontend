@@ -1,11 +1,11 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_ToolbarDropZone.module.css';
 import { useEffect } from 'react';
 import { Flex, Text, Transition } from '@mantine/core';
+import classes from './MRT_ToolbarDropZone.module.css';
 export const MRT_ToolbarDropZone = ({ table, ...rest }) => {
-    const { getState, options: { enableGrouping, localization }, setHoveredColumn, setShowToolbarDropZone, } = table;
-    const { draggingColumn, grouping, hoveredColumn, showToolbarDropZone } = getState();
+    const { state, options: { enableGrouping, localization }, setHoveredColumn, setShowToolbarDropZone, } = table;
+    const { draggingColumn, grouping, hoveredColumn, showToolbarDropZone } = state;
     const handleDragEnter = (_event) => {
         setHoveredColumn({ id: 'drop-zone' });
     };

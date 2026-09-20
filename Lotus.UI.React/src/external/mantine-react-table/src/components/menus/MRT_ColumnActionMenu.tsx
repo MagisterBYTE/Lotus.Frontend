@@ -1,17 +1,13 @@
-import classes from './MRT_ColumnActionMenu.module.css';
+import { ActionIcon, Menu, Tooltip } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import classes from './MRT_ColumnActionMenu.module.css'
+import type { MenuProps } from '@mantine/core'
 
-import { ActionIcon, Menu, type MenuProps, Tooltip } from '@mantine/core';
-
-import {
-  type MRT_Header,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import type { MRT_Header, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends MenuProps {
-  header: MRT_Header<TData>;
-  table: MRT_TableInstance<TData>;
+  header: MRT_Header<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
@@ -20,7 +16,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       columnFilterDisplayMode,
       enableColumnFilters,
@@ -50,62 +46,62 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
     },
     refs: { filterInputRefs },
     setColumnOrder,
-    setColumnSizingInfo,
+    setColumnResizing,
     setShowColumnFilters,
     toggleAllColumnsVisible,
-  } = table;
-  const { column } = header;
-  const { columnDef } = column;
-  const { columnSizing, columnVisibility } = getState();
+  } = table
+  const { column } = header
+  const { columnDef } = column
+  const { columnSizing, columnVisibility } = state
 
-  const arg = { column, table };
+  const arg = { column, table }
   const actionIconProps = {
     ...parseFromValuesOrFunc(mantineColumnActionsButtonProps, arg),
     ...parseFromValuesOrFunc(columnDef.mantineColumnActionsButtonProps, arg),
-  };
+  }
 
   const handleClearSort = () => {
-    column.clearSorting();
-  };
+    column.clearSorting()
+  }
 
   const handleSortAsc = () => {
-    column.toggleSorting(false);
-  };
+    column.toggleSorting(false)
+  }
 
   const handleSortDesc = () => {
-    column.toggleSorting(true);
-  };
+    column.toggleSorting(true)
+  }
 
   const handleResetColumnSize = () => {
-    setColumnSizingInfo((old) => ({ ...old, isResizingColumn: false }));
-    column.resetSize();
-  };
+    setColumnResizing((old) => ({ ...old, isResizingColumn: false }))
+    column.resetSize()
+  }
 
   const handleHideColumn = () => {
-    column.toggleVisibility(false);
-  };
+    column.toggleVisibility(false)
+  }
 
-  const handlePinColumn = (pinDirection: 'left' | 'right' | false) => {
-    column.pin(pinDirection);
-  };
+  const handlePinColumn = (pinDirection: 'start' | 'end' | false) => {
+    column.pin(pinDirection)
+  }
 
   const handleGroupByColumn = () => {
-    column.toggleGrouping();
-    setColumnOrder((old: any) => ['mrt-row-expand', ...old]);
-  };
+    column.toggleGrouping()
+    setColumnOrder((old: any) => ['mrt-row-expand', ...old])
+  }
 
   const handleClearFilter = () => {
-    column.setFilterValue('');
-  };
+    column.setFilterValue('')
+  }
 
   const handleFilterByColumn = () => {
-    setShowColumnFilters(true);
-    setTimeout(() => filterInputRefs.current[`${column.id}-0`]?.focus(), 100);
-  };
+    setShowColumnFilters(true)
+    setTimeout(() => filterInputRefs.current[`${column.id}-0`]?.focus(), 100)
+  }
 
   const handleShowAllColumns = () => {
-    toggleAllColumnsVisible(true);
-  };
+    toggleAllColumnsVisible(true)
+  }
 
   const internalColumnMenuItems = (
     <>
@@ -184,16 +180,16 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
       {enableColumnPinning && column.getCanPin() && (
         <>
           <Menu.Item
-            disabled={column.getIsPinned() === 'left' || !column.getCanPin()}
+            disabled={column.getIsPinned() === 'start' || !column.getCanPin()}
             leftSection={<IconPinned className={classes.left} />}
-            onClick={() => handlePinColumn('left')}
+            onClick={() => handlePinColumn('start')}
           >
             {localization.pinToLeft}
           </Menu.Item>
           <Menu.Item
-            disabled={column.getIsPinned() === 'right' || !column.getCanPin()}
+            disabled={column.getIsPinned() === 'end' || !column.getCanPin()}
             leftSection={<IconPinned className={classes.right} />}
-            onClick={() => handlePinColumn('right')}
+            onClick={() => handlePinColumn('end')}
           >
             {localization.pinToRight}
           </Menu.Item>
@@ -247,7 +243,7 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
         </>
       )}
     </>
-  );
+  )
 
   return (
     <Menu closeOnItemClick position="bottom-start" withinPortal {...rest}>
@@ -282,5 +278,5 @@ export const MRT_ColumnActionMenu = <TData extends MRT_RowData>({
           internalColumnMenuItems}
       </Menu.Dropdown>
     </Menu>
-  );
-};
+  )
+}

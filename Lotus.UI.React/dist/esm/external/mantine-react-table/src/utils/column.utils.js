@@ -15,39 +15,33 @@ export const getAllLeafColumnDefs = (columns) => {
     return allLeafColumnDefs;
 };
 export const prepareColumns = ({ columnDefs, tableOptions, }) => {
-    const { aggregationFns = {}, defaultDisplayColumn, filterFns = {}, sortingFns = {}, state: { columnFilterFns = {} } = {}, } = tableOptions;
+    const { defaultDisplayColumn, filterFns = {}, sortFns = {}, state: { columnFilterFns = {} } = {}, } = tableOptions;
     return columnDefs.map((columnDef) => {
-        //assign columnId
+        // assign columnId
         if (!columnDef.id)
             columnDef.id = getColumnId(columnDef);
-        //assign columnDefType
+        // assign columnDefType
         if (!columnDef.columnDefType)
             columnDef.columnDefType = 'data';
         if (columnDef.columns?.length) {
             columnDef.columnDefType = 'group';
-            //recursively prepare columns if this is a group column
+            // recursively prepare columns if this is a group column
             columnDef.columns = prepareColumns({
                 columnDefs: columnDef.columns,
                 tableOptions,
             });
         }
         else if (columnDef.columnDefType === 'data') {
-            //assign aggregationFns if multiple aggregationFns are provided
-            if (Array.isArray(columnDef.aggregationFn)) {
-                const aggFns = columnDef.aggregationFn;
-                columnDef.aggregationFn = (columnId, leafRows, childRows) => aggFns.map((fn) => aggregationFns[fn]?.(columnId, leafRows, childRows));
-            }
-            //assign filterFns
+            // assign filterFns
             if (Object.keys(filterFns).includes(columnFilterFns[columnDef.id])) {
                 columnDef.filterFn =
                     filterFns[columnFilterFns[columnDef.id]] ?? filterFns.fuzzy;
                 columnDef._filterFn =
                     columnFilterFns[columnDef.id];
             }
-            //assign sortingFns
-            if (Object.keys(sortingFns).includes(columnDef.sortingFn)) {
-                // @ts-ignore
-                columnDef.sortingFn = sortingFns[columnDef.sortingFn];
+            // assign sortFns
+            if (Object.keys(sortFns).includes(columnDef.sortFn)) {
+                columnDef.sortFn = sortFns[columnDef.sortFn];
             }
         }
         else if (columnDef.columnDefType === 'display') {

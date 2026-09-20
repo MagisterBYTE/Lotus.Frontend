@@ -1,21 +1,21 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableHeadCell.module.css';
-import { useMemo, useState, } from 'react';
+import { useMemo, useState } from 'react';
 import { Flex, TableTh, useDirection } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
+import { parseCSSVarId } from '../../utils/style.utils';
+import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_ColumnActionMenu } from '../menus/MRT_ColumnActionMenu';
 import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
 import { MRT_TableHeadCellFilterLabel } from './MRT_TableHeadCellFilterLabel';
 import { MRT_TableHeadCellGrabHandle } from './MRT_TableHeadCellGrabHandle';
 import { MRT_TableHeadCellResizeHandle } from './MRT_TableHeadCellResizeHandle';
 import { MRT_TableHeadCellSortLabel } from './MRT_TableHeadCellSortLabel';
-import { parseCSSVarId } from '../../utils/style.utils';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_ColumnActionMenu } from '../menus/MRT_ColumnActionMenu';
+import classes from './MRT_TableHeadCell.module.css';
 export const MRT_TableHeadCell = ({ columnVirtualizer, header, renderedHeaderIndex = 0, table, ...rest }) => {
     const direction = useDirection();
-    const { getState, options: { columnFilterDisplayMode, columnResizeDirection, columnResizeMode, enableColumnActions, enableColumnDragging, enableColumnOrdering, enableColumnPinning, enableGrouping, enableHeaderActionsHoverReveal, enableMultiSort, layoutMode, mantineTableHeadCellProps, }, refs: { tableHeadCellRefs }, setHoveredColumn, } = table;
-    const { columnSizingInfo, draggingColumn, grouping, hoveredColumn } = getState();
+    const { state, options: { columnFilterDisplayMode, columnResizeDirection, columnResizeMode, enableColumnActions, enableColumnDragging, enableColumnOrdering, enableColumnPinning, enableGrouping, enableHeaderActionsHoverReveal, enableMultiSort, layoutMode, mantineTableHeadCellProps, }, refs: { tableHeadCellRefs }, setHoveredColumn, } = table;
+    const { columnResizing, draggingColumn, grouping, hoveredColumn } = state;
     const { column } = header;
     const { columnDef } = column;
     const { columnDefType } = columnDef;
@@ -84,17 +84,17 @@ export const MRT_TableHeadCell = ({ columnVirtualizer, header, renderedHeaderInd
             table,
         })
         : (columnDef?.Header ?? columnDef.header);
-    return (_jsxs(TableTh, { colSpan: header.colSpan, "data-column-pinned": isColumnPinned || undefined, "data-dragging-column": isDraggingColumn || undefined, "data-first-right-pinned": (isColumnPinned === 'right' &&
-            column.getIsFirstColumn(isColumnPinned)) ||
-            undefined, "data-hovered-column-target": isHoveredColumn || undefined, "data-index": renderedHeaderIndex, "data-last-left-pinned": (isColumnPinned === 'left' && column.getIsLastColumn(isColumnPinned)) ||
+    return (_jsxs(TableTh, { colSpan: header.colSpan, "data-column-pinned": isColumnPinned || undefined, "data-dragging-column": isDraggingColumn || undefined, "data-first-end-pinned": (isColumnPinned === 'end' && column.getIsFirstColumn(isColumnPinned)) ||
+            undefined, "data-hovered-column-target": isHoveredColumn || undefined, "data-index": renderedHeaderIndex, "data-last-start-pinned": (isColumnPinned === 'start' &&
+            column.getIsLastColumn(isColumnPinned)) ||
             undefined, "data-resizing": (columnResizeMode === 'onChange' &&
-            columnSizingInfo?.isResizingColumn === column.id &&
+            columnResizing?.isResizingColumn === column.id &&
             columnResizeDirection) ||
             undefined, ...tableCellProps, __vars: {
-            '--mrt-table-cell-left': isColumnPinned === 'left'
+            '--mrt-table-cell-start': isColumnPinned === 'start'
                 ? `${column.getStart(isColumnPinned)}`
                 : undefined,
-            '--mrt-table-cell-right': isColumnPinned === 'right'
+            '--mrt-table-cell-end': isColumnPinned === 'end'
                 ? `${column.getAfter(isColumnPinned)}`
                 : undefined,
         }, align: columnDefType === 'group'
@@ -104,7 +104,6 @@ export const MRT_TableHeadCell = ({ columnVirtualizer, header, renderedHeaderInd
                 : 'left', className: clsx(classes.root, layoutMode?.startsWith('grid') && classes['root-grid'], enableMultiSort && column.getCanSort() && classes['root-no-select'], columnVirtualizer && classes['root-virtualized'], tableCellProps?.className), onDragEnter: handleDragEnter, ref: (node) => {
             if (node) {
                 tableHeadCellRefs.current[column.id] = node;
-                // @ts-expect-error
                 isHoveredHeadCellRef.current = node;
                 if (columnDefType !== 'group') {
                     columnVirtualizer?.measureElement?.(node);

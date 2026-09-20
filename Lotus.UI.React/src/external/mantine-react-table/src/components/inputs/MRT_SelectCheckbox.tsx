@@ -1,31 +1,20 @@
-import { type MouseEvent } from 'react';
-
-import {
-  Checkbox,
-  type CheckboxProps,
-  Radio,
-  type RadioProps,
-  Switch,
-  type SwitchProps,
-  Tooltip,
-} from '@mantine/core';
-
-import {
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import { Checkbox, Radio, Switch, Tooltip } from '@mantine/core'
 import {
   getIsRowSelected,
   getMRT_RowSelectionHandler,
   getMRT_SelectAllHandler,
-} from '../../utils/row.utils';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+} from '../../utils/row.utils'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import type { MouseEvent } from 'react'
+
+import type { CheckboxProps, RadioProps, SwitchProps } from '@mantine/core'
+
+import type { MRT_Row, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends CheckboxProps {
-  renderedRowIndex?: number;
-  row?: MRT_Row<TData>;
-  table: MRT_TableInstance<TData>;
+  renderedRowIndex?: number
+  row?: MRT_Row<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
@@ -35,7 +24,7 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       enableMultiRowSelection,
       localization,
@@ -44,20 +33,20 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
       selectAllMode,
       selectDisplayMode,
     },
-  } = table;
-  const { density, isLoading } = getState();
+  } = table
+  const { density, isLoading } = state
 
-  const selectAll = !row;
+  const selectAll = !row
 
   const allRowsSelected = selectAll
     ? selectAllMode === 'page'
       ? table.getIsAllPageRowsSelected()
       : table.getIsAllRowsSelected()
-    : undefined;
+    : undefined
 
   const isChecked = selectAll
     ? allRowsSelected
-    : getIsRowSelected({ row, table });
+    : getIsRowSelected({ row, table })
 
   const checkboxProps = {
     ...(selectAll
@@ -67,7 +56,7 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
           table,
         })),
     ...rest,
-  };
+  }
 
   const onSelectionChange = row
     ? getMRT_RowSelectionHandler({
@@ -75,9 +64,9 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
         row,
         table,
       })
-    : undefined;
+    : undefined
 
-  const onSelectAllChange = getMRT_SelectAllHandler({ table });
+  const onSelectAllChange = getMRT_SelectAllHandler({ table })
 
   const commonProps = {
     'aria-label': selectAll
@@ -87,21 +76,21 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
     disabled:
       isLoading || (row && !row.getCanSelect()) || row?.id === 'mrt-row-create',
     onChange: (event) => {
-      event.stopPropagation();
+      event.stopPropagation()
       if (selectAll) {
-        onSelectAllChange(event);
+        onSelectAllChange(event)
       } else {
-        onSelectionChange!(event);
+        onSelectionChange!(event)
       }
     },
     size: density === 'xs' ? 'sm' : 'md',
     ...checkboxProps,
     onClick: (e: MouseEvent<HTMLInputElement>) => {
-      e.stopPropagation();
-      checkboxProps?.onClick?.(e);
+      e.stopPropagation()
+      checkboxProps?.onClick?.(e)
     },
     title: undefined,
-  } as CheckboxProps & RadioProps & SwitchProps;
+  } as CheckboxProps & RadioProps & SwitchProps
 
   return (
     <Tooltip
@@ -132,5 +121,5 @@ export const MRT_SelectCheckbox = <TData extends MRT_RowData>({
         )}
       </span>
     </Tooltip>
-  );
-};
+  )
+}

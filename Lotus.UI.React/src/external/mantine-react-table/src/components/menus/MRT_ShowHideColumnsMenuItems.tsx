@@ -1,12 +1,4 @@
-import classes from './MRT_ShowHideColumnsMenuItems.module.css';
-
-import {
-  type Dispatch,
-  type DragEvent,
-  type SetStateAction,
-  useRef,
-  useState,
-} from 'react';
+import { useRef, useState } from 'react'
 
 import {
   Box,
@@ -15,25 +7,27 @@ import {
   Text,
   Tooltip,
   useMantineTheme,
-} from '@mantine/core';
+} from '@mantine/core'
 
-import {
-  type MRT_CellValue,
-  type MRT_Column,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { reorderColumn } from '../../utils/column.utils';
-import { dataVariable, getPrimaryColor } from '../../utils/style.utils';
-import { MRT_ColumnPinningButtons } from '../buttons/MRT_ColumnPinningButtons';
-import { MRT_GrabHandleButton } from '../buttons/MRT_GrabHandleButton';
+import { reorderColumn } from '../../utils/column.utils'
+import { dataVariable, getPrimaryColor } from '../../utils/style.utils'
+import { MRT_ColumnPinningButtons } from '../buttons/MRT_ColumnPinningButtons'
+import { MRT_GrabHandleButton } from '../buttons/MRT_GrabHandleButton'
+import classes from './MRT_ShowHideColumnsMenuItems.module.css'
+import type {
+  MRT_CellValue,
+  MRT_Column,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
+import type { Dispatch, DragEvent, SetStateAction } from 'react'
 
 interface Props<TData extends MRT_RowData, TValue = MRT_CellValue> {
-  allColumns: MRT_Column<TData>[];
-  column: MRT_Column<TData, TValue>;
-  hoveredColumn: MRT_Column<TData> | null;
-  setHoveredColumn: Dispatch<SetStateAction<MRT_Column<TData> | null>>;
-  table: MRT_TableInstance<TData>;
+  allColumns: Array<MRT_Column<TData>>
+  column: MRT_Column<TData, TValue>
+  hoveredColumn: MRT_Column<TData> | null
+  setHoveredColumn: Dispatch<SetStateAction<MRT_Column<TData> | null>>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
@@ -43,9 +37,9 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
   setHoveredColumn,
   table,
 }: Props<TData>) => {
-  const theme = useMantineTheme();
+  const theme = useMantineTheme()
   const {
-    getState,
+    state,
     options: {
       enableColumnOrdering,
       enableColumnPinning,
@@ -53,51 +47,51 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
       localization,
     },
     setColumnOrder,
-  } = table;
-  const { columnOrder } = getState();
-  const { columnDef } = column;
-  const { columnDefType } = columnDef;
+  } = table
+  const { columnOrder } = state
+  const { columnDef } = column
+  const { columnDefType } = columnDef
 
   const switchChecked =
     (columnDefType !== 'group' && column.getIsVisible()) ||
     (columnDefType === 'group' &&
-      column.getLeafColumns().some((col) => col.getIsVisible()));
+      column.getLeafColumns().some((col) => col.getIsVisible()))
 
   const handleToggleColumnHidden = (column: MRT_Column<TData>) => {
     if (columnDefType === 'group') {
       column?.columns?.forEach?.((childColumn: MRT_Column<TData>) => {
-        childColumn.toggleVisibility(!switchChecked);
-      });
+        childColumn.toggleVisibility(!switchChecked)
+      })
     } else {
-      column.toggleVisibility();
+      column.toggleVisibility()
     }
-  };
+  }
 
-  const menuItemRef = useRef<HTMLElement>(null);
+  const menuItemRef = useRef<HTMLElement>(null)
 
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false)
 
   const handleDragStart = (e: DragEvent<HTMLButtonElement>) => {
-    setIsDragging(true);
-    e.dataTransfer.setDragImage(menuItemRef.current as HTMLElement, 0, 0);
-  };
+    setIsDragging(true)
+    e.dataTransfer.setDragImage(menuItemRef.current as HTMLElement, 0, 0)
+  }
 
   const handleDragEnd = (_e: DragEvent<HTMLButtonElement>) => {
-    setIsDragging(false);
-    setHoveredColumn(null);
+    setIsDragging(false)
+    setHoveredColumn(null)
     if (hoveredColumn) {
-      setColumnOrder(reorderColumn(column, hoveredColumn, columnOrder));
+      setColumnOrder(reorderColumn(column, hoveredColumn, columnOrder))
     }
-  };
+  }
 
   const handleDragEnter = (_e: DragEvent) => {
     if (!isDragging && columnDef.enableColumnOrdering !== false) {
-      setHoveredColumn(column);
+      setHoveredColumn(column)
     }
-  };
+  }
 
   if (!columnDef.header || columnDef.visibleInShowHideMenu === false) {
-    return null;
+    return null
   }
 
   return (
@@ -106,7 +100,7 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
         className={classes.root}
         component="span"
         onDragEnter={handleDragEnter}
-        ref={menuItemRef as any}
+        ref={menuItemRef}
         style={{
           '--_column-depth': `${(column.depth + 0.5) * 2}rem`,
           '--_hover-color': getPrimaryColor(theme),
@@ -165,5 +159,5 @@ export const MRT_ShowHideColumnsMenuItems = <TData extends MRT_RowData>({
         />
       ))}
     </>
-  );
-};
+  )
+}

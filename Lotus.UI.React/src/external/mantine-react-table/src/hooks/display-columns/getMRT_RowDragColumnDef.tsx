@@ -1,12 +1,12 @@
-import { type RefObject } from 'react';
+import { MRT_TableBodyRowGrabHandle } from '../../components/body/MRT_TableBodyRowGrabHandle'
+import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils'
+import type { RefObject } from 'react'
 
-import { MRT_TableBodyRowGrabHandle } from '../../components/body/MRT_TableBodyRowGrabHandle';
-import {
-  type MRT_ColumnDef,
-  type MRT_RowData,
-  type MRT_StatefulTableOptions,
-} from '../../types';
-import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils';
+import type {
+  MRT_ColumnDef,
+  MRT_RowData,
+  MRT_StatefulTableOptions,
+} from '../../types'
 
 export const getMRT_RowDragColumnDef = <TData extends MRT_RowData>(
   tableOptions: MRT_StatefulTableOptions<TData>,
@@ -26,5 +26,5 @@ export const getMRT_RowDragColumnDef = <TData extends MRT_RowData>(
       size: 60,
       tableOptions,
     }),
-  };
-};
+  }
+}

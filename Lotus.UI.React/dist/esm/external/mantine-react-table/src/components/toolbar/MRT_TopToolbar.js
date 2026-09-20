@@ -1,19 +1,19 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import commonClasses from './common.styles.module.css';
-import classes from './MRT_TopToolbar.module.css';
 import { Box, Flex } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_GlobalFilterTextInput } from '../inputs/MRT_GlobalFilterTextInput';
+import commonClasses from './common.styles.module.css';
+import classes from './MRT_TopToolbar.module.css';
 import { MRT_ProgressBar } from './MRT_ProgressBar';
 import { MRT_TablePagination } from './MRT_TablePagination';
 import { MRT_ToolbarAlertBanner } from './MRT_ToolbarAlertBanner';
 import { MRT_ToolbarDropZone } from './MRT_ToolbarDropZone';
 import { MRT_ToolbarInternalButtons } from './MRT_ToolbarInternalButtons';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_GlobalFilterTextInput } from '../inputs/MRT_GlobalFilterTextInput';
 export const MRT_TopToolbar = ({ table, ...rest }) => {
-    const { getState, options: { enableGlobalFilter, enablePagination, enableToolbarInternalActions, mantineTopToolbarProps, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, renderTopToolbarCustomActions, }, refs: { topToolbarRef }, } = table;
-    const { isFullScreen, showGlobalFilter } = getState();
+    const { state, options: { enableGlobalFilter, enablePagination, enableToolbarInternalActions, mantineTopToolbarProps, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, renderTopToolbarCustomActions, }, refs: { topToolbarRef }, } = table;
+    const { isFullScreen, showGlobalFilter } = state;
     const isMobile = useMediaQuery('(max-width:720px)');
     const isTablet = useMediaQuery('(max-width:1024px)');
     const toolbarProps = {

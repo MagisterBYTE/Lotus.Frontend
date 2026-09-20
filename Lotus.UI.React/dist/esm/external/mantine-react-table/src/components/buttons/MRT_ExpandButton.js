@@ -1,9 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_ExpandButton.module.css';
-import { ActionIcon, Tooltip, useDirection, } from '@mantine/core';
+import { ActionIcon, Tooltip, useDirection } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_EditCellTextInput } from '../inputs/MRT_EditCellTextInput';
+import classes from './MRT_ExpandButton.module.css';
 export const MRT_ExpandButton = ({ row, table, ...rest }) => {
     const direction = useDirection();
     const { options: { icons: { IconChevronDown }, localization, mantineExpandButtonProps, positionExpandColumn, renderDetailPanel, }, } = table;

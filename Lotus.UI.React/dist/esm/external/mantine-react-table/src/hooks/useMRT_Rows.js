@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { getMRT_Rows } from '../utils/row.utils';
 export const useMRT_Rows = (table) => {
-    const { getRowModel, getState, options: { data, enableGlobalFilterRankedResults, positionCreatingRow }, } = table;
-    const { creatingRow, expanded, globalFilter, pagination, rowPinning, sorting, } = getState();
+    const { getRowModel, state, options: { data, enableGlobalFilterRankedResults, positionCreatingRow }, } = table;
+    const { creatingRow, expanded, globalFilter, pagination, rowPinning, sorting, } = state;
     const rows = useMemo(() => getMRT_Rows(table), [
         creatingRow,
         data,

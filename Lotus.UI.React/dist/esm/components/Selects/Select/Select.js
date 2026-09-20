@@ -5,7 +5,7 @@ import { Assert } from 'lotus-core/utils';
 import { useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { ContainerControl, Primitive } from '#components/Common';
-import { SelectEx } from '#components/Extendeds';
+import { SelectEx } from '#components/Extended';
 export function Select(props) {
     const { items, onChangedItem, selectedItem, imageDatabase, selectRenderComponent, getValueItem = ItemsHelper.getValueOfItem, getLabelItem = ItemsHelper.getLabelOfItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, renderValue, selectProps, size, ...otherProps } = props;
     const data = useMemo(() => items.map((item) => ({

@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useState } from 'react';
 import { ActionIcon, Tooltip } from '@mantine/core';
-export const MRT_ToggleFullScreenButton = ({ table: { getState, options: { icons: { IconMaximize, IconMinimize }, localization: { toggleFullScreen }, }, setIsFullScreen, }, title, ...rest }) => {
-    const { isFullScreen } = getState();
+export const MRT_ToggleFullScreenButton = ({ table: { state, options: { icons: { IconMaximize, IconMinimize }, localization: { toggleFullScreen }, }, setIsFullScreen, }, title, ...rest }) => {
+    const { isFullScreen } = state;
     const [tooltipOpened, setTooltipOpened] = useState(false);
     const handleToggleFullScreen = () => {
         setTooltipOpened(false);

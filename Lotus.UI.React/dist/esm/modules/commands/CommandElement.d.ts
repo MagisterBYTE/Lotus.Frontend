@@ -28,6 +28,6 @@ export type ICommandElementProps = (ICommandElementBaseProps & {
 } & NavLinkProps) | (ICommandElementBaseProps & {
     elementType: 'menuItem';
 } & MenuItemProps);
-export declare function CommandElement(props: ICommandElementProps): import("react/jsx-runtime").JSX.Element;
+export declare function CommandElement(props: ICommandElementProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=CommandElement.d.ts.map

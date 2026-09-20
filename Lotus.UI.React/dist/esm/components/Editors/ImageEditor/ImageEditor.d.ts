@@ -40,6 +40,6 @@ export type IImageEditorProps = IVerticalImageEditorProps | IHorizontalImageEdit
  * @param props
  * @returns
  */
-export declare function ImageEditor(props: IImageEditorProps): import("react/jsx-runtime").JSX.Element | null;
+export declare function ImageEditor(props: IImageEditorProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=ImageEditor.d.ts.map

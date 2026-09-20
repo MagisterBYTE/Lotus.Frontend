@@ -1,17 +1,17 @@
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableBodyCell.module.css';
-import { memo, useEffect, useRef, useState, } from 'react';
-import { Skeleton, TableTd, useDirection, } from '@mantine/core';
-import { MRT_TableBodyCellValue } from './MRT_TableBodyCellValue';
+import { memo, useEffect, useRef, useState } from 'react';
+import { Skeleton, TableTd, useDirection } from '@mantine/core';
 import { parseCSSVarId } from '../../utils/style.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_CopyButton } from '../buttons/MRT_CopyButton';
 import { MRT_EditCellTextInput } from '../inputs/MRT_EditCellTextInput';
+import { MRT_TableBodyCellValue } from './MRT_TableBodyCellValue';
+import classes from './MRT_TableBodyCell.module.css';
 export const MRT_TableBodyCell = ({ cell, numRows = 1, renderedColumnIndex = 0, renderedRowIndex = 0, rowRef, table, virtualCell, ...rest }) => {
     const direction = useDirection();
-    const { getState, options: { columnResizeDirection, columnResizeMode, createDisplayMode, editDisplayMode, enableClickToCopy, enableColumnOrdering, enableColumnPinning, enableEditing, enableGrouping, layoutMode, mantineSkeletonProps, mantineTableBodyCellProps, }, refs: { editInputRefs }, setEditingCell, setHoveredColumn, } = table;
-    const { columnSizingInfo, creatingRow, density, draggingColumn, editingCell, editingRow, hoveredColumn, isLoading, showSkeletons, } = getState();
+    const { state, options: { columnResizeDirection, columnResizeMode, createDisplayMode, editDisplayMode, enableClickToCopy, enableColumnOrdering, enableColumnPinning, enableEditing, enableGrouping, layoutMode, mantineSkeletonProps, mantineTableBodyCellProps, }, refs: { editInputRefs }, setEditingCell, setHoveredColumn, } = table;
+    const { columnResizing, creatingRow, density, draggingColumn, editingCell, editingRow, hoveredColumn, isLoading, showSkeletons, } = state;
     const { column, row } = cell;
     const { columnDef } = column;
     const { columnDefType } = columnDef;
@@ -138,18 +138,18 @@ export const MRT_TableBodyCell = ({ cell, numRows = 1, renderedColumnIndex = 0, 
         }
         return _jsx(MRT_TableBodyCellValue, { ...cellValueProps });
     };
-    return (_jsx(TableTd, { "data-column-pinned": isColumnPinned || undefined, "data-dragging-column": isDraggingColumn || undefined, "data-first-right-pinned": (isColumnPinned === 'right' &&
-            column.getIsFirstColumn(isColumnPinned)) ||
-            undefined, "data-hovered-column-target": isHoveredColumn || undefined, "data-index": renderedColumnIndex, "data-last-left-pinned": (isColumnPinned === 'left' && column.getIsLastColumn(isColumnPinned)) ||
+    return (_jsx(TableTd, { "data-column-pinned": isColumnPinned || undefined, "data-dragging-column": isDraggingColumn || undefined, "data-first-end-pinned": (isColumnPinned === 'end' && column.getIsFirstColumn(isColumnPinned)) ||
+            undefined, "data-hovered-column-target": isHoveredColumn || undefined, "data-index": renderedColumnIndex, "data-last-start-pinned": (isColumnPinned === 'start' &&
+            column.getIsLastColumn(isColumnPinned)) ||
             undefined, "data-last-row": renderedRowIndex === numRows - 1 || undefined, "data-resizing": (columnResizeMode === 'onChange' &&
-            columnSizingInfo?.isResizingColumn === column.id &&
+            columnResizing?.isResizingColumn === column.id &&
             columnResizeDirection) ||
             undefined, ...tableCellProps, __vars: {
             '--mrt-cell-align': tableCellProps.align ?? (direction.dir === 'rtl' ? 'right' : 'left'),
-            '--mrt-table-cell-left': isColumnPinned === 'left'
+            '--mrt-table-cell-start': isColumnPinned === 'start'
                 ? `${column.getStart(isColumnPinned)}`
                 : undefined,
-            '--mrt-table-cell-right': isColumnPinned === 'right'
+            '--mrt-table-cell-end': isColumnPinned === 'end'
                 ? `${column.getAfter(isColumnPinned)}`
                 : undefined,
             ...tableCellProps.__vars,

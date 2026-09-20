@@ -1,14 +1,14 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_GlobalFilterTextInput.module.css';
 import { useEffect, useRef, useState } from 'react';
-import { ActionIcon, Collapse, Menu, TextInput, Tooltip, } from '@mantine/core';
+import { ActionIcon, Collapse, Menu, TextInput, Tooltip } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_FilterOptionMenu } from '../menus/MRT_FilterOptionMenu';
+import classes from './MRT_GlobalFilterTextInput.module.css';
 export const MRT_GlobalFilterTextInput = ({ table, ...rest }) => {
-    const { getState, options: { enableGlobalFilterModes, icons: { IconSearch, IconX }, localization, mantineSearchTextInputProps, manualFiltering, positionGlobalFilter, }, refs: { searchInputRef }, setGlobalFilter, } = table;
-    const { globalFilter, showGlobalFilter } = getState();
+    const { state, options: { enableGlobalFilterModes, icons: { IconSearch, IconX }, localization, mantineSearchTextInputProps, manualFiltering, positionGlobalFilter, }, refs: { searchInputRef }, setGlobalFilter, } = table;
+    const { globalFilter, showGlobalFilter } = state;
     const textFieldProps = {
         ...parseFromValuesOrFunc(mantineSearchTextInputProps, {
             table,
@@ -36,7 +36,7 @@ export const MRT_GlobalFilterTextInput = ({ table, ...rest }) => {
         }
         isMounted.current = true;
     }, [globalFilter]);
-    return (_jsxs(Collapse, { className: classes.collapse, in: showGlobalFilter, children: [enableGlobalFilterModes && (_jsxs(Menu, { withinPortal: true, children: [_jsx(Menu.Target, { children: _jsx(ActionIcon, { "aria-label": localization.changeSearchMode, color: "gray", size: "sm", variant: "transparent", children: _jsx(IconSearch, {}) }) }), _jsx(MRT_FilterOptionMenu, { onSelect: handleClear, table: table })] })), _jsx(TextInput, { leftSection: !enableGlobalFilterModes && _jsx(IconSearch, {}), mt: 0, mx: positionGlobalFilter !== 'left' ? 'mx' : undefined, onChange: (event) => setSearchValue(event.target.value), placeholder: localization.search, rightSection: _jsx(ActionIcon, { "aria-label": localization.clearSearch, color: "gray", disabled: !searchValue?.length, hidden: !searchValue, onClick: handleClear, size: "sm", style: {
+    return (_jsxs(Collapse, { className: classes.collapse, expanded: showGlobalFilter, children: [enableGlobalFilterModes && (_jsxs(Menu, { withinPortal: true, children: [_jsx(Menu.Target, { children: _jsx(ActionIcon, { "aria-label": localization.changeSearchMode, color: "gray", size: "sm", variant: "transparent", children: _jsx(IconSearch, {}) }) }), _jsx(MRT_FilterOptionMenu, { onSelect: handleClear, table: table })] })), _jsx(TextInput, { leftSection: !enableGlobalFilterModes && _jsx(IconSearch, {}), mt: 0, mx: positionGlobalFilter !== 'left' ? 'mx' : undefined, onChange: (event) => setSearchValue(event.target.value), placeholder: localization.search, rightSection: _jsx(ActionIcon, { "aria-label": localization.clearSearch, color: "gray", disabled: !searchValue?.length, hidden: !searchValue, onClick: handleClear, size: "sm", style: {
                         visibility: !searchValue ? 'hidden' : undefined,
                     }, variant: "transparent", children: _jsx(Tooltip, { label: localization.clearSearch, withinPortal: true, children: _jsx(IconX, {}) }) }), value: searchValue ?? '', variant: "filled", ...textFieldProps, className: clsx('mrt-global-filter-text-input', classes.root, textFieldProps?.className), ref: (node) => {
                     if (node) {

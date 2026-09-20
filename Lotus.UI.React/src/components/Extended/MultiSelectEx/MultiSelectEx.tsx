@@ -31,7 +31,7 @@ const clearSectionOffset: Record<string, number> = {
   xl: 89
 };
 
-export interface IMultiSelectExProps extends MultiSelectProps 
+export interface IMultiSelectExProps extends Omit<MultiSelectProps<string>, 'renderPill'>
 {
   renderPill?: (value: string, contextRender?: IContextRenderBase) => ReactNode
 }
@@ -53,9 +53,10 @@ const defaultProps = {
   size: 'sm'
 } satisfies Partial<MultiSelectExFactory>;
 
-export const MultiSelectEx = factory<MultiSelectExFactory>((_props, ref) =>
+export const MultiSelectEx = factory<MultiSelectExFactory>((_props) =>
 {
-  const props = useProps('MultiSelect', defaultProps, _props);
+  const { ref, ...restProps } = _props;
+  const props = useProps('MultiSelect', defaultProps, restProps);
   const {
     classNames,
     className,
@@ -139,9 +140,9 @@ export const MultiSelectEx = factory<MultiSelectExFactory>((_props, ref) =>
   } = props;
 
   const _id = useId(id);
-  const parsedData = getParsedComboboxData(data);
-  const optionsLockup = getOptionsLockup(parsedData);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
+  const parsedData = getParsedComboboxData<string>(data);
+  const optionsLockup = getOptionsLockup<string>(parsedData);
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<string>>>({});
 
   const combobox = useCombobox({
     opened: dropdownOpened,
@@ -190,16 +191,16 @@ export const MultiSelectEx = factory<MultiSelectExFactory>((_props, ref) =>
     name: 'MultiSelect',
     classes: {} as any,
     props,
-    classNames,
-    styles,
+    classNames: classNames as never,
+    styles: styles as never,
     unstyled,
     attributes
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MultiSelectExFactory>({
     props,
-    styles,
-    classNames
+    styles: styles as never,
+    classNames: classNames as never
   });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) =>
@@ -281,7 +282,7 @@ export const MultiSelectEx = factory<MultiSelectExFactory>((_props, ref) =>
     />
   );
 
-  const filteredData = filterPickedValues({ data: parsedData, value: _value });
+  const filteredData = filterPickedValues({ data: parsedData, value: _value as string[] });
   const _clearable = clearable && _value.length > 0 && !disabled && !readOnly;
   const pillsListStyle = _clearable ? { paddingInlineEnd: clearSectionOffset[size] ?? clearSectionOffset.sm } : undefined;
 
@@ -407,7 +408,7 @@ export const MultiSelectEx = factory<MultiSelectExFactory>((_props, ref) =>
           aria-label={label ? undefined : others['aria-label']}
           checkIconPosition={checkIconPosition}
           data={hidePickedOptions ? filteredData : parsedData}
-          filter={filter}
+          filter={filter as never}
           filterOptions={searchable}
           hidden={readOnly || disabled}
           hiddenWhenEmpty={!nothingFoundMessage}

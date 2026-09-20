@@ -1,15 +1,14 @@
-import { type ReactNode } from 'react';
+import { Flex, Tooltip } from '@mantine/core'
 
-import { Flex, Tooltip } from '@mantine/core';
-
-import { MRT_ExpandAllButton } from '../../components/buttons/MRT_ExpandAllButton';
-import { MRT_ExpandButton } from '../../components/buttons/MRT_ExpandButton';
-import {
-  type MRT_ColumnDef,
-  type MRT_RowData,
-  type MRT_StatefulTableOptions,
-} from '../../types';
-import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils';
+import { MRT_ExpandAllButton } from '../../components/buttons/MRT_ExpandAllButton'
+import { MRT_ExpandButton } from '../../components/buttons/MRT_ExpandButton'
+import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils'
+import type {
+  MRT_ColumnDef,
+  MRT_RowData,
+  MRT_StatefulTableOptions,
+} from '../../types'
+import type { ReactNode } from 'react'
 
 export const getMRT_RowExpandColumnDef = <TData extends MRT_RowData>(
   tableOptions: MRT_StatefulTableOptions<TData>,
@@ -21,19 +20,19 @@ export const getMRT_RowExpandColumnDef = <TData extends MRT_RowData>(
     positionExpandColumn,
     renderDetailPanel,
     state: { grouping },
-  } = tableOptions;
+  } = tableOptions
 
   const alignProps =
     positionExpandColumn === 'last'
       ? ({
           align: 'right',
         } as const)
-      : undefined;
+      : undefined
 
   return {
     Cell: ({ cell, column, row, table }) => {
-      const expandButtonProps = { row, table };
-      const subRowsLength = row.subRows?.length;
+      const expandButtonProps = { row, table }
+      const subRowsLength = row.subRows?.length
       if (tableOptions.groupedColumnMode === 'remove' && row.groupingColumnId) {
         return (
           <Flex align="center" gap="0.25rem">
@@ -47,14 +46,14 @@ export const getMRT_RowExpandColumnDef = <TData extends MRT_RowData>(
             </Tooltip>
             {!!subRowsLength && <span>({subRowsLength})</span>}
           </Flex>
-        );
+        )
       } else {
         return (
           <>
             <MRT_ExpandButton {...expandButtonProps} />
             {column.columnDef.GroupedCell?.({ cell, column, row, table })}
           </>
-        );
+        )
       }
     },
     Header: enableExpandAll
@@ -70,7 +69,7 @@ export const getMRT_RowExpandColumnDef = <TData extends MRT_RowData>(
                   )
                   ?.join(', ')}
             </Flex>
-          );
+          )
         }
       : undefined,
     mantineTableBodyCellProps: alignProps,
@@ -88,5 +87,5 @@ export const getMRT_RowExpandColumnDef = <TData extends MRT_RowData>(
             : 100,
       tableOptions,
     }),
-  };
-};
+  }
+}

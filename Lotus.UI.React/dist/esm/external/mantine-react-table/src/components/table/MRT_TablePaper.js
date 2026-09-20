@@ -1,14 +1,14 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TablePaper.module.css';
 import { Paper } from '@mantine/core';
-import { MRT_TableContainer } from './MRT_TableContainer';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_BottomToolbar } from '../toolbar/MRT_BottomToolbar';
 import { MRT_TopToolbar } from '../toolbar/MRT_TopToolbar';
+import { MRT_TableContainer } from './MRT_TableContainer';
+import classes from './MRT_TablePaper.module.css';
 export const MRT_TablePaper = ({ table, specificTableBody, ...rest }) => {
-    const { getState, options: { enableBottomToolbar, enableTopToolbar, mantinePaperProps, renderBottomToolbar, renderTopToolbar, }, refs: { tablePaperRef }, } = table;
-    const { isFullScreen } = getState();
+    const { state, options: { enableBottomToolbar, enableTopToolbar, mantinePaperProps, renderBottomToolbar, renderTopToolbar, }, refs: { tablePaperRef }, } = table;
+    const { isFullScreen } = state;
     const tablePaperProps = {
         ...parseFromValuesOrFunc(mantinePaperProps, { table }),
         ...rest,
@@ -41,7 +41,7 @@ export const MRT_TablePaper = ({ table, specificTableBody, ...rest }) => {
                 }
                 : null),
         }), children: [enableTopToolbar &&
-                (parseFromValuesOrFunc(renderTopToolbar, { table }) ?? (_jsx(MRT_TopToolbar, { table: table }))), _jsx(MRT_TableContainer, { table: table, specificTableBody: specificTableBody }), enableBottomToolbar &&
+                (parseFromValuesOrFunc(renderTopToolbar, { table }) ?? (_jsx(MRT_TopToolbar, { table: table }))), _jsx(MRT_TableContainer, { specificTableBody: specificTableBody, table: table }), enableBottomToolbar &&
                 (parseFromValuesOrFunc(renderBottomToolbar, { table }) ?? (_jsx(MRT_BottomToolbar, { table: table })))] }));
 };
 //# sourceMappingURL=MRT_TablePaper.js.map

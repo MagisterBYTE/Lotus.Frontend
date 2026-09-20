@@ -86,7 +86,7 @@
   text-align: var(--mrt-cell-align);
 }
 
-.cell-hover-reveal.overflowing:hover{
+.cell-hover-reveal.overflowing:hover {
   overflow: visible;
   white-space: normal;
   position: absolute;

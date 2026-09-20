@@ -1,7 +1,7 @@
 /**
  * Массив доступных вариантов размещения иконки
  */
-export declare const TIconPlacementValues: readonly ["left", "right", "top", "bottom"];
+export declare const TIconPlacementValues: readonly ['left', 'right', 'top', 'bottom'];
 /**
  * Вариант размещения иконки
  */

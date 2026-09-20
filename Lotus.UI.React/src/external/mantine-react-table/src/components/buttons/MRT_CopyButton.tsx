@@ -1,29 +1,26 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_CopyButton.module.css';
+import { CopyButton, Tooltip, UnstyledButton } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import classes from './MRT_CopyButton.module.css'
+import type { ReactNode } from 'react'
 
-import { type ReactNode } from 'react';
+import type { UnstyledButtonProps } from '@mantine/core'
 
-import {
-  CopyButton,
-  Tooltip,
-  UnstyledButton,
-  type UnstyledButtonProps,
-} from '@mantine/core';
+import type {
+  MRT_Cell,
+  MRT_CellValue,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
 
-import {
-  type MRT_Cell,
-  type MRT_CellValue,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-
-interface Props<TData extends MRT_RowData, TValue = MRT_CellValue>
-  extends UnstyledButtonProps {
-  cell: MRT_Cell<TData, TValue>;
-  children: ReactNode;
-  table: MRT_TableInstance<TData>;
+interface Props<
+  TData extends MRT_RowData,
+  TValue = MRT_CellValue,
+> extends UnstyledButtonProps {
+  cell: MRT_Cell<TData, TValue>
+  children: ReactNode
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_CopyButton = <TData extends MRT_RowData>({
@@ -37,16 +34,16 @@ export const MRT_CopyButton = <TData extends MRT_RowData>({
       localization: { clickToCopy, copiedToClipboard },
       mantineCopyButtonProps,
     },
-  } = table;
-  const { column, row } = cell;
-  const { columnDef } = column;
+  } = table
+  const { column, row } = cell
+  const { columnDef } = column
 
-  const arg = { cell, column, row, table };
+  const arg = { cell, column, row, table }
   const buttonProps = {
     ...parseFromValuesOrFunc(mantineCopyButtonProps, arg),
     ...parseFromValuesOrFunc(columnDef.mantineCopyButtonProps, arg),
     ...rest,
-  };
+  }
 
   return (
     <CopyButton value={cell.getValue<string>()}>
@@ -67,8 +64,8 @@ export const MRT_CopyButton = <TData extends MRT_RowData>({
               buttonProps?.className,
             )}
             onClick={(e) => {
-              e.stopPropagation();
-              copy();
+              e.stopPropagation()
+              copy()
             }}
             role="presentation"
             title={undefined}
@@ -78,5 +75,5 @@ export const MRT_CopyButton = <TData extends MRT_RowData>({
         </Tooltip>
       )}
     </CopyButton>
-  );
-};
+  )
+}

@@ -3,8 +3,8 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { parseFromValuesOrFunc } from '../utils/utils';
 import { extraIndexRangeExtractor } from '../utils/virtualization.utils';
 export const useMRT_ColumnVirtualizer = (table) => {
-    const { getLeftLeafColumns, getRightLeafColumns, getState, getVisibleLeafColumns, options: { columnVirtualizerInstanceRef, columnVirtualizerOptions, enableColumnPinning, enableColumnVirtualization, }, refs: { tableContainerRef }, } = table;
-    const { columnPinning, draggingColumn } = getState();
+    const { getStartLeafColumns, getEndLeafColumns, state, getVisibleLeafColumns, options: { columnVirtualizerInstanceRef, columnVirtualizerOptions, enableColumnPinning, enableColumnVirtualization, }, refs: { tableContainerRef }, } = table;
+    const { columnPinning, draggingColumn } = state;
     if (!enableColumnVirtualization)
         return undefined;
     const columnVirtualizerProps = parseFromValuesOrFunc(columnVirtualizerOptions, {
@@ -13,8 +13,8 @@ export const useMRT_ColumnVirtualizer = (table) => {
     const visibleColumns = getVisibleLeafColumns();
     const [leftPinnedIndexes, rightPinnedIndexes] = useMemo(() => enableColumnPinning
         ? [
-            getLeftLeafColumns().map((c) => c.getPinnedIndex()),
-            getRightLeafColumns()
+            getStartLeafColumns().map((c) => c.getPinnedIndex()),
+            getEndLeafColumns()
                 .map((column) => visibleColumns.length - column.getPinnedIndex() - 1)
                 .sort((a, b) => a - b),
         ]
@@ -54,15 +54,14 @@ export const useMRT_ColumnVirtualizer = (table) => {
         const leftNonPinnedEnd = virtualColumns[leftPinnedIndexes.length - 1]?.end || 0;
         const rightNonPinnedStart = virtualColumns[numColumns - numPinnedRight]?.start || 0;
         const rightNonPinnedEnd = virtualColumns[numColumns - numPinnedRight - 1]?.end || 0;
-        columnVirtualizer.virtualPaddingLeft =
-            leftNonPinnedStart - leftNonPinnedEnd;
+        columnVirtualizer.virtualPaddingLeft = leftNonPinnedStart - leftNonPinnedEnd;
         columnVirtualizer.virtualPaddingRight =
             totalSize -
                 rightNonPinnedEnd -
                 (numPinnedRight ? totalSize - rightNonPinnedStart : 0);
     }
     if (columnVirtualizerInstanceRef) {
-        //@ts-ignore
+        // @ts-ignore - TODO: fix this
         columnVirtualizerInstanceRef.current = columnVirtualizer;
     }
     return columnVirtualizer;

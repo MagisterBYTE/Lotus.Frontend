@@ -1,18 +1,14 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableHeadCellResizeHandle.module.css';
+import { Box } from '@mantine/core'
+import classes from './MRT_TableHeadCellResizeHandle.module.css'
+import type { BoxProps } from '@mantine/core'
 
-import { Box, type BoxProps } from '@mantine/core';
-
-import {
-  type MRT_Header,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
+import type { MRT_Header, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends BoxProps {
-  header: MRT_Header<TData>;
-  table: MRT_TableInstance<TData>;
+  header: MRT_Header<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
@@ -21,30 +17,30 @@ export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: { columnResizeDirection, columnResizeMode },
-    setColumnSizingInfo,
-  } = table;
-  const { density } = getState();
-  const { column } = header;
-  const handler = header.getResizeHandler();
+    setColumnResizing,
+  } = table
+  const { density } = state
+  const { column } = header
+  const handler = header.getResizeHandler()
 
   const offset =
     column.getIsResizing() && columnResizeMode === 'onEnd'
       ? `translateX(${
           (columnResizeDirection === 'rtl' ? -1 : 1) *
-          (getState().columnSizingInfo.deltaOffset ?? 0)
+          (state.columnResizing.deltaOffset ?? 0)
         }px)`
-      : undefined;
+      : undefined
 
   return (
     <Box
       onDoubleClick={() => {
-        setColumnSizingInfo((old) => ({
+        setColumnResizing((old) => ({
           ...old,
           isResizingColumn: false,
-        }));
-        column.resetSize();
+        }))
+        column.resetSize()
       }}
       onMouseDown={handler}
       onTouchStart={handler}
@@ -62,5 +58,5 @@ export const MRT_TableHeadCellResizeHandle = <TData extends MRT_RowData>({
         rest.className,
       )}
     />
-  );
-};
+  )
+}

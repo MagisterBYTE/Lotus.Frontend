@@ -1,18 +1,18 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableHeadCellResizeHandle.module.css';
 import { Box } from '@mantine/core';
+import classes from './MRT_TableHeadCellResizeHandle.module.css';
 export const MRT_TableHeadCellResizeHandle = ({ header, table, ...rest }) => {
-    const { getState, options: { columnResizeDirection, columnResizeMode }, setColumnSizingInfo, } = table;
-    const { density } = getState();
+    const { state, options: { columnResizeDirection, columnResizeMode }, setColumnResizing, } = table;
+    const { density } = state;
     const { column } = header;
     const handler = header.getResizeHandler();
     const offset = column.getIsResizing() && columnResizeMode === 'onEnd'
         ? `translateX(${(columnResizeDirection === 'rtl' ? -1 : 1) *
-            (getState().columnSizingInfo.deltaOffset ?? 0)}px)`
+            (state.columnResizing.deltaOffset ?? 0)}px)`
         : undefined;
     return (_jsx(Box, { onDoubleClick: () => {
-            setColumnSizingInfo((old) => ({
+            setColumnResizing((old) => ({
                 ...old,
                 isResizingColumn: false,
             }));

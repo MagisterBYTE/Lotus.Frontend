@@ -1,12 +1,12 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableDetailPanel.module.css';
 import { Collapse, TableTd, TableTr } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_EditCellTextInput } from '../inputs/MRT_EditCellTextInput';
+import classes from './MRT_TableDetailPanel.module.css';
 export const MRT_TableDetailPanel = ({ parentRowRef, renderedRowIndex = 0, row, rowVirtualizer, striped, table, virtualRow, ...rest }) => {
-    const { getState, getVisibleLeafColumns, options: { layoutMode, mantineDetailPanelProps, mantineTableBodyRowProps, renderDetailPanel, }, } = table;
-    const { isLoading } = getState();
+    const { state, getVisibleLeafColumns, options: { layoutMode, mantineDetailPanelProps, mantineTableBodyRowProps, renderDetailPanel, }, } = table;
+    const { isLoading } = state;
     const tableRowProps = parseFromValuesOrFunc(mantineTableBodyRowProps, {
         isDetailPanel: true,
         row,
@@ -40,6 +40,6 @@ export const MRT_TableDetailPanel = ({ parentRowRef, renderedRowIndex = 0, row, 
             ...tableRowProps?.__vars,
         }, className: clsx('mantine-Table-tr-detail-panel', classes.root, layoutMode?.startsWith('grid') && classes['root-grid'], virtualRow && classes['root-virtual-row'], tableRowProps?.className), children: _jsx(TableTd, { colSpan: getVisibleLeafColumns().length, component: "td", ...tableCellProps, __vars: {
                 '--mrt-inner-width': `${table.getTotalSize()}px`,
-            }, className: clsx('mantine-Table-td-detail-panel', classes.inner, layoutMode?.startsWith('grid') && classes['inner-grid'], row.getIsExpanded() && classes['inner-expanded'], virtualRow && classes['inner-virtual']), p: row.getIsExpanded() && DetailPanel ? 'md' : 0, children: rowVirtualizer ? (row.getIsExpanded() && DetailPanel) : (_jsx(Collapse, { in: row.getIsExpanded(), children: DetailPanel })) }) }));
+            }, className: clsx('mantine-Table-td-detail-panel', classes.inner, layoutMode?.startsWith('grid') && classes['inner-grid'], row.getIsExpanded() && classes['inner-expanded'], virtualRow && classes['inner-virtual']), p: row.getIsExpanded() && DetailPanel ? 'md' : 0, children: rowVirtualizer ? (row.getIsExpanded() && DetailPanel) : (_jsx(Collapse, { expanded: row.getIsExpanded(), children: DetailPanel })) }) }));
 };
 //# sourceMappingURL=MRT_TableDetailPanel.js.map

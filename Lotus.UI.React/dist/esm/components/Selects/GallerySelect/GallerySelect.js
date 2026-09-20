@@ -1,4 +1,4 @@
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import { Combobox, Input, InputBase, Pagination, Popover, ScrollArea, SimpleGrid, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';

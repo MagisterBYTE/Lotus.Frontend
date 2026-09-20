@@ -18,5 +18,5 @@ export interface IDesignSystemProviderProps {
      */
     children: React.ReactNode;
 }
-export declare const DesignSystemProvider: (props: IDesignSystemProviderProps) => import("react/jsx-runtime").JSX.Element;
+export declare const DesignSystemProvider: (props: IDesignSystemProviderProps) => import("react").JSX.Element;
 //# sourceMappingURL=DesignSystemProvider.d.ts.map

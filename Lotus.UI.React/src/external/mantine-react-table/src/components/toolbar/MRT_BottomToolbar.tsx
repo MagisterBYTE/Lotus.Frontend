@@ -1,21 +1,21 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import commonClasses from './common.styles.module.css';
-import classes from './MRT_BottomToolbar.module.css';
+import { Box } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import commonClasses from './common.styles.module.css'
+import classes from './MRT_BottomToolbar.module.css'
 
-import { Box, type BoxProps } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { MRT_ProgressBar } from './MRT_ProgressBar'
+import { MRT_TablePagination } from './MRT_TablePagination'
+import { MRT_ToolbarAlertBanner } from './MRT_ToolbarAlertBanner'
+import { MRT_ToolbarDropZone } from './MRT_ToolbarDropZone'
+import type { BoxProps } from '@mantine/core'
 
-import { MRT_ProgressBar } from './MRT_ProgressBar';
-import { MRT_TablePagination } from './MRT_TablePagination';
-import { MRT_ToolbarAlertBanner } from './MRT_ToolbarAlertBanner';
-import { MRT_ToolbarDropZone } from './MRT_ToolbarDropZone';
-
-import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import type { MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData> extends BoxProps {
-  table: MRT_TableInstance<TData>;
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_BottomToolbar = <TData extends MRT_RowData>({
@@ -23,7 +23,7 @@ export const MRT_BottomToolbar = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       enablePagination,
       mantineBottomToolbarProps,
@@ -33,19 +33,19 @@ export const MRT_BottomToolbar = <TData extends MRT_RowData>({
       renderBottomToolbarCustomActions,
     },
     refs: { bottomToolbarRef },
-  } = table;
-  const { isFullScreen } = getState();
+  } = table
+  const { isFullScreen } = state
 
-  const isMobile = useMediaQuery('(max-width: 720px)');
+  const isMobile = useMediaQuery('(max-width: 720px)')
 
   const toolbarProps = {
     ...parseFromValuesOrFunc(mantineBottomToolbarProps, {
       table,
     }),
     ...rest,
-  };
+  }
 
-  const stackAlertBanner = isMobile || !!renderBottomToolbarCustomActions;
+  const stackAlertBanner = isMobile || !!renderBottomToolbarCustomActions
 
   return (
     <Box
@@ -59,9 +59,9 @@ export const MRT_BottomToolbar = <TData extends MRT_RowData>({
       )}
       ref={(node: HTMLDivElement) => {
         if (node) {
-          bottomToolbarRef.current = node;
+          bottomToolbarRef.current = node
           if (toolbarProps?.ref) {
-            toolbarProps.ref.current = node;
+            toolbarProps.ref.current = node
           }
         }
       }}
@@ -95,5 +95,5 @@ export const MRT_BottomToolbar = <TData extends MRT_RowData>({
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}

@@ -11,5 +11,5 @@ export interface IGridProps extends IGeneralContainerProperties, IGeneralBackgro
     hContentAlign?: TCssJustifyItems;
     vContentAlign?: TCssAlignItems;
 }
-export declare function Grid(props: IGridProps): import("react/jsx-runtime").JSX.Element;
+export declare function Grid(props: IGridProps): import("react").JSX.Element;
 //# sourceMappingURL=Grid.d.ts.map

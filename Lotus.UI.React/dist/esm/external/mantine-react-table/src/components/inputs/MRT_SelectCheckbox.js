@@ -1,10 +1,10 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Checkbox, Radio, Switch, Tooltip, } from '@mantine/core';
+import { Checkbox, Radio, Switch, Tooltip } from '@mantine/core';
 import { getIsRowSelected, getMRT_RowSelectionHandler, getMRT_SelectAllHandler, } from '../../utils/row.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 export const MRT_SelectCheckbox = ({ renderedRowIndex = 0, row, table, ...rest }) => {
-    const { getState, options: { enableMultiRowSelection, localization, mantineSelectAllCheckboxProps, mantineSelectCheckboxProps, selectAllMode, selectDisplayMode, }, } = table;
-    const { density, isLoading } = getState();
+    const { state, options: { enableMultiRowSelection, localization, mantineSelectAllCheckboxProps, mantineSelectCheckboxProps, selectAllMode, selectDisplayMode, }, } = table;
+    const { density, isLoading } = state;
     const selectAll = !row;
     const allRowsSelected = selectAll
         ? selectAllMode === 'page'

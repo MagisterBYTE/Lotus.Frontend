@@ -1,16 +1,16 @@
-import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableBody.module.css';
 import { memo, useMemo } from 'react';
-import { TableTbody, } from '@mantine/core';
-import { MRT_TableBodyEmptyRow } from './MRT_TableBodyEmptyRow';
-import { Memo_MRT_TableBodyRow, MRT_TableBodyRow } from './MRT_TableBodyRow';
+import { TableTbody } from '@mantine/core';
 import { useMRT_Rows } from '../../hooks/useMRT_Rows';
 import { useMRT_RowVirtualizer } from '../../hooks/useMRT_RowVirtualizer';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_TableBodyRow, Memo_MRT_TableBodyRow } from './MRT_TableBodyRow';
+import { MRT_TableBodyEmptyRow } from './MRT_TableBodyEmptyRow';
+import classes from './MRT_TableBody.module.css';
 export const MRT_TableBody = ({ columnVirtualizer, table, tableProps, ...rest }) => {
-    const { getBottomRows, getIsSomeRowsPinned, getRowModel, getState, getTopRows, options: { enableStickyFooter, enableStickyHeader, layoutMode, mantineTableBodyProps, memoMode, renderDetailPanel, rowPinningDisplayMode, }, refs: { tableFooterRef, tableHeadRef }, } = table;
-    const { isFullScreen, rowPinning } = getState();
+    const { getBottomRows, getIsSomeRowsPinned, getRowModel, state, getTopRows, options: { enableStickyFooter, enableStickyHeader, layoutMode, mantineTableBodyProps, memoMode, renderDetailPanel, rowPinningDisplayMode, }, refs: { tableFooterRef, tableHeadRef }, } = table;
+    const { isFullScreen, rowPinning } = state;
     const tableBodyProps = {
         ...parseFromValuesOrFunc(mantineTableBodyProps, { table }),
         ...rest,

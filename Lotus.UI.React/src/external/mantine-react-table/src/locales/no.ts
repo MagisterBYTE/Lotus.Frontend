@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_NO: MRT_Localization = {
   cancel: 'Avbryt',
@@ -94,4 +94,4 @@ export const MRT_Localization_NO: MRT_Localization = {
 
   ungroupByColumn: 'Oppgrupper etter {column}',
   selectedCountOfRowCountRowsSelected: '{selected} av {count} rader valgt',
-};
+}

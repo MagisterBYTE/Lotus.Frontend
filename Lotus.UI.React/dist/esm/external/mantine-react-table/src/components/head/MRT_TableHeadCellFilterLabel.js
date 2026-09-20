@@ -1,11 +1,11 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableHeadCellFilterLabel.module.css';
 import { useState } from 'react';
-import { ActionIcon, Popover, Tooltip, Transition, } from '@mantine/core';
-import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
+import { ActionIcon, Popover, Tooltip, Transition } from '@mantine/core';
 import { localizedFilterOption } from '../../fns/filterFns';
 import { dataVariable } from '../../utils/style.utils';
+import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
+import classes from './MRT_TableHeadCellFilterLabel.module.css';
 export const MRT_TableHeadCellFilterLabel = ({ header, table, ...rest }) => {
     const { options: { columnFilterDisplayMode, icons: { IconFilter }, localization, }, refs: { filterInputRefs }, setShowColumnFilters, } = table;
     const { column } = header;

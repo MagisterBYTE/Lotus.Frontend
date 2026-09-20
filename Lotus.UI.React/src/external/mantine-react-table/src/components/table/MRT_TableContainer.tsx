@@ -1,23 +1,23 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableContainer.module.css';
+import { useEffect, useLayoutEffect, useState } from 'react'
 
-import { ReactElement, useEffect, useLayoutEffect, useState } from 'react';
+import { Box, LoadingOverlay } from '@mantine/core'
 
-import { Box, type BoxProps, LoadingOverlay } from '@mantine/core';
-
-import { MRT_Table } from './MRT_Table';
-
-import { type MRT_RowData, type MRT_TableInstance } from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_EditRowModal } from '../modals/MRT_EditRowModal';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_EditRowModal } from '../modals/MRT_EditRowModal'
+import { MRT_Table } from './MRT_Table'
+import classes from './MRT_TableContainer.module.css'
+import type { MRT_RowData, MRT_TableInstance } from '../../types'
+import type { BoxProps } from '@mantine/core'
+import type { ReactElement } from 'react'
 
 const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 interface Props<TData extends MRT_RowData> extends BoxProps {
-  table: MRT_TableInstance<TData>;
-  specificTableBody?: ReactElement;
+  table: MRT_TableInstance<TData>
+  specificTableBody?: ReactElement
 }
 
 export const MRT_TableContainer = <TData extends MRT_RowData>({
@@ -26,7 +26,7 @@ export const MRT_TableContainer = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       createDisplayMode,
       editDisplayMode,
@@ -35,42 +35,42 @@ export const MRT_TableContainer = <TData extends MRT_RowData>({
       mantineTableContainerProps,
     },
     refs: { bottomToolbarRef, tableContainerRef, topToolbarRef },
-  } = table;
+  } = table
   const {
     creatingRow,
     editingRow,
     isFullScreen,
     isLoading,
     showLoadingOverlay,
-  } = getState();
+  } = state
 
-  const [totalToolbarHeight, setTotalToolbarHeight] = useState(0);
+  const [totalToolbarHeight, setTotalToolbarHeight] = useState(0)
 
   const tableContainerProps = {
     ...parseFromValuesOrFunc(mantineTableContainerProps, { table }),
     ...rest,
-  };
+  }
   const loadingOverlayProps = parseFromValuesOrFunc(
     mantineLoadingOverlayProps,
     { table },
-  );
+  )
 
   useIsomorphicLayoutEffect(() => {
     const topToolbarHeight =
       typeof document !== 'undefined'
         ? (topToolbarRef.current?.offsetHeight ?? 0)
-        : 0;
+        : 0
 
     const bottomToolbarHeight =
       typeof document !== 'undefined'
         ? (bottomToolbarRef?.current?.offsetHeight ?? 0)
-        : 0;
+        : 0
 
-    setTotalToolbarHeight(topToolbarHeight + bottomToolbarHeight);
-  });
+    setTotalToolbarHeight(topToolbarHeight + bottomToolbarHeight)
+  })
 
-  const createModalOpen = createDisplayMode === 'modal' && creatingRow;
-  const editModalOpen = editDisplayMode === 'modal' && editingRow;
+  const createModalOpen = createDisplayMode === 'modal' && creatingRow
+  const editModalOpen = editDisplayMode === 'modal' && editingRow
 
   return (
     <Box
@@ -88,10 +88,10 @@ export const MRT_TableContainer = <TData extends MRT_RowData>({
       )}
       ref={(node: HTMLDivElement) => {
         if (node) {
-          tableContainerRef.current = node;
+          tableContainerRef.current = node
           if (tableContainerProps?.ref) {
-            //@ts-ignore
-            tableContainerProps.ref.current = node;
+            // @ts-ignore
+            tableContainerProps.ref.current = node
           }
         }
       }}
@@ -101,10 +101,10 @@ export const MRT_TableContainer = <TData extends MRT_RowData>({
         zIndex={2}
         {...loadingOverlayProps}
       />
-      <MRT_Table table={table} specificTableBody={specificTableBody} />
+      <MRT_Table specificTableBody={specificTableBody} table={table} />
       {(createModalOpen || editModalOpen) && (
         <MRT_EditRowModal open table={table} />
       )}
     </Box>
-  );
-};
+  )
+}

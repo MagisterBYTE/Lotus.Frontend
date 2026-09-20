@@ -1,5 +1,5 @@
 import { InputBaseProps, PaginationProps, SimpleGridProps } from '@mantine/core';
-import { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithRef } from 'react';
 import { IBaseContainerControlProps } from '#components/Common';
 import { IHorizontalStackProps } from '#components/Layout';
 import { TSizeType } from '#types';
@@ -15,5 +15,5 @@ export interface IGallerySelectProps<TItem> extends IBaseContainerControlProps, 
     gridProps?: SimpleGridProps;
     paginationProps?: PaginationProps;
 }
-export declare function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>): import("react/jsx-runtime").JSX.Element;
+export declare function GallerySelect<TItem = unknown>(props: IGallerySelectProps<TItem>): React.JSX.Element;
 //# sourceMappingURL=GallerySelect.d.ts.map

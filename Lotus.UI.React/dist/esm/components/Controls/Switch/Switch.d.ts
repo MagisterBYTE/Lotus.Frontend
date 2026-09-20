@@ -12,6 +12,6 @@ export interface ISwitchProps extends IBaseContainerControlProps, Omit<IHorizont
     onChangeValue?: TChangedValueFunction;
     disabled?: boolean;
 }
-export declare function Switch(props: ISwitchProps): import("react/jsx-runtime").JSX.Element;
+export declare function Switch(props: ISwitchProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=Switch.d.ts.map

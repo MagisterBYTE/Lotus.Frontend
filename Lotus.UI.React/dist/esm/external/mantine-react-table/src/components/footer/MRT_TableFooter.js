@@ -1,12 +1,12 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableFooter.module.css';
 import { TableTfoot } from '@mantine/core';
-import { MRT_TableFooterRow } from './MRT_TableFooterRow';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_TableFooterRow } from './MRT_TableFooterRow';
+import classes from './MRT_TableFooter.module.css';
 export const MRT_TableFooter = ({ columnVirtualizer, table, ...rest }) => {
-    const { getFooterGroups, getState, options: { enableStickyFooter, layoutMode, mantineTableFooterProps }, refs: { tableFooterRef }, } = table;
-    const { isFullScreen } = getState();
+    const { getFooterGroups, state, options: { enableStickyFooter, layoutMode, mantineTableFooterProps }, refs: { tableFooterRef }, } = table;
+    const { isFullScreen } = state;
     const tableFooterProps = {
         ...parseFromValuesOrFunc(mantineTableFooterProps, {
             table,

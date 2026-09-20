@@ -8,5 +8,5 @@ export interface IPanelProps extends IBoxProps {
     headerOffsetPercent?: number;
     headerProps?: ILabelProps;
 }
-export declare function Panel(props: IPanelProps): import("react/jsx-runtime").JSX.Element;
+export declare function Panel(props: IPanelProps): import("react").JSX.Element;
 //# sourceMappingURL=Panel.d.ts.map

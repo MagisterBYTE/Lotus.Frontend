@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_VI: MRT_Localization = {
   actions: 'Thao tác',
@@ -93,4 +93,4 @@ export const MRT_Localization_VI: MRT_Localization = {
   ungroupByColumn: 'Bỏ nhóm dữ liệu theo {column}',
   unpin: 'Bỏ ghim',
   unpinAll: 'Bỏ ghim tất cả',
-};
+}

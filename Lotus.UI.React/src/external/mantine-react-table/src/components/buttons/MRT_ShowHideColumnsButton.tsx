@@ -1,16 +1,12 @@
-import { ActionIcon, type ActionIconProps, Menu, Tooltip } from '@mantine/core';
+import { ActionIcon, Menu, Tooltip } from '@mantine/core'
+import { MRT_ShowHideColumnsMenu } from '../menus/MRT_ShowHideColumnsMenu'
+import type { ActionIconProps } from '@mantine/core'
 
-import {
-  type HTMLPropsRef,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { MRT_ShowHideColumnsMenu } from '../menus/MRT_ShowHideColumnsMenu';
+import type { HTMLPropsRef, MRT_RowData, MRT_TableInstance } from '../../types'
 
 interface Props<TData extends MRT_RowData>
-  extends ActionIconProps,
-    HTMLPropsRef<HTMLButtonElement> {
-  table: MRT_TableInstance<TData>;
+  extends ActionIconProps, HTMLPropsRef<HTMLButtonElement> {
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_ShowHideColumnsButton = <TData extends MRT_RowData>({
@@ -21,7 +17,7 @@ export const MRT_ShowHideColumnsButton = <TData extends MRT_RowData>({
   const {
     icons: { IconColumns },
     localization: { showHideColumns },
-  } = table.options;
+  } = table.options
 
   return (
     <Menu closeOnItemClick={false} withinPortal>
@@ -40,5 +36,5 @@ export const MRT_ShowHideColumnsButton = <TData extends MRT_RowData>({
       </Tooltip>
       <MRT_ShowHideColumnsMenu table={table} />
     </Menu>
-  );
-};
+  )
+}

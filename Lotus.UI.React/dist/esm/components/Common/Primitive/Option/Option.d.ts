@@ -16,5 +16,5 @@ export interface IOptionProps extends IGeneralIconProperties {
      */
     wrapContainer?: IHorizontalStackProps;
 }
-export declare const Option: import("react").MemoExoticComponent<(props: IOptionProps) => import("react/jsx-runtime").JSX.Element>;
+export declare const Option: import("react").MemoExoticComponent<(props: IOptionProps) => import("react").JSX.Element>;
 //# sourceMappingURL=Option.d.ts.map

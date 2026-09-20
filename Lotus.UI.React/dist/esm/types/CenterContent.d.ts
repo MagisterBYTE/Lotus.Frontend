@@ -1,7 +1,7 @@
 /**
  * Массив доступных значений центрирования контента
  */
-export declare const TCenterContentValues: readonly ["horizontally", "vertically", "center"];
+export declare const TCenterContentValues: readonly ['horizontally', 'vertically', 'center'];
 /**
  * Тип центрирования контента
  */

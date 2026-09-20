@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_CopyButton.module.css';
-import { CopyButton, Tooltip, UnstyledButton, } from '@mantine/core';
+import { CopyButton, Tooltip, UnstyledButton } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_CopyButton.module.css';
 export const MRT_CopyButton = ({ cell, children, table, ...rest }) => {
     const { options: { localization: { clickToCopy, copiedToClipboard }, mantineCopyButtonProps, }, } = table;
     const { column, row } = cell;

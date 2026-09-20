@@ -1,73 +1,72 @@
-import { Highlight, type HighlightProps } from '@mantine/core';
+import { Highlight } from '@mantine/core'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import type { HighlightProps } from '@mantine/core'
 
-import {
-  type MRT_Cell,
-  type MRT_CellValue,
-  type MRT_RowData,
-  type MRT_TableInstance
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import type {
+  MRT_Cell,
+  MRT_CellValue,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
 
-const allowedTypes = ['string', 'number'];
-const allowedFilterVariants = ['text', 'autocomplete'];
+const allowedTypes = ['string', 'number']
+const allowedFilterVariants = ['text', 'autocomplete']
 
 interface Props<TData extends MRT_RowData, TValue = MRT_CellValue> {
-  cell: MRT_Cell<TData, TValue>;
-  renderedColumnIndex?: number;
-  renderedRowIndex?: number;
-  table: MRT_TableInstance<TData>;
+  cell: MRT_Cell<TData, TValue>
+  renderedColumnIndex?: number
+  renderedRowIndex?: number
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableBodyCellValue = <TData extends MRT_RowData>({
   cell,
   renderedColumnIndex = 0,
   renderedRowIndex = 0,
-  table
-}: Props<TData>) => 
-{
+  table,
+}: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       enableFilterMatchHighlighting,
-      mantineHighlightProps = { size: 'sm' }
-    }
-  } = table;
-  const { column, row } = cell;
-  const { columnDef } = column;
-  const { globalFilter, globalFilterFn } = getState();
-  const filterValue = column.getFilterValue();
+      mantineHighlightProps = { size: 'sm' },
+    },
+  } = table
+  const { column, row } = cell
+  const { columnDef } = column
+  const { globalFilter, globalFilterFn } = state
+  const filterValue = column.getFilterValue()
 
   const highlightProps = parseFromValuesOrFunc(mantineHighlightProps, {
     cell,
     column,
     row,
-    table
-  }) as Partial<HighlightProps>;
+    table,
+  }) as Partial<HighlightProps>
 
   let renderedCellValue =
     cell.getIsAggregated() && columnDef.AggregatedCell
       ? columnDef.AggregatedCell({
-        cell,
-        column,
-        row,
-        table
-      })
+          cell,
+          column,
+          row,
+          table,
+        })
       : row.getIsGrouped() && !cell.getIsGrouped()
         ? null
         : cell.getIsGrouped() && columnDef.GroupedCell
           ? columnDef.GroupedCell({
-            cell,
-            column,
-            row,
-            table
-          })
-          : undefined;
+              cell,
+              column,
+              row,
+              table,
+            })
+          : undefined
 
-  const isGroupedValue = renderedCellValue !== undefined;
+  const isGroupedValue = renderedCellValue !== undefined
 
-  if (!isGroupedValue) 
-  {
-    renderedCellValue = cell.renderValue() as number | string;
+  if (!isGroupedValue) {
+    renderedCellValue = cell.renderValue() as number | string
   }
 
   if (
@@ -81,27 +80,24 @@ export const MRT_TableBodyCellValue = <TData extends MRT_RowData>({
       (globalFilter &&
         allowedTypes.includes(typeof globalFilter) &&
         column.getCanGlobalFilter()))
-  ) 
-  {
-    let highlight: string | string[] = (
+  ) {
+    let highlight: string | Array<string> = (
       column.getFilterValue() ??
       globalFilter ??
       ''
-    ).toString() as string;
-    if ((filterValue ? columnDef._filterFn : globalFilterFn) === 'fuzzy') 
-    {
-      highlight = highlight.split(' ');
+    ).toString() as string
+    if ((filterValue ? columnDef._filterFn : globalFilterFn) === 'fuzzy') {
+      highlight = highlight.split(' ')
     }
 
     renderedCellValue = (
-      <Highlight color='yellow.3' highlight={highlight} {...highlightProps}>
+      <Highlight color="yellow.3" highlight={highlight} {...highlightProps}>
         {renderedCellValue?.toString()}
       </Highlight>
-    );
+    )
   }
 
-  if (columnDef.Cell && !isGroupedValue) 
-  {
+  if (columnDef.Cell && !isGroupedValue) {
     renderedCellValue = columnDef.Cell({
       cell,
       column,
@@ -109,9 +105,9 @@ export const MRT_TableBodyCellValue = <TData extends MRT_RowData>({
       renderedColumnIndex,
       renderedRowIndex,
       row,
-      table
-    });
+      table,
+    })
   }
 
-  return renderedCellValue;
-};
+  return renderedCellValue
+}

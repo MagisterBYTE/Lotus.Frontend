@@ -1,19 +1,19 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TablePagination.module.css';
-import { ActionIcon, Box, Group, Pagination, Select, Text, } from '@mantine/core';
+import { ActionIcon, Box, Group, Pagination, Select, Text } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_TablePagination.module.css';
 const defaultRowsPerPage = [5, 10, 15, 20, 25, 30, 50, 100].map((x) => x.toString());
 export const MRT_TablePagination = ({ position = 'bottom', table, ...props }) => {
-    const { getPrePaginationRowModel, getState, options: { enableToolbarInternalActions, icons: { IconChevronLeft, IconChevronLeftPipe, IconChevronRight, IconChevronRightPipe, }, localization, mantinePaginationProps, paginationDisplayMode, rowCount, }, setPageIndex, setPageSize, } = table;
-    const { pagination: { pageIndex = 0, pageSize = 10 }, showGlobalFilter, } = getState();
+    const { getPrePaginatedRowModel, state, options: { enableToolbarInternalActions, icons: { IconChevronLeft, IconChevronLeftPipe, IconChevronRight, IconChevronRightPipe, }, localization, mantinePaginationProps, paginationDisplayMode, rowCount, }, setPageIndex, setPageSize, } = table;
+    const { pagination: { pageIndex = 0, pageSize = 10 }, showGlobalFilter, } = state;
     const paginationProps = {
         ...parseFromValuesOrFunc(mantinePaginationProps, {
             table,
         }),
         ...props,
     };
-    const totalRowCount = rowCount ?? getPrePaginationRowModel().rows.length;
+    const totalRowCount = rowCount ?? getPrePaginatedRowModel().rows.length;
     const numberOfPages = Math.ceil(totalRowCount / pageSize);
     const showFirstLastPageButtons = numberOfPages > 2;
     const firstRowIndex = pageIndex * pageSize;

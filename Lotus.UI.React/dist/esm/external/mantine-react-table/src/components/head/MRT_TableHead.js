@@ -1,13 +1,13 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableHead.module.css';
-import { TableTh, TableThead, TableTr, } from '@mantine/core';
-import { MRT_TableHeadRow } from './MRT_TableHeadRow';
+import { TableTh, TableThead, TableTr } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_ToolbarAlertBanner } from '../toolbar/MRT_ToolbarAlertBanner';
+import { MRT_TableHeadRow } from './MRT_TableHeadRow';
+import classes from './MRT_TableHead.module.css';
 export const MRT_TableHead = ({ columnVirtualizer, table, ...rest }) => {
-    const { getHeaderGroups, getSelectedRowModel, getState, options: { enableStickyHeader, layoutMode, mantineTableHeadProps, positionToolbarAlertBanner, }, refs: { tableHeadRef }, } = table;
-    const { isFullScreen, showAlertBanner } = getState();
+    const { getHeaderGroups, getSelectedRowModel, state, options: { enableStickyHeader, layoutMode, mantineTableHeadProps, positionToolbarAlertBanner, }, refs: { tableHeadRef }, } = table;
+    const { isFullScreen, showAlertBanner } = state;
     const tableHeadProps = {
         ...parseFromValuesOrFunc(mantineTableHeadProps, {
             table,

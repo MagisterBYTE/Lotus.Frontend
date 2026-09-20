@@ -1,6 +1,6 @@
 import { ItemsHelper, StringHelper } from 'lotus-core/helpers';
 import { FilterFunctionDescriptors } from 'lotus-core/modules/filter';
-import { PropertyTypeDescriptors } from 'lotus-core/modules/objectInfo';
+import { TPropertyTypes } from 'lotus-core/modules/objectInfo';
 import { FilterPropertyConstants } from 'lotus-core/modules/requestAndResponse';
 export class MantineReactTableHelper {
     // #region Property
@@ -52,10 +52,10 @@ export class MantineReactTableHelper {
      * @returns Функция фильтрации MantineReactTable
      */
     static getDefaultFilterFunction(property) {
-        switch (property.propertyTypeDesc) {
-            case PropertyTypeDescriptors.String:
+        switch (property.propertyType) {
+            case TPropertyTypes.String:
                 return 'contains';
-            case PropertyTypeDescriptors.Enum:
+            case TPropertyTypes.Enum:
                 return 'arrIncludesSome';
         }
         return 'equals';
@@ -77,7 +77,7 @@ export class MantineReactTableHelper {
             if (property?.filtering && property?.filtering.enabled && columnFiltersFns) {
                 const filterFn = columnFiltersFns[column.id];
                 filter.propertyPath = StringHelper.capitalizeFirstLetter(column.id);
-                filter.propertyTypeDesc = property.propertyTypeDesc;
+                filter.propertyType = property.propertyType;
                 filter.function = MantineReactTableHelper.convertToFilterFunctionDesc(filterFn);
                 if (filter.function === FilterFunctionDescriptors.Between ||
                     filter.function === FilterFunctionDescriptors.IncludeAll ||
@@ -216,7 +216,7 @@ export class MantineReactTableHelper {
         const sortings = columnSortState.map((column) => {
             const sort = {
                 propertyPath: StringHelper.capitalizeFirstLetter(column.id),
-                propertyTypeDesc: objectInfo.getPropertyByName(column.id).propertyTypeDesc,
+                propertyType: objectInfo.getPropertyByName(column.id).propertyType,
                 isDesc: column.desc
             };
             return sort;

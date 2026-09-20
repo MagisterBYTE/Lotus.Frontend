@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { ActionIcon, Tooltip } from '@mantine/core';
-export const MRT_ToggleGlobalFilterButton = ({ table: { getState, options: { icons: { IconSearch, IconSearchOff }, localization: { showHideSearch }, }, refs: { searchInputRef }, setShowGlobalFilter, }, title, ...rest }) => {
-    const { globalFilter, showGlobalFilter } = getState();
+export const MRT_ToggleGlobalFilterButton = ({ table: { state, options: { icons: { IconSearch, IconSearchOff }, localization: { showHideSearch }, }, refs: { searchInputRef }, setShowGlobalFilter, }, title, ...rest }) => {
+    const { globalFilter, showGlobalFilter } = state;
     const handleToggleSearch = () => {
         setShowGlobalFilter(!showGlobalFilter);
         setTimeout(() => searchInputRef.current?.focus(), 100);

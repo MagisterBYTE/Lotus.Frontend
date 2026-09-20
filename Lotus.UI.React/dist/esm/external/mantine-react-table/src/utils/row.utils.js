@@ -1,21 +1,21 @@
 import { rankGlobalFuzzy } from '../fns/sortingFns';
 import { parseFromValuesOrFunc } from './utils';
 export const getMRT_Rows = (table, all) => {
-    const { getCenterRows, getPrePaginationRowModel, getRowModel, getState, getTopRows, options: { createDisplayMode, enablePagination, enableRowPinning, manualPagination, positionCreatingRow, rowPinningDisplayMode, }, } = table;
-    const { creatingRow, pagination } = getState();
+    const { getCenterRows, getPrePaginatedRowModel, getRowModel, state, getTopRows, options: { createDisplayMode, enablePagination, enableRowPinning, manualPagination, positionCreatingRow, rowPinningDisplayMode, }, } = table;
+    const { creatingRow, pagination } = state;
     const isRankingRows = getIsRankingRows(table);
     let rows = [];
     if (!isRankingRows) {
         rows =
             !enableRowPinning || rowPinningDisplayMode?.includes('sticky')
                 ? all
-                    ? getPrePaginationRowModel().rows
+                    ? getPrePaginatedRowModel().rows
                     : getRowModel().rows
                 : getCenterRows();
     }
     else {
         // fuzzy ranking adjustments
-        rows = getPrePaginationRowModel().rows.sort((a, b) => rankGlobalFuzzy(a, b));
+        rows = getPrePaginatedRowModel().rows.sort((a, b) => rankGlobalFuzzy(a, b));
         if (enablePagination && !manualPagination && !all) {
             const start = pagination.pageIndex * pagination.pageSize;
             rows = rows.slice(start, start + pagination.pageSize);
@@ -53,8 +53,8 @@ export const getMRT_Rows = (table, all) => {
     return rows;
 };
 export const getCanRankRows = (table) => {
-    const { getState, options: { enableGlobalFilterRankedResults, manualExpanding, manualFiltering, manualGrouping, manualSorting, }, } = table;
-    const { expanded, globalFilterFn } = getState();
+    const { state, options: { enableGlobalFilterRankedResults, manualExpanding, manualFiltering, manualGrouping, manualSorting, }, } = table;
+    const { expanded, globalFilterFn } = state;
     return (!manualExpanding &&
         !manualFiltering &&
         !manualGrouping &&
@@ -65,7 +65,7 @@ export const getCanRankRows = (table) => {
         !Object.values(expanded).some(Boolean));
 };
 export const getIsRankingRows = (table) => {
-    const { globalFilter, sorting } = table.getState();
+    const { globalFilter, sorting } = table.state;
     return (getCanRankRows(table) &&
         globalFilter &&
         !Object.values(sorting).some(Boolean));
@@ -78,8 +78,8 @@ export const getIsRowSelected = ({ row, table, }) => {
             row.getIsAllSubRowsSelected()));
 };
 export const getMRT_RowSelectionHandler = ({ renderedRowIndex = 0, row, table, }) => (event, value) => {
-    const { getState, options: { enableBatchRowSelection, enableMultiRowSelection, enableRowPinning, manualPagination, rowPinningDisplayMode, }, refs: { lastSelectedRowId: lastSelectedRowId }, } = table;
-    const { pagination: { pageIndex, pageSize }, } = getState();
+    const { state, options: { enableBatchRowSelection, enableMultiRowSelection, enableRowPinning, manualPagination, rowPinningDisplayMode, }, refs: { lastSelectedRowId: lastSelectedRowId }, } = table;
+    const { pagination: { pageIndex, pageSize }, } = state;
     const paginationOffset = manualPagination ? 0 : pageSize * pageIndex;
     const wasCurrentRowChecked = getIsRowSelected({ row, table });
     // toggle selection of this row
@@ -120,7 +120,7 @@ export const getMRT_RowSelectionHandler = ({ renderedRowIndex = 0, row, table, }
     if (enableRowPinning && rowPinningDisplayMode?.includes('select')) {
         changedRowIds.forEach((rowId) => {
             const rowToTogglePin = table.getRow(rowId);
-            rowToTogglePin.pin(!wasCurrentRowChecked //was not previously pinned or selected
+            rowToTogglePin.pin(!wasCurrentRowChecked // was not previously pinned or selected
                 ? rowPinningDisplayMode?.includes('bottom')
                     ? 'bottom'
                     : 'top'

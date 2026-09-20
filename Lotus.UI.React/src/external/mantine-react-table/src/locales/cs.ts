@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_CS: MRT_Localization = {
   actions: 'Akce',
@@ -94,4 +94,4 @@ export const MRT_Localization_CS: MRT_Localization = {
   ungroupByColumn: 'Neseskupovat podle sloupce {column}',
   unpin: 'Odepnout',
   unpinAll: 'Odepnout vše',
-};
+}

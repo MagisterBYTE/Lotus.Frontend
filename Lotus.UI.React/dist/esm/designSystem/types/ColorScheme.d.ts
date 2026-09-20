@@ -2,7 +2,7 @@ import { IOption } from 'lotus-core/modules/option';
 /**
  * Массив значений цветовой схемы
  */
-export declare const TColorSchemeValues: readonly ["light", "dark"];
+export declare const TColorSchemeValues: readonly ['light', 'dark'];
 /**
  * Цветовая схема
  */

@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_ET: MRT_Localization = {
   actions: 'Toimingud',
@@ -94,4 +94,4 @@ export const MRT_Localization_ET: MRT_Localization = {
   ungroupByColumn: 'Eemalda rühmitamine veeru {column} järgi',
   unpin: 'Eemalda kinnitamine',
   unpinAll: 'Eemalda kõigi kinnitamine',
-};
+}

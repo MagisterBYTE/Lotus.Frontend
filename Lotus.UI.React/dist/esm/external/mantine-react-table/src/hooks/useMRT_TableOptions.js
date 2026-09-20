@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { getCoreRowModel, getExpandedRowModel, getFacetedMinMaxValues, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getGroupedRowModel, getPaginationRowModel, getSortedRowModel, } from '@tanstack/react-table';
+import { createExpandedRowModel, createFacetedMinMaxValues, createFacetedRowModel, createFacetedUniqueValues, createFilteredRowModel, createGroupedRowModel, createPaginatedRowModel, createSortedRowModel, stockFeatures, } from '@tanstack/react-table';
 import { useDirection } from '@mantine/core';
-import { MRT_AggregationFns } from '../fns/aggregationFns';
+import { MRT_RowAggregationFns } from '../fns/aggregationFns';
 import { MRT_FilterFns } from '../fns/filterFns';
-import { MRT_SortingFns } from '../fns/sortingFns';
+import { MRT_SortFns } from '../fns/sortingFns';
 import { MRT_Default_Icons } from '../icons';
 import { MRT_Localization_EN } from '../locales/en';
 export const MRT_DefaultColumn = {
@@ -26,22 +26,21 @@ export const MRT_DefaultDisplayColumn = {
     enableResizing: false,
     enableSorting: false,
 };
-export const useMRT_TableOptions = ({ aggregationFns, autoResetExpanded = false, columnFilterDisplayMode = 'subheader', columnResizeDirection, columnResizeMode = 'onChange', createDisplayMode = 'modal', defaultColumn, defaultDisplayColumn, editDisplayMode = 'modal', enableBatchRowSelection = true, enableBottomToolbar = true, enableColumnActions = true, enableColumnFilters = true, enableColumnOrdering = false, enableColumnPinning = false, enableColumnResizing = false, enableColumnVirtualization, enableDensityToggle = true, enableExpandAll = true, enableExpanding, enableFacetedValues = false, enableFilterMatchHighlighting = true, enableFilters = true, enableFullScreenToggle = true, enableGlobalFilter = true, enableGlobalFilterRankedResults = true, enableGrouping = false, enableHeaderActionsHoverReveal = false, enableHiding = true, enableMultiRowSelection = true, enableMultiSort = true, enablePagination = true, enableRowPinning = false, enableRowSelection = false, enableRowVirtualization, enableSelectAll = true, enableSorting = true, enableStickyHeader = false, enableTableFooter = true, enableTableHead = true, enableToolbarInternalActions = true, enableTopToolbar = true, filterFns, icons, layoutMode, localization, manualFiltering, manualGrouping, manualPagination, manualSorting, paginationDisplayMode = 'default', positionActionsColumn = 'first', positionCreatingRow = 'top', positionExpandColumn = 'first', positionGlobalFilter = 'right', positionPagination = 'bottom', positionToolbarAlertBanner = 'top', positionToolbarDropZone = 'top', rowNumberDisplayMode = 'static', rowPinningDisplayMode = 'sticky', selectAllMode = 'page', sortingFns, ...rest }) => {
+export const useMRT_TableOptions = ({ aggregationFns, autoResetExpanded = false, columnFilterDisplayMode = 'subheader', columnResizeDirection, columnResizeMode = 'onChange', createDisplayMode = 'modal', defaultColumn, defaultDisplayColumn, editDisplayMode = 'modal', enableBatchRowSelection = true, enableBottomToolbar = true, enableColumnActions = true, enableColumnFilters = true, enableColumnOrdering = false, enableColumnPinning = false, enableColumnResizing = false, enableColumnVirtualization, enableDensityToggle = true, enableExpandAll = true, enableExpanding, enableFacetedValues = false, enableFilterMatchHighlighting = true, enableFilters = true, enableFullScreenToggle = true, enableGlobalFilter = true, enableGlobalFilterRankedResults = true, enableGrouping = false, enableHeaderActionsHoverReveal = false, enableHiding = true, enableMultiRowSelection = true, enableMultiSort = true, enablePagination = true, enableRowPinning = false, enableRowSelection = false, enableRowVirtualization, enableSelectAll = true, enableSorting = true, enableStickyHeader = false, enableTableFooter = true, enableTableHead = true, enableToolbarInternalActions = true, enableTopToolbar = true, filterFns, icons, layoutMode, localization, manualFiltering, manualGrouping, manualPagination, manualSorting, paginationDisplayMode = 'default', positionActionsColumn = 'first', positionCreatingRow = 'top', positionExpandColumn = 'first', positionGlobalFilter = 'right', positionPagination = 'bottom', positionToolbarAlertBanner = 'top', positionToolbarDropZone = 'top', rowNumberDisplayMode = 'static', rowPinningDisplayMode = 'sticky', selectAllMode = 'page', sortFns, ...rest }) => {
     const direction = useDirection();
     icons = useMemo(() => ({ ...MRT_Default_Icons, ...icons }), [icons]);
     localization = useMemo(() => ({
         ...MRT_Localization_EN,
         ...localization,
     }), [localization]);
-    aggregationFns = useMemo(() => ({ ...MRT_AggregationFns, ...aggregationFns }), []);
+    aggregationFns = useMemo(() => ({ ...MRT_RowAggregationFns, ...aggregationFns }), []);
     filterFns = useMemo(() => ({ ...MRT_FilterFns, ...filterFns }), []);
-    sortingFns = useMemo(() => ({ ...MRT_SortingFns, ...sortingFns }), []);
+    sortFns = useMemo(() => ({ ...MRT_SortFns, ...sortFns }), []);
     defaultColumn = useMemo(() => ({ ...MRT_DefaultColumn, ...defaultColumn }), [defaultColumn]);
     defaultDisplayColumn = useMemo(() => ({
         ...MRT_DefaultDisplayColumn,
         ...defaultDisplayColumn,
     }), [defaultDisplayColumn]);
-    //cannot be changed after initialization
     [enableColumnVirtualization, enableRowVirtualization] = useMemo(() => [enableColumnVirtualization, enableRowVirtualization], []);
     if (!columnResizeDirection) {
         columnResizeDirection = direction.dir || 'ltr';
@@ -108,23 +107,35 @@ export const useMRT_TableOptions = ({ aggregationFns, autoResetExpanded = false,
         enableToolbarInternalActions,
         enableTopToolbar,
         filterFns,
-        getCoreRowModel: getCoreRowModel(),
-        getExpandedRowModel: enableExpanding || enableGrouping ? getExpandedRowModel() : undefined,
-        getFacetedMinMaxValues: enableFacetedValues
-            ? getFacetedMinMaxValues()
-            : undefined,
-        getFacetedRowModel: enableFacetedValues ? getFacetedRowModel() : undefined,
-        getFacetedUniqueValues: enableFacetedValues
-            ? getFacetedUniqueValues()
-            : undefined,
-        getFilteredRowModel: enableColumnFilters || enableGlobalFilter || enableFilters
-            ? getFilteredRowModel()
-            : undefined,
-        getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
-        getPaginationRowModel: enablePagination
-            ? getPaginationRowModel()
-            : undefined,
-        getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
+        features: {
+            ...stockFeatures,
+            ...((enableColumnFilters || enableGlobalFilter || enableFilters) &&
+                !manualFiltering
+                ? { filteredRowModel: createFilteredRowModel(), filterFns }
+                : {}),
+            ...(enableSorting && !manualSorting
+                ? { sortedRowModel: createSortedRowModel(), sortFns }
+                : {}),
+            ...(enablePagination && !manualPagination
+                ? { paginatedRowModel: createPaginatedRowModel() }
+                : {}),
+            ...(enableExpanding || enableGrouping
+                ? { expandedRowModel: createExpandedRowModel() }
+                : {}),
+            ...(enableGrouping && !manualGrouping
+                ? {
+                    groupedRowModel: createGroupedRowModel(),
+                    aggregationFns,
+                }
+                : {}),
+            ...(enableFacetedValues
+                ? {
+                    facetedRowModel: createFacetedRowModel(),
+                    facetedMinMaxValues: createFacetedMinMaxValues(),
+                    facetedUniqueValues: createFacetedUniqueValues(),
+                }
+                : {}),
+        },
         getSubRows: (row) => row?.subRows,
         icons,
         layoutMode,
@@ -144,7 +155,7 @@ export const useMRT_TableOptions = ({ aggregationFns, autoResetExpanded = false,
         rowNumberDisplayMode,
         rowPinningDisplayMode,
         selectAllMode,
-        sortingFns,
+        sortFns,
         ...rest,
     };
 };

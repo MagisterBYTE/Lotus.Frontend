@@ -3,8 +3,8 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { parseFromValuesOrFunc } from '../utils/utils';
 import { extraIndexRangeExtractor } from '../utils/virtualization.utils';
 export const useMRT_RowVirtualizer = (table, rows) => {
-    const { getRowModel, getState, options: { enableRowVirtualization, renderDetailPanel, rowVirtualizerInstanceRef, rowVirtualizerOptions, }, refs: { tableContainerRef }, } = table;
-    const { density, draggingRow, expanded } = getState();
+    const { getRowModel, state, options: { enableRowVirtualization, renderDetailPanel, rowVirtualizerInstanceRef, rowVirtualizerOptions, }, refs: { tableContainerRef }, } = table;
+    const { density, draggingRow, expanded } = state;
     if (!enableRowVirtualization)
         return undefined;
     const rowVirtualizerProps = parseFromValuesOrFunc(rowVirtualizerOptions, {
@@ -40,7 +40,7 @@ export const useMRT_RowVirtualizer = (table, rows) => {
     });
     rowVirtualizer.virtualRows = rowVirtualizer.getVirtualItems();
     if (rowVirtualizerInstanceRef) {
-        //@ts-ignore
+        // @ts-ignore
         rowVirtualizerInstanceRef.current = rowVirtualizer;
     }
     return rowVirtualizer;

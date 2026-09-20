@@ -2,13 +2,13 @@ import
   {
     FilterFunctionDescriptors,
     IPropertyDescriptor,
-    PropertyTypeDescriptors,
     ObjectInfo,
     INameable,
     IEditable,
     IOption,
     BaseValidator,
-    ItemsHelper
+    ItemsHelper,
+    TPropertyTypes
   } from 'lotus-core';
 import { OptionsStory } from './OptionsStory';
 import { Box, HorizontalStack } from '#components/Layout';
@@ -75,7 +75,7 @@ export class PersonInfoBase extends ObjectInfo
       fieldName: 'id',
       name: 'Id',
       desc: 'Идентификатор пользователя',
-      propertyTypeDesc: PropertyTypeDescriptors.Int,
+      propertyType: TPropertyTypes.Int,
       sorting: {
         enabled: true
       },
@@ -93,7 +93,7 @@ export class PersonInfoBase extends ObjectInfo
       fieldName: 'avatar',
       name: 'Avatar',
       desc: 'Аватар пользователя',
-      propertyTypeDesc: PropertyTypeDescriptors.String,
+      propertyType: TPropertyTypes.String,
       isArray: false,
       isNullable: true,
       visualSettings: {
@@ -126,7 +126,7 @@ export class PersonInfoBase extends ObjectInfo
       fieldName: 'name',
       name: 'Имя',
       desc: 'Имя пользователя',
-      propertyTypeDesc: PropertyTypeDescriptors.String,
+      propertyType: TPropertyTypes.String,
       editing: {
         enabled: true,
         required: true,
@@ -149,7 +149,7 @@ export class PersonInfoBase extends ObjectInfo
       fieldName: 'surname',
       name: 'Фамилия',
       desc: 'Фамилия пользователя',
-      propertyTypeDesc: PropertyTypeDescriptors.String,
+      propertyType: TPropertyTypes.String,
       editing: {
         enabled: true,
         required: true,
@@ -183,7 +183,7 @@ export class PersonInfoBase extends ObjectInfo
       fieldName: 'roleId',
       name: 'Роль',
       desc: 'Роль пользователя',
-      propertyTypeDesc: PropertyTypeDescriptors.Int,
+      propertyType: TPropertyTypes.Int,
       isArray: false,
       possibleValues: OptionsStory.TextRoles,
       // editing: {
@@ -218,7 +218,7 @@ export class PersonInfoBase extends ObjectInfo
       fieldName: 'tagsIds',
       name: 'Теги',
       desc: 'Теги',
-      propertyTypeDesc: PropertyTypeDescriptors.Int,
+      propertyType: TPropertyTypes.Int,
       isArray: true,
       possibleValues: OptionsStory.PermissionNumber,
       editing: {

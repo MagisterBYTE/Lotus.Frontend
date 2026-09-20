@@ -3,24 +3,24 @@ import { Highlight } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 const allowedTypes = ['string', 'number'];
 const allowedFilterVariants = ['text', 'autocomplete'];
-export const MRT_TableBodyCellValue = ({ cell, renderedColumnIndex = 0, renderedRowIndex = 0, table }) => {
-    const { getState, options: { enableFilterMatchHighlighting, mantineHighlightProps = { size: 'sm' } } } = table;
+export const MRT_TableBodyCellValue = ({ cell, renderedColumnIndex = 0, renderedRowIndex = 0, table, }) => {
+    const { state, options: { enableFilterMatchHighlighting, mantineHighlightProps = { size: 'sm' }, }, } = table;
     const { column, row } = cell;
     const { columnDef } = column;
-    const { globalFilter, globalFilterFn } = getState();
+    const { globalFilter, globalFilterFn } = state;
     const filterValue = column.getFilterValue();
     const highlightProps = parseFromValuesOrFunc(mantineHighlightProps, {
         cell,
         column,
         row,
-        table
+        table,
     });
     let renderedCellValue = cell.getIsAggregated() && columnDef.AggregatedCell
         ? columnDef.AggregatedCell({
             cell,
             column,
             row,
-            table
+            table,
         })
         : row.getIsGrouped() && !cell.getIsGrouped()
             ? null
@@ -29,7 +29,7 @@ export const MRT_TableBodyCellValue = ({ cell, renderedColumnIndex = 0, rendered
                     cell,
                     column,
                     row,
-                    table
+                    table,
                 })
                 : undefined;
     const isGroupedValue = renderedCellValue !== undefined;
@@ -52,7 +52,7 @@ export const MRT_TableBodyCellValue = ({ cell, renderedColumnIndex = 0, rendered
         if ((filterValue ? columnDef._filterFn : globalFilterFn) === 'fuzzy') {
             highlight = highlight.split(' ');
         }
-        renderedCellValue = (_jsx(Highlight, { color: 'yellow.3', highlight: highlight, ...highlightProps, children: renderedCellValue?.toString() }));
+        renderedCellValue = (_jsx(Highlight, { color: "yellow.3", highlight: highlight, ...highlightProps, children: renderedCellValue?.toString() }));
     }
     if (columnDef.Cell && !isGroupedValue) {
         renderedCellValue = columnDef.Cell({
@@ -62,7 +62,7 @@ export const MRT_TableBodyCellValue = ({ cell, renderedColumnIndex = 0, rendered
             renderedColumnIndex,
             renderedRowIndex,
             row,
-            table
+            table,
         });
     }
     return renderedCellValue;

@@ -1,42 +1,37 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableBodyRow.module.css';
+import { memo, useMemo, useRef } from 'react'
 
-import { type DragEvent, memo, useMemo, useRef } from 'react';
+import { Box, TableTr } from '@mantine/core'
 
-import {
-  Box,
-  type TableProps,
-  TableTr,
-  type TableTrProps,
-} from '@mantine/core';
-
-import { Memo_MRT_TableBodyCell, MRT_TableBodyCell } from './MRT_TableBodyCell';
-import { MRT_TableDetailPanel } from './MRT_TableDetailPanel';
-
-import {
-  type MRT_Cell,
-  type MRT_ColumnVirtualizer,
-  type MRT_DensityState,
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_RowVirtualizer,
-  type MRT_TableInstance,
-  type MRT_VirtualItem,
-} from '../../types';
-import { getIsRowSelected } from '../../utils/row.utils';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import { getIsRowSelected } from '../../utils/row.utils'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_TableDetailPanel } from './MRT_TableDetailPanel'
+import { MRT_TableBodyCell, Memo_MRT_TableBodyCell } from './MRT_TableBodyCell'
+import classes from './MRT_TableBodyRow.module.css'
+import type {
+  MRT_Cell,
+  MRT_ColumnVirtualizer,
+  MRT_DensityState,
+  MRT_Row,
+  MRT_RowData,
+  MRT_RowVirtualizer,
+  MRT_TableInstance,
+  MRT_VirtualItem,
+} from '../../types'
+import type { TableProps, TableTrProps } from '@mantine/core'
+import type { DragEvent } from 'react'
 
 interface Props<TData extends MRT_RowData> extends TableTrProps {
-  columnVirtualizer?: MRT_ColumnVirtualizer;
-  numRows?: number;
-  pinnedRowIds?: string[];
-  renderedRowIndex?: number;
-  row: MRT_Row<TData>;
-  rowVirtualizer?: MRT_RowVirtualizer;
-  table: MRT_TableInstance<TData>;
-  tableProps: Partial<TableProps>;
-  virtualRow?: MRT_VirtualItem;
+  columnVirtualizer?: MRT_ColumnVirtualizer
+  numRows?: number
+  pinnedRowIds?: Array<string>
+  renderedRowIndex?: number
+  row: MRT_Row<TData>
+  rowVirtualizer?: MRT_RowVirtualizer
+  table: MRT_TableInstance<TData>
+  tableProps: Partial<TableProps>
+  virtualRow?: MRT_VirtualItem
 }
 
 export const MRT_TableBodyRow = <TData extends MRT_RowData>({
@@ -53,7 +48,7 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: {
       enableRowOrdering,
       enableRowPinning,
@@ -67,7 +62,7 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
     },
     refs: { tableFooterRef, tableHeadRef },
     setHoveredRow,
-  } = table;
+  } = table
   const {
     density,
     draggingColumn,
@@ -77,19 +72,19 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
     hoveredRow,
     isFullScreen,
     rowPinning,
-  } = getState();
+  } = state
 
-  const visibleCells = row.getVisibleCells();
+  const visibleCells = row.getVisibleCells()
 
   const { virtualColumns, virtualPaddingLeft, virtualPaddingRight } =
-    columnVirtualizer ?? {};
+    columnVirtualizer ?? {}
 
-  const isRowSelected = getIsRowSelected({ row, table });
-  const isRowPinned = enableRowPinning && row.getIsPinned();
+  const isRowSelected = getIsRowSelected({ row, table })
+  const isRowPinned = enableRowPinning && row.getIsPinned()
   const isRowStickyPinned =
-    isRowPinned && rowPinningDisplayMode?.includes('sticky') && 'sticky';
-  const isDraggingRow = draggingRow?.id === row.id;
-  const isHoveredRow = hoveredRow?.id === row.id;
+    isRowPinned && rowPinningDisplayMode?.includes('sticky') && 'sticky'
+  const isDraggingRow = draggingRow?.id === row.id
+  const isHoveredRow = hoveredRow?.id === row.id
 
   const tableRowProps = {
     ...parseFromValuesOrFunc(mantineTableBodyRowProps, {
@@ -98,7 +93,7 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
       table,
     }),
     ...rest,
-  };
+  }
 
   const [bottomPinnedIndex, topPinnedIndex] = useMemo(() => {
     if (
@@ -107,19 +102,19 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
       !pinnedRowIds ||
       !row.getIsPinned()
     )
-      return [];
+      return []
     return [
       [...pinnedRowIds].reverse().indexOf(row.id),
       pinnedRowIds.indexOf(row.id),
-    ];
-  }, [pinnedRowIds, rowPinning]);
+    ]
+  }, [pinnedRowIds, rowPinning])
 
   const tableHeadHeight =
     ((enableStickyHeader || isFullScreen) &&
       tableHeadRef.current?.clientHeight) ||
-    0;
+    0
   const tableFooterHeight =
-    (enableStickyFooter && tableFooterRef.current?.clientHeight) || 0;
+    (enableStickyFooter && tableFooterRef.current?.clientHeight) || 0
 
   const defaultRowHeightByDensity: Record<MRT_DensityState, number> = {
     lg: 61,
@@ -127,32 +122,32 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
     sm: 45,
     xl: 69,
     xs: 37,
-  };
+  }
 
   const rowHeight =
     // @ts-ignore
     parseInt(tableRowProps?.style?.height, 10) ||
-    (defaultRowHeightByDensity[density] ?? defaultRowHeightByDensity['md']);
+    (defaultRowHeightByDensity[density] ?? defaultRowHeightByDensity['md'])
 
   const handleDragEnter = (_e: DragEvent) => {
     if (enableRowOrdering && draggingRow) {
-      setHoveredRow(row);
+      setHoveredRow(row)
     }
-  };
+  }
 
-  const rowRef = useRef<HTMLTableRowElement | null>(null);
+  const rowRef = useRef<HTMLTableRowElement | null>(null)
 
-  let striped = tableProps.striped as boolean | string;
+  let striped = tableProps.striped as boolean | string
 
   if (striped) {
     if (striped === true) {
-      striped = 'odd';
+      striped = 'odd'
     }
     if (striped === 'odd' && renderedRowIndex % 2 !== 0) {
-      striped = false;
+      striped = false
     }
     if (striped === 'even' && renderedRowIndex % 2 === 0) {
-      striped = false;
+      striped = false
     }
   }
 
@@ -168,8 +163,8 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
         onDragEnter={handleDragEnter}
         ref={(node: HTMLTableRowElement) => {
           if (node) {
-            rowRef.current = node;
-            rowVirtualizer?.measureElement(node);
+            rowRef.current = node
+            rowVirtualizer?.measureElement(node)
           }
         }}
         {...tableRowProps}
@@ -208,11 +203,11 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
           ? children
           : (virtualColumns ?? row.getVisibleCells()).map(
               (cellOrVirtualCell, renderedColumnIndex) => {
-                let cell = cellOrVirtualCell as MRT_Cell<TData>;
+                let cell = cellOrVirtualCell as MRT_Cell<TData>
                 if (columnVirtualizer) {
                   renderedColumnIndex = (cellOrVirtualCell as MRT_VirtualItem)
-                    .index;
-                  cell = visibleCells[renderedColumnIndex];
+                    .index
+                  cell = visibleCells[renderedColumnIndex]
                 }
                 const cellProps = {
                   cell,
@@ -224,19 +219,17 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
                   virtualCell: columnVirtualizer
                     ? (cellOrVirtualCell as MRT_VirtualItem)
                     : undefined,
-                };
+                }
                 return memoMode === 'cells' &&
                   cell.column.columnDef.columnDefType === 'data' &&
                   !draggingColumn &&
                   !draggingRow &&
                   editingCell?.id !== cell.id &&
                   editingRow?.id !== row.id ? (
-                  // @ts-expect-error rowRef
                   <Memo_MRT_TableBodyCell key={cell.id} {...cellProps} />
                 ) : (
-                  // @ts-expect-error rowRef
                   <MRT_TableBodyCell key={cell.id} {...cellProps} />
-                );
+                )
               },
             )}
         {virtualPaddingRight ? (
@@ -245,7 +238,6 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
       </TableTr>
       {renderDetailPanel && !row.getIsGrouped() && (
         <MRT_TableDetailPanel
-          // @ts-expect-error rowRef
           parentRowRef={rowRef}
           renderedRowIndex={renderedRowIndex}
           row={row}
@@ -256,10 +248,10 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
         />
       )}
     </>
-  );
-};
+  )
+}
 
 export const Memo_MRT_TableBodyRow = memo(
   MRT_TableBodyRow,
   (prev, next) => prev.row === next.row,
-) as typeof MRT_TableBodyRow;
+) as typeof MRT_TableBodyRow

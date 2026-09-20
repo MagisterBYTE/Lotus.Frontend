@@ -1,7 +1,7 @@
 /**
  * Массив значений типа информирования
  */
-export declare const TAlertTypeValues: readonly ["error", "warning", "info", "success", "service"];
+export declare const TAlertTypeValues: readonly ['error', 'warning', 'info', 'success', 'service'];
 /**
  * Тип информирования
  */

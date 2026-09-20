@@ -1,7 +1,7 @@
 /**
  * Массив возможных значений эффекта для текста
  */
-export declare const TTextEffectValues: readonly ["shadow", "stroke", "glow"];
+export declare const TTextEffectValues: readonly ['shadow', 'stroke', 'glow'];
 /**
  * Тип эффекта для текста
  */

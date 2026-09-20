@@ -1,11 +1,11 @@
-import { MRT_DefaultDisplayColumn } from '../useMRT_TableOptions';
+import { MRT_DefaultDisplayColumn } from '../useMRT_TableOptions'
 
-import {
-  type MRT_ColumnDef,
-  type MRT_RowData,
-  type MRT_StatefulTableOptions,
-} from '../../types';
-import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils';
+import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils'
+import type {
+  MRT_ColumnDef,
+  MRT_RowData,
+  MRT_StatefulTableOptions,
+} from '../../types'
 
 const blankColProps = {
   children: null,
@@ -14,7 +14,7 @@ const blankColProps = {
     padding: 0,
     width: 0,
   },
-};
+}
 
 export const getMRT_RowSpacerColumnDef = <TData extends MRT_RowData>(
   tableOptions: MRT_StatefulTableOptions<TData>,
@@ -30,5 +30,5 @@ export const getMRT_RowSpacerColumnDef = <TData extends MRT_RowData>(
     mantineTableBodyCellProps: blankColProps,
     mantineTableFooterCellProps: blankColProps,
     mantineTableHeadCellProps: blankColProps,
-  };
-};
+  }
+}

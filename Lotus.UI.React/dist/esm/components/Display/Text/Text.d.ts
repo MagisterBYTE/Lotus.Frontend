@@ -16,5 +16,5 @@ export interface ITextProps extends IGeneralContainerProperties, IGeneralTextPro
      */
     disabled?: boolean;
 }
-export declare function Text(props: ITextProps): import("react/jsx-runtime").JSX.Element;
+export declare function Text(props: ITextProps): import("react").JSX.Element;
 //# sourceMappingURL=Text.d.ts.map

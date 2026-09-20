@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_NL: MRT_Localization = {
   actions: 'Acties',
@@ -93,4 +93,4 @@ export const MRT_Localization_NL: MRT_Localization = {
   ungroupByColumn: 'Stop groeperen op {column}',
   unpin: 'Losmaken',
   unpinAll: 'Alles losmaken',
-};
+}

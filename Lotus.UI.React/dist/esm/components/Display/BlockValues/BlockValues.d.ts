@@ -27,5 +27,5 @@ export interface IBlockValuesProps extends IGridProps {
      */
     placement: TOrientation;
 }
-export declare function BlockValues(props: IBlockValuesProps): import("react/jsx-runtime").JSX.Element;
+export declare function BlockValues(props: IBlockValuesProps): import("react").JSX.Element;
 //# sourceMappingURL=BlockValues.d.ts.map

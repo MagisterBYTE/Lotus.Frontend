@@ -5,7 +5,7 @@ import { Assert } from 'lotus-core/utils';
 import { useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { ContainerControl, Primitive } from '#components/Common';
-import { MultiSelectEx } from '#components/Extendeds';
+import { MultiSelectEx } from '#components/Extended';
 const styleContainerItem = { withBorder: true, p: 'xxs', bdRadius: 'md' };
 export function MultiSelect(props) {
     const { items, onChangedItems, selectedItems, imageDatabase, selectRenderComponent, getValueItem = ItemsHelper.getValueOfItem, getLabelItem = ItemsHelper.getLabelOfItem, getDisabledItem = ItemsHelper.getDisabledOfItem, renderItem, renderValue, selectProps, size, ...otherProps } = props;

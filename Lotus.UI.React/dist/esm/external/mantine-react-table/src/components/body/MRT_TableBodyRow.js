@@ -1,15 +1,15 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableBodyRow.module.css';
 import { memo, useMemo, useRef } from 'react';
-import { Box, TableTr, } from '@mantine/core';
-import { Memo_MRT_TableBodyCell, MRT_TableBodyCell } from './MRT_TableBodyCell';
-import { MRT_TableDetailPanel } from './MRT_TableDetailPanel';
+import { Box, TableTr } from '@mantine/core';
 import { getIsRowSelected } from '../../utils/row.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_TableDetailPanel } from './MRT_TableDetailPanel';
+import { MRT_TableBodyCell, Memo_MRT_TableBodyCell } from './MRT_TableBodyCell';
+import classes from './MRT_TableBodyRow.module.css';
 export const MRT_TableBodyRow = ({ children, columnVirtualizer, numRows, pinnedRowIds, renderedRowIndex = 0, row, rowVirtualizer, table, tableProps, virtualRow, ...rest }) => {
-    const { getState, options: { enableRowOrdering, enableRowPinning, enableStickyFooter, enableStickyHeader, layoutMode, mantineTableBodyRowProps, memoMode, renderDetailPanel, rowPinningDisplayMode, }, refs: { tableFooterRef, tableHeadRef }, setHoveredRow, } = table;
-    const { density, draggingColumn, draggingRow, editingCell, editingRow, hoveredRow, isFullScreen, rowPinning, } = getState();
+    const { state, options: { enableRowOrdering, enableRowPinning, enableStickyFooter, enableStickyHeader, layoutMode, mantineTableBodyRowProps, memoMode, renderDetailPanel, rowPinningDisplayMode, }, refs: { tableFooterRef, tableHeadRef }, setHoveredRow, } = table;
+    const { density, draggingColumn, draggingRow, editingCell, editingRow, hoveredRow, isFullScreen, rowPinning, } = state;
     const visibleCells = row.getVisibleCells();
     const { virtualColumns, virtualPaddingLeft, virtualPaddingRight } = columnVirtualizer ?? {};
     const isRowSelected = getIsRowSelected({ row, table });
@@ -114,16 +114,8 @@ export const MRT_TableBodyRow = ({ children, columnVirtualizer, numRows, pinnedR
                                 !draggingColumn &&
                                 !draggingRow &&
                                 editingCell?.id !== cell.id &&
-                                editingRow?.id !== row.id ? (
-                            // @ts-expect-error rowRef
-                            _jsx(Memo_MRT_TableBodyCell, { ...cellProps }, cell.id)) : (
-                            // @ts-expect-error rowRef
-                            _jsx(MRT_TableBodyCell, { ...cellProps }, cell.id));
-                        }), virtualPaddingRight ? (_jsx(Box, { component: "td", display: "flex", w: virtualPaddingRight })) : null] }), renderDetailPanel && !row.getIsGrouped() && (_jsx(MRT_TableDetailPanel
-            // @ts-expect-error rowRef
-            , { 
-                // @ts-expect-error rowRef
-                parentRowRef: rowRef, renderedRowIndex: renderedRowIndex, row: row, rowVirtualizer: rowVirtualizer, striped: striped, table: table, virtualRow: virtualRow }))] }));
+                                editingRow?.id !== row.id ? (_jsx(Memo_MRT_TableBodyCell, { ...cellProps }, cell.id)) : (_jsx(MRT_TableBodyCell, { ...cellProps }, cell.id));
+                        }), virtualPaddingRight ? (_jsx(Box, { component: "td", display: "flex", w: virtualPaddingRight })) : null] }), renderDetailPanel && !row.getIsGrouped() && (_jsx(MRT_TableDetailPanel, { parentRowRef: rowRef, renderedRowIndex: renderedRowIndex, row: row, rowVirtualizer: rowVirtualizer, striped: striped, table: table, virtualRow: virtualRow }))] }));
 };
 export const Memo_MRT_TableBodyRow = memo(MRT_TableBodyRow, (prev, next) => prev.row === next.row);
 //# sourceMappingURL=MRT_TableBodyRow.js.map

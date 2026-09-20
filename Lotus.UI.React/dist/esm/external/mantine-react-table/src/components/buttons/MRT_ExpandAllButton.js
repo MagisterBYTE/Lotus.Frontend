@@ -1,11 +1,11 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_ExpandAllButton.module.css';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_ExpandAllButton.module.css';
 export const MRT_ExpandAllButton = ({ table, ...rest }) => {
-    const { getCanSomeRowsExpand, getIsAllRowsExpanded, getIsSomeRowsExpanded, getState, options: { icons: { IconChevronsDown }, localization, mantineExpandAllButtonProps, renderDetailPanel, }, toggleAllRowsExpanded, } = table;
-    const { density, isLoading } = getState();
+    const { getCanSomeRowsExpand, getIsAllRowsExpanded, getIsSomeRowsExpanded, state, options: { icons: { IconChevronsDown }, localization, mantineExpandAllButtonProps, renderDetailPanel, }, toggleAllRowsExpanded, } = table;
+    const { density, isLoading } = state;
     const actionIconProps = {
         ...parseFromValuesOrFunc(mantineExpandAllButtonProps, {
             table,

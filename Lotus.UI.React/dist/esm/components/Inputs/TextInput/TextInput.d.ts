@@ -12,6 +12,6 @@ export interface ITextInputProps extends IBaseContainerControlProps, Omit<IHoriz
     onChangeValue?: TChangedValueFunction;
     disabled?: boolean;
 }
-export declare function TextInput(props: ITextInputProps): import("react/jsx-runtime").JSX.Element;
+export declare function TextInput(props: ITextInputProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=TextInput.d.ts.map

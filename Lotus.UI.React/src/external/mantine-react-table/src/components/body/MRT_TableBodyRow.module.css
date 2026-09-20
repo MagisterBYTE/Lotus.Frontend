@@ -66,32 +66,36 @@
         z-index: -1;
       }
 
-      &[data-column-pinned='left'] {
-        left: calc(var(--mrt-table-cell-left, 0) * 1px);
-        &[data-last-left-pinned] {
+      &[data-column-pinned='start'] {
+        inset-inline-start: calc(var(--mrt-table-cell-start, 0) * 1px);
+        &[data-last-start-pinned] {
           &::before {
-            box-shadow: -6px 0 6px -6px alpha(
+            box-shadow: -6px 0 6px -6px
+              alpha(
                 light-dark(
                   var(--mantine-color-gray-outline),
                   var(--mantine-color-dark-outline)
                 ),
                 0.5
-              ) inset;
+              )
+              inset;
           }
         }
       }
 
-      &[data-column-pinned='right'] {
-        right: calc(var(--mrt-table-cell-right, 0) * 1px);
-        &[data-first-right-pinned] {
+      &[data-column-pinned='end'] {
+        inset-inline-end: calc(var(--mrt-table-cell-end, 0) * 1px);
+        &[data-first-end-pinned] {
           &::before {
-            box-shadow: 6px 0 6px -6px alpha(
+            box-shadow: 6px 0 6px -6px
+              alpha(
                 light-dark(
                   var(--mantine-color-gray-outline),
                   var(--mantine-color-dark-outline)
                 ),
                 0.5
-              ) inset;
+              )
+              inset;
           }
         }
       }
@@ -100,7 +104,10 @@
   /* end column pinning styles */
   /* row pinning styles */
   &[data-row-pinned] {
-    background-color: var(--mrt-pinned-row-background-color, --mantine-color-body);
+    background-color: var(
+      --mrt-pinned-row-background-color,
+      --mantine-color-body
+    );
     bottom: calc(var(--mrt-pinned-row-bottom) * 1px);
     opacity: 0.97;
     top: calc(var(--mrt-pinned-row-top) * 1px);
@@ -141,7 +148,10 @@
 
   /* selection styles */
   &[data-selected] {
-    background-color: var(--mrt-selected-row-background-color, --mantine-color-body);
+    background-color: var(
+      --mrt-selected-row-background-color,
+      --mantine-color-body
+    );
 
     td {
       &[data-column-pinned] {

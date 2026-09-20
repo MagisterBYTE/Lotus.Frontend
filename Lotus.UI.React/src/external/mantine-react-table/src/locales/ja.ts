@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_JA: MRT_Localization = {
   actions: '操作',
@@ -93,4 +93,4 @@ export const MRT_Localization_JA: MRT_Localization = {
   ungroupByColumn: '{column}のグループ解除',
   unpin: '固定を解除',
   unpinAll: '全ての固定を解除',
-};
+}

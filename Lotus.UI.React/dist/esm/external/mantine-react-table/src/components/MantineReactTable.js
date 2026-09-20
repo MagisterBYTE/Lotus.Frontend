@@ -11,6 +11,6 @@ export const MantineReactTable = (props) => {
     else {
         table = useMantineReactTable(props);
     }
-    return _jsx(MRT_TablePaper, { table: table, specificTableBody: specificTableBody });
+    return _jsx(MRT_TablePaper, { specificTableBody: specificTableBody, table: table });
 };
 //# sourceMappingURL=MantineReactTable.js.map

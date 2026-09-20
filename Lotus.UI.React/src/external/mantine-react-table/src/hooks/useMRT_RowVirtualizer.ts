@@ -1,16 +1,17 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 
-import { type Range, useVirtualizer } from '@tanstack/react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { parseFromValuesOrFunc } from '../utils/utils'
+import { extraIndexRangeExtractor } from '../utils/virtualization.utils'
+import type { Range } from '@tanstack/react-virtual'
 
-import {
-  type MRT_DensityState,
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_RowVirtualizer,
-  type MRT_TableInstance,
-} from '../types';
-import { parseFromValuesOrFunc } from '../utils/utils';
-import { extraIndexRangeExtractor } from '../utils/virtualization.utils';
+import type {
+  MRT_DensityState,
+  MRT_Row,
+  MRT_RowData,
+  MRT_RowVirtualizer,
+  MRT_TableInstance,
+} from '../types'
 
 export const useMRT_RowVirtualizer = <
   TData extends MRT_RowData,
@@ -18,11 +19,11 @@ export const useMRT_RowVirtualizer = <
   TItemElement extends Element = HTMLTableRowElement,
 >(
   table: MRT_TableInstance<TData>,
-  rows?: MRT_Row<TData>[],
+  rows?: Array<MRT_Row<TData>>,
 ): MRT_RowVirtualizer<TScrollElement, TItemElement> | undefined => {
   const {
     getRowModel,
-    getState,
+    state,
     options: {
       enableRowVirtualization,
       renderDetailPanel,
@@ -30,16 +31,16 @@ export const useMRT_RowVirtualizer = <
       rowVirtualizerOptions,
     },
     refs: { tableContainerRef },
-  } = table;
-  const { density, draggingRow, expanded } = getState();
+  } = table
+  const { density, draggingRow, expanded } = state
 
-  if (!enableRowVirtualization) return undefined;
+  if (!enableRowVirtualization) return undefined
 
   const rowVirtualizerProps = parseFromValuesOrFunc(rowVirtualizerOptions, {
     table,
-  });
+  })
 
-  const rowCount = rows?.length ?? getRowModel().rows.length;
+  const rowCount = rows?.length ?? getRowModel().rows.length
 
   const defaultRowHeightByDensity: Record<MRT_DensityState, number> = {
     lg: 62.7,
@@ -47,10 +48,10 @@ export const useMRT_RowVirtualizer = <
     sm: 48.7,
     xl: 70.7,
     xs: 42.7,
-  };
+  }
 
   const normalRowHeight =
-    defaultRowHeightByDensity[density] ?? defaultRowHeightByDensity['md'];
+    defaultRowHeightByDensity[density] ?? defaultRowHeightByDensity['md']
 
   const rowVirtualizer = useVirtualizer({
     count: renderDetailPanel ? rowCount * 2 : rowCount,
@@ -71,24 +72,24 @@ export const useMRT_RowVirtualizer = <
       (range: Range) => {
         const current_index = getRowModel().rows.findIndex(
           (row) => row.id === draggingRow?.id,
-        );
+        )
 
         return extraIndexRangeExtractor(
           range,
           current_index >= 0 ? current_index : 0,
-        );
+        )
       },
       [draggingRow],
     ),
     ...rowVirtualizerProps,
-  }) as unknown as MRT_RowVirtualizer<TScrollElement, TItemElement>;
+  }) as unknown as MRT_RowVirtualizer<TScrollElement, TItemElement>
 
-  rowVirtualizer.virtualRows = rowVirtualizer.getVirtualItems() as any;
+  rowVirtualizer.virtualRows = rowVirtualizer.getVirtualItems()
 
   if (rowVirtualizerInstanceRef) {
-    //@ts-ignore
-    rowVirtualizerInstanceRef.current = rowVirtualizer;
+    // @ts-ignore
+    rowVirtualizerInstanceRef.current = rowVirtualizer
   }
 
-  return rowVirtualizer;
-};
+  return rowVirtualizer
+}

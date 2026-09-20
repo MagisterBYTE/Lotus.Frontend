@@ -1,12 +1,12 @@
-import { type MRT_DefinedTableOptions, type MRT_RowData, type MRT_TableOptions } from '../types';
+import type { MRT_DefinedTableOptions, MRT_RowData, MRT_TableOptions } from '../types';
 export declare const MRT_DefaultColumn: {
-    readonly filterVariant: "text";
+    readonly filterVariant: 'text';
     readonly maxSize: 1000;
     readonly minSize: 40;
     readonly size: 180;
 };
 export declare const MRT_DefaultDisplayColumn: {
-    readonly columnDefType: "display";
+    readonly columnDefType: 'display';
     readonly enableClickToCopy: false;
     readonly enableColumnActions: false;
     readonly enableColumnDragging: false;

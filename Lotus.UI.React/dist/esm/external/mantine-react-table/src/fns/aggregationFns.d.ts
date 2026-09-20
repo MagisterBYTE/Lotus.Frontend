@@ -1,12 +1,14 @@
-export declare const MRT_AggregationFns: {
-    sum: import("@tanstack/table-core").AggregationFn<any>;
-    min: import("@tanstack/table-core").AggregationFn<any>;
-    max: import("@tanstack/table-core").AggregationFn<any>;
-    extent: import("@tanstack/table-core").AggregationFn<any>;
-    mean: import("@tanstack/table-core").AggregationFn<any>;
-    median: import("@tanstack/table-core").AggregationFn<any>;
-    unique: import("@tanstack/table-core").AggregationFn<any>;
-    uniqueCount: import("@tanstack/table-core").AggregationFn<any>;
-    count: import("@tanstack/table-core").AggregationFn<any>;
+export declare const MRT_RowAggregationFns: {
+    sum: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, number>;
+    min: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, (number | Date) | undefined>;
+    max: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, (number | Date) | undefined>;
+    extent: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, [(number | Date) | undefined, (number | Date) | undefined]>;
+    mean: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, number | undefined>;
+    median: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, number | undefined>;
+    unique: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, unknown[]>;
+    uniqueCount: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, number>;
+    count: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, number>;
+    first: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, unknown>;
+    last: import("@tanstack/table-core").AggregationFnDef<any, any, unknown, unknown>;
 };
 //# sourceMappingURL=aggregationFns.d.ts.map

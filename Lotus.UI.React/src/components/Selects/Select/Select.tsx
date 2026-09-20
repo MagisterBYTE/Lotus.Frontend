@@ -4,7 +4,7 @@ import { Assert } from 'lotus-core/utils';
 import { JSX, useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { ContainerControl, IBaseContainerControlProps, Primitive } from '#components/Common';
-import { SelectEx } from '#components/Extendeds';
+import { SelectEx } from '#components/Extended';
 import { IHorizontalStackProps } from '#components/Layout';
 import { IContextRenderBase } from '#types';
 import { IItemsBaseOneProps } from '../types';

@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_ZH_HANT: MRT_Localization = {
   actions: '動作',
@@ -92,4 +92,4 @@ export const MRT_Localization_ZH_HANT: MRT_Localization = {
   ungroupByColumn: '取消按 {column} 分組',
   unpin: '取消固定',
   unpinAll: '全部取消固定',
-};
+}

@@ -1,26 +1,43 @@
-import { JSX, type ReactNode } from 'react';
-
 import {
-  createRow as _createRow,
+  constructRow as _createRow,
   flexRender as _flexRender,
-  type Renderable,
-} from '@tanstack/react-table';
+} from '@tanstack/react-table'
+import { getAllLeafColumnDefs, getColumnId } from './column.utils'
+import type { Renderable } from '@tanstack/react-table'
+import type { JSX, ReactNode } from 'react'
 
-import {
-  type MRT_ColumnHelper,
-  type MRT_DisplayColumnDef,
-  type MRT_GroupColumnDef,
-  type MRT_Row,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../types';
-import { getAllLeafColumnDefs, getColumnId } from './column.utils';
+import type {
+  MRT_ColumnDef,
+  MRT_ColumnHelper,
+  MRT_Row,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../types'
 
 export const flexRender = _flexRender as (
   Comp: Renderable<any>,
   props: any,
-) => JSX.Element | ReactNode;
+) => JSX.Element | ReactNode
 
+/**
+ * A helper utility for creating MRT column definitions with type inference
+ * for each individual column's `TValue`. Mirrors v9's `createColumnHelper`
+ * surface (`accessor`, `columns`, `display`, `group`) but bound to MRT's
+ * column-def shape (extra MRT-specific props, `StockFeatures` pre-bound).
+ *
+ * From a JavaScript perspective, `display` / `group` / `columns` are identity
+ * functions — they exist purely to anchor TypeScript inference.
+ *
+ * @example
+ * ```tsx
+ * const helper = createMRTColumnHelper<Person>()
+ * const columns = helper.columns([
+ *   helper.accessor('firstName', { header: 'First' }),
+ *   helper.accessor((row) => row.lastName, { id: 'lastName' }),
+ *   helper.display({ id: 'actions', header: 'Actions' }),
+ * ])
+ * ```
+ */
 export function createMRTColumnHelper<
   TData extends MRT_RowData,
 >(): MRT_ColumnHelper<TData> {
@@ -31,14 +48,17 @@ export function createMRTColumnHelper<
             ...column,
             accessorFn: accessor,
           } as any)
-        : {
+        : ({
             ...column,
             accessorKey: accessor,
-          };
+          } as any)
     },
-    display: (column) => column as MRT_DisplayColumnDef<TData>,
-    group: (column) => column as MRT_GroupColumnDef<TData>,
-  };
+    columns: <TColumns extends ReadonlyArray<MRT_ColumnDef<TData, any>>>(
+      columns: [...TColumns],
+    ): Array<MRT_ColumnDef<TData, any>> & [...TColumns] => columns,
+    display: (column) => column,
+    group: (column) => column,
+  }
 }
 
 export const createRow = <TData extends MRT_RowData>(
@@ -46,7 +66,7 @@ export const createRow = <TData extends MRT_RowData>(
   originalRow?: TData,
   rowIndex = -1,
   depth = 0,
-  subRows?: MRT_Row<TData>[],
+  subRows?: Array<MRT_Row<TData>>,
   parentId?: string,
 ): MRT_Row<TData> =>
   _createRow(
@@ -63,4 +83,4 @@ export const createRow = <TData extends MRT_RowData>(
     depth,
     subRows as any,
     parentId,
-  ) as MRT_Row<TData>;
+  ) as MRT_Row<TData>

@@ -1,12 +1,12 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useState } from 'react';
-import { MultiSelect, Select, TextInput, } from '@mantine/core';
+import { MultiSelect, Select, TextInput } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 export const MRT_EditCellTextInput = ({ cell, table, ...rest }) => {
-    const { getState, options: { createDisplayMode, editDisplayMode, mantineEditSelectProps, mantineEditTextInputProps, }, refs: { editInputRefs }, setCreatingRow, setEditingCell, setEditingRow, } = table;
+    const { state, options: { createDisplayMode, editDisplayMode, mantineEditSelectProps, mantineEditTextInputProps, }, refs: { editInputRefs }, setCreatingRow, setEditingCell, setEditingRow, } = table;
     const { column, row } = cell;
     const { columnDef } = column;
-    const { creatingRow, editingRow } = getState();
+    const { creatingRow, editingRow } = state;
     const isCreating = creatingRow?.id === row.id;
     const isEditing = editingRow?.id === row.id;
     const isSelectEdit = columnDef.editVariant === 'select';
@@ -24,7 +24,7 @@ export const MRT_EditCellTextInput = ({ cell, table, ...rest }) => {
         ...rest,
     };
     const saveInputValueToRowCache = (newValue) => {
-        //@ts-ignore
+        // @ts-ignore
         row._valuesCache[column.id] = newValue;
         if (isCreating) {
             setCreatingRow(row);
@@ -65,6 +65,7 @@ export const MRT_EditCellTextInput = ({ cell, table, ...rest }) => {
     };
     if (isSelectEdit) {
         return (_jsx(Select, { ...commonProps, searchable: true, value: value, ...selectProps, onBlur: handleBlur, onChange: (value, option) => {
+                ;
                 selectProps.onChange?.(value, option);
                 setValue(value);
             }, onClick: (e) => {
@@ -73,7 +74,7 @@ export const MRT_EditCellTextInput = ({ cell, table, ...rest }) => {
             }, ref: (node) => {
                 if (node) {
                     editInputRefs.current[cell.id] = node;
-                    if (selectProps.ref) {
+                    if (selectProps.ref && typeof selectProps.ref === 'object') {
                         selectProps.ref.current = node;
                     }
                 }
@@ -81,6 +82,7 @@ export const MRT_EditCellTextInput = ({ cell, table, ...rest }) => {
     }
     if (isMultiSelectEdit) {
         return (_jsx(MultiSelect, { ...commonProps, searchable: true, value: value, ...selectProps, onBlur: handleBlur, onChange: (newValue) => {
+                ;
                 selectProps.onChange?.(value);
                 setValue(newValue);
                 // Save if not in focus, otherwise it will be handled by onBlur
@@ -93,7 +95,7 @@ export const MRT_EditCellTextInput = ({ cell, table, ...rest }) => {
             }, ref: (node) => {
                 if (node) {
                     editInputRefs.current[cell.id] = node;
-                    if (selectProps.ref) {
+                    if (selectProps.ref && typeof selectProps.ref === 'object') {
                         selectProps.ref.current = node;
                     }
                 }

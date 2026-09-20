@@ -17,7 +17,7 @@ import {
   useMantineReactTable
 } from '#external/mantine-react-table';
 import { TSizeType } from '#types';
-import { IItemsBaseOneProps, RenderFunction } from 'src/components/Selects/types';
+import { IItemsBaseOneProps, RenderFunction } from '#components/Selects';
 import { MantineReactTableHelper } from '../TableView/MantineReactTableHelper';
 import { useTableViewLocalization } from '../TableView/useTableViewLocalization';
 

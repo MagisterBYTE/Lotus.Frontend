@@ -1,11 +1,11 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_FilterCheckBox.module.css';
 import { Checkbox, Tooltip } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_FilterCheckBox.module.css';
 export const MRT_FilterCheckbox = ({ column, table, ...rest }) => {
-    const { getState, options: { localization, mantineFilterCheckboxProps }, } = table;
-    const { density } = getState();
+    const { state, options: { localization, mantineFilterCheckboxProps }, } = table;
+    const { density } = state;
     const { columnDef } = column;
     const arg = { column, table };
     const checkboxProps = {

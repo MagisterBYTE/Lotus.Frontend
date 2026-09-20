@@ -1,7 +1,7 @@
 /**
  * Массив доступных акцентов фона
  */
-export declare const TBackgroundAccentValues: readonly ["accent", "glass"];
+export declare const TBackgroundAccentValues: readonly ['accent', 'glass'];
 /**
  * Тип акцента фона
  */

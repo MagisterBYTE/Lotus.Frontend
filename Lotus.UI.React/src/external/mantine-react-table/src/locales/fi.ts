@@ -1,4 +1,4 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..'
 
 export const MRT_Localization_FI: MRT_Localization = {
   actions: 'Toiminnot',
@@ -94,4 +94,4 @@ export const MRT_Localization_FI: MRT_Localization = {
   ungroupByColumn: 'Poista ryhmittely sarakkeen {column} mukaan',
   unpin: 'Poista kiinnitys',
   unpinAll: 'Poista kiinnitys kaikilta',
-};
+}

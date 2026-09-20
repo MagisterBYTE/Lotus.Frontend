@@ -1,12 +1,12 @@
-import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
+import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_FilterTextInput.module.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActionIcon, Autocomplete, Badge, Box, MultiSelect, Select, TextInput, } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useDebouncedValue } from '@mantine/hooks';
 import { localizedFilterOption } from '../../fns/filterFns';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import classes from './MRT_FilterTextInput.module.css';
 export const MRT_FilterTextInput = ({ header, rangeFilterIndex, table, ...rest }) => {
     const { options: { columnFilterDisplayMode, columnFilterModeOptions, icons: { IconX }, localization, mantineFilterAutocompleteProps, mantineFilterDateInputProps, mantineFilterMultiSelectProps = {
         clearable: true,
@@ -66,7 +66,7 @@ export const MRT_FilterTextInput = ({ header, rangeFilterIndex, table, ...rest }
                 .filter((key) => key !== null)
                 .sort((a, b) => a.localeCompare(b))
             : []))
-        //@ts-ignore
+        // @ts-ignore
         .filter((o) => o !== undefined && o !== null), [
         autoCompleteProps?.data,
         facetedUniqueValues,
@@ -83,7 +83,7 @@ export const MRT_FilterTextInput = ({ header, rangeFilterIndex, table, ...rest }
             ? column.getFilterValue()?.[rangeFilterIndex] || ''
             : (column.getFilterValue() ?? ''));
     const [debouncedFilterValue] = useDebouncedValue(filterValue, manualFiltering ? 400 : 200);
-    //send debounced filterValue to table instance
+    // send debounced filterValue to table instance
     useEffect(() => {
         if (!isMounted.current)
             return;
@@ -99,7 +99,7 @@ export const MRT_FilterTextInput = ({ header, rangeFilterIndex, table, ...rest }
             column.setFilterValue(debouncedFilterValue ?? undefined);
         }
     }, [debouncedFilterValue]);
-    //receive table filter value and set it to local state
+    // receive table filter value and set it to local state
     useEffect(() => {
         if (!isMounted.current) {
             isMounted.current = true;
@@ -237,7 +237,7 @@ export const MRT_FilterTextInput = ({ header, rangeFilterIndex, table, ...rest }
             if (node) {
                 filterInputRefs.current[`${column.id}-${rangeFilterIndex ?? 0}`] =
                     node;
-                if (textInputProps.ref) {
+                if (textInputProps.ref && typeof textInputProps.ref === 'object') {
                     textInputProps.ref.current = node;
                 }
             }

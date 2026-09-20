@@ -7,5 +7,5 @@ export interface IHorizontalStackProps extends IGeneralContainerProperties, IGen
     vAlign?: TCssAlignItems;
     wrap?: boolean;
 }
-export declare function HorizontalStack(props: IHorizontalStackProps): import("react/jsx-runtime").JSX.Element;
+export declare function HorizontalStack(props: IHorizontalStackProps): import("react").JSX.Element;
 //# sourceMappingURL=HorizontalStack.d.ts.map

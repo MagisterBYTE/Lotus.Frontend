@@ -1,25 +1,24 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableHeadRow.module.css';
+import { Box, TableTr } from '@mantine/core'
 
-import { Box, TableTr, type TableTrProps } from '@mantine/core';
-
-import { MRT_TableHeadCell } from './MRT_TableHeadCell';
-
-import {
-  type MRT_ColumnVirtualizer,
-  type MRT_Header,
-  type MRT_HeaderGroup,
-  type MRT_RowData,
-  type MRT_TableInstance,
-  type MRT_VirtualItem,
-} from '../../types';
-import { parseFromValuesOrFunc } from '../../utils/utils';
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_TableHeadCell } from './MRT_TableHeadCell'
+import classes from './MRT_TableHeadRow.module.css'
+import type {
+  MRT_ColumnVirtualizer,
+  MRT_Header,
+  MRT_HeaderGroup,
+  MRT_RowData,
+  MRT_TableInstance,
+  MRT_VirtualItem,
+} from '../../types'
+import type { TableTrProps } from '@mantine/core'
 
 interface Props<TData extends MRT_RowData> extends TableTrProps {
-  columnVirtualizer?: MRT_ColumnVirtualizer;
-  headerGroup: MRT_HeaderGroup<TData>;
-  table: MRT_TableInstance<TData>;
+  columnVirtualizer?: MRT_ColumnVirtualizer
+  headerGroup: MRT_HeaderGroup<TData>
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableHeadRow = <TData extends MRT_RowData>({
@@ -29,13 +28,13 @@ export const MRT_TableHeadRow = <TData extends MRT_RowData>({
   ...rest
 }: Props<TData>) => {
   const {
-    getState,
+    state,
     options: { enableStickyHeader, layoutMode, mantineTableHeadRowProps },
-  } = table;
-  const { isFullScreen } = getState();
+  } = table
+  const { isFullScreen } = state
 
   const { virtualColumns, virtualPaddingLeft, virtualPaddingRight } =
-    columnVirtualizer ?? {};
+    columnVirtualizer ?? {}
 
   const tableRowProps = {
     ...parseFromValuesOrFunc(mantineTableHeadRowProps, {
@@ -43,7 +42,7 @@ export const MRT_TableHeadRow = <TData extends MRT_RowData>({
       table,
     }),
     ...rest,
-  };
+  }
 
   return (
     <TableTr
@@ -60,11 +59,11 @@ export const MRT_TableHeadRow = <TData extends MRT_RowData>({
       ) : null}
       {(virtualColumns ?? headerGroup.headers).map(
         (headerOrVirtualHeader, renderedHeaderIndex) => {
-          let header = headerOrVirtualHeader as MRT_Header<TData>;
+          let header = headerOrVirtualHeader as MRT_Header<TData>
           if (columnVirtualizer) {
             renderedHeaderIndex = (headerOrVirtualHeader as MRT_VirtualItem)
-              .index;
-            header = headerGroup.headers[renderedHeaderIndex];
+              .index
+            header = headerGroup.headers[renderedHeaderIndex]
           }
 
           return (
@@ -75,12 +74,12 @@ export const MRT_TableHeadRow = <TData extends MRT_RowData>({
               renderedHeaderIndex={renderedHeaderIndex}
               table={table}
             />
-          );
+          )
         },
       )}
       {virtualPaddingRight ? (
         <Box component="th" display="flex" w={virtualPaddingRight} />
       ) : null}
     </TableTr>
-  );
-};
+  )
+}

@@ -1,41 +1,34 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
-import classes from './MRT_TableHeadCell.module.css';
+import { useMemo, useState } from 'react'
 
-import {
-  type CSSProperties,
-  type DragEventHandler,
-  type MutableRefObject,
-  type ReactNode,
-  RefObject,
-  useMemo,
-  useState,
-} from 'react';
+import { Flex, TableTh, useDirection } from '@mantine/core'
+import { useHover } from '@mantine/hooks'
 
-import { Flex, TableTh, type TableThProps, useDirection } from '@mantine/core';
-import { useHover } from '@mantine/hooks';
+import { parseCSSVarId } from '../../utils/style.utils'
+import { parseFromValuesOrFunc } from '../../utils/utils'
+import { MRT_ColumnActionMenu } from '../menus/MRT_ColumnActionMenu'
+import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer'
+import { MRT_TableHeadCellFilterLabel } from './MRT_TableHeadCellFilterLabel'
+import { MRT_TableHeadCellGrabHandle } from './MRT_TableHeadCellGrabHandle'
+import { MRT_TableHeadCellResizeHandle } from './MRT_TableHeadCellResizeHandle'
+import { MRT_TableHeadCellSortLabel } from './MRT_TableHeadCellSortLabel'
 
-import { MRT_TableHeadCellFilterContainer } from './MRT_TableHeadCellFilterContainer';
-import { MRT_TableHeadCellFilterLabel } from './MRT_TableHeadCellFilterLabel';
-import { MRT_TableHeadCellGrabHandle } from './MRT_TableHeadCellGrabHandle';
-import { MRT_TableHeadCellResizeHandle } from './MRT_TableHeadCellResizeHandle';
-import { MRT_TableHeadCellSortLabel } from './MRT_TableHeadCellSortLabel';
-
-import {
-  type MRT_ColumnVirtualizer,
-  type MRT_Header,
-  type MRT_RowData,
-  type MRT_TableInstance,
-} from '../../types';
-import { parseCSSVarId } from '../../utils/style.utils';
-import { parseFromValuesOrFunc } from '../../utils/utils';
-import { MRT_ColumnActionMenu } from '../menus/MRT_ColumnActionMenu';
+import classes from './MRT_TableHeadCell.module.css'
+import type {
+  MRT_ColumnVirtualizer,
+  MRT_Header,
+  MRT_RowData,
+  MRT_TableInstance,
+} from '../../types'
+import type { TableThProps } from '@mantine/core'
+import type { CSSProperties, DragEventHandler, ReactNode } from 'react'
 
 interface Props<TData extends MRT_RowData> extends TableThProps {
-  columnVirtualizer?: MRT_ColumnVirtualizer;
-  header: MRT_Header<TData>;
-  renderedHeaderIndex?: number;
-  table: MRT_TableInstance<TData>;
+  columnVirtualizer?: MRT_ColumnVirtualizer
+  header: MRT_Header<TData>
+  renderedHeaderIndex?: number
+  table: MRT_TableInstance<TData>
 }
 
 export const MRT_TableHeadCell = <TData extends MRT_RowData>({
@@ -45,9 +38,9 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
   table,
   ...rest
 }: Props<TData>) => {
-  const direction = useDirection();
+  const direction = useDirection()
   const {
-    getState,
+    state,
     options: {
       columnFilterDisplayMode,
       columnResizeDirection,
@@ -64,58 +57,57 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
     },
     refs: { tableHeadCellRefs },
     setHoveredColumn,
-  } = table;
-  const { columnSizingInfo, draggingColumn, grouping, hoveredColumn } =
-    getState();
-  const { column } = header;
-  const { columnDef } = column;
-  const { columnDefType } = columnDef;
+  } = table
+  const { columnResizing, draggingColumn, grouping, hoveredColumn } = state
+  const { column } = header
+  const { columnDef } = column
+  const { columnDefType } = columnDef
 
-  const arg = { column, table };
+  const arg = { column, table }
   const tableCellProps = {
     ...parseFromValuesOrFunc(mantineTableHeadCellProps, arg),
     ...parseFromValuesOrFunc(columnDef.mantineTableHeadCellProps, arg),
     ...rest,
-  };
+  }
 
   const widthStyles: CSSProperties = {
     minWidth: `max(calc(var(--header-${parseCSSVarId(
       header?.id,
     )}-size) * 1px), ${columnDef.minSize ?? 30}px)`,
     width: `calc(var(--header-${parseCSSVarId(header.id)}-size) * 1px)`,
-  };
+  }
   if (layoutMode === 'grid') {
     widthStyles.flex = `${
       [0, false].includes(columnDef.grow!)
         ? 0
         : `var(--header-${parseCSSVarId(header.id)}-size)`
-    } 0 auto`;
+    } 0 auto`
   } else if (layoutMode === 'grid-no-grow') {
-    widthStyles.flex = `${+(columnDef.grow || 0)} 0 auto`;
+    widthStyles.flex = `${+(columnDef.grow || 0)} 0 auto`
   }
 
   const isColumnPinned =
     enableColumnPinning &&
     columnDef.columnDefType !== 'group' &&
-    column.getIsPinned();
+    column.getIsPinned()
 
-  const isDraggingColumn = draggingColumn?.id === column.id;
-  const isHoveredColumn = hoveredColumn?.id === column.id;
+  const isDraggingColumn = draggingColumn?.id === column.id
+  const isHoveredColumn = hoveredColumn?.id === column.id
 
   const { hovered: isHoveredHeadCell, ref: isHoveredHeadCellRef } =
-    useHover<HTMLTableCellElement>();
+    useHover<HTMLTableCellElement>()
 
-  const [isOpenedColumnActions, setIsOpenedColumnActions] = useState(false);
+  const [isOpenedColumnActions, setIsOpenedColumnActions] = useState(false)
 
   const columnActionsEnabled =
     (enableColumnActions || columnDef.enableColumnActions) &&
-    columnDef.enableColumnActions !== false;
+    columnDef.enableColumnActions !== false
 
   const showColumnButtons =
     !enableHeaderActionsHoverReveal ||
     isOpenedColumnActions ||
     (isHoveredHeadCell &&
-      !table.getVisibleFlatColumns().find((column) => column.getIsResizing()));
+      !table.getVisibleFlatColumns().find((column) => column.getIsResizing()))
 
   const showDragHandle =
     enableColumnDragging !== false &&
@@ -125,28 +117,26 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
       (enableGrouping &&
         columnDef.enableGrouping !== false &&
         !grouping.includes(column.id))) &&
-    showColumnButtons;
+    showColumnButtons
 
   const headerPL = useMemo(() => {
-    let pl = 0;
-    if (column.getCanSort()) pl++;
+    let pl = 0
+    if (column.getCanSort()) pl++
     // Only add padding for buttons if they will actually be displayed
     if (showColumnButtons && (columnActionsEnabled || showDragHandle))
-      pl += 1.75;
-    if (showDragHandle) pl += 1.25;
-    return pl;
-  }, [showColumnButtons, showDragHandle, columnActionsEnabled]);
+      pl += 1.75
+    if (showDragHandle) pl += 1.25
+    return pl
+  }, [showColumnButtons, showDragHandle, columnActionsEnabled])
 
   const handleDragEnter: DragEventHandler<HTMLTableCellElement> = (_e) => {
     if (enableGrouping && hoveredColumn?.id === 'drop-zone') {
-      setHoveredColumn(null);
+      setHoveredColumn(null)
     }
     if (enableColumnOrdering && draggingColumn && columnDefType !== 'group') {
-      setHoveredColumn(
-        columnDef.enableColumnOrdering !== false ? column : null,
-      );
+      setHoveredColumn(columnDef.enableColumnOrdering !== false ? column : null)
     }
-  };
+  }
 
   const headerElement =
     columnDef?.Header instanceof Function
@@ -155,38 +145,38 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
           header,
           table,
         })
-      : (columnDef?.Header ?? (columnDef.header as ReactNode));
+      : (columnDef?.Header ?? (columnDef.header as ReactNode))
 
   return (
     <TableTh
       colSpan={header.colSpan}
       data-column-pinned={isColumnPinned || undefined}
       data-dragging-column={isDraggingColumn || undefined}
-      data-first-right-pinned={
-        (isColumnPinned === 'right' &&
-          column.getIsFirstColumn(isColumnPinned)) ||
+      data-first-end-pinned={
+        (isColumnPinned === 'end' && column.getIsFirstColumn(isColumnPinned)) ||
         undefined
       }
       data-hovered-column-target={isHoveredColumn || undefined}
       data-index={renderedHeaderIndex}
-      data-last-left-pinned={
-        (isColumnPinned === 'left' && column.getIsLastColumn(isColumnPinned)) ||
+      data-last-start-pinned={
+        (isColumnPinned === 'start' &&
+          column.getIsLastColumn(isColumnPinned)) ||
         undefined
       }
       data-resizing={
         (columnResizeMode === 'onChange' &&
-          columnSizingInfo?.isResizingColumn === column.id &&
+          columnResizing?.isResizingColumn === column.id &&
           columnResizeDirection) ||
         undefined
       }
       {...tableCellProps}
       __vars={{
-        '--mrt-table-cell-left':
-          isColumnPinned === 'left'
+        '--mrt-table-cell-start':
+          isColumnPinned === 'start'
             ? `${column.getStart(isColumnPinned)}`
             : undefined,
-        '--mrt-table-cell-right':
-          isColumnPinned === 'right'
+        '--mrt-table-cell-end':
+          isColumnPinned === 'end'
             ? `${column.getAfter(isColumnPinned)}`
             : undefined,
       }}
@@ -207,13 +197,10 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
       onDragEnter={handleDragEnter}
       ref={(node: HTMLTableCellElement) => {
         if (node) {
-          tableHeadCellRefs.current[column.id] = node;
-          (
-            // @ts-expect-error
-            isHoveredHeadCellRef as RefObject<HTMLTableCellElement>
-          ).current = node;
+          tableHeadCellRefs.current[column.id] = node
+          ;(isHoveredHeadCellRef as any).current = node
           if (columnDefType !== 'group') {
-            columnVirtualizer?.measureElement?.(node);
+            columnVirtualizer?.measureElement?.(node)
           }
         }
       }}
@@ -313,5 +300,5 @@ export const MRT_TableHeadCell = <TData extends MRT_RowData>({
         <MRT_TableHeadCellFilterContainer header={header} table={table} />
       )}
     </TableTh>
-  );
-};
+  )
+}

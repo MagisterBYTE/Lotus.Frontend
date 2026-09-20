@@ -1,15 +1,15 @@
-import { MRT_SelectCheckbox } from '../../components/inputs/MRT_SelectCheckbox';
-import {
-  type MRT_ColumnDef,
-  type MRT_RowData,
-  type MRT_StatefulTableOptions,
-} from '../../types';
-import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils';
+import { MRT_SelectCheckbox } from '../../components/inputs/MRT_SelectCheckbox'
+import { defaultDisplayColumnProps } from '../../utils/displayColumn.utils'
+import type {
+  MRT_ColumnDef,
+  MRT_RowData,
+  MRT_StatefulTableOptions,
+} from '../../types'
 
 export const getMRT_RowSelectColumnDef = <TData extends MRT_RowData>(
   tableOptions: MRT_StatefulTableOptions<TData>,
 ): MRT_ColumnDef<TData> | null => {
-  const { enableMultiRowSelection, enableSelectAll } = tableOptions;
+  const { enableMultiRowSelection, enableSelectAll } = tableOptions
 
   return {
     Cell: ({ renderedRowIndex, row, table }) => (
@@ -30,5 +30,5 @@ export const getMRT_RowSelectColumnDef = <TData extends MRT_RowData>(
       size: enableSelectAll ? 60 : 70,
       tableOptions,
     }),
-  };
-};
+  }
+}

@@ -1,3 +1,3 @@
-import { type MRT_Localization } from '..';
+import type { MRT_Localization } from '..';
 export declare const MRT_Localization_NP: MRT_Localization;
 //# sourceMappingURL=np.d.ts.map

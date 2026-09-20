@@ -9,5 +9,5 @@ export interface ISpanProps extends IGeneralTextProperties {
      */
     disabled?: boolean;
 }
-export declare const Span: import("react").MemoExoticComponent<(props: ISpanProps) => import("react/jsx-runtime").JSX.Element>;
+export declare const Span: import("react").MemoExoticComponent<(props: ISpanProps) => import("react").JSX.Element>;
 //# sourceMappingURL=Span.d.ts.map

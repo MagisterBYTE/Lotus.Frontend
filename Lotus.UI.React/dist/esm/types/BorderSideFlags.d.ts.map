@@ -1,1 +1,1 @@
-{"version":3,"file":"BorderSideFlags.d.ts","sourceRoot":"","sources":["../../../src/types/BorderSideFlags.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,eAAO,MAAM,gBAAgB;IAC3B;;OAEG;;IAGH;;OAEG;;IAGH;;OAEG;;IAGH;;OAEG;;CAEK,CAAC"}
+{"version":3,"file":"BorderSideFlags.d.ts","sourceRoot":"","sources":["../../../src/types/BorderSideFlags.ts"],"names":[],"mappings":"AACA;;GAEG;AACH,eAAO,MAAM,gBAAgB;IAC3B;;OAEG;aACH,IAAI,EAAE,CAAC;IAEP;;OAEG;aACH,KAAK,EAAE,CAAC;IAER;;OAEG;aACH,GAAG,EAAE,CAAC;IAEN;;OAEG;aACH,MAAM,EAAE,CAAC;CACD,CAAC"}

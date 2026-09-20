@@ -3,9 +3,9 @@ import { reorderColumn } from '../../utils/column.utils';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_GrabHandleButton } from '../buttons/MRT_GrabHandleButton';
 export const MRT_TableHeadCellGrabHandle = ({ column, table, tableHeadCellRef, ...rest }) => {
-    const { getState, options: { enableColumnOrdering, mantineColumnDragHandleProps }, setColumnOrder, setDraggingColumn, setHoveredColumn, } = table;
+    const { state, options: { enableColumnOrdering, mantineColumnDragHandleProps }, setColumnOrder, setDraggingColumn, setHoveredColumn, } = table;
     const { columnDef } = column;
-    const { columnOrder, draggingColumn, hoveredColumn } = getState();
+    const { columnOrder, draggingColumn, hoveredColumn } = state;
     const arg = { column, table };
     const actionIconProps = {
         ...parseFromValuesOrFunc(mantineColumnDragHandleProps, arg),

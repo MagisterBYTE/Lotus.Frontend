@@ -12,5 +12,5 @@ export interface IDividerProps extends Omit<IGeneralContainerProperties, keyof I
     nmt?: boolean;
     nmb?: boolean;
 }
-export declare function Divider(props: IDividerProps): import("react/jsx-runtime").JSX.Element;
+export declare function Divider(props: IDividerProps): import("react").JSX.Element;
 //# sourceMappingURL=Divider.d.ts.map

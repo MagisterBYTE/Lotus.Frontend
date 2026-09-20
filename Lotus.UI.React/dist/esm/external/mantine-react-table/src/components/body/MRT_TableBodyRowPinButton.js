@@ -3,8 +3,8 @@ import { Box } from '@mantine/core';
 import { parseFromValuesOrFunc } from '../../utils/utils';
 import { MRT_RowPinButton } from '../buttons/MRT_RowPinButton';
 export const MRT_TableBodyRowPinButton = ({ row, table, ...rest }) => {
-    const { getState, options: { enableRowPinning, rowPinningDisplayMode }, } = table;
-    const { density } = getState();
+    const { state, options: { enableRowPinning, rowPinningDisplayMode }, } = table;
+    const { density } = state;
     const canPin = parseFromValuesOrFunc(enableRowPinning, row);
     if (!canPin)
         return null;

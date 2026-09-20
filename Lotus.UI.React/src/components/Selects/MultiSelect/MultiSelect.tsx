@@ -4,13 +4,13 @@ import { Assert } from 'lotus-core/utils';
 import { JSX, useMemo } from 'react';
 import { ContainerPropertiesHelper } from '#base';
 import { ContainerControl, IBaseContainerControlProps, Primitive } from '#components/Common';
-import { MultiSelectEx } from '#components/Extendeds';
+import { MultiSelectEx } from '#components/Extended';
 import { IHorizontalStackProps } from '#components/Layout';
 import { IContextRenderBase } from '#types';
 import { IItemsBaseMultiProps } from '../types';
 
 export interface IMultiSelectProps<TItem> extends IBaseContainerControlProps, IItemsBaseMultiProps<TItem>, IHorizontalStackProps {
-  selectProps?: Omit<MultiSelectProps, keyof IBaseContainerControlProps | 'data' | 'value'>;
+  selectProps?: Omit<MultiSelectProps<string>, keyof IBaseContainerControlProps | 'data' | 'value' | 'renderPill'>;
 }
 
 const styleContainerItem: IHorizontalStackProps = { withBorder: true, p: 'xxs', bdRadius: 'md' };

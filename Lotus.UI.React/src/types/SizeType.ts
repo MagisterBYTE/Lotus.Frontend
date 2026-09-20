@@ -114,6 +114,6 @@ export const TSizeTypes = {
   {
     if (size === 'xxs') return 'xs';
     if (size === 'xxl') return 'xl';
-    return size as TTruncatedSizeType;
+    return size;
   }
 } as const;

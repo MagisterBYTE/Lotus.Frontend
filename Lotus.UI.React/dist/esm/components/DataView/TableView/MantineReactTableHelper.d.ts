@@ -1,9 +1,9 @@
 import { SortingState } from '@tanstack/react-table';
 import { IFilterFunctionDesc } from 'lotus-core/modules/filter';
 import { IObjectInfo, IPropertyDescriptor } from 'lotus-core/modules/objectInfo';
-import { IFilterPropertyCollection } from 'lotus-core/modules/requestAndResponse';
+import { IFilterPropertyCollection, ISortProperty } from 'lotus-core/modules/requestAndResponse';
 import { IRecordObject } from 'lotus-core/types';
-import { ISortPropertyCollection } from 'node_modules/lotus-core/dist/esm/modules/requestAndResponse/SortProperty';
+type ISortPropertyCollection = ISortProperty[];
 import { MRT_ColumnDef, MRT_ColumnFiltersState, MRT_FilterOption } from '#external/mantine-react-table';
 export declare class MantineReactTableHelper {
     /**
@@ -56,4 +56,5 @@ export declare class MantineReactTableHelper {
      */
     static convertColumnsSortStateToSortObjects(objectInfo: IObjectInfo, columnSortState: SortingState): ISortPropertyCollection;
 }
+export {};
 //# sourceMappingURL=MantineReactTableHelper.d.ts.map

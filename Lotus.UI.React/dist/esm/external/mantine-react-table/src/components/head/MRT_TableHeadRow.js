@@ -1,12 +1,12 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import clsx from 'clsx';
-import classes from './MRT_TableHeadRow.module.css';
 import { Box, TableTr } from '@mantine/core';
-import { MRT_TableHeadCell } from './MRT_TableHeadCell';
 import { parseFromValuesOrFunc } from '../../utils/utils';
+import { MRT_TableHeadCell } from './MRT_TableHeadCell';
+import classes from './MRT_TableHeadRow.module.css';
 export const MRT_TableHeadRow = ({ columnVirtualizer, headerGroup, table, ...rest }) => {
-    const { getState, options: { enableStickyHeader, layoutMode, mantineTableHeadRowProps }, } = table;
-    const { isFullScreen } = getState();
+    const { state, options: { enableStickyHeader, layoutMode, mantineTableHeadRowProps }, } = table;
+    const { isFullScreen } = state;
     const { virtualColumns, virtualPaddingLeft, virtualPaddingRight } = columnVirtualizer ?? {};
     const tableRowProps = {
         ...parseFromValuesOrFunc(mantineTableHeadRowProps, {
