@@ -1,6 +1,6 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  // Плагины: без unicorn (в старом ESLint его не было). oxc оставляем выключенным по умолчанию через plugins.
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  // Базовый lint для TS-библиотек без React (Lotus.Core и аналоги).
   "plugins": ["typescript", "import"],
   "env": {
     "browser": true,
@@ -8,16 +8,15 @@
     "es2020": true
   },
   "ignorePatterns": [
-    "dist/**",
-    "node_modules/**",
-    "coverage/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/coverage/**",
     "jest.config.ts"
   ],
   "options": {
     "typeAware": true
   },
-  // Не включаем целые категории Oxlint — только правила из прежнего eslint.config.ts
-  // (+ базовые correctness, которые давал eslint:recommended).
+  // Только явные правила (+ базовые из eslint:recommended). Категории Oxlint выключены.
   "categories": {
     "correctness": "off",
     "suspicious": "off",
@@ -39,7 +38,6 @@
     "no-fallthrough": "error",
     "no-var": "error",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    // из eslint:recommended (было через extends js/recommended)
     "no-unreachable": "error",
     "no-cond-assign": "error",
     "no-extra-boolean-cast": "error",
@@ -49,7 +47,7 @@
     // СТИЛЬ КОДА И ФОРМАТИРОВАНИЕ
     //=============================================================
     // quotes, indent, brace-style(allman), padded-blocks, *-spacing, semi*,
-    // spaced-comment, max-len, comma-dangle — нет в Oxlint → Oxfmt (.oxfmtrc.json).
+    // spaced-comment, max-len, comma-dangle — нет в Oxlint → Oxfmt.
     // @typescript-eslint/naming-convention (Async suffix) — аналога в Oxlint нет.
     "max-lines": ["warn", { "max": 1200 }],
 
@@ -99,7 +97,6 @@
     // ОРГАНИЗАЦИЯ ИМПОРТОВ
     //=============================================================
     // import/order и import/no-useless-path-segments — нет в Oxlint.
-    // sort-imports не эквивалентен import/order (другой порядок групп) — не включаем.
     "import/no-duplicates": "error"
   }
 }

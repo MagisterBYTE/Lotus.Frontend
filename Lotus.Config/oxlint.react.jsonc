@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  // React-библиотеки (Lotus.UI.React, Lotus.ArchFiber и т.п.).
+  // Наследует base и добавляет react / jsx-a11y.
+  "extends": ["./oxlint.base.jsonc"],
+  "plugins": ["typescript", "import", "react", "jsx-a11y"],
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/coverage/**",
+    "**/.storybook/**",
+    "**/src/.storydata/**",
+    "**/src/external/**",
+    "**/*.stories.tsx",
+    "eslint.config.ts",
+    "jest.config.ts"
+  ],
+  "options": {
+    "typeAware": true
+  },
+  "settings": {
+    "react": {
+      "version": "19.0"
+    }
+  },
+  "rules": {
+    //=============================================================
+    // REACT - ОСНОВНЫЕ ПРАВИЛА
+    //=============================================================
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx", ".jsx"] }],
+    // "react/prop-types": нет в Oxlint — обычно off (TypeScript)
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-key": "error",
+    // "react/no-typos", "react/no-unused-prop-types", "react/no-unused-state" — нет в Oxlint
+    "react/no-array-index-key": "warn",
+    "react/jsx-handler-names": [
+      "warn",
+      {
+        "eventHandlerPrefix": "handle",
+        "eventHandlerPropPrefix": "on"
+      }
+    ],
+
+    //=============================================================
+    // REACT JSX - СТИЛЬ (часть правил нет в Oxlint → Oxfmt)
+    //=============================================================
+    "react/self-closing-comp": "error",
+    // jsx-curly-spacing, jsx-equals-spacing, jsx-indent*, jsx-max-props-per-line,
+    // jsx-wrap-multilines, jsx-tag-spacing, jsx-sort-props — нет в Oxlint
+
+    //=============================================================
+    // REACT - БЕЗОПАСНОСТЬ И ЛУЧШИЕ ПРАКТИКИ
+    //=============================================================
+    "react/no-danger": "warn",
+    "react/no-direct-mutation-state": "error",
+    "react/no-unsafe": "error",
+    // "react/prefer-stateless-function", "react/destructuring-assignment" — нет в Oxlint
+
+    //=============================================================
+    // REACT - ДОСТУПНОСТЬ (a11y)
+    //=============================================================
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/interactive-supports-focus": "warn",
+    "jsx-a11y/role-has-required-aria-props": "warn",
+
+    // В React-проектах historically было off (handlers в JSX)
+    "typescript/no-misused-promises": "off"
+  }
+}

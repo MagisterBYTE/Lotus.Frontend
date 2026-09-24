@@ -1,6 +1,5 @@
 {
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  // Перенесено из .prettierrc
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxfmt/configuration_schema.json",
   "semi": true,
   "singleQuote": true,
   "arrowParens": "always",
@@ -9,8 +8,6 @@
   "printWidth": 160,
   "tabWidth": 2,
   "trailingComma": "none",
-  // Oxfmt читает .editorconfig сам; опция editorconfig из Prettier не поддерживается.
-  // Не сортировать package.json (в Prettier он был в ignore)
   "sortPackageJson": false,
   "ignorePatterns": [
     "**/.git",

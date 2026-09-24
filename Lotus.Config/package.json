@@ -1,0 +1,33 @@
+{
+  "name": "lotus-config",
+  "description": "Общие конфигурации для Frontend платформы Lotus",
+  "version": "4.0.0",
+  "author": "MagisterBYTE aka DanielDem",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "oxlint.base.jsonc",
+    "oxlint.react.jsonc",
+    "oxfmt.base.jsonc",
+    "tsconfig.library.json",
+    "jest.library.ts",
+    "README.md"
+  ],
+  "exports": {
+    "./oxlint.base.jsonc": "./oxlint.base.jsonc",
+    "./oxlint.react.jsonc": "./oxlint.react.jsonc",
+    "./oxfmt.base.jsonc": "./oxfmt.base.jsonc",
+    "./tsconfig.library.json": "./tsconfig.library.json",
+    "./jest.library.ts": "./jest.library.ts",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "jest": ">=29"
+  },
+  "peerDependenciesMeta": {
+    "jest": {
+      "optional": true
+    }
+  },
+  "private": true
+}

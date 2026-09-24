@@ -1,19 +1,29 @@
 {
   "name": "lotus-core",
+  "description": "Модуль Core для Frontend приложений платформы Lotus",
   "version": "4.0.0",
-  "scripts": {
-    "test": "jest",
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "start": "node dist/index.js",
-    "lint": "oxlint",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check"
-  },
-  "keywords": [],
   "author": "MagisterBYTE aka DanielDem",
   "license": "MIT",
-  "description": "Модуль Core для Frontend приложений платформы Lotus",
+  "keywords": [],
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/lotus-core.min.js",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
   "imports": {
     "#constants": "./src/constants/index.ts",
     "#converters": "./src/converters/index.ts",
@@ -37,83 +47,74 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js"
     },
     "./constants": {
-      "import": "./dist/esm/constants/index.js",
-      "types": "./dist/esm/constants/index.d.ts"
+      "types": "./dist/esm/constants/index.d.ts",
+      "import": "./dist/esm/constants/index.js"
     },
     "./environment": {
-      "import": "./dist/esm/environment/index.js",
-      "types": "./dist/esm/environment/index.d.ts"
+      "types": "./dist/esm/environment/index.d.ts",
+      "import": "./dist/esm/environment/index.js"
     },
     "./converters": {
-      "import": "./dist/esm/converters/index.js",
-      "types": "./dist/esm/converters/index.d.ts"
+      "types": "./dist/esm/converters/index.d.ts",
+      "import": "./dist/esm/converters/index.js"
     },
     "./formatters": {
-      "import": "./dist/esm/formatters/index.js",
-      "types": "./dist/esm/formatters/index.d.ts"
+      "types": "./dist/esm/formatters/index.d.ts",
+      "import": "./dist/esm/formatters/index.js"
     },
     "./graphics": {
-      "import": "./dist/esm/graphics/index.js",
-      "types": "./dist/esm/graphics/index.d.ts"
+      "types": "./dist/esm/graphics/index.d.ts",
+      "import": "./dist/esm/graphics/index.js"
     },
     "./helpers": {
-      "import": "./dist/esm/helpers/index.js",
-      "types": "./dist/esm/helpers/index.d.ts"
+      "types": "./dist/esm/helpers/index.d.ts",
+      "import": "./dist/esm/helpers/index.js"
     },
     "./localization": {
-      "import": "./dist/esm/localization/index.js",
-      "types": "./dist/esm/localization/index.d.ts"
+      "types": "./dist/esm/localization/index.d.ts",
+      "import": "./dist/esm/localization/index.js"
     },
     "./math": {
-      "import": "./dist/esm/math/index.js",
-      "types": "./dist/esm/math/index.d.ts"
+      "types": "./dist/esm/math/index.d.ts",
+      "import": "./dist/esm/math/index.js"
     },
     "./modules/*": {
-      "import": "./dist/esm/modules/*/index.js",
-      "types": "./dist/esm/modules/*/index.d.ts"
+      "types": "./dist/esm/modules/*/index.d.ts",
+      "import": "./dist/esm/modules/*/index.js"
     },
     "./resources/*": {
-      "import": "./dist/esm/resources/*/index.js",
-      "types": "./dist/esm/resources/*/index.d.ts"
+      "types": "./dist/esm/resources/*/index.d.ts",
+      "import": "./dist/esm/resources/*/index.js"
     },
     "./types": {
-      "import": "./dist/esm/types/index.js",
-      "types": "./dist/esm/types/index.d.ts"
+      "types": "./dist/esm/types/index.d.ts",
+      "import": "./dist/esm/types/index.js"
     },
     "./utils": {
-      "import": "./dist/esm/utils/index.js",
-      "types": "./dist/esm/utils/index.d.ts"
+      "types": "./dist/esm/utils/index.d.ts",
+      "import": "./dist/esm/utils/index.js"
     },
     "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "lodash": "^4.18.1"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.25",
     "@types/node": "^26.6.2",
-    "jest": "^30.5.1",
-    "oxfmt": "^0.68.0",
-    "oxlint": "^1.83.0",
-    "oxlint-tsgolint": "^7.0.2002",
-    "ts-jest": "^29.4.12",
-    "ts-node": "^10.9.2",
     "@typescript/native": "npm:typescript@^7.0.2",
+    "jest": "^30.5.2",
+    "lotus-config": "file:../Lotus.Config",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
+    "oxlint-tsgolint": "^7.0.2002",
+    "ts-jest": "^29.4.13",
+    "ts-node": "^10.9.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
-  },
-  "type": "module",
-  "main": "dist/cjs/index.js",
-  "unpkg": "dist/lotus-core.min.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
-  "files": [
-    "dist",
-    "cjs",
-    "esm"
-  ],
-  "dependencies": {
-    "lodash": "^4.18.1"
   }
 }
