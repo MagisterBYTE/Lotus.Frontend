@@ -1,21 +1,31 @@
 {
   "name": "lotus-ui-react",
+  "description": "Модуль компонентов Lotus.UI.React для Frontend приложений платформы Lotus",
   "version": "4.0.0",
-  "scripts": {
-    "test": "jest",
-    "build": "tsc && npm run copy-assets",
-    "copy-assets": "copyfiles -u 1 src/**/*.css dist/esm/",
-    "start": "node dist/index.js",
-    "lint": "oxlint",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
-    "sb": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "keywords": [],
   "author": "MagisterBYTE aka DanielDem",
   "license": "MIT",
-  "description": "Модуль компонентов Lotus.UI.React для Frontend приложений платформы Lotus",
+  "keywords": [],
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/lotus-ui-react.min.js",
+  "files": [
+    "dist",
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "build": "tsc && npm run copy-assets",
+    "build-storybook": "storybook build",
+    "copy-assets": "copyfiles -u 1 src/**/*.css dist/esm/",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "sb": "storybook dev -p 6006",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
   "imports": {
     "#storydata": "./src/.storydata/index.ts",
     "#base": "./src/base/index.ts",
@@ -48,133 +58,117 @@
   },
   "exports": {
     "./external": {
-      "import": "./dist/esm/external/index.js",
-      "types": "./dist/esm/external/index.d.ts"
+      "types": "./dist/esm/external/index.d.ts",
+      "import": "./dist/esm/external/index.js"
     },
     "./base": {
-      "import": "./dist/esm/base/index.js",
-      "types": "./dist/esm/base/index.d.ts"
+      "types": "./dist/esm/base/index.d.ts",
+      "import": "./dist/esm/base/index.js"
     },
     "./components/Common": {
-      "import": "./dist/esm/components/Common/index.js",
-      "types": "./dist/esm/components/Common/index.d.ts"
+      "types": "./dist/esm/components/Common/index.d.ts",
+      "import": "./dist/esm/components/Common/index.js"
     },
     "./components/Controls": {
-      "import": "./dist/esm/components/Controls/index.js",
-      "types": "./dist/esm/components/Controls/index.d.ts"
+      "types": "./dist/esm/components/Controls/index.d.ts",
+      "import": "./dist/esm/components/Controls/index.js"
     },
     "./components/DataView": {
-      "import": "./dist/esm/components/DataView/index.js",
-      "types": "./dist/esm/components/DataView/index.d.ts"
+      "types": "./dist/esm/components/DataView/index.d.ts",
+      "import": "./dist/esm/components/DataView/index.js"
     },
     "./components/Display": {
-      "import": "./dist/esm/components/Display/index.js",
-      "types": "./dist/esm/components/Display/index.d.ts"
+      "types": "./dist/esm/components/Display/index.d.ts",
+      "import": "./dist/esm/components/Display/index.js"
     },
     "./components/Editors": {
-      "import": "./dist/esm/components/Editors/index.js",
-      "types": "./dist/esm/components/Editors/index.d.ts"
+      "types": "./dist/esm/components/Editors/index.d.ts",
+      "import": "./dist/esm/components/Editors/index.js"
     },
     "./components/Extended": {
-      "import": "./dist/esm/components/Extended/index.js",
-      "types": "./dist/esm/components/Extended/index.d.ts"
+      "types": "./dist/esm/components/Extended/index.d.ts",
+      "import": "./dist/esm/components/Extended/index.js"
     },
     "./components/Inputs": {
-      "import": "./dist/esm/components/Inputs/index.js",
-      "types": "./dist/esm/components/Inputs/index.d.ts"
+      "types": "./dist/esm/components/Inputs/index.d.ts",
+      "import": "./dist/esm/components/Inputs/index.js"
     },
     "./components/Layout": {
-      "import": "./dist/esm/components/Layout/index.js",
-      "types": "./dist/esm/components/Layout/index.d.ts"
+      "types": "./dist/esm/components/Layout/index.d.ts",
+      "import": "./dist/esm/components/Layout/index.js"
     },
     "./components/Selects": {
-      "import": "./dist/esm/components/Selects/index.js",
-      "types": "./dist/esm/components/Selects/index.d.ts"
+      "types": "./dist/esm/components/Selects/index.d.ts",
+      "import": "./dist/esm/components/Selects/index.js"
     },
     "./designSystem": {
-      "import": "./dist/esm/designSystem/index.js",
-      "types": "./dist/esm/designSystem/index.d.ts"
+      "types": "./dist/esm/designSystem/index.d.ts",
+      "import": "./dist/esm/designSystem/index.js"
     },
     "./designSystem/background": {
-      "import": "./dist/esm/designSystem/background/index.js",
-      "types": "./dist/esm/designSystem/background/index.d.ts"
+      "types": "./dist/esm/designSystem/background/index.d.ts",
+      "import": "./dist/esm/designSystem/background/index.js"
     },
     "./designSystem/border": {
-      "import": "./dist/esm/designSystem/border/index.js",
-      "types": "./dist/esm/designSystem/border/index.d.ts"
+      "types": "./dist/esm/designSystem/border/index.d.ts",
+      "import": "./dist/esm/designSystem/border/index.js"
     },
     "./designSystem/colors": {
-      "import": "./dist/esm/designSystem/colors/index.js",
-      "types": "./dist/esm/designSystem/colors/index.d.ts"
+      "types": "./dist/esm/designSystem/colors/index.d.ts",
+      "import": "./dist/esm/designSystem/colors/index.js"
     },
     "./designSystem/font": {
-      "import": "./dist/esm/designSystem/font/index.js",
-      "types": "./dist/esm/designSystem/font/index.d.ts"
+      "types": "./dist/esm/designSystem/font/index.d.ts",
+      "import": "./dist/esm/designSystem/font/index.js"
     },
     "./designSystem/sizes": {
-      "import": "./dist/esm/designSystem/sizes/index.js",
-      "types": "./dist/esm/designSystem/sizes/index.d.ts"
+      "types": "./dist/esm/designSystem/sizes/index.d.ts",
+      "import": "./dist/esm/designSystem/sizes/index.js"
     },
     "./designSystem/text": {
-      "import": "./dist/esm/designSystem/text/index.js",
-      "types": "./dist/esm/designSystem/text/index.d.ts"
+      "types": "./dist/esm/designSystem/text/index.d.ts",
+      "import": "./dist/esm/designSystem/text/index.js"
     },
     "./designSystem/types": {
-      "import": "./dist/esm/designSystem/types/index.js",
-      "types": "./dist/esm/designSystem/types/index.d.ts"
+      "types": "./dist/esm/designSystem/types/index.d.ts",
+      "import": "./dist/esm/designSystem/types/index.js"
     },
     "./designSystem/сssVariables": {
-      "import": "./dist/esm/designSystem/сssVariables/index.js",
-      "types": "./dist/esm/designSystem/сssVariables/index.d.ts"
+      "types": "./dist/esm/designSystem/сssVariables/index.d.ts",
+      "import": "./dist/esm/designSystem/сssVariables/index.js"
     },
     "./external/mantine-react-table": {
-      "import": "./dist/esm/external/mantine-react-table/index.js",
-      "types": "./dist/esm/external/mantine-react-table/index.d.ts"
+      "types": "./dist/esm/external/mantine-react-table/index.d.ts",
+      "import": "./dist/esm/external/mantine-react-table/index.js"
     },
     "./helpers": {
-      "import": "./dist/esm/helpers/index.js",
-      "types": "./dist/esm/helpers/index.d.ts"
+      "types": "./dist/esm/helpers/index.d.ts",
+      "import": "./dist/esm/helpers/index.js"
     },
     "./hooks": {
-      "import": "./dist/esm/hooks/index.js",
-      "types": "./dist/esm/hooks/index.d.ts"
+      "types": "./dist/esm/hooks/index.d.ts",
+      "import": "./dist/esm/hooks/index.js"
     },
     "./interactivity": {
-      "import": "./dist/esm/interactivity/index.js",
-      "types": "./dist/esm/interactivity/index.d.ts"
+      "types": "./dist/esm/interactivity/index.d.ts",
+      "import": "./dist/esm/interactivity/index.js"
     },
     "./modules/feedback": {
-      "import": "./dist/esm/modules/feedback/index.js",
-      "types": "./dist/esm/modules/feedback/index.d.ts"
+      "types": "./dist/esm/modules/feedback/index.d.ts",
+      "import": "./dist/esm/modules/feedback/index.js"
     },
     "./modules/commands": {
-      "import": "./dist/esm/modules/commands/index.js",
-      "types": "./dist/esm/modules/commands/index.d.ts"
+      "types": "./dist/esm/modules/commands/index.d.ts",
+      "import": "./dist/esm/modules/commands/index.js"
     },
     "./provider": {
-      "import": "./dist/esm/provider/index.js",
-      "types": "./dist/esm/provider/index.d.ts"
+      "types": "./dist/esm/provider/index.d.ts",
+      "import": "./dist/esm/provider/index.js"
     },
     "./types": {
-      "import": "./dist/esm/types/index.js",
-      "types": "./dist/esm/types/index.d.ts"
+      "types": "./dist/esm/types/index.d.ts",
+      "import": "./dist/esm/types/index.js"
     }
-  },
-  "devDependencies": {
-    "@storybook/react-vite": "^10.6.0",
-    "@types/jest": "^30.0.0",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "copyfiles": "^2.4.1",
-    "jest": "^30.5.2",
-    "oxfmt": "^0.68.0",
-    "oxlint": "^1.83.0",
-    "oxlint-tsgolint": "^7.0.2002",
-    "storybook": "^10.6.0",
-    "ts-jest": "^29.4.12",
-    "ts-node": "^10.9.2",
-    "typescript": "npm:@typescript/typescript6@^6.0.2"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -195,6 +189,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.23",
     "lotus-core": "file:../Lotus.Core",
+    "lotus-config": "file:../Lotus.Config",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-draggable": "^4.7.2",
@@ -204,19 +199,25 @@
     "react-select": "^5.10.2",
     "react-toastify": "^11.1.0"
   },
+  "devDependencies": {
+    "@storybook/react-vite": "^10.6.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "copyfiles": "^2.4.1",
+    "jest": "^30.5.2",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
+    "oxlint-tsgolint": "^7.0.2002",
+    "storybook": "^10.6.0",
+    "ts-jest": "^29.4.12",
+    "ts-node": "^10.9.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
+  },
   "peerDependencies": {
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router-dom": "^7.18.4"
-  },
-  "type": "module",
-  "main": "dist/cjs/index.js",
-  "unpkg": "dist/lotus-ui-react.min.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
-  "files": [
-    "dist",
-    "cjs",
-    "esm"
-  ]
+  }
 }
