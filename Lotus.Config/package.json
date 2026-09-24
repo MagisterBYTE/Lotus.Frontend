@@ -22,7 +22,7 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "jest": ">=29"
+    "jest": "^30.5.2"
   },
   "peerDependenciesMeta": {
     "jest": {
